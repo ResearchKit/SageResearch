@@ -1,6 +1,6 @@
 //
 //  RSDColorRules.swift
-//  Research
+//  ResearchPlatformContext
 //
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
@@ -30,8 +30,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-
-import Foundation
 
 #if os(iOS) || os(tvOS)
 import UIKit
@@ -85,31 +83,16 @@ open class RSDColorRules  {
     
     /// MARK: Default colors
     
-    /// The named category or style for a given color.
-    public enum Style : String, Codable, CaseIterable {
-        /// The color "white".
-        case white
-        /// The primary color for the application.
-        case primary
-        /// The secondary color for the application.
-        case secondary
-        /// The accent color for the application.
-        case accent
-        /// The color to use on screens and icons that indicate success.
-        case successGreen
-        /// The color to use on screens and icons that indicate an error or alert.
-        case errorRed
-        /// A custom color should be defined for a given screen or icon. For example, a picture that shows
-        /// someone running outside would have a "sky blue" background color that is defined independantly
-        /// of the branding colors used by an app.
-        case custom
-    }
-    
     /// The default color to use for a given color style.
     /// - parameter style: The color style.
     /// - returns: The color mapping for that style.
-    open func mapping(for style: Style) -> RSDColorMapping? {
+    open func mapping(for style: RSDColorStyle) -> RSDColorMapping? {
         switch style {
+        case .background:
+            // TODO: syoung 12/10/2019 Support dark mode.
+            return self.palette.grayScale.mapping(forShade: .white)
+        case .black:
+            return self.palette.grayScale.mapping(forColor: .black)
         case .white:
             return self.palette.grayScale.mapping(forShade: .white)
         case .primary:
@@ -555,7 +538,7 @@ open class RSDColorRules  {
     ///     - unfilled: The unfilled (background) color for the progress bar.
     ///     - inner: The inner color to use for the progress bar.
     open func progressDial(on background: RSDColorTile,
-                           style: Style? = nil,
+                           style: RSDColorStyle? = nil,
                            innerColor: RSDColor = RSDColor.clear,
                            usesLightStyle: Bool = false) -> (filled: RSDColor, unfilled: RSDColor, inner: RSDColorTile) {
         
@@ -633,7 +616,13 @@ open class RSDColorRules  {
     ///     - isSelected: Whether or not the cell is selected.
     /// - returns: The color tile for the background of the cell.
     open func tableCellBackground(on background: RSDColorTile, isSelected: Bool) -> RSDColorTile {
-        return isSelected ?  self.palette.primary.colorTiles.first! : self.palette.grayScale.white
+        if isSelected {
+            let baseColor = self.palette.primary.normal.usesLightStyle ? self.palette.primary : self.palette.accent
+            return baseColor.veryLight
+        }
+        else {
+            return self.palette.grayScale.white
+        }
     }
     
     /// The background color tile for the table section header.
@@ -679,7 +668,7 @@ open class RSDSeverityColorScale {
     }
     
     /// The color palette that backs this rule.
-    public var grayScale = RSDStudyConfiguration.shared.colorPalette.grayScale
+    lazy public var grayScale: RSDGrayScale = RSDDesignSystem.shared.colorRules.palette.grayScale
     
     /// The fill color of the button representing this scale value.
     /// - parameters:

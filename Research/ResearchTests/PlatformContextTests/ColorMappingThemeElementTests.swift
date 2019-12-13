@@ -33,7 +33,7 @@
 
 
 import XCTest
-@testable import Research
+@testable import ResearchPlatformContext
 
 class ColorMappingThemeElementTests: XCTestCase {
 
@@ -47,7 +47,7 @@ class ColorMappingThemeElementTests: XCTestCase {
 
     func testColorPlacement_PrimaryHeader() {
         let designSystem = RSDDesignSystem()
-        let mapping: [RSDColorPlacement : RSDColorRules.Style] = [.header : .primary, .body: .white, .footer: .white]
+        let mapping: [RSDColorPlacement : RSDColorStyle] = [.header : .primary, .body: .white, .footer: .white]
         let placement = mapping.mapKeys { $0.stringValue }
         let theme = RSDColorPlacementThemeElementObject(placement: placement)
         
@@ -62,12 +62,11 @@ class ColorMappingThemeElementTests: XCTestCase {
     
     func testColorPlacement_CustomHeader() {
         let designSystem = RSDDesignSystem()
-        let mapping: [RSDColorPlacement : RSDColorRules.Style] = [.header : .custom, .body: .white, .footer: .white]
+        let mapping: [RSDColorPlacement : RSDColorStyle] = [.header : .custom, .body: .white, .footer: .white]
         let placement = mapping.mapKeys { $0.stringValue }
         let theme = RSDColorPlacementThemeElementObject(placement: placement,
                                                         customColorName: "#FFAABB",
-                                                        usesLightStyle: true,
-                                                        bundleIdentifier: nil)
+                                                        usesLightStyle: true)
         
         let headerColor = theme.backgroundColor(for: .header, using: designSystem.colorRules, compatibleWith: nil)
         let bodyColor = theme.backgroundColor(for: .body, using: designSystem.colorRules, compatibleWith: nil)

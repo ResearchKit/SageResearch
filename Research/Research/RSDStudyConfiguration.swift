@@ -38,7 +38,11 @@ import Foundation
 open class RSDStudyConfiguration {
     
     /// Singleton for the study configuration for a given app.
-    public static var shared: RSDStudyConfiguration = RSDStudyConfiguration()
+    open class var shared: RSDStudyConfiguration {
+        get { return _shared }
+        set { _shared = newValue }
+    }
+    private static var _shared: RSDStudyConfiguration = RSDStudyConfiguration()
     
     /// How often should a given task be displayed to the user with the full instructions?
     /// (Default = `always`)
@@ -68,18 +72,59 @@ open class RSDStudyConfiguration {
     open var isParticipantDevice : Bool = true
     
     /// The default color palette to use for this app.
-    open var colorPalette: RSDColorPalette = .wireframe {
-        didSet {
-            self.hasSetColorPallette = true
+    @available(*, deprecated, message: "Use `RSDDesignSystem.shared` directly")
+    open var colorPalette: RSDColorPalette {
+        get {
+            return RSDDesignSystem.shared.colorRules.palette
+        }
+        set {
+            RSDDesignSystem.shared.colorRules.palette = newValue
         }
     }
     
-    /// Has the color palette been set for this app or is it set to the default?
-    public private(set) var hasSetColorPallette: Bool = false
-    
     /// The default font rules for this app.
-    open var fontRules: RSDFontRules = RSDFontRules(version: 1)
+    @available(*, deprecated, message: "Use `RSDDesignSystem.shared` directly")
+    open var fontRules: RSDFontRules {
+        get { return RSDDesignSystem.shared.fontRules }
+        set {
+            RSDDesignSystem.shared.fontRules = newValue
+        }
+    }
     
     /// A flag for whether or not tasks that support "remind me later" should show that action. (Default = `false`)
     open var shouldShowRemindMe: Bool = false
 }
+
+/// The platform context info contains information about the current platform context that needs
+/// to be accessed via a single entry point and should *not*
+public protocol RSDPlatformContextInfo : class {
+    
+    /// Information about the specific device.
+    var deviceInfo: String { get }
+    
+    /// Specific model identifier of the device.
+    /// - example: "Apple Watch Series 1"
+    var deviceTypeIdentifier: String { get }
+    
+    /// The name of the application.
+    var appName: String { get }
+    
+    /// The application version.
+    var appVersion: String { get }
+    
+    /// Research framework version.
+    var rsdFrameworkVersion: String { get }
+}
+
+/// Set the current platform on startup. If this value is set more than once then subsequent calls
+/// will be ignored.
+public var currentPlatformContext: RSDPlatformContextInfo! {
+    get {
+        return _currentPlatformContext
+    }
+    set {
+        guard _currentPlatformContext == nil else { return }
+        _currentPlatformContext = newValue
+    }
+}
+private var _currentPlatformContext: RSDPlatformContextInfo?

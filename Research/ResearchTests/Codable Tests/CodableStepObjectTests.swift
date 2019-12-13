@@ -39,9 +39,6 @@ class CodableStepObjectTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        // setup to have an image wrapper delegate set so the image wrapper won't crash
-        RSDImageWrapper.sharedDelegate = TestImageWrapperDelegate()
-        
         // Use a statically defined timezone.
         rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
@@ -95,7 +92,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
-            XCTAssertEqual((object.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "before")
+            XCTAssertEqual(object.imageTheme?.imageName, "before")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
             
             let goForwardAction = object.action(for: .navigation(.goForward), on: object)
@@ -251,7 +248,7 @@ class CodableStepObjectTests: XCTestCase {
             
             if let color = object.colorMapping as? RSDSingleColorThemeElementObject {
                 XCTAssertTrue(color.customColor?.usesLightStyle ?? false)
-                XCTAssertEqual(color.customColor?.color, "sky")
+                XCTAssertEqual(color.customColor?.colorIdentifier, "sky")
             } else {
                 XCTFail("Failed to decode color theme")
             }
@@ -490,7 +487,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
-            XCTAssertEqual((object.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "before")
+            XCTAssertEqual(object.imageTheme?.imageName, "before")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
             
             let goForwardAction = object.action(for: .navigation(.goForward), on: object)

@@ -1,5 +1,5 @@
-#  API
-The `API` group defines the interfaces included in this framework.
+#  Core
+The `Core` group defines the interfaces included in this framework.
 
 ## Types
 The `Types` group includes the structs, enums, and option sets used to define values within the interface.

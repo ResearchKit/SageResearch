@@ -130,9 +130,6 @@ public protocol RSDTaskPathComponent : RSDHistoryPathComponent {
     /// A pointer to the task controller that is running the task.
     var taskController : RSDTaskController? { get }
     
-    /// The design system to use with this task path.
-    var designSystem : RSDDesignSystem { get }
-    
     /// The task that is currently being run. This can be `nil` if the task has not yet been loaded.
     var task: RSDTask? { get }
     

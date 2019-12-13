@@ -35,9 +35,18 @@ import Foundation
 
 extension Dictionary {
     
-    /// Use this dictionary to decode the given object type.
-    public func rsd_decode<T>(_ type: T.Type, bundle: Bundle? = nil) throws -> T where T : Decodable {
+    /// - deprecated: Use `rsd_decode(:, resourceInfo:)` instead.
+    @available(*, deprecated, message: "Use `rsd_decode(:, resourceInfo:)` instead.")
+    public func rsd_decode<T>(_ type: T.Type, bundle: Bundle) throws -> T where T : Decodable {
         let decoder = RSDFactory.shared.createJSONDecoder(bundle: bundle)
+        let jsonData = try JSONSerialization.data(withJSONObject: self, options: [])
+        let decodable = try decoder.decode(type, from: jsonData)
+        return decodable
+    }
+    
+    /// Use this dictionary to decode the given object type.
+    public func rsd_decode<T>(_ type: T.Type, resourceInfo: RSDResourceInfo? = nil) throws -> T where T : Decodable {
+        let decoder = RSDFactory.shared.createJSONDecoder(resourceInfo: resourceInfo)
         let jsonData = try JSONSerialization.data(withJSONObject: self, options: [])
         let decodable = try decoder.decode(type, from: jsonData)
         return decodable
@@ -47,8 +56,18 @@ extension Dictionary {
 extension Array {
     
     /// Use this array to decode an array of objects of the given type.
-    public func rsd_decode<T>(_ type: Array<T>.Type, bundle: Bundle? = nil) throws -> Array<T> where T : Decodable {
+    /// - deprecated: Use `rsd_decode(:, resourceInfo:)` instead.
+    @available(*, deprecated, message: "Use `rsd_decode(:, resourceInfo:)` instead.")
+    public func rsd_decode<T>(_ type: Array<T>.Type, bundle: Bundle?) throws -> Array<T> where T : Decodable {
         let decoder = RSDFactory.shared.createJSONDecoder(bundle: bundle)
+        let jsonData = try JSONSerialization.data(withJSONObject: self, options: [])
+        let decodable = try decoder.decode(type, from: jsonData)
+        return decodable
+    }
+    
+    /// Use this array to decode an array of objects of the given type.
+    public func rsd_decode<T>(_ type: Array<T>.Type, resourceInfo: RSDResourceInfo? = nil) throws -> Array<T> where T : Decodable {
+        let decoder = RSDFactory.shared.createJSONDecoder(resourceInfo: resourceInfo)
         let jsonData = try JSONSerialization.data(withJSONObject: self, options: [])
         let decodable = try decoder.decode(type, from: jsonData)
         return decodable

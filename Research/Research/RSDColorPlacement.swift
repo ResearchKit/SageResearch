@@ -1,8 +1,8 @@
 //
-//  RSDImageVendor.swift
+//  RSDColorPlacement.swift
 //  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,26 +31,17 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
+import Foundation
 
-/// `RSDImageVendor` is a protocol for defining an abstract method for fetching an image.
-public protocol RSDImageVendor {
+/// An enum for part of the view to which a given color style should be applied.
+public enum RSDColorPlacement : String, Codable, CaseIterable {
     
-    /// A unique identifier that can be used to validate that the image shown in a reusable view
-    /// is the same image as the one fetched.
-    var imageIdentifier: String { get }
+    /// The color applies to the header.
+    case header
     
-    /// The size of the image.
-    var size: CGSize { get }
+    /// The color applies to the body of the view.
+    case body
     
-    /// Fetch the image.
-    ///
-    /// - parameters:
-    ///     - size:        The size of the image to return.
-    ///     - callback:    The callback with the identifier and image, run on the main thread.
-    func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void))
+    /// The color applies to the footer of the view.
+    case footer
 }

@@ -34,53 +34,33 @@
 import Foundation
 
 /// `RSDDecodableBundleInfo` is a convenience protocol for getting a bundle from a bundle identifier.
-public protocol RSDDecodableBundleInfo : Decodable {
+public protocol RSDDecodableBundleInfo : Decodable, RSDResourceInfo {
     
     /// The bundle identifier. Decodable identifier that can be used to get the bundle.
     var bundleIdentifier : String? { get }
     
     /// A pointer to the bundle set by the factory (if applicable).
-    var factoryBundle: Bundle? { get set }
+    var factoryBundle: RSDResourceBundle? { get set }
+    
+    /// The package name (if applicable)
+    var packageName: String? { get set }
 }
 
-extension RSDDecodableBundleInfo {
+extension Bundle : RSDResourceBundle {
+}
+
+extension RSDResourceInfo {
     
     /// The bundle returned for the given `bundleIdentifier` or `factoryBundle` if `nil`.
     public var bundle: Bundle? {
         guard let identifier = bundleIdentifier
             else {
-                return self.factoryBundle
+                return self.factoryBundle as? Bundle
         }
         return Bundle(identifier: identifier)
     }
 }
 
-/// `RSDResourceConfig` is designed as an overridable resource configuration manager. The functions and
-/// properties are intended to be overridable in the app by implementing a custom extension of the function
-/// with the same name. This is designed to use app-wins namespace conflict resolution that is typical of
-/// obj-c architecture.
-open class RSDResourceConfig : NSObject {
-}
-
-extension RSDResourceConfig {
-    
-    /// Queries the resource config for the relative URL for a given resource object. Default return is
-    /// `nil`.
-    ///
-    /// - parameter resource: The resource object.
-    /// - returns: The relative URL to apply to the resource object.
-    @objc open class func relativeURL(for resource: Any?) -> URL? {
-        return nil
-    }
-    
-    /// Queries the resource config for the bundle for a given resource object. Default return is `nil`.
-    ///
-    /// - parameter resource: The resource object.
-    /// - returns: The bundle to use to get the resource object.
-    @objc open class func resourceBundle(for resource: Any?) -> Bundle? {
-        return nil
-    }
-}
 
 /// `RSDResourceTransformer` is a protocol for getting either embedded resources or online resources.
 ///
@@ -106,7 +86,7 @@ extension RSDResourceTransformer {
     /// Whether or not the resource is an online URL or from an embedded resource bundle.
     /// - returns: `true` if the resource is an online URL or `false` if it is an embedded resource.
     public func isOnlineResourceURL() -> Bool {
-        return resourceName.hasPrefix("http") || RSDResourceConfig.relativeURL(for: self) != nil
+        return resourceName.hasPrefix("http")
     }
     
     /// Get the full URL for a given resource no matter if it is a local or online resource.
@@ -137,42 +117,25 @@ extension RSDResourceTransformer {
     ///     - url: The returned URL for this resource.
     ///     - resourceType: The resource type.
     /// - throws: `RSDResourceTransformerError` if the file cannot be found.
-    public func resourceURL(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (url: URL, resourceType: RSDResourceType) {
+    public func resourceURL(ofType defaultExtension: String? = nil, bundle: RSDResourceBundle? = nil) throws -> (url: URL, resourceType: RSDResourceType) {
         
         // get the resource name and extension
-        var resource = resourceName
-        var ext = defaultExtension ?? RSDResourceType.json.rawValue
-        let split = resourceName.components(separatedBy: ".")
-        if split.count == 2 {
-            ext = split.last!
-            resource = split.first!
-        }
+        let splitValue = resourceName.splitFilename(defaultExtension: defaultExtension)
+        let resource = splitValue.resourceName
+        let ext = splitValue.fileExtension ?? RSDResourceType.json.rawValue
         let resourceType = RSDResourceType(rawValue: ext)
-        
-        // check if this is either a fully qualified resource and exit early if it is
-        if isOnlineResourceURL(), let url = URL(string: resourceName, relativeTo: RSDResourceConfig.relativeURL(for: self)) {
-            return (url, resourceType)
-        }
         
         // get the bundle
         let rBundle: Bundle
-        if bundle != nil {
-            rBundle = bundle!
+        if let inBundle = bundle as? Bundle {
+            rBundle = inBundle
         }
-        else if self.factoryBundle != nil {
-            rBundle = self.factoryBundle!
+        else if let factoryBundle = self.bundle {
+            rBundle = factoryBundle
         }
-        else if let relativeBundle = RSDResourceConfig.resourceBundle(for: self) {
-            rBundle = relativeBundle
-        }
-        else if let bundleIdentifier = bundleIdentifier {
-            if let bundle = Bundle(identifier: bundleIdentifier) {
-                rBundle = bundle
-            }
-            else {
-                let bundleIds = Bundle.allBundles.compactMap { $0.bundleIdentifier }
-                throw RSDResourceTransformerError.bundleNotFound("\(bundleIdentifier) Not Found. Available identifiers: \(bundleIds.joined(separator: ","))")
-            }
+        else if let bundleIdentifier = self.bundleIdentifier {
+            let bundleIds = Bundle.allBundles.compactMap { $0.bundleIdentifier }
+            throw RSDResourceTransformerError.bundleNotFound("\(bundleIdentifier) Not Found. Available identifiers: \(bundleIds.joined(separator: ","))")
         }
         else {
             rBundle = Bundle.main
@@ -180,10 +143,46 @@ extension RSDResourceTransformer {
 
         // get the url
         guard let url = rBundle.url(forResource: resource, withExtension: ext) else {
-            throw RSDResourceTransformerError.fileNotFound("\(resourceName) not found in \(String(describing: rBundle.bundleIdentifier))")
+            throw RSDResourceTransformerError.fileNotFound("\(resource) not found in \(String(describing: rBundle.bundleIdentifier))")
         }
         
         return (url, resourceType)
+    }
+    
+    
+    /// Get the `Data` for a given resource. This is used to get data from an embedded resource.
+    ///
+    /// - returns:
+    ///     - data: The returned Data for this resource.
+    ///     - resourceType: The resource type.
+    /// - throws: `RSDResourceTransformerError` if the file cannot be found.
+    public func resourceData() throws -> (data: Data, resourceType: RSDResourceType) {
+        return try _resourceData(ofType: nil, bundle: nil)
+    }
+    
+    /// Get the `Data` for a given resource. This is used to get data from an embedded resource.
+    ///
+    /// - parameters:
+    ///     - decoder: The decoder to use to get bundle or package information about a resource.
+    /// - returns:
+    ///     - data: The returned Data for this resource.
+    ///     - resourceType: The resource type.
+    /// - throws: `RSDResourceTransformerError` if the file cannot be found.
+    public func resourceData(using decoder: Decoder) throws -> (data: Data, resourceType: RSDResourceType) {
+        return try _resourceData(ofType: .json, bundle: decoder.bundle)
+    }
+    
+    /// Get the `Data` for a given resource. This is used to get data from an embedded resource.
+    ///
+    /// - parameters:
+    ///     - defaultExtension: The default extension for the URL. If `nil` then the `resourceName` will be inspected
+    ///                         for a file extension. If that is `nil` then "json" will be assumed.
+    /// - returns:
+    ///     - data: The returned Data for this resource.
+    ///     - resourceType: The resource type.
+    /// - throws: `RSDResourceTransformerError` if the file cannot be found.
+    public func resourceData(ofType defaultExtension: RSDResourceType) throws -> (data: Data, resourceType: RSDResourceType) {
+        return try _resourceData(ofType: defaultExtension, bundle: nil)
     }
     
     /// Get the `Data` for a given resource. This is used to get data from an embedded resource.
@@ -196,10 +195,10 @@ extension RSDResourceTransformer {
     ///     - data: The returned Data for this resource.
     ///     - resourceType: The resource type.
     /// - throws: `RSDResourceTransformerError` if the file cannot be found.
-    public func resourceData(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (data: Data, resourceType: RSDResourceType) {
+    private func _resourceData(ofType defaultExtension: RSDResourceType?, bundle: RSDResourceBundle?) throws -> (data: Data, resourceType: RSDResourceType) {
         
         // get the url
-        let (url, resourceType) = try resourceURL(ofType: defaultExtension, bundle: bundle)
+        let (url, resourceType) = try resourceURL(ofType: defaultExtension?.rawValue, bundle: bundle)
         
         // get the data
         let data = try Data(contentsOf: url)

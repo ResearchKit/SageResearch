@@ -75,8 +75,11 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
         
         // get the step from the resource.
         let resourceTransformer = try container.decode(RSDResourceTransformerObject.self, forKey: .resourceTransformer)
-        let (data, resourceType) = try resourceTransformer.resourceData(ofType: nil, bundle: decoder.bundle)
-        let resourceDecoder = try decoder.factory.createDecoder(for: resourceType, taskIdentifier: decoder.taskIdentifier, schemaInfo: decoder.schemaInfo, bundle: decoder.bundle)
+        let (data, resourceType) = try resourceTransformer.resourceData(using: decoder)
+        let resourceDecoder = try decoder.factory.createDecoder(for: resourceType,
+                                                                taskIdentifier: decoder.taskIdentifier,
+                                                                schemaInfo: decoder.schemaInfo,
+                                                                resourceInfo: FactoryResourceInfo(from: decoder))
         let stepDecoder = try resourceDecoder.decode(_StepDecoder.self, from: data)
         
         // copy to transformer

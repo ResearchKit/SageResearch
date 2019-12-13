@@ -33,7 +33,7 @@
 
 import Foundation
 
-public struct RSDTaskInfoObject : RSDTaskInfo, RSDEmbeddedIconVendor, Decodable {
+public struct RSDTaskInfoObject : RSDTaskInfo, Decodable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, title, subtitle, detail, icon, _estimatedMinutes = "estimatedMinutes", _embeddedResource = "taskTransformer", _schemaInfoObject = "schemaInfo"
@@ -61,7 +61,12 @@ public struct RSDTaskInfoObject : RSDTaskInfo, RSDEmbeddedIconVendor, Decodable 
     private var _estimatedMinutes: Int?
     
     /// The icon used to display this task reference in a list of tasks.
-    public var icon: RSDImageWrapper?
+    public var icon: RSDResourceImageDataObject?
+    
+    /// The icon associated with this task info.
+    public var imageData: RSDImageData? {
+        return self.icon
+    }
 
     /// Optional schema info to pass with the task info for this task.
     public var schemaInfo: RSDSchemaInfo? {
@@ -143,7 +148,7 @@ extension RSDTaskInfoObject : Equatable {
             lhs.subtitle == rhs.subtitle &&
             lhs.detail == rhs.detail &&
             lhs.estimatedMinutes == rhs.estimatedMinutes &&
-            lhs.icon == rhs.icon
+            lhs.icon?.imageIdentifier == rhs.icon?.imageIdentifier
     }
 }
 

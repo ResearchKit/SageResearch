@@ -32,96 +32,59 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
 
-/// An extension of `RSDImageWrapper` that implements the `RSDFetchableImageThemeElement` protocol
-/// with `nil` values for the properties of that protocol. This allows for coding an image on an
-/// `RSDThemedUIStep` using just the image name as oppose to the more complex schema that supports
-/// additional information about the presentation of the image.
-extension RSDImageWrapper : RSDFetchableImageThemeElement, RSDAssetImageThemeElement {
-
-    /// The unique identifier for the image.
-    public var imageIdentifier: String {
-        return self.imageName
+public struct RSDFetchableImageThemeElementObject : RSDThemeResourceImageData, Codable {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case imageName, bundleIdentifier, packageName, imageSize = "size", placementType, rawFileExtension = "fileExtension"
     }
     
-    /// The placement type for the image. This is `nil` for an `RSDImageWrapper`.
-    public var placementType: RSDImagePlacementType? {
-        return nil
-    }
-}
-
-/// `RSDFetchableImageThemeElementObject` is a `Codable` concrete implementation of `RSDFetchableImageThemeElement`.
-public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElement, RSDDecodableBundleInfo, Codable {
+    /// The name of the resource.
+    public let imageName: String
     
-    private enum CodingKeys: String, CodingKey, CaseIterable {
-        case imageName, bundleIdentifier, placementType, _size = "size"
-    }
-
-    /// The name of the image.
-    public let imageName: RSDFileWrapper
+    /// For a raw resource file, this is the file extension for getting at the resource.
+    public let rawFileExtension: String?
     
-    /// The bundle identifier for the image resource bundle.
+    /// Pointer to the factory bundle.
+    public var factoryBundle: RSDResourceBundle?
+    
+    /// The identifier of the bundle within which the resource is embedded on Apple platforms.
     public let bundleIdentifier: String?
     
-    /// The preferred placement of the image. Default placement is `iconBefore` if undefined.
+    /// The package within which the resource is embedded on Android platforms.
+    public var packageName: String?
+    
+    /// The size of the image (if known).
+    public let imageSize: RSDSize?
+    
+    /// The preferred placement of the image. Included for conformance to image theme elements.
     public let placementType: RSDImagePlacementType?
     
-    /// The image size. If undefined then default sizing will be used.
-    public var size: CGSize {
-        return _size?.size ?? .zero
+    public var resourceName: String {
+        return imageName
     }
-    private let _size: RSDSizeWrapper?
     
-    /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
-    
-    /// The unique identifier for the image
-    public var imageIdentifier: String {
-        guard let bundleIdentifier = bundleIdentifier else { return imageName.rawValue }
-        return "\(bundleIdentifier).\(imageName.rawValue)"
-    }
-
-    /// Default initializer.
-    ///
-    /// - parameters:
-    ///     - imageName: The name of the image.
-    ///     - bundleIdentifier: The bundle identifier for the image resource bundle. Default = `nil`.
-    ///     - placementType: The preferred placement of the image. Default = `nil`.
-    ///     - size: The image size. Default = `nil`.
-    public init(imageName: String, bundleIdentifier: String? = nil, placementType: RSDImagePlacementType? = nil, size: CGSize? = nil) {
-        self.imageName = RSDFileWrapper(rawValue: imageName)
+    public init(imageName: String, bundle: RSDResourceBundle? = nil, packageName: String? = nil, bundleIdentifier: String? = nil) {
+        let splitFile = imageName.splitFilename()
+        self.imageName = splitFile.resourceName
+        self.rawFileExtension = splitFile.fileExtension
+        self.factoryBundle = bundle
         self.bundleIdentifier = bundleIdentifier
-        self._size = RSDSizeWrapper(size)
-        self.placementType = placementType
-    }
-    
-    /// A method for fetching the image.
-    ///
-    /// - parameters:
-    ///     - size:        The size of the image to return.
-    ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void)) {
-        let fetchedImage = imageName.fetchImages(from: self.bundle, ofSize: size).first
-        DispatchQueue.main.async {
-            callback(self.imageIdentifier, fetchedImage)
-        }
+        self.packageName = packageName
+        self.imageSize = nil
+        self.placementType = nil
     }
 }
 
+
 /// `RSDAnimatedImageThemeElementObject` is a `Codable` concrete implementation of `RSDAnimatedImageThemeElement`.
-public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement, RSDDecodableBundleInfo, Codable {
-    
+public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement, RSDThemeResourceImageData, Codable {
+
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case imageNames, animationDuration, animationRepeatCount, bundleIdentifier, placementType, _size = "size"
+        case imageNames, animationDuration, animationRepeatCount, bundleIdentifier, packageName, placementType, imageSize = "size", rawFileExtension = "fileExtension"
     }
     
     /// The list of image names for the images to include in this animation.
-    public let imageNames: [RSDFileWrapper]
+    public let imageNames: [String]
     
     /// The animation duration for the image animation.
     public let animationDuration: TimeInterval
@@ -136,19 +99,26 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     public let bundleIdentifier: String?
     
     /// The image size.
-    public var size: CGSize {
-        return _size?.size ?? .zero
-    }
-    private let _size: RSDSizeWrapper?
-    
-    /// The unique identifier for the image
-    public var imageIdentifier: String {
-        guard let bundleIdentifier = bundleIdentifier else { return imageNames.first!.rawValue }
-        return "\(bundleIdentifier).\(imageNames.first!.rawValue)"
-    }
+    public let imageSize: RSDSize?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
+    public var factoryBundle: RSDResourceBundle? = nil
+    
+    /// The Android package for the resource.
+    public var packageName: String?
+    
+    /// The raw file
+    public let rawFileExtension: String?
+    
+    /// The animation images for this theme element.
+    public var animationImageNames: [String]? {
+        return self.imageNames
+    }
+    
+    /// The image name is the name of the first image in the series.
+    public var imageName: String {
+        return self.imageNames.first ?? "null"
+    }
 
     /// Default initializer.
     ///
@@ -158,79 +128,14 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     ///     - animationDuration: The animation duration.
     ///     - placementType: The preferred placement of the image. Default = `nil`.
     ///     - size: The image size. Default = `nil`.
-    public init(imageNames: [String], animationDuration: TimeInterval, bundleIdentifier: String? = nil, placementType: RSDImagePlacementType? = nil, size: CGSize? = nil, animationRepeatCount: Int = 0) {
-        self.imageNames = imageNames.map { RSDFileWrapper(rawValue: $0) }
+    public init(imageNames: [String], animationDuration: TimeInterval, bundleIdentifier: String? = nil, placementType: RSDImagePlacementType? = nil, size: RSDSize? = nil, animationRepeatCount: Int = 0) {
+        self.imageNames = imageNames
         self.bundleIdentifier = bundleIdentifier
         self.animationDuration = animationDuration
-        self._size = RSDSizeWrapper(size)
+        self.imageSize = size
         self.placementType = placementType
         self.animationRepeatCount = animationRepeatCount
-    }
-    
-    #if os(iOS) || os(tvOS)
-    
-    /// **Available** for iOS and tvOS.
-    ///
-    /// The animated images to display.
-    /// - parameter traitCollection: The trait collection.
-    /// - returns: The images for this step.
-    public func images(compatibleWith traitCollection: UITraitCollection?) -> [RSDImage] {
-        // TODO: syoung 08/01/2019 Look into using the trait collection to return bigger/smaller image.
-        return images()
-    }
-    #endif
-    
-    /// The animated images to display.
-    /// - returns: The images for this step.
-    public func images() -> [RSDImage] {
-        return imageNames.map ({
-            $0.fetchImages(from: self.bundle, ofSize: self.size)
-        }).flatMap { $0 }
-    }
-    
-    /// A method for fetching the image.
-    ///
-    /// - parameters:
-    ///     - size:        The size of the image to return.
-    ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchImage(for size: CGSize, callback: @escaping ((RSDImage?) -> Void)) {
-        let fetchedImage = self.images().first
-        DispatchQueue.main.async {
-            callback(fetchedImage)
-        }
-    }
-}
-
-/// A `Codable` wrapper for `CGSize`.
-struct RSDSizeWrapper : Codable {
-    let width: CGFloat
-    let height: CGFloat
-    
-    init?(_ size: CGSize?) {
-        guard let size = size else { return nil }
-        width = size.width
-        height = size.height
-    }
-    
-    var size: CGSize {
-        return CGSize(width: width, height: height)
-    }
-}
-
-extension RSDFetchableImageThemeElementObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func imageThemeExamples() -> [RSDFetchableImageThemeElementObject] {
-        let imageA = RSDFetchableImageThemeElementObject(imageName: "blueDog")
-        let imageB = RSDFetchableImageThemeElementObject(imageName: "redCat", bundleIdentifier: "org.example.SharedResources", placementType: .topBackground, size: CGSize(width: 100, height: 120))
-        return [imageA, imageB]
-    }
-    
-    static func examples() -> [Encodable] {
-        return imageThemeExamples()
+        self.rawFileExtension = nil
     }
 }
 
@@ -242,7 +147,7 @@ extension RSDAnimatedImageThemeElementObject : RSDDocumentableCodableObject {
     
     static func imageThemeExamples() -> [RSDAnimatedImageThemeElementObject] {
         let imageA = RSDAnimatedImageThemeElementObject(imageNames: ["blueDog1", "blueDog2", "blueDog3"], animationDuration: 2)
-        let imageB = RSDAnimatedImageThemeElementObject(imageNames: ["redCat1", "redCat2", "redCat3"], animationDuration: 2, bundleIdentifier: "org.example.SharedResources", placementType: .topBackground, size: CGSize(width: 100, height: 120))
+        let imageB = RSDAnimatedImageThemeElementObject(imageNames: ["redCat1", "redCat2", "redCat3"], animationDuration: 2, bundleIdentifier: "org.example.SharedResources", placementType: .topBackground, size: RSDSize(width: 100, height: 120))
         return [imageA, imageB]
     }
     

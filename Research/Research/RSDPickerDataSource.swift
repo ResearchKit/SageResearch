@@ -31,11 +31,6 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
 
 /// `RSDPickerDataSource` includes information that can be used to build a picker UI element.
 public protocol RSDPickerDataSource {
@@ -121,14 +116,6 @@ public protocol RSDChoicePickerDataSource : RSDPickerDataSource {
     func selectedRows(from selectedAnswer: Any?) -> [Int]?
 }
 
-public protocol RSDImageChoicePickerDataSource : RSDPickerDataSource {
-    
-    /// Returns the size of the images for the given component.
-    /// - parameter component: The component (or column) of the picker.
-    /// - returns: The size of the images in that component.
-    func imageSize(forComponent component: Int) -> CGSize
-}
-
 /// A picker data source for picking a number.
 public protocol RSDNumberPickerDataSource : RSDPickerDataSource {
     
@@ -171,7 +158,7 @@ public protocol RSDChoice {
     var isExclusive: Bool { get }
     
     /// An icon image that can be used for displaying the choice.
-    var imageVendor: RSDImageVendor? { get }
+    var imageData: RSDImageData? { get }
     
     /// Is the choice value equal to the given result?
     /// - parameter result: A result to test for equality.
@@ -218,7 +205,7 @@ extension RSDChoiceOptions {
     /// Convenience property for whether or not the choice input field has associated images.
     public var hasImages: Bool {
         for choice in choices {
-            if choice.imageVendor != nil {
+            if choice.imageData != nil {
                 return true
             }
         }

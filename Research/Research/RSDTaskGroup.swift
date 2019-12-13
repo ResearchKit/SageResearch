@@ -48,7 +48,7 @@ public protocol RSDTaskGroup {
     var detail: String? { get }
     
     /// An icon image that can be used for displaying the choice.
-    var imageVendor: RSDImageVendor? { get }
+    var imageData: RSDImageData? { get }
     
     /// A list of the task references included in this group.
     var tasks: [RSDTaskInfo] { get }

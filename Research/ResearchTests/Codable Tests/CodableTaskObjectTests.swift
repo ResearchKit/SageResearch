@@ -39,9 +39,6 @@ class CodableTaskObjectTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        // setup to have an image wrapper delegate set so the image wrapper won't crash
-        RSDImageWrapper.sharedDelegate = TestImageWrapperDelegate()
-        
         // Use a statically defined timezone.
         rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
@@ -104,7 +101,7 @@ class CodableTaskObjectTests: XCTestCase {
             XCTAssertEqual(object.title, "Hello World!")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.estimatedMinutes, 5)
-            XCTAssertEqual((object.imageVendor as? RSDImageWrapper)?.imageName, "foobar")
+            XCTAssertEqual(object.imageData?.imageIdentifier, "foobar")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -146,7 +143,7 @@ class CodableTaskObjectTests: XCTestCase {
             XCTAssertEqual(object.identifier, "foobar.group")
             XCTAssertEqual(object.title, "Foo and Bar")
             XCTAssertEqual(object.detail, "This is a test of the task group.")
-            XCTAssertEqual(object.icon?.imageName, "foobarGroup")
+            XCTAssertEqual(object.imageData?.imageIdentifier, "foobarGroup")
             XCTAssertEqual(object.tasks.count, 2, "\(object.tasks)")
             
             guard let firstTask = object.tasks.first as? RSDTaskInfoObject else {
@@ -158,7 +155,7 @@ class CodableTaskObjectTests: XCTestCase {
             XCTAssertEqual(firstTask.title, "Hello World!")
             XCTAssertEqual(firstTask.detail, "This is a test.")
             XCTAssertEqual(firstTask.estimatedMinutes, 5)
-            XCTAssertEqual(firstTask.icon?.imageName, "foobar")
+            XCTAssertEqual(firstTask.imageData?.imageIdentifier, "foobar")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")

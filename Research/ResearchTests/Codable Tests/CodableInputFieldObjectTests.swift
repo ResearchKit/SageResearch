@@ -39,9 +39,6 @@ class CodableInputFieldObjectTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        // setup to have an image wrapper delegate set so the image wrapper won't crash
-        RSDImageWrapper.sharedDelegate = TestImageWrapperDelegate()
-        
         // Use a statically defined timezone.
         rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
@@ -70,7 +67,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.answerValue as? String, "foo")
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "A detail about the object")
-            XCTAssertEqual(object.icon?.imageName, "fooImage")
+            XCTAssertEqual(object.imageData?.imageIdentifier, "fooImage")
             XCTAssertTrue(object.isExclusive)
             
             let jsonData = try encoder.encode(object)
@@ -110,7 +107,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.answerValue as? Int, 3)
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "A detail about the object")
-            XCTAssertEqual(object.icon?.imageName, "fooImage")
+            XCTAssertEqual(object.imageData?.imageIdentifier, "fooImage")
             XCTAssertTrue(object.isExclusive)
             
             let jsonData = try encoder.encode(object)

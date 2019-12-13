@@ -93,7 +93,7 @@ extension RSDStandardPermissionType : RSDDocumentableStringEnum {
 
 /// A Codable struct that can be used to store messaging information specific to the use-case specific to
 /// the associated activity, task, or step.
-public final class RSDStandardPermission : NSObject, RSDPermission, Codable {
+public final class RSDStandardPermission : RSDPermission, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case permissionType

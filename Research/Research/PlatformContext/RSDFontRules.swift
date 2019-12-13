@@ -1,6 +1,6 @@
 //
 //  RSDFontRules.swift
-//  Research
+//  ResearchPlatformContext
 //
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //

@@ -1,6 +1,6 @@
 //
 //  RSDColor.swift
-//  Research
+//  ResearchPlatformContext
 //
 //  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
@@ -30,7 +30,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-
 
 #if os(macOS)
 import AppKit

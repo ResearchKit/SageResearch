@@ -31,41 +31,17 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
-
-/// `RSDEmbeddedResourceUIAction` is a convenience protocol for returning an image using an encodable strings for the
-/// name and bundle identifier.
+/// `RSDEmbeddedResourceUIAction` is a convenience protocol for returning an image using an
+/// encodable strings for the name and bundle identifier.
 public protocol RSDEmbeddedResourceUIAction: RSDUIAction, RSDDecodableBundleInfo {
-    
-    /// The name of the icon to display on the button associated with this action.
-    var iconName: String? { get }
-}
-
-extension RSDEmbeddedResourceUIAction {
-    
-    /// The icon to display on the button associated with this action.
-    public var buttonIcon: RSDImage? {
-        guard let name = iconName else { return nil }
-        #if os(watchOS)
-            return RSDImage(named: name)
-        #elseif os(macOS)
-            return RSDImage(named: name)
-        #else
-            return RSDImage(named: name, in: bundle, compatibleWith: nil)
-        #endif
-    }
 }
 
 /// `RSDUIActionObject` is a concrete implementation of `RSDUIAction` that can be used to customize the
 /// title and image displayed for a given action of the UI.
-public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
+public struct RSDUIActionObject : RSDEmbeddedResourceUIAction {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case buttonTitle, iconName, bundleIdentifier
+        case buttonTitle, iconName, bundleIdentifier, packageName
     }
     
     /// The title to display on the button associated with this action.
@@ -78,7 +54,10 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
+    public var factoryBundle: RSDResourceBundle? = nil
+    
+    /// The Android package for the resource.
+    public var packageName: String?
     
     /// Default initializer for a button with text.
     /// - parameter buttonTitle: The title to display on the button associated with this action.
@@ -101,7 +80,7 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
     /// - parameters:
     ///     - iconName: The name of the image to display on the button.
     ///     - bundle: The resource bundle that contains the image.
-    public init(iconName: String, bundle: Bundle?) {
+    public init(iconName: String, bundle: RSDResourceBundle?) {
         self.buttonTitle = nil
         self.iconName = iconName
         self.bundleIdentifier = bundle?.bundleIdentifier
@@ -113,7 +92,7 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
 public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavigationUIAction, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case skipToIdentifier, buttonTitle, iconName, bundleIdentifier
+        case skipToIdentifier, buttonTitle, iconName, bundleIdentifier, packageName
     }
     
     /// The identifier for the step to skip to if the action is called.
@@ -129,7 +108,10 @@ public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavi
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
+    public var factoryBundle: RSDResourceBundle? = nil
+    
+    /// The Android package for the resource.
+    public var packageName: String?
     
     /// Default initializer for a button with text.
     /// - parameters:
@@ -146,7 +128,7 @@ public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavi
 public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDReminderUIAction, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case reminderIdentifier, _buttonTitle = "buttonTitle", iconName, bundleIdentifier
+        case reminderIdentifier, _buttonTitle = "buttonTitle", iconName, bundleIdentifier, packageName
     }
     
     /// The identifier for a `UNNotificationRequest`.
@@ -165,7 +147,10 @@ public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDRemind
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
+    public var factoryBundle: RSDResourceBundle? = nil
+    
+    /// The Android package for the resource.
+    public var packageName: String?
     
     /// Default initializer for a button with text.
     /// - parameters:
@@ -182,7 +167,7 @@ public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDRemind
 public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebViewUIAction, Codable {
 
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case url, usesBackButton, title, closeButtonTitle, buttonTitle, iconName, bundleIdentifier
+        case url, usesBackButton, title, closeButtonTitle, buttonTitle, iconName, bundleIdentifier, packageName
     }
     
     /// The url to load in the webview. If this is not a fully qualified url string, then it is assumed to
@@ -212,7 +197,10 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
+    public var factoryBundle: RSDResourceBundle? = nil
+    
+    /// The Android package for the resource.
+    public var packageName: String?
     
     /// The `url` is the resource name.
     public var resourceName: String {
@@ -253,7 +241,7 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
 public struct RSDVideoViewUIActionObject : RSDEmbeddedResourceUIAction, RSDVideoViewUIAction, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case url, buttonTitle, iconName, bundleIdentifier
+        case url, buttonTitle, iconName, bundleIdentifier, packageName
     }
     
     /// The url to load in the webview. If this is not a fully qualified url string, then it is assumed to
@@ -273,7 +261,10 @@ public struct RSDVideoViewUIActionObject : RSDEmbeddedResourceUIAction, RSDVideo
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
+    public var factoryBundle: RSDResourceBundle? = nil
+    
+    /// The Android package for the resource.
+    public var packageName: String?
     
     /// The `url` is the resource name.
     public var resourceName: String {

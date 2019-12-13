@@ -138,7 +138,7 @@ public final class TestTaskInfo : RSDTaskInfo, RSDTaskTransformer {
     
     public var estimatedMinutes: Int = 2
     
-    public var imageVendor: RSDImageVendor?
+    public var imageData: RSDImageData?
     
     public var schemaInfo: RSDSchemaInfo? {
         return self.task.schemaInfo
@@ -152,7 +152,7 @@ public final class TestTaskInfo : RSDTaskInfo, RSDTaskTransformer {
         copy.subtitle = self.subtitle
         copy.detail = self.detail
         copy.estimatedMinutes = self.estimatedMinutes
-        copy.imageVendor = self.imageVendor
+        copy.imageData = self.imageData
         return copy
     }
     

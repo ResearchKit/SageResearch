@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import Research
+@testable import ResearchPlatformContext
 
 class ColorPaletteTests: XCTestCase {
     

@@ -39,21 +39,31 @@ import UIKit
 
 /// `RSDEmbeddedIconVendor` is a convenience protocol for fetching an codable image using an optional
 /// `RSDImageWrapper`. This protocol implements an extension method to fetch the icon.
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 public protocol RSDEmbeddedIconVendor {
     
     /// The optional `RSDImageWrapper` with the pointer to the image.
     var icon: RSDImageWrapper? { get }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDEmbeddedIconVendor {
     public var imageVendor: RSDImageVendor? {
         return icon
     }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
+extension RSDImageWrapper : RSDImageVendor {
+    public var imageIdentifier: String {
+        return imageName
+    }
+}
+
 /// The `RSDImageWrapperDelegate` is a singleton delegate that can be used to customize the rules for fetching
 /// an image using the `RSDImageWrapper`. If defined and attached to the `RSDImageWrapper` using the static property
 /// `sharedDelegate` then the image wrapper will ask the delegate for the appropriate image.
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 public protocol RSDImageWrapperDelegate {
     
     /// Get an image of the appropriate size.
@@ -68,6 +78,7 @@ public protocol RSDImageWrapperDelegate {
 /// `RSDImageWrapper` vends an image. It does not handle image caching. If your app using a custom image caching,
 /// then you will need to use the shared delegate to implement this. The image wrapper is designed to allow coding of
 /// images using an `imageName` property as a key for accessing the image.
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 public struct RSDImageWrapper {
     
     /// The name of the image to be fetched.
@@ -122,7 +133,7 @@ public struct RSDImageWrapper {
     }
     
     static func imageFromBundle(_ imageName: String, bundle: Bundle?) -> RSDImage? {
-        guard let bundle = bundle ?? RSDResourceConfig.resourceBundle(for: imageName)
+        guard let bundle = bundle
             else {
                 return nil
         }
@@ -133,37 +144,6 @@ public struct RSDImageWrapper {
         #else
             return nil
         #endif
-    }
-    
-    /// Fetch the image.
-    ///
-    /// - parameters:
-    ///     - size:        The size of the image to return.
-    ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void)) {
-        if let delegate = RSDImageWrapper.sharedDelegate {
-            delegate.fetchImage(for: self, callback: callback)
-        }
-        else if let image =  embeddedImage() {
-            DispatchQueue.main.async {
-                callback(self.imageName, image)
-            }
-        }
-        else if let url = URL(string: self.imageName) {
-            let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
-            let task = URLSession.shared.dataTask(with: request) {(data, _, _) in
-                    let image: RSDImage? = (data != nil) ? RSDImage(data: data!) : nil
-                    DispatchQueue.main.async {
-                        callback(self.imageName, image)
-                    }
-            }
-            task.resume()
-        }
-        else {
-            DispatchQueue.main.async {
-                callback(self.imageName, nil)
-            }
-        }
     }
     
     public func embeddedImage() -> RSDImage? {
@@ -177,6 +157,7 @@ public struct RSDImageWrapper {
     }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDImageWrapper : RawRepresentable {
     public typealias RawValue = String
     
@@ -197,6 +178,7 @@ extension RSDImageWrapper : RawRepresentable {
     }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDImageWrapper : Equatable {
     public static func ==(lhs: RSDImageWrapper, rhs: RSDImageWrapper) -> Bool {
         return lhs.rawValue == rhs.rawValue
@@ -209,6 +191,7 @@ extension RSDImageWrapper : Equatable {
     }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDImageWrapper : ExpressibleByStringLiteral {    
     /// Required initializer for conformance to `ExpressibleByStringLiteral`.
     /// - parameter stringLiteral: The `imageName` for this image wrapper.
@@ -218,6 +201,7 @@ extension RSDImageWrapper : ExpressibleByStringLiteral {
     }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDImageWrapper : Decodable {
     
     /// Required initializer for conformance to `Decodable`.
@@ -227,17 +211,13 @@ extension RSDImageWrapper : Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let imageName = try container.decode(String.self)
-        self.size = try RSDImageWrapper.validate(imageName: imageName, bundle: decoder.bundle)
+        let bundle = decoder.bundle as? Bundle
+        self.size = try RSDImageWrapper.validate(imageName: imageName, bundle: bundle)
         self.imageName = imageName
-        self.bundle = decoder.bundle
+        self.bundle = bundle
     }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDImageWrapper : Encodable {
-}
-
-extension RSDImageWrapper : RSDDocumentableStringLiteral {
-    static func examples() -> [String] {
-        return ["happyFaceIcon"]
-    }
 }

@@ -2,7 +2,7 @@
 //  RSDTaskController.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -60,7 +60,7 @@ public enum RSDTaskFinishReason : Int {
 /// `RSDTaskControllerDelegate` is responsible for processing the results of the task, providing some input into
 /// how the controller behaves, and providing additional content as needed. It's primary purpose is to handle
 /// processing the results of running the task.
-public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
+public protocol RSDTaskControllerDelegate : class {
     
     /// Tells the delegate that the task has finished.
     ///
@@ -96,7 +96,7 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
 ///
 /// To start a task, create an instance of a view controller that conforms to this protocol
 /// and set the `task`, `taskInfo`, or `taskViewModel`.
-public protocol RSDTaskController : class, NSObjectProtocol {
+public protocol RSDTaskController : class {
     
     /// A path object used to track the current state of a running task.
     var taskViewModel: RSDTaskViewModel! { get set }

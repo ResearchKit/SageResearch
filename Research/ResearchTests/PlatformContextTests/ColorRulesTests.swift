@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import Research
+@testable import ResearchPlatformContext
 
 
 // - note: syoung 04/12/2019 The purpose of the tests included in this file is to check that as the rules
@@ -63,13 +63,13 @@ class ColorRulesTests: XCTestCase {
         let palette: RSDColorPalette = .wireframe
         let colorRules = RSDColorRules(palette: palette)
         
-        XCTAssertEqual(colorRules.mapping(for: RSDColorRules.Style.white)?.normal, palette.grayScale.white)
-        XCTAssertEqual(colorRules.mapping(for: RSDColorRules.Style.primary)?.normal, palette.primary.normal)
-        XCTAssertEqual(colorRules.mapping(for: RSDColorRules.Style.secondary)?.normal, palette.secondary.normal)
-        XCTAssertEqual(colorRules.mapping(for: RSDColorRules.Style.accent)?.normal, palette.accent.normal)
-        XCTAssertEqual(colorRules.mapping(for: RSDColorRules.Style.successGreen)?.normal, palette.successGreen.normal)
-        XCTAssertEqual(colorRules.mapping(for: RSDColorRules.Style.errorRed)?.normal, palette.errorRed.normal)
-        XCTAssertNil(colorRules.mapping(for: RSDColorRules.Style.custom))
+        XCTAssertEqual(colorRules.mapping(for: RSDColorStyle.white)?.normal, palette.grayScale.white)
+        XCTAssertEqual(colorRules.mapping(for: RSDColorStyle.primary)?.normal, palette.primary.normal)
+        XCTAssertEqual(colorRules.mapping(for: RSDColorStyle.secondary)?.normal, palette.secondary.normal)
+        XCTAssertEqual(colorRules.mapping(for: RSDColorStyle.accent)?.normal, palette.accent.normal)
+        XCTAssertEqual(colorRules.mapping(for: RSDColorStyle.successGreen)?.normal, palette.successGreen.normal)
+        XCTAssertEqual(colorRules.mapping(for: RSDColorStyle.errorRed)?.normal, palette.errorRed.normal)
+        XCTAssertNil(colorRules.mapping(for: RSDColorStyle.custom))
     }
     
     func testMapping_ForColor() {
@@ -399,11 +399,11 @@ class ColorRulesTests: XCTestCase {
         let colorRules = RSDColorRules(palette: palette)
         
         let background1 = colorRules.tableCellBackground(on: palette.grayScale.white, isSelected: true)
-        XCTAssertEqual(background1, palette.primary.colorTiles.first!)
+        XCTAssertEqual(background1, palette.accent.colorTiles.first!)
         let background2 = colorRules.tableCellBackground(on: palette.grayScale.white, isSelected: false)
         XCTAssertEqual(background2, palette.grayScale.white)
         let background3 = colorRules.tableCellBackground(on: palette.primary.normal, isSelected: true)
-        XCTAssertEqual(background3, palette.primary.colorTiles.first!)
+        XCTAssertEqual(background3, palette.accent.colorTiles.first!)
         let background4 = colorRules.tableCellBackground(on: palette.primary.normal, isSelected: false)
         XCTAssertEqual(background4, palette.grayScale.white)
     }

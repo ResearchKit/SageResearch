@@ -1,6 +1,6 @@
 //
 //  RSDColorSwatch.swift
-//  Research
+//  ResearchPlatformContext
 //
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
@@ -287,7 +287,8 @@ public struct RSDColorTile : Codable, Equatable, Hashable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let colorName = try container.decode(String.self, forKey: .color)
-        if let color = RSDColor.rsd_color(named: colorName, in: decoder.bundle) {
+        let bundle = decoder.bundle as? Bundle
+        if let color = RSDColor.rsd_color(named: colorName, in: bundle) {
             self.color = color
         }
         else {

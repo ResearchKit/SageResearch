@@ -132,7 +132,10 @@ extension RSDAsyncActionStatus : CustomStringConvertible {
 public typealias RSDAsyncActionCompletionHandler = (RSDAsyncAction, RSDResult?, Error?) -> Void
 
 /// A controller for an async action configuration.
-public protocol RSDAsyncAction : class, NSObjectProtocol {
+public protocol RSDAsyncAction : class {
+    
+    /// `NSObject` equality.
+    func isEqual(_ object: Any?) -> Bool
     
     /// Delegate callback for handling action completed or failed.
     var delegate: RSDAsyncActionDelegate? { get set }

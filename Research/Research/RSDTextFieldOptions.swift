@@ -2,7 +2,7 @@
 //  RSDTextFieldOptions.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -114,4 +114,94 @@ extension RSDRegExMatchValidator {
         let count = try self.regExMatches(string)
         return count > 0
     }
+}
+
+
+/// `Codable` enum for the auto-capitalization type for an input text field.
+/// - keywords: ["none", "words", "sentences", "allCharacters"]
+public enum RSDTextAutocapitalizationType : String, Codable, RSDStringEnumSet {
+    case none, words, sentences, allCharacters
+    
+    public static var all: Set<RSDTextAutocapitalizationType> {
+        return Set(orderedSet)
+    }
+    
+    static var orderedSet: [RSDTextAutocapitalizationType] {
+        return [.none, .words, .sentences, .allCharacters]
+    }
+
+    public func rawIntValue() -> Int? {
+        return RSDTextAutocapitalizationType.orderedSet.firstIndex(of: self)
+    }
+}
+
+extension RSDTextAutocapitalizationType : RSDDocumentableStringEnum {
+}
+
+
+/// `Codable` enum for the auto-capitalization type for an input text field.
+/// - keywords: ["default", "no", yes"]
+public enum RSDTextAutocorrectionType : String, Codable, RSDStringEnumSet {
+    case `default`, no, yes
+    
+    public static var all: Set<RSDTextAutocorrectionType> {
+        return Set(orderedSet)
+    }
+    
+    static var orderedSet: [RSDTextAutocorrectionType] {
+        return [.default, .no, .yes]
+    }
+    
+    public func rawIntValue() -> Int? {
+        return RSDTextAutocorrectionType.orderedSet.firstIndex(of: self)
+    }
+}
+
+extension RSDTextAutocorrectionType : RSDDocumentableStringEnum {
+}
+
+
+/// `Codable` enum for the spell checking type for an input text field.
+/// - keywords: ["default", "no", yes"]
+public enum RSDTextSpellCheckingType  : String, Codable, RSDStringEnumSet {
+    case `default`, no, yes
+    
+    public static var all: Set<RSDTextSpellCheckingType> {
+        return Set(orderedSet)
+    }
+    
+    static var orderedSet: [RSDTextSpellCheckingType] {
+        return [.default, .no, .yes]
+    }
+
+    public func rawIntValue() -> Int? {
+        return RSDTextSpellCheckingType.orderedSet.firstIndex(of: self)
+    }
+}
+
+extension RSDTextSpellCheckingType : RSDDocumentableStringEnum {
+}
+
+
+/// `Codable` enum for the spell checking type for an input text field.
+/// - keywords: [ "default", "asciiCapable", "numbersAndPunctuation", "URL",
+///               "numberPad", "phonePad", "namePhonePad", "emailAddress",
+///               "decimalPad", "twitter", "webSearch", "asciiCapableNumberPad"]
+public enum RSDKeyboardType  : String, Codable, RSDStringEnumSet {
+    case `default`, asciiCapable, numbersAndPunctuation, URL, numberPad, phonePad, namePhonePad, emailAddress, decimalPad, twitter, webSearch, asciiCapableNumberPad
+    
+    public static var all: Set<RSDKeyboardType> {
+        return Set(orderedSet)
+    }
+
+    static var orderedSet: [RSDKeyboardType] {
+        return [.default, .asciiCapable, .numbersAndPunctuation, .URL, .numberPad, .phonePad, .namePhonePad, .emailAddress, .decimalPad, .twitter, .webSearch, .asciiCapableNumberPad]
+    }
+
+    public func rawIntValue() -> Int? {
+        return RSDKeyboardType.orderedSet.firstIndex(of: self)
+    }
+}
+
+extension RSDKeyboardType : RSDDocumentableStringEnum {
 }

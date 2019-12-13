@@ -36,7 +36,7 @@ import Foundation
 /// `RSDChoiceObject` is a concrete implementation of `RSDChoice` that can be used to
 /// track a multiple choice, single choice, or multiple component input field where each
 /// choice in the input field maps to a specific value.
-public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbeddedIconVendor, Codable {
+public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, Codable {
 
     public typealias Value = T
     
@@ -62,11 +62,11 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
 
     /// Whether or not this choice has an image associated with it that should be returned by the fetch icon method.
     public var hasIcon: Bool {
-        return icon != nil
+        return self.imageData != nil
     }
     
-    /// The optional `RSDImageWrapper` with the pointer to the image.
-    public let icon: RSDImageWrapper?
+    /// The optional `RSDImageData` with the pointer to the image.
+    public let imageData: RSDImageData?
     
     /// Expected answer for the rule. In this case, it is the `value` associated with this choice.
     public var matchingAnswer: Any? {
@@ -81,7 +81,6 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
     ///     - iconName: The name of the icon associated with this choice.
     ///     - detail: Additional detail text.
     ///     - isExclusive: For a multiple choice option, is this choice mutually exclusive?
-    /// - throws: `RSDValidationError.invalidImageName` if the `iconName` does not map to an image.
     public init(value: Value?, text: String? = nil, iconName: String? = nil, detail: String? = nil, isExclusive: Bool = false) throws {
         _value = value
         if text == nil, iconName == nil, value != nil, value! is String {
@@ -92,7 +91,7 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
             self.text = text
         }
         self.detail = detail
-        self.icon = (iconName != nil) ? try RSDImageWrapper(imageName: iconName!) : nil
+        self.imageData = (iconName != nil) ? RSDResourceImageDataObject(imageName: iconName!) : nil
         self.isExclusive = isExclusive
     }
     
@@ -112,7 +111,7 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
         var value: Value?
         var text: String?
         var detail: String?
-        var icon: RSDImageWrapper?
+        var icon: RSDResourceImageDataObject?
         var isExclusive = false
         
         do {
@@ -121,7 +120,7 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
             value = try container.decodeIfPresent(Value.self, forKey: .value)
             text = try container.decodeIfPresent(String.self, forKey: .text)
             detail = try container.decodeIfPresent(String.self, forKey: .detail)
-            icon = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .icon)
+            icon = try container.decodeIfPresent(RSDResourceImageDataObject.self, forKey: .icon)
             isExclusive = try container.decodeIfPresent(Bool.self, forKey: .isExclusive) ?? false
         }
         catch DecodingError.typeMismatch(let type, let context) {
@@ -141,7 +140,7 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
         _value = value
         self.text = text
         self.detail = detail
-        self.icon = icon
+        self.imageData = icon
         self.isExclusive = isExclusive
     }
     
@@ -153,7 +152,12 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
         try container.encodeIfPresent(_value, forKey: .value)
         try container.encodeIfPresent(text, forKey: .text)
         try container.encodeIfPresent(detail, forKey: .detail)
-        try container.encodeIfPresent(icon, forKey: .icon)
+        if let imageData = self.imageData as? RSDResourceImageDataObject {
+            try container.encode(imageData, forKey: .icon)
+        }
+        else {
+            try container.encodeIfPresent(self.imageData?.imageIdentifier, forKey: .detail)
+        }
         try container.encode(isExclusive, forKey: .isExclusive)
     }
 }

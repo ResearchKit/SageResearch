@@ -1,8 +1,8 @@
 //
-//  RSDStepController.swift
-//  Research
+//  RSDUIAction+Platform.swift
+//  ResearchPlatformContext
 //
-//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,32 +31,19 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
-
-/// `RSDStepController` handles default implementations for running a step in a task.
-public protocol RSDStepController : class {
-
-    /// A pointer to the step with the model information used to display and run the step. The
-    /// implementation of the task controller should set this pointer before displaying the step controller
-    /// by calling `setStep(_ step: RSDStep, with parent: RSDPathComponent?)`.
-    var stepViewModel: RSDStepViewPathComponent! { get set }
+extension RSDUIAction {
     
-    /// Callback from the task controller called on the current step controller when loading is finished
-    /// and the task is ready to continue.
-    func didFinishLoading()
-    
-    /// Navigates forward to the next step.
-    func goForward()
-    
-    /// Navigates backward to the previous step.
-    func goBack()
-}
-
-extension RSDStepController {
-    
-    /// Pointer back to the task controller that is displaying the step controller.
-    public var taskController: RSDTaskController? {
-        return self.stepViewModel?.parentTaskPath?.taskController
+    /// Convenience property for accessing the button icon.
+    public var buttonIcon: RSDImage? {
+        guard let imageName = self.iconName else { return nil }
+        return RSDDesignSystem.shared.imageRules.assetImage(named: imageName,
+                                                            using: self,
+                                                            compatibleWith: nil)
     }
 }
