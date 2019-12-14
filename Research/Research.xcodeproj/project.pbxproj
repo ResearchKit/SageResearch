@@ -2481,6 +2481,7 @@
 			isa = PBXGroup;
 			children = (
 				F814DD1E227509D3004579EF /* README.md */,
+				FF61FA3023A447F5006B36C5 /* MigrationNotes-v2.9.md */,
 				FF72B2331F6859D3004C6F15 /* Research */,
 				FF72B23E1F6859D3004C6F15 /* ResearchTests */,
 				F875575720807E2300235078 /* Research-UnitTest */,
