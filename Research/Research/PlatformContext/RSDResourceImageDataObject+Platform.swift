@@ -41,7 +41,7 @@ extension RSDResourceImageDataObject {
     ///         image. This error will only be thrown if there is **not** a `sharedDelegate`. In that case,
     ///         this initializer will check that the image is either included in the main bundle or in the
     ///         bundle returned by a call to `RSDResourceConfig.resourceBundle()`.
-    public init?(imageName: String, bundle: Bundle? = nil) throws {
+    public init?(imageName: String, bundle: Bundle?) throws {
         try validateImage(imageName: imageName, bundle: bundle)
         self.imageName = imageName
         self.factoryBundle = bundle

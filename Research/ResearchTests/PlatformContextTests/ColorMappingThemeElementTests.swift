@@ -33,7 +33,7 @@
 
 
 import XCTest
-@testable import ResearchPlatformContext
+@testable import Research
 
 class ColorMappingThemeElementTests: XCTestCase {
 

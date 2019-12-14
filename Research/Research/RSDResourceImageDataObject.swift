@@ -78,7 +78,7 @@ public struct RSDResourceImageDataObject : RSDThemeResourceImageData, Codable {
         return nil
     }
     
-    public init(imageName: String, bundle: RSDResourceBundle? = nil, packageName: String? = nil) {
+    public init(imageName: String, factoryBundle: RSDResourceBundle? = nil, packageName: String? = nil) {
         let splitFile = imageName.splitFilename()
         self.imageName = splitFile.resourceName
         self.rawFileExtension = splitFile.fileExtension
