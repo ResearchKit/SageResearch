@@ -42,6 +42,7 @@
 		FF5010BA22DE621E0035E83C /* topMarginBackground.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B722DE621E0035E83C /* topMarginBackground.pdf */; };
 		FF5010BB22DE621E0035E83C /* HoldPhone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B822DE621E0035E83C /* HoldPhone.pdf */; };
 		FF5010BC22DE621E0035E83C /* topBackground.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B922DE621E0035E83C /* topBackground.pdf */; };
+		FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */ = {isa = PBXBuildFile; fileRef = FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */; };
 		FF8FC21322F3A01800FA6DAF /* PhoneInPocket-1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21222F3A01800FA6DAF /* PhoneInPocket-1.pdf */; };
 		FF8FC21522F3A02300FA6DAF /* PhoneInPocket-2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21422F3A02300FA6DAF /* PhoneInPocket-2.pdf */; };
 		FF8FC21722F3A02D00FA6DAF /* PhoneInPocket-3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21622F3A02D00FA6DAF /* PhoneInPocket-3.pdf */; };
@@ -120,6 +121,7 @@
 		FF5010B722DE621E0035E83C /* topMarginBackground.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = topMarginBackground.pdf; sourceTree = "<group>"; };
 		FF5010B822DE621E0035E83C /* HoldPhone.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = HoldPhone.pdf; sourceTree = "<group>"; };
 		FF5010B922DE621E0035E83C /* topBackground.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = topBackground.pdf; sourceTree = "<group>"; };
+		FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Silver_Cat_01_Videvo.mov; sourceTree = "<group>"; };
 		FF8FC21222F3A01800FA6DAF /* PhoneInPocket-1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "PhoneInPocket-1.pdf"; sourceTree = "<group>"; };
 		FF8FC21422F3A02300FA6DAF /* PhoneInPocket-2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "PhoneInPocket-2.pdf"; sourceTree = "<group>"; };
 		FF8FC21622F3A02D00FA6DAF /* PhoneInPocket-3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "PhoneInPocket-3.pdf"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				F8D42A92209552EC00C6A4BC /* JSON Files */,
 				FF5010B022DE60BB0035E83C /* Image Files */,
 				F8D42A8B209552CB00C6A4BC /* Storyboards */,
+				FF61FA2F23A43BA9006B36C5 /* Videos */,
 				F8D42A592095518400C6A4BC /* Assets.xcassets */,
 				F8D42A5E2095518400C6A4BC /* Info.plist */,
 			);
@@ -264,6 +267,14 @@
 				FF8FC21622F3A02D00FA6DAF /* PhoneInPocket-3.pdf */,
 			);
 			path = "Image Files";
+			sourceTree = "<group>";
+		};
+		FF61FA2F23A43BA9006B36C5 /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */,
+			);
+			path = Videos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,6 +401,7 @@
 				F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */,
 				FF5010BC22DE621E0035E83C /* topBackground.pdf in Resources */,
 				F82A4AC322960DD400BEBE3C /* Recorder_Distance.json in Resources */,
+				FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */,
 				FF8FC21922F3A0AF00FA6DAF /* Theme_Image.json in Resources */,
 				F8D42AA0209552EC00C6A4BC /* FormStep_Picker.json in Resources */,
 				FF5010BA22DE621E0035E83C /* topMarginBackground.pdf in Resources */,

@@ -21,6 +21,11 @@
                                     "goForward": {
                                         "type": "default",
                                         "buttonTitle": "Get started"
+                                    },
+                                    "learnMore": {
+                                        "type": "videoView",
+                                        "buttonTitle": "Learn more",
+                                        "url": "Silver_Cat_01_Videvo.mov"
                                     }
                                 }
                             },

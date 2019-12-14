@@ -76,6 +76,10 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     var learnMoreHeightConstraint: NSLayoutConstraint!
     
+    /// The constraint between the icons and the bottom of the screen.
+    @IBOutlet
+    var iconBottomConstraint: NSLayoutConstraint!
+    
     /// Overrides viewWillAppear to add an info button, display the icons, to save
     /// the current Date to UserDefaults, and to use the saved date to decide whether
     /// or not to show the full task info or an abbreviated screen.
@@ -85,6 +89,10 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
         if let overviewStep = self.step as? RSDOverviewStep,
             let icons = overviewStep.icons, icons.count > 0 {
+            
+            self.iconViewLabel.isHidden = true
+            self.iconHolder.isHidden = true
+            self.iconBottomConstraint.isActive = true
         
             for idx in 0..<iconImages.count {
                 let iconInfo = (idx < icons.count) ? icons[idx] : nil
@@ -110,8 +118,9 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
             }
         }
         else {
-            self.iconViewLabel.removeFromSuperview()
-            self.iconHolder.removeFromSuperview()
+            self.iconViewLabel.isHidden = true
+            self.iconHolder.isHidden = true
+            self.iconBottomConstraint.isActive = false
         }
         
         // Hide learn more action if it is not provided by the step json
