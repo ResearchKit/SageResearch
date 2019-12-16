@@ -104,7 +104,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     
     /// The spacing vertically between icon collection view cells
     var verticalCellSpacing: CGFloat {
-        return 12
+        return 24
     }
     
     /// This function calculates the header height for the icon collection view title label.
