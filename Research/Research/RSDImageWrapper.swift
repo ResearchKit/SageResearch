@@ -37,6 +37,8 @@ import AppKit
 import UIKit
 #endif
 
+#if os(iOS) || os(tvOS)
+
 /// `RSDEmbeddedIconVendor` is a convenience protocol for fetching an codable image using an optional
 /// `RSDImageWrapper`. This protocol implements an extension method to fetch the icon.
 @available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
@@ -59,6 +61,7 @@ extension RSDImageWrapper : RSDImageVendor {
         return imageName
     }
 }
+#endif
 
 /// The `RSDImageWrapperDelegate` is a singleton delegate that can be used to customize the rules for fetching
 /// an image using the `RSDImageWrapper`. If defined and attached to the `RSDImageWrapper` using the static property

@@ -46,11 +46,12 @@ extension RSDColorMappingThemeElement {
     /// step view controller.
     /// - returns: The color or `nil` if undefined.
     public func backgroundColor(for placement: RSDColorPlacement, using colorRules: RSDColorRules) -> RSDColorTile? {
-        if let tile = colorRules.mapping(for: self.style(for: placement)) {
+        let style = self.backgroundColorStyle(for: placement)
+        if let tile = colorRules.mapping(for: style) {
             return tile.normal
         }
         else if let custom = self.customColorData,
-            let color = RSDColor.rsd_color(named: custom.color, in: self.bundle) {
+            let color = RSDColor.rsd_color(named: custom.colorIdentifier, in: self.bundle) {
             return RSDColorTile(color, usesLightStyle: custom.usesLightStyle)
         }
         else {

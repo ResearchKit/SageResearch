@@ -45,6 +45,12 @@ extension RSDImage : RSDImageData {
     public var imageIdentifier: String {
         return self.accessibilityIdentifier ?? "\(self.hash)"
     }
+    
+    #if os(macOS) || os(watchOS)
+    var accessibilityIdentifier: String? {
+        return nil
+    }
+    #endif
 }
 
 extension RSDImage : RSDImageThemeElement {

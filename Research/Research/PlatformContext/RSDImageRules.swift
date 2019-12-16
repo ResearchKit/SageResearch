@@ -77,6 +77,8 @@ open class RSDImageRules {
     /// system image on platforms where it is available.
     open var shouldPreferSystemImage: Bool = false
     
+    #if os(iOS) || os(tvOS)
+    
     /// Get the image path for a given image.
     open func imagePath(for resourceName: String,
                         in bundle: Bundle?,
@@ -114,7 +116,6 @@ open class RSDImageRules {
         return rBundle.path(forResource: imageName, ofType: ext)
     }
     
-    #if os(iOS) || os(tvOS)
     
     /// As of this writing, there is a bug in some versions of of iOS supported by this framework
     /// that causes larger images to crash the application b/c of low memory and improper release
@@ -169,8 +170,16 @@ open class RSDImageRules {
     
     /// Private getter that can be used to check for availability.
     private func _getSystemImage(_ resourceName:String, _ traitCollection: UITraitCollection?) -> RSDImage? {
-        guard #available(iOSApplicationExtension 13.0, *) else { return nil }
-        return RSDImage(systemName: resourceName, compatibleWith: traitCollection)
+        #if os(tvOS)
+        if #available(tvOSApplicationExtension 13.0, *) {
+            return RSDImage(systemName: resourceName, compatibleWith: traitCollection)
+        }
+        #elseif os(iOS)
+        if #available(iOSApplicationExtension 13.0, *) {
+            return RSDImage(systemName: resourceName, compatibleWith: traitCollection)
+        }
+        #endif
+        return nil
     }
     
     /// Private getter that can be used to add traits.

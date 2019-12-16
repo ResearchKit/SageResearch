@@ -42,8 +42,14 @@ extension RSDUIAction {
     /// Convenience property for accessing the button icon.
     public var buttonIcon: RSDImage? {
         guard let imageName = self.iconName else { return nil }
+        #if os(iOS) || os(tvOS)
         return RSDDesignSystem.shared.imageRules.assetImage(named: imageName,
                                                             using: self,
                                                             compatibleWith: nil)
+        #elseif os(macOS)
+        return RSDImage(named: .init(imageName))
+        #else
+        return RSDImage(named: imageName)
+        #endif
     }
 }

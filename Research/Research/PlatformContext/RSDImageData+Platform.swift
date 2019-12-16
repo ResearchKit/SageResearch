@@ -47,6 +47,8 @@ extension RSDSize {
 
 extension RSDImageData {
     
+    #if os(iOS) || os(tvOS)
+    
     /// Fetch the image.
     ///
     /// This method is used to work-around supporting both iOS and Android with the same model.
@@ -100,9 +102,13 @@ extension RSDImageData {
             }
         }
     }
+    
+    #endif
 }
 
 extension RSDResourceImageData {
+    
+    #if os(iOS) || os(tvOS)
     
     /// Get the embedded image for this resource info.
     ///
@@ -117,4 +123,6 @@ extension RSDResourceImageData {
                                                   using: self,
                                                   compatibleWith: traitCollection)
     }
+    
+    #endif
 }

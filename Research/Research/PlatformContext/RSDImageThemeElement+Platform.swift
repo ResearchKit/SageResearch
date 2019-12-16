@@ -39,6 +39,8 @@ import UIKit
 
 extension RSDImageThemeElement {
     
+    #if os(iOS) || os(tvOS)
+    
     /// Fetch the images represented by this theme element.
     ///
     /// This method is used to work-around supporting both iOS and Android with the same model.
@@ -98,4 +100,6 @@ extension RSDImageThemeElement {
         image?.accessibilityIdentifier = self.imageIdentifier
         image?.accessibilityLabel = Localization.localizedString(self.imageName)
     }
+    
+    #endif
 }
