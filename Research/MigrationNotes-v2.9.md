@@ -2,7 +2,7 @@
 
 
 ## Search and replace
-Use research and replace to update the following method signatures:
+Use search and replace to update the following method signatures:
 
 ### RSDAsyncAction
 
@@ -38,4 +38,3 @@ RSDDesignSystem.shared.colorRules.palette
 var imageVendor: RSDImageVendor?
 - Replace:
 var imageData: RSDImageData?
-
