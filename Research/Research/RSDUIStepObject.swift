@@ -196,7 +196,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     
     /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)`
     /// method. Swift does not nicely handle casting from `Self` to a class instance for non-final classes.
-    /// This is a work-around.
+    /// This is a work around.
     open func copyInto(_ copy: RSDUIStepObject) {
         copy.title = self.title
         copy.text = self.text

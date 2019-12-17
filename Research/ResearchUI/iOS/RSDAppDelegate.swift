@@ -133,7 +133,7 @@ open class RSDAppDelegate : UIResponder, RSDAppOrientationLock, RSDAlertPresente
 
 /// As of this writing, there is no simple way for an application to allow selectively locking
 /// the orientation of the app to portrait, while still allowing *some* view controllers to
-/// require landscape. This is intended as a work-around for that limitation. Using this feature
+/// require landscape. This is intended as a work around for that limitation. Using this feature
 /// requires the view controller that needs to change the orientation to set the
 /// `orientationLock` in `viewWillAppear` and then clear the lock on `viewDidAppear`.
 /// syoung 08/15/2019

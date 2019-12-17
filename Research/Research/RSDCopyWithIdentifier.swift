@@ -34,7 +34,7 @@
 import Foundation
 
 
-/// A light-weight protocol for copying objects with a new identifier.
+/// A lightweight protocol for copying objects with a new identifier.
 public protocol RSDCopyWithIdentifier {
     
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.

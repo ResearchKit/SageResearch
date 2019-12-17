@@ -51,7 +51,7 @@ extension RSDImageData {
     
     /// Fetch the image.
     ///
-    /// This method is used to work-around supporting both iOS and Android with the same model.
+    /// This method is used to work around supporting both iOS and Android with the same model.
     /// To do so, this extension checks the type of the image theme protocol and defines this
     /// method in an extension on that protocol rather than having the protocol define the method
     /// and each class (or struct) define the implementation.

@@ -134,7 +134,7 @@ public typealias RSDAsyncActionCompletionHandler = (RSDAsyncAction, RSDResult?, 
 /// A controller for an async action configuration.
 public protocol RSDAsyncAction : class {
     
-    /// `NSObject` equality.
+    /// Object equality.
     func isEqual(_ object: Any?) -> Bool
     
     /// Delegate callback for handling action completed or failed.

@@ -33,7 +33,7 @@
 
 import Foundation
 
-/// A color data object is a light-weight codable implementation for storing custom color data.
+/// A color data object is a lightweight codable implementation for storing custom color data.
 public struct RSDColorDataObject : Codable, RSDColorData {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case colorIdentifier = "color", usesLightStyle
@@ -60,7 +60,7 @@ public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement,
         case type, bundleIdentifier, packageName, placement, customColor
     }
 
-    /// The type for the class
+    /// The type for the class.
     public let type: RSDColorMappingThemeElementType
 
     /// The color placement mapping.
@@ -153,7 +153,7 @@ public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RS
         case type, bundleIdentifier, packageName, colorStyle, customColor
     }
     
-    /// The type for the class
+    /// The type for the class.
     public let type: RSDColorMappingThemeElementType
     
     /// The bundle identifier.

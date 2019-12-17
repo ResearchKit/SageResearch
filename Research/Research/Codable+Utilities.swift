@@ -76,7 +76,7 @@ extension Array {
 
 extension RSDFactoryEncoder {
     
-    /// Serialize a dictionary. This is a work-around for not being able to
+    /// Serialize a dictionary. This is a work around for not being able to
     /// directly encode a generic dictionary.
     func rsd_encode(_ value: Dictionary<String, Any>) throws -> Data {
         let dictionary = value.mapKeys { "\($0)" }
@@ -85,7 +85,7 @@ extension RSDFactoryEncoder {
         return data
     }
     
-    /// Serialize an array. This is a work-around for not being able to
+    /// Serialize an array. This is a work around for not being able to
     /// directly encode a generic dictionary.
     func rsd_encode(_ value: Array<Any>) throws -> Data {
         let anyArray = AnyCodableArray(value)

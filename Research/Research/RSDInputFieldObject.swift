@@ -135,7 +135,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     
     /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)`
     /// method. Swift does not nicely handle casting from `Self` to a class instance for non-final classes.
-    /// This is a work-around.
+    /// This is a work around.
     open func copyInto(_ copy: RSDInputFieldObject) {
         copy.inputUIHint = self.inputUIHint
         copy.inputPrompt = self.inputPrompt

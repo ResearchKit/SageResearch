@@ -43,7 +43,7 @@ extension RSDImageThemeElement {
     
     /// Fetch the images represented by this theme element.
     ///
-    /// This method is used to work-around supporting both iOS and Android with the same model.
+    /// This method is used to work around supporting both iOS and Android with the same model.
     /// To do so, this extension checks the type of the image theme protocol and defines this
     /// method in an extension on that protocol rather than having the protocol define the method
     /// and each class (or struct) define the implementation.
@@ -51,10 +51,10 @@ extension RSDImageThemeElement {
     /// Therefore, this implementation *only* supports subprotocols and concrete implementations
     /// defined within this framework or the Research framework that contains the model definitions.
     /// Any custom loading must be handled using a subclass of `RSDImageRules` that overrides
-    /// `largeImage(named:, using:, compatibleWith:)` to include it's own implementation.
+    /// `largeImage(named:, using:, compatibleWith:)` to include its own implementation.
     ///
     /// Additionally, this method currently does not support loading images from an online resource.
-    /// When, or if, that is supported in Research frameword, then this method should be updated to
+    /// When, or if, that is supported in Research framework, then this method should be updated to
     /// include support for that protocol.
     ///
     /// - parameters:

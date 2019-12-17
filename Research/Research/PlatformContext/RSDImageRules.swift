@@ -168,7 +168,7 @@ open class RSDImageRules {
         }
     }
     
-    /// Private getter that can be used to check for availability.
+    /// Get an SF system image if the OS supports this feature.
     private func _getSystemImage(_ resourceName:String, _ traitCollection: UITraitCollection?) -> RSDImage? {
         #if os(tvOS)
         if #available(tvOSApplicationExtension 13.0, *) {
@@ -182,7 +182,7 @@ open class RSDImageRules {
         return nil
     }
     
-    /// Private getter that can be used to add traits.
+    /// Get an image from an asset catalog and then add default accessibility traits.
     private func _getAssetImage(_ resourceName: String,
                                 _ resourceInfo: RSDResourceInfo?,
                                 _ traitCollection: UITraitCollection?) -> RSDImage? {
@@ -201,7 +201,7 @@ open class RSDImageRules {
         return image
     }
     
-    /// Private getter that can be used to add traits.
+    /// Get an image from a file and then add default accessibility traits.
     private func _getFileImage(_ resourceName: String,
                                 _ resourceInfo: RSDResourceInfo?,
                                 _ traitCollection: UITraitCollection?) -> RSDImage? {
@@ -220,7 +220,7 @@ open class RSDImageRules {
         return image
     }
     
-    /// Look in each bundle, in priority order.
+    /// Look in each bundle for an asset image, in priority order.
     private func searchBundlesForAsset(named resourceName: String,
                                        using resourceInfo: RSDResourceInfo? = nil,
                                        compatibleWith traitCollection: UITraitCollection? = nil) -> RSDImage? {
@@ -245,7 +245,7 @@ open class RSDImageRules {
         return nil
     }
     
-    /// Look in each bundle, in priority order.
+    /// Look in each bundle for a file image, in priority order.
     private func searchBundlesForImageFile(named resourceName: String,
                                            using resourceInfo: RSDResourceInfo? = nil,
                                            compatibleWith traitCollection: UITraitCollection? = nil) -> RSDImage? {

@@ -96,7 +96,9 @@ open class RSDStudyConfiguration {
 }
 
 /// The platform context info contains information about the current platform context that needs
-/// to be accessed via a single entry point and should *not*
+/// to be accessed via a single entry point.
+///
+/// - seealso: `currentPlatformContext`.
 public protocol RSDPlatformContextInfo : class {
     
     /// Information about the specific device.

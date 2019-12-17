@@ -31,16 +31,12 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#if os(macOS)
-import AppKit
-#else
+#if os(iOS) || os(tvOS)
 import UIKit
-#endif
 
 extension RSDTextAutocapitalizationType {
 
     /// Return the `UITextAutocapitalizationType` that maps to this enum.
-    #if os(iOS) || os(tvOS)
     public func textAutocapitalizationType() -> UITextAutocapitalizationType {
         guard let idx = self.rawIntValue(),
             let type = UITextAutocapitalizationType(rawValue: Int(idx))
@@ -49,13 +45,11 @@ extension RSDTextAutocapitalizationType {
         }
         return type
     }
-    #endif
 }
 
 extension RSDTextAutocorrectionType {
 
     /// Return the `UITextAutocorrectionType` that maps to this enum.
-    #if os(iOS) || os(tvOS)
     public func textAutocorrectionType() -> UITextAutocorrectionType {
         guard let idx = self.rawIntValue(),
             let type = UITextAutocorrectionType(rawValue: Int(idx))
@@ -64,12 +58,11 @@ extension RSDTextAutocorrectionType {
         }
         return type
     }
-    #endif
 }
 
 extension RSDTextSpellCheckingType {
+    
     /// Return the `UITextSpellCheckingType` that maps to this enum.
-    #if os(iOS) || os(tvOS)
     public func textSpellCheckingType() -> UITextSpellCheckingType {
         guard let idx = self.rawIntValue(),
             let type = UITextSpellCheckingType(rawValue: Int(idx))
@@ -78,13 +71,11 @@ extension RSDTextSpellCheckingType {
         }
         return type
     }
-    #endif
 }
 
 extension RSDKeyboardType {
 
     /// Return the `UIKeyboardType` that maps to this enum.
-    #if os(iOS) || os(tvOS)
     public func keyboardType() -> UIKeyboardType {
         guard let idx = self.rawIntValue(),
             let type = UIKeyboardType(rawValue: Int(idx))
@@ -93,5 +84,6 @@ extension RSDKeyboardType {
         }
         return type
     }
-    #endif
 }
+
+#endif

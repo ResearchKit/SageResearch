@@ -275,7 +275,7 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     
     /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)`
     /// method. Swift does not nicely handle casting from `Self` to a class instance for non-final classes.
-    /// This is a work-around.
+    /// This is a work around.
     open func copyInto(_ copy: RSDTaskObject) {
         copy.actions = self.actions
         copy.shouldHideActions = self.shouldHideActions

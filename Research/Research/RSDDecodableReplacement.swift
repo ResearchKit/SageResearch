@@ -34,7 +34,7 @@
 import Foundation
 
 
-/// A light-weight protocol for replacing the mutable properties on a class with values from a decoder.
+/// A lightweight protocol for replacing the mutable properties on a class with values from a decoder.
 public protocol RSDDecodableReplacement : class {
     
     /// Decode from the given decoder, replacing mutable properties on self with those from the decoder.

@@ -662,7 +662,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// The page view controller used to control the view controller navigation.
     public private(set) var pageViewController: (UIViewController & RSDPageViewControllerProtocol)!
     
-    /// This is a work-around to not being able to hook up child view controllers via the storyboard IBOutlet.
+    /// This is a work around to not being able to hook up child view controllers via the storyboard IBOutlet.
     /// The method is called in `viewDidLoad` to see if there is already a view controller of the expected type
     /// that is included in the storyboard or nib that was used to create this view controller.
     ///

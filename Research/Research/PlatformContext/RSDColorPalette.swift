@@ -232,58 +232,58 @@ public struct RSDColorKey : Codable, Equatable, Hashable, RSDColorMapping {
     }
 }
 
-//extension RSDColorKey : RSDDocumentableDecodableObject {
-//
-//    static func codingKeys() -> [CodingKey] {
-//        return CodingKeys.allCases
-//    }
-//
-//    static func examples() -> [[String : RSDJSONValue]] {
-//        let jsonA: [String : RSDJSONValue] = [
-//            "index" : 2,
-//            "swatchName" : "rose"
-//        ]
-//        let jsonB: [String : RSDJSONValue] = [
-//            "index" : 1,
-//            "swatch" : [
-//                "name" : "foo",
-//                "colorTiles" : [[
-//                    "usesLightStyle" : true,
-//                    "color" : "#D3D5DB"],
-//                                [
-//                    "usesLightStyle" : false,
-//                    "color" : "#1A1C29"]
-//                ]
-//            ]
-//        ]
-//        return [jsonA, jsonB]
-//    }
-//}
-//
-//extension RSDColorKey : RSDDocumentableStringLiteral {
-//
-//    var stringValue: String {
-//        return self.normal.colorName ?? ""
-//    }
-//
-//    static func examples() -> [String] {
-//        return ["#7B67B3", "#6DB56D"]
-//    }
-//}
-//
-//extension RSDColorPalette : RSDDocumentableDecodableObject {
-//
-//    static func codingKeys() -> [CodingKey] {
-//        return CodingKeys.allCases
-//    }
-//
-//    static func examples() -> [[String : RSDJSONValue]] {
-//        let jsonA: [String : RSDJSONValue] = [
-//            "version" : 0,
-//            "primary" : [ "index" : 2, "swatchName" : "rose"],
-//            "secondary" : [ "index" : 3, "swatchName" : "powder"],
-//            "accent" : [ "index" : 3, "swatchName" : "royal"]
-//        ]
-//        return [jsonA]
-//    }
-//}
+extension RSDColorKey : RSDDocumentableDecodableObject {
+
+    static func codingKeys() -> [CodingKey] {
+        return CodingKeys.allCases
+    }
+
+    static func examples() -> [[String : RSDJSONValue]] {
+        let jsonA: [String : RSDJSONValue] = [
+            "index" : 2,
+            "swatchName" : "rose"
+        ]
+        let jsonB: [String : RSDJSONValue] = [
+            "index" : 1,
+            "swatch" : [
+                "name" : "foo",
+                "colorTiles" : [[
+                    "usesLightStyle" : true,
+                    "color" : "#D3D5DB"],
+                                [
+                    "usesLightStyle" : false,
+                    "color" : "#1A1C29"]
+                ]
+            ]
+        ]
+        return [jsonA, jsonB]
+    }
+}
+
+extension RSDColorKey : RSDDocumentableStringLiteral {
+
+    var stringValue: String {
+        return self.normal.colorName ?? ""
+    }
+
+    static func examples() -> [String] {
+        return ["#7B67B3", "#6DB56D"]
+    }
+}
+
+extension RSDColorPalette : RSDDocumentableDecodableObject {
+
+    static func codingKeys() -> [CodingKey] {
+        return CodingKeys.allCases
+    }
+
+    static func examples() -> [[String : RSDJSONValue]] {
+        let jsonA: [String : RSDJSONValue] = [
+            "version" : 0,
+            "primary" : [ "index" : 2, "swatchName" : "rose"],
+            "secondary" : [ "index" : 3, "swatchName" : "powder"],
+            "accent" : [ "index" : 3, "swatchName" : "royal"]
+        ]
+        return [jsonA]
+    }
+}
