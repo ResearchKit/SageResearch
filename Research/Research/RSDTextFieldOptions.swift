@@ -139,7 +139,7 @@ extension RSDTextAutocapitalizationType : RSDDocumentableStringEnum {
 }
 
 
-/// `Codable` enum for the auto-capitalization type for an input text field.
+/// `Codable` enum for the auto-correction type for an input text field.
 /// - keywords: ["default", "no", yes"]
 public enum RSDTextAutocorrectionType : String, Codable, RSDStringEnumSet {
     case `default`, no, yes
