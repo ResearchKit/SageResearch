@@ -183,7 +183,7 @@ extension RSDTextSpellCheckingType : RSDDocumentableStringEnum {
 }
 
 
-/// `Codable` enum for the spell checking type for an input text field.
+/// `Codable` enum for the keyboard type for an input text field.
 /// - keywords: [ "default", "asciiCapable", "numbersAndPunctuation", "URL",
 ///               "numberPad", "phonePad", "namePhonePad", "emailAddress",
 ///               "decimalPad", "twitter", "webSearch", "asciiCapableNumberPad"]
