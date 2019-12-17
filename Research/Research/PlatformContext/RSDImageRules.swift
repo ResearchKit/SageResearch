@@ -117,7 +117,7 @@ open class RSDImageRules {
     }
     
     
-    /// As of this writing, there is a bug in some versions of of iOS supported by this framework
+    /// As of this writing, there is a bug in some versions of iOS supported by this framework
     /// that causes larger images to crash the application b/c of low memory and improper release
     /// of the cache. As a result of this issue, large images should *not* be stored in the asset
     /// catalog. Instead, they should be stored as files using the iOS convention of `imageName@2x`
