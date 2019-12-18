@@ -36,7 +36,7 @@ import Foundation
 
 /// `RSDViewThemeElement` tells the UI where to find the view controller to use when instantiating the
 /// `RSDStepController`.
-public protocol RSDViewThemeElement : RSDUIThemeElement {
+public protocol RSDViewThemeElement : RSDResourceInfo {
     
     /// The storyboard view controller identifier or the nib name for this view controller.
     var viewIdentifier: String { get }

@@ -72,7 +72,7 @@ public final class RSDMotionAudioSessionController : NSObject, RSDAudioSessionCo
     public private(set) var audioSession: AVAudioSession?
     
     /// The audio player that plays the background sound used to keep the motion sensors active. This is a
-    /// work-around to allow the task to continue running in the background without requiring GPS by instead
+    /// work around to allow the task to continue running in the background without requiring GPS by instead
     /// playing an audio file of silence.
     ///
     /// - note: As of this writing, speech-to-text using the `AVSpeechSynthesizer` will *not* run in the

@@ -150,14 +150,19 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     /// The design system to use with this step view controller.
     open var designSystem: RSDDesignSystem!
-    
+        
     /// Override `viewWillAppear` to set up the navigation, step details, and background color theme if this
     /// is the first appearance.
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isFirstAppearance {
             if self.designSystem == nil {
-                self.designSystem = self.stepViewModel.parentTaskPath?.designSystem ?? RSDDesignSystem()
+                let designSystem = (self.stepViewModel.parentTaskPath as? RSDTaskDesign)?.designSystem ?? RSDDesignSystem.shared
+                let bundle = Bundle(for: type(of: self))
+                if !designSystem.imageRules.registeredBundles.contains(bundle) {
+                    designSystem.imageRules.insert(bundle: bundle, at: .max)
+                }
+                self.designSystem = designSystem
             }
             setupBackgroundColorTheme()
             setupViews()
@@ -443,44 +448,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
                 return
         }
         let traitCollection = self.traitCollection
-        if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
-            DispatchQueue.global().async { [weak navigationView] in
-                let images = animatedImage.images(compatibleWith: traitCollection)
-                DispatchQueue.main.async {
-                    guard let navigationView = navigationView,
-                        let image = images.first
-                        else {
-                            return
-                    }
-                    UIView.transition(with: navigationView,
-                                      duration: 0.2,
-                                      options: .transitionCrossDissolve,
-                                      animations: {
-                                        navigationView.imageView?.image = image },
-                                      completion: { (finished) in
-                                        // If there is more than one image in the collection, then animate them.
-                                        if finished, images.count > 1 {
-                                            navigationView.imageView?.animationDuration = animatedImage.animationDuration
-                                            navigationView.imageView?.animationImages = images
-                                            if let repeatCount = animatedImage.animationRepeatCount {
-                                                navigationView.imageView?.animationRepeatCount = repeatCount
-                                            }
-                                            navigationView.imageView?.startAnimating()
-                                            // Always set the last image as the one to show when/if the animation ends.
-                                            navigationView.imageView?.image = images.last
-                                        }
-                    })
-                }
-            }
-        }
-        else if let assetLoader = imageTheme as? RSDAssetImageThemeElement {
-            navigationView.image = assetLoader.embeddedImage()
-        }
-        else if let fetchLoader = imageTheme as? RSDFetchableImageThemeElement {
-            fetchLoader.fetchImage(for: imageView.bounds.size, callback: { [weak navigationView] (_, img) in
-                navigationView?.image = img
-            })
-        }
+        let designSystem = self.designSystem
+        self.loadImage(withKey: "RSDImageViewCell",
+                       using: imageTheme,
+                       into: imageView,
+                       using: designSystem,
+                       compatibleWith: traitCollection)
     }
     
     /// Return the image theme for this step view controller.
@@ -1198,6 +1171,15 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     open func playAlert() {
         vibrateDevice()
         playSound(.alarm)
+    }
+}
+
+extension RSDStepViewController : ThemeImageViewOwner {
+    
+    /// For this case, the image theme identifier should not change while the step view is loaded
+    /// and if it does then the *new* image theme is the newly set value.
+    func themeImageIdentifier(withKey key: String) -> String? {
+        return self.imageTheme?.imageIdentifier
     }
 }
 

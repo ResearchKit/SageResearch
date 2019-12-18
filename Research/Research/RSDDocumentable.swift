@@ -84,8 +84,6 @@ public struct RSDDocumentCreator {
     
     let allStringLiterals: [RSDDocumentableStringLiteral.Type] = [
         RSDChoiceObject<String>.self,
-        RSDColorKey.self,
-        RSDImageWrapper.self,
         RSDRegExValidatorObject.self,
         ]
 
@@ -96,13 +94,9 @@ public struct RSDDocumentCreator {
             RSDAnswerResultType.self,
             RSDCohortNavigationRuleObject.self,
             RSDCollectionResultObject.self,
-            RSDColorSwatch.self,
-            RSDColorTile.self,
             RSDDateRangeObject.self,
             RSDDurationRangeObject.self,
-            RSDFetchableImageThemeElementObject.self,
             RSDFileResultObject.self,
-            RSDGrayScale.self,
             RSDNavigationUIActionObject.self,
             RSDNumberRangeObject.self,
             RSDResourceTransformerObject.self,
@@ -148,10 +142,8 @@ public struct RSDDocumentCreator {
         RSDCodableChoiceInputFieldObject<Double>.self,
         RSDCodableChoiceInputFieldObject<Int>.self,
         RSDCodableChoiceInputFieldObject<RSDFraction>.self,
-        RSDColorKey.self,
         RSDColorPlacementThemeElementObject.self,
         RSDSingleColorThemeElementObject.self,
-        RSDColorPalette.self,
         RSDMultipleComponentInputFieldObject.self,
         RSDSchemaInfoObject.self,
         RSDConditionalStepNavigatorObject.self,

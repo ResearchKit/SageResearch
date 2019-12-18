@@ -34,8 +34,7 @@
 import Foundation
 
 /// `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
-public struct RSDTaskGroupObject : RSDTaskGroup, RSDEmbeddedIconVendor, Decodable {
-    
+public struct RSDTaskGroupObject : RSDTaskGroup, Decodable {
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier, title, detail, icon, tasks
     }
@@ -49,8 +48,8 @@ public struct RSDTaskGroupObject : RSDTaskGroup, RSDEmbeddedIconVendor, Decodabl
     /// Additional detail text to display for the task group in a localized string.
     public var detail: String?
     
-    /// The optional `RSDImageWrapper` with the pointer to the image.
-    public var icon: RSDImageWrapper?
+    /// The optional `RSDImageData` with the pointer to the image.
+    public var imageData: RSDImageData?
     
     /// A list of the task references included in this group.
     public let tasks: [RSDTaskInfo]
@@ -106,7 +105,7 @@ public struct RSDTaskGroupObject : RSDTaskGroup, RSDEmbeddedIconVendor, Decodabl
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
-        self.icon = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .icon)
+        self.imageData = try container.decodeIfPresent(RSDResourceImageDataObject.self, forKey: .icon)
         
         let factory = decoder.factory
         var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .tasks)

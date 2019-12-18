@@ -51,18 +51,36 @@ open class RSDAppDelegate : UIResponder, RSDAppOrientationLock, RSDAlertPresente
         return nil
     }
     
+    /// Override and return a non-nil value to set up using custom color rules.
+    open func instantiateColorRules() -> RSDColorRules? {
+        guard let palette = instantiateColorPalette() else { return nil }
+        return RSDColorRules(palette: palette)
+    }
+    
+    /// Override and return a non-nil value to set up using custom font rules.
+    open func instantiateFontRules() -> RSDFontRules? {
+        return nil
+    }
+    
     open func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization before application launch.
         
         // Set up color palette and factory.
         RSDFactory.shared = instantiateFactory()
-        if let palette = instantiateColorPalette() {
-            RSDStudyConfiguration.shared.colorPalette = palette
+        let colorRules = instantiateColorRules()
+        let fontRules = instantiateFontRules()
+        if fontRules != nil || colorRules != nil {
+            let version = colorRules?.version ?? fontRules?.version ?? RSDDesignSystem.currentVersion
+            let cRules = colorRules ?? RSDColorRules(palette: .wireframe)
+            let fRules = fontRules ?? RSDFontRules(version: version)
+            let designSystem = RSDDesignSystem(version: version, colorRules: cRules, fontRules: fRules)
+            designSystem.imageRules.insert(bundle: Bundle.init(for: RSDAppDelegate.self), at: .max)
+            RSDDesignSystem.shared = designSystem
         }
         
         // Set the tint color.
-        self.window?.tintColor = RSDStudyConfiguration.shared.colorPalette.primary.normal.color
-        
+        self.window?.tintColor = RSDDesignSystem.shared.colorRules.palette.primary.normal.color
+                    
         return true
     }
     
@@ -115,7 +133,7 @@ open class RSDAppDelegate : UIResponder, RSDAppOrientationLock, RSDAlertPresente
 
 /// As of this writing, there is no simple way for an application to allow selectively locking
 /// the orientation of the app to portrait, while still allowing *some* view controllers to
-/// require landscape. This is intended as a work-around for that limitation. Using this feature
+/// require landscape. This is intended as a work around for that limitation. Using this feature
 /// requires the view controller that needs to change the orientation to set the
 /// `orientationLock` in `viewWillAppear` and then clear the lock on `viewDidAppear`.
 /// syoung 08/15/2019

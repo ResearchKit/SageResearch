@@ -82,7 +82,7 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
         titleLabel?.text = taskInfoStep.taskInfo.title
         subtitleLabel?.text = taskInfoStep.taskInfo.subtitle
         if let imageSize = iconImageView?.bounds.size {
-            taskInfoStep.taskInfo.imageVendor?.fetchImage(for: imageSize) { [weak self] (_, img) in
+            taskInfoStep.taskInfo.imageData?.fetchImage(for: imageSize) { [weak self] (_, img) in
                 self?.iconImageView?.image = img
             }
         }

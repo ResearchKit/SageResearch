@@ -92,7 +92,8 @@ open class RSDInstructionStepViewController: RSDPermissionStepViewController {
             let leading = self.imageLeadingConstraint,
             let imageView = self.imageView {
             imageView.contentMode = .scaleAspectFit
-            let imageSize: CGSize? = self.imageTheme!.size != .zero ? self.imageTheme!.size : self.imageView?.image?.size
+            let themeSize = self.imageTheme?.imageSize?.cgSize
+            let imageSize: CGSize? = themeSize != .zero ? themeSize : self.imageView?.image?.size
             let desiredWidth = min(imageSize?.width ?? 999999, self.view.bounds.width * 0.5)
             let constant = floor((self.view.bounds.width - desiredWidth) * 0.5)
             if constant != leading.constant {

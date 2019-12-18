@@ -44,10 +44,3 @@ public protocol RSDDesignableUIStep : RSDUIStep {
     /// The color mapping.
     var colorMapping: RSDColorMappingThemeElement? { get }
 }
-
-/// `RSDUIThemeElement` is used to tell the application UI view controllers how to style a given step.
-public protocol RSDUIThemeElement {
-    
-    /// The resource bundle to use for fetching the theme elements.
-    var bundle: Bundle? { get }
-}

@@ -56,7 +56,7 @@ public protocol RSDTaskInfo : RSDCopyWithIdentifier {
     var estimatedMinutes: Int { get }
     
     /// An icon image that can be used for displaying the choice.
-    var imageVendor: RSDImageVendor? { get }
+    var imageData: RSDImageData? { get }
     
     /// Optional schema info to pass with the task info for this task.
     var schemaInfo: RSDSchemaInfo? { get }

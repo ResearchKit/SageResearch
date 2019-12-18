@@ -2,7 +2,7 @@
 //  RSDStepController.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,7 +35,7 @@ import Foundation
 
 
 /// `RSDStepController` handles default implementations for running a step in a task.
-public protocol RSDStepController : class, NSObjectProtocol {
+public protocol RSDStepController : class {
 
     /// A pointer to the step with the model information used to display and run the step. The
     /// implementation of the task controller should set this pointer before displaying the step controller

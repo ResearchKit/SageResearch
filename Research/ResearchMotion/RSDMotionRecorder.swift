@@ -125,7 +125,7 @@ public class RSDMotionRecorder : RSDSampleRecorder {
     private let motionQueue = OperationQueue()
     
     /// Override to implement requesting permission to access the participant's motion sensors.
-    override public func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
+    override public func requestPermissions(on viewController: Any, _ completion: @escaping RSDAsyncActionCompletionHandler) {
         self.updateStatus(to: .requestingPermission , error: nil)
         if RSDMotionAuthorization.authorizationStatus() == .authorized {
             self.updateStatus(to: .permissionGranted , error: nil)

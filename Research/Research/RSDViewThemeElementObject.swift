@@ -38,21 +38,24 @@ import Foundation
 public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundleInfo, Codable {
     
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case viewIdentifier, bundleIdentifier, storyboardIdentifier
+        case storyboardIdentifier, viewIdentifier, bundleIdentifier, packageName
     }
     
     /// The storyboard view controller identifier or the nib name for this view controller.
     public let viewIdentifier: String
     
-    /// The bundle identifier for the nib or storyboard.
-    public let bundleIdentifier: String?
-    
     /// If the storyboard identifier is non-nil then the view is assumed to be accessible within the
     /// storyboard via the `viewIdentifier`.
     public let storyboardIdentifier: String?
     
+    /// The bundle identifier for the nib or storyboard.
+    public let bundleIdentifier: String?
+    
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
+    public var factoryBundle: RSDResourceBundle? = nil
+    
+    /// The Android package for the resource.
+    public var packageName: String?
     
     /// Default initializer.
     ///

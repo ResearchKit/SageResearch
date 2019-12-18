@@ -56,7 +56,7 @@ class CopyStepTests: XCTestCase {
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
         step.colorMapping = RSDSingleColorThemeElementObject(colorStyle: .primary)
-        step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
+        step.imageTheme = RSDResourceImageDataObject(imageName: "fooIcon")
         step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
         step.shouldHideActions = [.navigation(.skip)]
         step.duration = 5
@@ -75,7 +75,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
         XCTAssertEqual((copy.colorMapping as? RSDSingleColorThemeElementObject)?.colorStyle, .primary)
-        XCTAssertEqual((copy.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "fooIcon")
+        XCTAssertEqual(copy.imageTheme?.imageName, "fooIcon")
         XCTAssertEqual(copy.nextStepIdentifier, "bar")
         if let learnAction = copy.actions?[.navigation(.learnMore)] as? RSDWebViewUIActionObject {
             XCTAssertEqual(learnAction.url, "fooFile")
@@ -116,7 +116,7 @@ class CopyStepTests: XCTestCase {
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
         step.colorMapping = RSDSingleColorThemeElementObject(colorStyle: .primary)
-        step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
+        step.imageTheme = RSDResourceImageDataObject(imageName: "fooIcon")
         step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
         step.shouldHideActions = [.navigation(.skip)]
         step.duration = 5
@@ -144,7 +144,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
         XCTAssertEqual((copy.colorMapping as? RSDSingleColorThemeElementObject)?.colorStyle, .primary)
-        XCTAssertEqual((copy.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "fooIcon")
+        XCTAssertEqual(copy.imageTheme?.imageName, "fooIcon")
         XCTAssertEqual(copy.nextStepIdentifier, "bar")
         if let learnAction = copy.actions?[.navigation(.learnMore)] as? RSDWebViewUIActionObject {
             XCTAssertEqual(learnAction.url, "fooFile")
@@ -186,7 +186,7 @@ class CopyStepTests: XCTestCase {
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
         step.colorMapping = RSDSingleColorThemeElementObject(colorStyle: .primary)
-        step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
+        step.imageTheme = RSDResourceImageDataObject(imageName: "fooIcon")
         step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
         step.shouldHideActions = [.navigation(.skip)]
         
@@ -199,7 +199,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
         XCTAssertEqual((copy.colorMapping as? RSDSingleColorThemeElementObject)?.colorStyle, .primary)
-        XCTAssertEqual((copy.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "fooIcon")
+        XCTAssertEqual(copy.imageTheme?.imageName, "fooIcon")
         if let learnAction = copy.actions?[.navigation(.learnMore)] as? RSDWebViewUIActionObject {
             XCTAssertEqual(learnAction.url, "fooFile")
             XCTAssertEqual(learnAction.buttonTitle, "tap foo")
@@ -226,7 +226,7 @@ class CopyStepTests: XCTestCase {
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
         step.colorMapping = RSDSingleColorThemeElementObject(colorStyle: .primary)
-        step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
+        step.imageTheme = RSDResourceImageDataObject(imageName: "fooIcon")
         step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
         step.shouldHideActions = [.navigation(.skip)]
         
@@ -248,7 +248,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
         XCTAssertEqual((copy.colorMapping as? RSDSingleColorThemeElementObject)?.colorStyle, .primary)
-        XCTAssertEqual((copy.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "fooIcon")
+        XCTAssertEqual(copy.imageTheme?.imageName, "fooIcon")
         if let learnAction = copy.actions?[.navigation(.learnMore)] as? RSDWebViewUIActionObject {
             XCTAssertEqual(learnAction.url, "fooFile")
             XCTAssertEqual(learnAction.buttonTitle, "tap foo")
@@ -357,7 +357,7 @@ class CopyStepTests: XCTestCase {
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
         step.colorMapping = RSDSingleColorThemeElementObject(colorStyle: .primary)
-        step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
+        step.imageTheme = RSDResourceImageDataObject(imageName: "fooIcon")
         step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
         step.shouldHideActions = [.navigation(.skip)]
         
@@ -370,7 +370,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
         XCTAssertEqual((copy.colorMapping as? RSDSingleColorThemeElementObject)?.colorStyle, .primary)
-        XCTAssertEqual((copy.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "fooIcon")
+        XCTAssertEqual(copy.imageTheme?.imageName, "fooIcon")
         XCTAssertEqual(copy.nextStepIdentifier, "bar")
         if let learnAction = copy.actions?[.navigation(.learnMore)] as? RSDWebViewUIActionObject {
             XCTAssertEqual(learnAction.url, "fooFile")
@@ -393,7 +393,7 @@ class CopyStepTests: XCTestCase {
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
         step.colorMapping = RSDSingleColorThemeElementObject(colorStyle: .primary)
-        step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
+        step.imageTheme = RSDResourceImageDataObject(imageName: "fooIcon")
         step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo"), .custom("moreInformation"): RSDVideoViewUIActionObject(url: "video.mp4", buttonTitle: "See this in action")]
         step.shouldHideActions = [.navigation(.skip)]
         
@@ -415,7 +415,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
         XCTAssertEqual((copy.colorMapping as? RSDSingleColorThemeElementObject)?.colorStyle, .primary)
-        XCTAssertEqual((copy.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "fooIcon")
+        XCTAssertEqual(copy.imageTheme?.imageName, "fooIcon")
         XCTAssertEqual(copy.nextStepIdentifier, "bar")
         if let learnAction = copy.actions?[.navigation(.learnMore)] as? RSDWebViewUIActionObject {
             XCTAssertEqual(learnAction.url, "fooFile")

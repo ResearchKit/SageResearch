@@ -36,12 +36,12 @@
 /// given action of the UI.
 ///
 /// - seealso: `RSDUIActionType` and `RSDUIActionHandler`
-public protocol RSDUIAction {
+public protocol RSDUIAction : RSDResourceInfo {
     
     /// The title to display on the button associated with this action.
     var buttonTitle: String? { get }
     
-    /// The icon to display on the button associated with this action.
-    var buttonIcon: RSDImage? { get }
+        /// The name of the icon to display on the button associated with this action.
+    var iconName: String? { get }
 }
 

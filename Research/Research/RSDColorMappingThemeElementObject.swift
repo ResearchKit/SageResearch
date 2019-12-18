@@ -32,63 +32,23 @@
 //
 
 import Foundation
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
 
-struct ColorTile : Codable {
-    let usesLightStyle : Bool
-    let color : String
-}
-
-protocol InternalColorMapping : RSDDecodableBundleInfo {
-    var customColor: ColorTile? { get }
-    func style(for placement: RSDColorPlacement) -> RSDColorRules.Style
-}
-
-extension InternalColorMapping {
-    #if os(watchOS) || os(macOS)
-    /// **Available** for watchOS and macOS.
-    ///
-    /// The background color for this step. If undefined then the background color will be determined by the
-    /// step view controller.
-    /// - returns: The color or `nil` if undefined.
-    public func backgroundColor(for placement: RSDColorPlacement, using colorRules: RSDColorRules) -> RSDColorTile? {
-        if let tile = colorRules.mapping(for: self.style(for: placement)) {
-            return tile.normal
-        }
-        else if let custom = self.customColor,
-            let color = RSDColor.rsd_color(named: custom.color, in: self.bundle) {
-            return RSDColorTile(color, usesLightStyle: custom.usesLightStyle)
-        }
-        else {
-            return nil
-        }
+/// A color data object is a lightweight codable implementation for storing custom color data.
+public struct RSDColorDataObject : Codable, RSDColorData {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case colorIdentifier = "color", usesLightStyle
     }
     
-    #else
+    /// The color identifier. Typically, the name in an asset catalog or a hexcode.
+    public let colorIdentifier: String
     
-    /// **Available** for iOS and tvOS.
-    ///
-    /// The background color for this step. If undefined then the background color will be determined by the
-    /// step view controller.
-    /// - returns: The color or `nil` if undefined.
-    public func backgroundColor(for placement: RSDColorPlacement, using colorRules: RSDColorRules, compatibleWith traitCollection: UITraitCollection?) -> RSDColorTile? {
-        let style = self.style(for: placement)
-        if let tile = colorRules.mapping(for: style) {
-            return tile.normal
-        }
-        else if let custom = self.customColor,
-            let color = RSDColor.rsd_color(named: custom.color, in: self.bundle, compatibleWith: traitCollection) {
-            return RSDColorTile(color, usesLightStyle: custom.usesLightStyle)
-        }
-        else {
-            return nil
-        }
+    /// Whether or not text and images displayed on top of this color should use light style.
+    public let usesLightStyle : Bool
+    
+    public init(colorIdentifier: String, usesLightStyle : Bool) {
+        self.colorIdentifier = colorIdentifier
+        self.usesLightStyle = usesLightStyle
     }
-    #endif
 }
 
 /// `RSDColorPlacementThemeElementObject` tells the UI what the background color and foreground color are for
@@ -97,23 +57,26 @@ extension InternalColorMapping {
 /// The mapping is handled using a dictionary of color placements to the color style for that placement.
 public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo {
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case type, bundleIdentifier, placement, customColor
+        case type, bundleIdentifier, packageName, placement, customColor
     }
-    
-    /// The type for the class
+
+    /// The type for the class.
     public let type: RSDColorMappingThemeElementType
 
+    /// The color placement mapping.
+    let placement: [String : RSDColorStyle]
+    
+    /// The custom color tile to use for a color placement.
+    let customColor: RSDColorDataObject?
+    
     /// The bundle identifier.
     public let bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
+    public var factoryBundle: RSDResourceBundle? = nil
     
-    /// The color placement mapping.
-    let placement: [String : RSDColorRules.Style]
-    
-    /// The custom color tile to use for a color placement.
-    let customColor: ColorTile?
+    /// The Android package name.
+    public var packageName: String?
 
     /// Default initializer.
     ///
@@ -122,31 +85,35 @@ public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement,
     ///     - customColorName: The name of the custom color.
     ///     - usesLightStyle: If using a custom color, the light style for the custom color.
     ///     - bundleIdentifier: The bundle identifier if using a color asset file.
-    public init(placement: [String : RSDColorRules.Style],
+    public init(placement: [String : RSDColorStyle],
                 customColorName: String? = nil,
-                usesLightStyle: Bool? = nil,
-                bundleIdentifier: String? = nil) {
+                usesLightStyle: Bool = false,
+                bundleIdentifier: String? = nil,
+                packageName: String? = nil) {
         self.type = .placementMapping
         self.placement = placement
         if let name = customColorName {
-            self.customColor = ColorTile(usesLightStyle: usesLightStyle ?? false, color: name)
+            self.customColor = RSDColorDataObject(colorIdentifier: name, usesLightStyle: usesLightStyle)
         }
         else {
             self.customColor = nil
         }
-        self.bundleIdentifier = nil
+        self.bundleIdentifier = bundleIdentifier
+        self.packageName = packageName
     }
     
-}
-
-extension RSDColorPlacementThemeElementObject : InternalColorMapping {
+    /// The custom color used by this theme element.
+    public var customColorData: RSDColorData? {
+        return self.customColor
+    }
     
-    func style(for placement: RSDColorPlacement) -> RSDColorRules.Style {
+    /// The background color style for a given placement.
+    public func backgroundColorStyle(for placement: RSDColorPlacement) -> RSDColorStyle {
         if let style = self.placement[placement.stringValue] {
             return style
         }
         else {
-            return ((self.customColor != nil) ? .custom : .white)
+            return ((self.customColor != nil) ? .custom : .background)
         }
     }
 }
@@ -161,6 +128,7 @@ extension RSDColorPlacementThemeElementObject : RSDDocumentableDecodableObject {
         let exA: [String : RSDJSONValue] = [
             "type" : "placementMapping",
             "bundleIdentifier" : "FooModule",
+            "packageName" : "org.sagebase.foo",
             "customColor" : [ "color" : "sky", "usesLightStyle" : false],
             "placement" : [
                 "header" : "primary",
@@ -182,23 +150,26 @@ extension RSDColorPlacementThemeElementObject : RSDDocumentableDecodableObject {
 /// The mapping is handled using a single style for the entire view.
 public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo {
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case type, bundleIdentifier, colorStyle, customColor
+        case type, bundleIdentifier, packageName, colorStyle, customColor
     }
     
-    /// The type for the class
+    /// The type for the class.
     public let type: RSDColorMappingThemeElementType
     
     /// The bundle identifier.
     public let bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
+    public var factoryBundle: RSDResourceBundle? = nil
+    
+    /// The Android package name.
+    public var packageName: String?
     
     /// The color placement mapping.
-    let colorStyle: RSDColorRules.Style?
+    let colorStyle: RSDColorStyle?
     
     /// The custom color tile to use for a color placement.
-    let customColor: ColorTile?
+    let customColor: RSDColorDataObject?
     
     /// Default initializer.
     ///
@@ -207,25 +178,30 @@ public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RS
     ///     - customColorName: The name of the custom color.
     ///     - usesLightStyle: If using a custom color, the light style for the custom color.
     ///     - bundleIdentifier: The bundle identifier if using a color asset file.
-    public init(colorStyle: RSDColorRules.Style?,
+    public init(colorStyle: RSDColorStyle?,
                 customColorName: String? = nil,
-                usesLightStyle: Bool? = nil,
-                bundleIdentifier: String? = nil) {
+                usesLightStyle: Bool = false,
+                bundleIdentifier: String? = nil,
+                packageName: String? = nil) {
         self.type = .singleColor
         self.colorStyle = colorStyle
         if let name = customColorName {
-            self.customColor = ColorTile(usesLightStyle: usesLightStyle ?? false, color: name)
+            self.customColor = RSDColorDataObject(colorIdentifier: name, usesLightStyle: usesLightStyle)
         }
         else {
             self.customColor = nil
         }
-        self.bundleIdentifier = nil
+        self.bundleIdentifier = bundleIdentifier
+        self.packageName = packageName
     }
-}
-
-extension RSDSingleColorThemeElementObject : InternalColorMapping {
     
-    func style(for placement: RSDColorPlacement) -> RSDColorRules.Style {
+    /// The custom color used by this theme element.
+    public var customColorData: RSDColorData? {
+        return self.customColor
+    }
+    
+    /// The background color style for a given placement.
+    public func backgroundColorStyle(for placement: RSDColorPlacement) -> RSDColorStyle {
         return colorStyle ?? ((self.customColor != nil) ? .custom : .white)
     }
 }
@@ -240,6 +216,7 @@ extension RSDSingleColorThemeElementObject : RSDDocumentableDecodableObject {
         let exA: [String : RSDJSONValue] = [
             "type" : "singleColor",
             "bundleIdentifier" : "FooModule",
+            "packageName" : "org.sagebase.foo",
             "customColor" : [ "color" : "sky", "usesLightStyle" : false]
         ]
         let exB: [String : RSDJSONValue] = [

@@ -42,10 +42,10 @@ public struct RSDColorMappingThemeElementType : RSDFactoryTypeRepresentable, Cod
         self.rawValue = rawValue
     }
     
-    /// Defaults to creating a `RSDFetchableImageThemeElementObject`.
+    /// Defaults to creating a `RSDColorPlacementThemeElementObject`.
     public static let placementMapping: RSDColorMappingThemeElementType = "placementMapping"
     
-    /// Defaults to creating a `RSDAnimatedImageThemeElementObject`.
+    /// Defaults to creating a `RSDSingleColorThemeElementObject`.
     public static let singleColor: RSDColorMappingThemeElementType = "singleColor"
     
     public static func allStandardTypes() -> [RSDColorMappingThemeElementType] {

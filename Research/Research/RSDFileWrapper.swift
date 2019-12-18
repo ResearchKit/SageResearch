@@ -39,6 +39,7 @@ import AppKit
 import UIKit
 #endif
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 public struct RSDFileWrapper : RawRepresentable, Hashable {
     public typealias RawValue = String
     
@@ -46,19 +47,21 @@ public struct RSDFileWrapper : RawRepresentable, Hashable {
     public let rawValue: String
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
+    public var factoryBundle: RSDResourceBundle? = nil
     
     public init(rawValue: String) {
         self.rawValue = rawValue
     }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDFileWrapper : ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.rawValue = value
     }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDFileWrapper : Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -67,6 +70,7 @@ extension RSDFileWrapper : Decodable {
     }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDFileWrapper : Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
@@ -74,6 +78,7 @@ extension RSDFileWrapper : Encodable {
     }
 }
 
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDFileWrapper {
     
     var resourceName: String {
@@ -163,7 +168,7 @@ extension RSDFileWrapper {
     #endif
     
     private func resourceBundle(_ bundle: Bundle?) -> Bundle {
-        return bundle ?? self.factoryBundle ?? Bundle.main
+        return bundle ?? self.factoryBundle as? Bundle ?? Bundle.main
     }
     
     public func imagePath(from bundle: Bundle?, ofType defaultExtension: String?) -> String? {

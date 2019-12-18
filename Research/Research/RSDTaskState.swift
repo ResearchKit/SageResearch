@@ -107,7 +107,7 @@ open class RSDTaskState : NSObject {
     /// A queue that can be used to serialize archiving and cleaning up the file output.
     public let fileManagementQueue = DispatchQueue(label: "org.sagebase.Research.fileQueue.\(UUID())")
     
-    /// Convenience method for encoding a result. This is a work-around for a limitation of the encoder
+    /// Convenience method for encoding a result. This is a work around for a limitation of the encoder
     /// where it cannot encode an object without a Type for the object.
     /// - parameter encoder: The factory top-level encoder.
     /// - returns: The encoded result.

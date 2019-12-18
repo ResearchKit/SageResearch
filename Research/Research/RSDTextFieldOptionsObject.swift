@@ -2,7 +2,7 @@
 //  RSDTextFieldOptionsObject.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -30,12 +30,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
 
 /// `RSDTextFieldOptionsObject` defines the options for a text field.
 ///
@@ -168,122 +162,4 @@ extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
         exampleB.invalidMessage = "This input field only allows entering numbers."
         return [exampleA, exampleB]
     }
-}
-
-/// `Codable` enum for the auto-capitalization type for an input text field.
-/// - keywords: ["none", "words", "sentences", "allCharacters"]
-public enum RSDTextAutocapitalizationType : String, Codable, RSDStringEnumSet {
-    case none, words, sentences, allCharacters
-    
-    public static var all: Set<RSDTextAutocapitalizationType> {
-        return Set(orderedSet)
-    }
-    
-    static var orderedSet: [RSDTextAutocapitalizationType] {
-        return [.none, .words, .sentences, .allCharacters]
-    }
-
-    /// Return the `UITextAutocapitalizationType` that maps to this enum.
-    #if os(iOS) || os(tvOS)
-    public func textAutocapitalizationType() -> UITextAutocapitalizationType {
-        guard let idx = RSDTextAutocapitalizationType.orderedSet.firstIndex(of: self),
-            let type = UITextAutocapitalizationType(rawValue: Int(idx))
-            else {
-                return .none
-        }
-        return type
-    }
-    #endif
-}
-
-extension RSDTextAutocapitalizationType : RSDDocumentableStringEnum {
-}
-
-/// `Codable` enum for the auto-capitalization type for an input text field.
-/// - keywords: ["default", "no", yes"]
-public enum RSDTextAutocorrectionType : String, Codable, RSDStringEnumSet {
-    case `default`, no, yes
-    
-    public static var all: Set<RSDTextAutocorrectionType> {
-        return Set(orderedSet)
-    }
-    
-    static var orderedSet: [RSDTextAutocorrectionType] {
-        return [.default, .no, .yes]
-    }
-
-    /// Return the `UITextAutocorrectionType` that maps to this enum.
-    #if os(iOS) || os(tvOS)
-    public func textAutocorrectionType() -> UITextAutocorrectionType {
-        guard let idx = RSDTextAutocorrectionType.orderedSet.firstIndex(of: self),
-            let type = UITextAutocorrectionType(rawValue: Int(idx))
-            else {
-                return .default
-        }
-        return type
-    }
-    #endif
-}
-
-extension RSDTextAutocorrectionType : RSDDocumentableStringEnum {
-}
-
-/// `Codable` enum for the spell checking type for an input text field.
-/// - keywords: ["default", "no", yes"]
-public enum RSDTextSpellCheckingType  : String, Codable, RSDStringEnumSet {
-    case `default`, no, yes
-    
-    public static var all: Set<RSDTextSpellCheckingType> {
-        return Set(orderedSet)
-    }
-    
-    static var orderedSet: [RSDTextSpellCheckingType] {
-        return [.default, .no, .yes]
-    }
-
-    /// Return the `UITextSpellCheckingType` that maps to this enum.
-    #if os(iOS) || os(tvOS)
-    public func textSpellCheckingType() -> UITextSpellCheckingType {
-        guard let idx = RSDTextSpellCheckingType.orderedSet.firstIndex(of: self),
-            let type = UITextSpellCheckingType(rawValue: Int(idx))
-            else {
-                return .default
-        }
-        return type
-    }
-    #endif
-}
-
-extension RSDTextSpellCheckingType : RSDDocumentableStringEnum {
-}
-
-/// `Codable` enum for the spell checking type for an input text field.
-/// - keywords: [ "default", "asciiCapable", "numbersAndPunctuation", "URL",
-///               "numberPad", "phonePad", "namePhonePad", "emailAddress",
-///               "decimalPad", "twitter", "webSearch", "asciiCapableNumberPad"]
-public enum RSDKeyboardType  : String, Codable, RSDStringEnumSet {
-    case `default`, asciiCapable, numbersAndPunctuation, URL, numberPad, phonePad, namePhonePad, emailAddress, decimalPad, twitter, webSearch, asciiCapableNumberPad
-    
-    public static var all: Set<RSDKeyboardType> {
-        return Set(orderedSet)
-    }
-
-    static var orderedSet: [RSDKeyboardType] {
-        return [.default, .asciiCapable, .numbersAndPunctuation, .URL, .numberPad, .phonePad, .namePhonePad, .emailAddress, .decimalPad, .twitter, .webSearch, .asciiCapableNumberPad]
-    }
-
-    /// Return the `UIKeyboardType` that maps to this enum.
-    #if os(iOS) || os(tvOS)
-    public func keyboardType() -> UIKeyboardType {
-        guard let idx = RSDKeyboardType.orderedSet.firstIndex(of: self),
-            let type = UIKeyboardType(rawValue: Int(idx))
-            else {
-                return .default
-        }
-        return type
-    }
-    #endif
-}
-
-extension RSDKeyboardType : RSDDocumentableStringEnum {
 }

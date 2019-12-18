@@ -52,7 +52,6 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
         case feedback
         case form
         case instruction
-        case imagePicker
         case overview
         case section
         case transform
@@ -81,9 +80,6 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
     
     /// Defaults to creating a `RSDFormUIStep`.
     public static let form = StandardType.form.type
-    
-    /// Defaults to creating a `RSDImagePickerStep`.
-    public static let imagePicker = StandardType.imagePicker.type
     
     /// Defaults to creating a `RSDActiveUIStep`.
     public static let instruction = StandardType.instruction.type

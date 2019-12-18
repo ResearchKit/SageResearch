@@ -33,42 +33,9 @@
 
 import Foundation
 
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
-
-
-/// An enum for part of the view to which a given color style should be applied.
-public enum RSDColorPlacement : String, Codable {
+public protocol RSDColorMappingThemeElement : RSDResourceInfo {
     
-    /// The color applies to the header.
-    case header
+    var customColorData: RSDColorData? { get }
     
-    /// The color applies to the body of the view.
-    case body
-    
-    /// The color applies to the footer of the view.
-    case footer
-}
-
-public protocol RSDColorMappingThemeElement : RSDUIThemeElement {
-    
-    #if os(watchOS) || os(macOS)
-    /// **Available** for watchOS and macOS.
-    ///
-    /// The background color for this step. If undefined then the background color will be determined by the
-    /// step view controller.
-    /// - returns: The color or `nil` if undefined.
-    func backgroundColor(for placement: RSDColorPlacement, using colorRules: RSDColorRules) -> RSDColorTile?
-    #else
-    
-    /// **Available** for iOS and tvOS.
-    ///
-    /// The background color for this step. If undefined then the background color will be determined by the
-    /// step view controller.
-    /// - returns: The color or `nil` if undefined.
-    func backgroundColor(for placement: RSDColorPlacement, using colorRules: RSDColorRules, compatibleWith traitCollection: UITraitCollection?) -> RSDColorTile?
-    #endif
+    func backgroundColorStyle(for placement: RSDColorPlacement) -> RSDColorStyle
 }

@@ -380,16 +380,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
             else {
                 return nil
         }
-        if let designSystem = parent?.rootPathComponent?.designSystem,
-            designSystem.version == 0,
-            activeStep.commands.contains(.transitionAutomatically) {
-            // If the design system is version 0 and the step transitions automatically
-            // then return the V0 view.
-            return RSDActiveStepViewControllerV0(step: step, parent: parent)
-        }
-        else {
-            return RSDActiveStepViewController(step: step, parent: parent)
-        }
+        return RSDActiveStepViewController(step: step, parent: parent)
     }
     
     /// The default nib name to use when instantiating the view controller using `init(step:)`.
@@ -422,19 +413,5 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
     /// - parameter aDecoder: The decoder used to initialize this view controller.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-}
-
-@available(*, deprecated)
-public class RSDActiveStepViewControllerV0 : RSDActiveStepViewController {
-    
-    /// The default nib name to use when instantiating the view controller using `init(step:)`.
-    open override class var nibName: String {
-        return String(describing: RSDActiveStepViewControllerV0.self)
-    }
-    
-    /// The default bundle to use when instantiating the view controller using `init(step:)`.
-    open override class var bundle: Bundle {
-        return Bundle(for: RSDActiveStepViewControllerV0.self)
     }
 }

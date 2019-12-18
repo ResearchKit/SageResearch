@@ -34,7 +34,7 @@
 import Foundation
 
 /// The task repository is used by an app to configure fetching tasks.
-open class RSDTaskRepository : NSObject {
+open class RSDTaskRepository {
     
     /// Singleton for the shared task repository.
     public static var shared = RSDTaskRepository()

@@ -31,11 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
+import Foundation
 
 /// `LocalizationBundle` is a wrapper for returning a bundle along with a table name and target suffixes.
 /// This is used by the `Localization` class to return localized strings that are defined in a strings

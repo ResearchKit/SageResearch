@@ -38,9 +38,6 @@ class CodableUIActionObjectTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
-        // setup to have an image wrapper delegate set so the image wrapper won't crash
-        RSDImageWrapper.sharedDelegate = TestImageWrapperDelegate()
     }
     
     override func tearDown() {

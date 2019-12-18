@@ -409,14 +409,14 @@ fileprivate class RSDCheckboxButtonView : UIView, RSDViewDesignable {
     }
     
     /// The background color of the checkbox when selected.
-    var selectedColor : UIColor = RSDStudyConfiguration.shared.colorPalette.primary.normal.color {
+    var selectedColor : UIColor = RSDDesignSystem.shared.colorRules.palette.primary.normal.color {
         didSet {
             viewChecked.backgroundColor = selectedColor
         }
     }
     
     /// The border color of the checkbox when selected.
-    var selectedBorderColor : UIColor = RSDStudyConfiguration.shared.colorPalette.primary.light.color {
+    var selectedBorderColor : UIColor = RSDDesignSystem.shared.colorRules.palette.primary.light.color {
         didSet {
             viewChecked.layer.borderColor = selectedBorderColor.cgColor
         }
@@ -538,7 +538,7 @@ fileprivate class RSDCheckboxButtonView : UIView, RSDViewDesignable {
 @IBDesignable
 fileprivate class UncheckedView : UIView {
     
-    fileprivate var borderColor: UIColor = RSDStudyConfiguration.shared.colorPalette.grayScale.lightGray.color {
+    fileprivate var borderColor: UIColor = RSDDesignSystem.shared.colorRules.palette.grayScale.lightGray.color {
         didSet {
             self.layer.borderColor = borderColor.cgColor
         }

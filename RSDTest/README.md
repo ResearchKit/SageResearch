@@ -1,6 +1,6 @@
 # RSDTest
 
-RSDTest is set up to test that a light-weight app with no required permissions can be built and
+RSDTest is set up to test that a lightweight app with no required permissions can be built and
 submitted to the Apple App Store without requiring set up of the unused privacy keys. Examples of
 form steps and instruction steps that *do not* use any additional frameworks such as HealthKit,
 CoreMotion, or CoreLocation can be added to this target when submitted as additions to the

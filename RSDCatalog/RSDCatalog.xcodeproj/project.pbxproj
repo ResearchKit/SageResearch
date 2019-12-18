@@ -39,13 +39,21 @@
 		F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB72095550C00C6A4BC /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42AC0209555C400C6A4BC /* RSDCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A672095518400C6A4BC /* RSDCatalogTests.swift */; };
 		F8DC072E2256DD8A0045D530 /* ArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */; };
-		FF5010BA22DE621E0035E83C /* topMarginBackground.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B722DE621E0035E83C /* topMarginBackground.pdf */; };
-		FF5010BB22DE621E0035E83C /* HoldPhone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B822DE621E0035E83C /* HoldPhone.pdf */; };
-		FF5010BC22DE621E0035E83C /* topBackground.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B922DE621E0035E83C /* topBackground.pdf */; };
-		FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */ = {isa = PBXBuildFile; fileRef = FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */; };
-		FF8FC21322F3A01800FA6DAF /* PhoneInPocket-1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21222F3A01800FA6DAF /* PhoneInPocket-1.pdf */; };
-		FF8FC21522F3A02300FA6DAF /* PhoneInPocket-2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21422F3A02300FA6DAF /* PhoneInPocket-2.pdf */; };
-		FF8FC21722F3A02D00FA6DAF /* PhoneInPocket-3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21622F3A02D00FA6DAF /* PhoneInPocket-3.pdf */; };
+        FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */ = {isa = PBXBuildFile; fileRef = FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */; };
+		FF432A1F23A3033F0027288F /* HoldPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A1D23A3033F0027288F /* HoldPhone@2x.png */; };
+		FF432A2023A3033F0027288F /* HoldPhone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A1E23A3033F0027288F /* HoldPhone@3x.png */; };
+		FF432A2923A3036E0027288F /* PhoneInPocket-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A2123A3036E0027288F /* PhoneInPocket-1@2x.png */; };
+		FF432A2A23A3036E0027288F /* PhoneInPocket-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A2223A3036E0027288F /* PhoneInPocket-4@2x.png */; };
+		FF432A2B23A3036E0027288F /* PhoneInPocket-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A2323A3036E0027288F /* PhoneInPocket-2@2x.png */; };
+		FF432A2C23A3036E0027288F /* PhoneInPocket-1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A2423A3036E0027288F /* PhoneInPocket-1@3x.png */; };
+		FF432A2D23A3036E0027288F /* PhoneInPocket-4@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A2523A3036E0027288F /* PhoneInPocket-4@3x.png */; };
+		FF432A2E23A3036E0027288F /* PhoneInPocket-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A2623A3036E0027288F /* PhoneInPocket-3@2x.png */; };
+		FF432A2F23A3036E0027288F /* PhoneInPocket-2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A2723A3036E0027288F /* PhoneInPocket-2@3x.png */; };
+		FF432A3023A3036E0027288F /* PhoneInPocket-3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A2823A3036E0027288F /* PhoneInPocket-3@3x.png */; };
+		FF432A3323A3038A0027288F /* topBackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3123A3038A0027288F /* topBackground@3x.png */; };
+		FF432A3423A3038A0027288F /* topBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3223A3038A0027288F /* topBackground@2x.png */; };
+		FF432A3723A303BB0027288F /* topMarginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3523A303BA0027288F /* topMarginBackground@2x.png */; };
+		FF432A3823A303BB0027288F /* topMarginBackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3623A303BB0027288F /* topMarginBackground@3x.png */; };
 		FF8FC21922F3A0AF00FA6DAF /* Theme_Image.json in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */; };
 /* End PBXBuildFile section */
 
@@ -118,13 +126,21 @@
 		F8D42AB52095550C00C6A4BC /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42AB72095550C00C6A4BC /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveManager.swift; sourceTree = "<group>"; };
-		FF5010B722DE621E0035E83C /* topMarginBackground.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = topMarginBackground.pdf; sourceTree = "<group>"; };
-		FF5010B822DE621E0035E83C /* HoldPhone.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = HoldPhone.pdf; sourceTree = "<group>"; };
-		FF5010B922DE621E0035E83C /* topBackground.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = topBackground.pdf; sourceTree = "<group>"; };
-		FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Silver_Cat_01_Videvo.mov; sourceTree = "<group>"; };
-		FF8FC21222F3A01800FA6DAF /* PhoneInPocket-1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "PhoneInPocket-1.pdf"; sourceTree = "<group>"; };
-		FF8FC21422F3A02300FA6DAF /* PhoneInPocket-2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "PhoneInPocket-2.pdf"; sourceTree = "<group>"; };
-		FF8FC21622F3A02D00FA6DAF /* PhoneInPocket-3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "PhoneInPocket-3.pdf"; sourceTree = "<group>"; };
+        FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Silver_Cat_01_Videvo.mov; sourceTree = "<group>"; };
+		FF432A1D23A3033F0027288F /* HoldPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HoldPhone@2x.png"; sourceTree = "<group>"; };
+		FF432A1E23A3033F0027288F /* HoldPhone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HoldPhone@3x.png"; sourceTree = "<group>"; };
+		FF432A2123A3036E0027288F /* PhoneInPocket-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-1@2x.png"; sourceTree = "<group>"; };
+		FF432A2223A3036E0027288F /* PhoneInPocket-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-4@2x.png"; sourceTree = "<group>"; };
+		FF432A2323A3036E0027288F /* PhoneInPocket-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-2@2x.png"; sourceTree = "<group>"; };
+		FF432A2423A3036E0027288F /* PhoneInPocket-1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-1@3x.png"; sourceTree = "<group>"; };
+		FF432A2523A3036E0027288F /* PhoneInPocket-4@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-4@3x.png"; sourceTree = "<group>"; };
+		FF432A2623A3036E0027288F /* PhoneInPocket-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-3@2x.png"; sourceTree = "<group>"; };
+		FF432A2723A3036E0027288F /* PhoneInPocket-2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-2@3x.png"; sourceTree = "<group>"; };
+		FF432A2823A3036E0027288F /* PhoneInPocket-3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-3@3x.png"; sourceTree = "<group>"; };
+		FF432A3123A3038A0027288F /* topBackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topBackground@3x.png"; sourceTree = "<group>"; };
+		FF432A3223A3038A0027288F /* topBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topBackground@2x.png"; sourceTree = "<group>"; };
+		FF432A3523A303BA0027288F /* topMarginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topMarginBackground@2x.png"; sourceTree = "<group>"; };
+		FF432A3623A303BB0027288F /* topMarginBackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topMarginBackground@3x.png"; sourceTree = "<group>"; };
 		FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Theme_Image.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -259,12 +275,20 @@
 		FF5010B022DE60BB0035E83C /* Image Files */ = {
 			isa = PBXGroup;
 			children = (
-				FF5010B822DE621E0035E83C /* HoldPhone.pdf */,
-				FF5010B922DE621E0035E83C /* topBackground.pdf */,
-				FF5010B722DE621E0035E83C /* topMarginBackground.pdf */,
-				FF8FC21222F3A01800FA6DAF /* PhoneInPocket-1.pdf */,
-				FF8FC21422F3A02300FA6DAF /* PhoneInPocket-2.pdf */,
-				FF8FC21622F3A02D00FA6DAF /* PhoneInPocket-3.pdf */,
+				FF432A1D23A3033F0027288F /* HoldPhone@2x.png */,
+				FF432A1E23A3033F0027288F /* HoldPhone@3x.png */,
+				FF432A3223A3038A0027288F /* topBackground@2x.png */,
+				FF432A3123A3038A0027288F /* topBackground@3x.png */,
+				FF432A3523A303BA0027288F /* topMarginBackground@2x.png */,
+				FF432A3623A303BB0027288F /* topMarginBackground@3x.png */,
+				FF432A2123A3036E0027288F /* PhoneInPocket-1@2x.png */,
+				FF432A2423A3036E0027288F /* PhoneInPocket-1@3x.png */,
+				FF432A2323A3036E0027288F /* PhoneInPocket-2@2x.png */,
+				FF432A2723A3036E0027288F /* PhoneInPocket-2@3x.png */,
+				FF432A2623A3036E0027288F /* PhoneInPocket-3@2x.png */,
+				FF432A2823A3036E0027288F /* PhoneInPocket-3@3x.png */,
+				FF432A2223A3036E0027288F /* PhoneInPocket-4@2x.png */,
+				FF432A2523A3036E0027288F /* PhoneInPocket-4@3x.png */,
 			);
 			path = "Image Files";
 			sourceTree = "<group>";
@@ -385,10 +409,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF8FC21522F3A02300FA6DAF /* PhoneInPocket-2.pdf in Resources */,
-				FF8FC21322F3A01800FA6DAF /* PhoneInPocket-1.pdf in Resources */,
-				FF8FC21722F3A02D00FA6DAF /* PhoneInPocket-3.pdf in Resources */,
+				FF432A2A23A3036E0027288F /* PhoneInPocket-4@2x.png in Resources */,
+				FF432A2D23A3036E0027288F /* PhoneInPocket-4@3x.png in Resources */,
+				FF432A3423A3038A0027288F /* topBackground@2x.png in Resources */,
+				FF432A3023A3036E0027288F /* PhoneInPocket-3@3x.png in Resources */,
+				FF432A2923A3036E0027288F /* PhoneInPocket-1@2x.png in Resources */,
+				FF432A2023A3033F0027288F /* HoldPhone@3x.png in Resources */,
+				FF432A1F23A3033F0027288F /* HoldPhone@2x.png in Resources */,
+				FF432A2B23A3036E0027288F /* PhoneInPocket-2@2x.png in Resources */,
 				F8D42A91209552CB00C6A4BC /* Main.storyboard in Resources */,
+				FF432A2E23A3036E0027288F /* PhoneInPocket-3@2x.png in Resources */,
+				FF432A2C23A3036E0027288F /* PhoneInPocket-1@3x.png in Resources */,
 				F8D42A9C209552EC00C6A4BC /* FormStep_List.json in Resources */,
 				F8D42AA1209552EC00C6A4BC /* TaskGroups.json in Resources */,
 				F8D42A5A2095518400C6A4BC /* Assets.xcassets in Resources */,
@@ -396,15 +427,16 @@
 				F8D42A9B209552EC00C6A4BC /* Recorder_Motion.json in Resources */,
 				F8373C9320964F60004DD4E1 /* README.md in Resources */,
 				F8D42A9E209552EC00C6A4BC /* Theme_Color.json in Resources */,
-				FF5010BB22DE621E0035E83C /* HoldPhone.pdf in Resources */,
+				FF432A3723A303BB0027288F /* topMarginBackground@2x.png in Resources */,
 				F8D42A9D209552EC00C6A4BC /* FormStep_Textfield.json in Resources */,
 				F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */,
-				FF5010BC22DE621E0035E83C /* topBackground.pdf in Resources */,
+				FF432A3323A3038A0027288F /* topBackground@3x.png in Resources */,
+				FF432A2F23A3036E0027288F /* PhoneInPocket-2@3x.png in Resources */,
 				F82A4AC322960DD400BEBE3C /* Recorder_Distance.json in Resources */,
 				FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */,
 				FF8FC21922F3A0AF00FA6DAF /* Theme_Image.json in Resources */,
 				F8D42AA0209552EC00C6A4BC /* FormStep_Picker.json in Resources */,
-				FF5010BA22DE621E0035E83C /* topMarginBackground.pdf in Resources */,
+				FF432A3823A303BB0027288F /* topMarginBackground@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +577,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -600,7 +632,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -616,7 +648,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = RSDCatalog/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -638,7 +670,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = RSDCatalog/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

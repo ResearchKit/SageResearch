@@ -38,10 +38,7 @@ class FactoryTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
-        // setup to have an image wrapper delegate set so the image wrapper won't crash
-        RSDImageWrapper.sharedDelegate = TestImageWrapperDelegate()
-        
+                
         // Use a statically defined timezone.
         rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
@@ -60,7 +57,7 @@ class FactoryTests: XCTestCase {
         XCTAssertEqual(taskGroup.identifier, "foobar")
         XCTAssertEqual(taskGroup.title, "Foobarific")
         XCTAssertEqual(taskGroup.detail, "This is a task group containing foo and bar")
-        XCTAssertEqual(taskGroup.icon?.imageName, "foobarIcon")
+        XCTAssertEqual(taskGroup.imageData?.imageIdentifier, "foobarIcon")
         XCTAssertEqual(taskGroup.tasks.count, 2)
         
         guard let fooTaskInfo = taskGroup.tasks.first as? RSDTaskInfoObject,
@@ -74,13 +71,13 @@ class FactoryTests: XCTestCase {
         XCTAssertEqual(fooTaskInfo.title, "Hello Foo!")
         XCTAssertEqual(fooTaskInfo.detail, "This is a test of foo.")
         XCTAssertEqual(fooTaskInfo.estimatedMinutes, 5)
-        XCTAssertEqual((fooTaskInfo.imageVendor as? RSDImageWrapper)?.imageName, "fooIcon")
+        XCTAssertEqual(fooTaskInfo.imageData?.imageIdentifier, "fooIcon")
         
         XCTAssertEqual(barTaskInfo.identifier, "bar")
         XCTAssertEqual(barTaskInfo.title, "Hello Bar!")
         XCTAssertEqual(barTaskInfo.detail, "This is a test of bar.")
         XCTAssertEqual(barTaskInfo.estimatedMinutes, 7)
-        XCTAssertEqual((barTaskInfo.imageVendor as? RSDImageWrapper)?.imageName, "barIcon")
+        XCTAssertEqual(barTaskInfo.imageData?.imageIdentifier, "barIcon")
     }
     
     func testFetchTask() {

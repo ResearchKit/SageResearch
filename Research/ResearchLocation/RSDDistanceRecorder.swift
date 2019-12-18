@@ -160,7 +160,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
     private var _permissionCompletion: RSDAsyncActionCompletionHandler?
     
     /// Override to request GPS and motion permissions.
-    override public func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
+    override public func requestPermissions(on viewController: Any, _ completion: @escaping RSDAsyncActionCompletionHandler) {
         
         // Get the current status and exit early if the status is restricted or denied.
         let status = CLLocationManager.authorizationStatus()

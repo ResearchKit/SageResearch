@@ -43,5 +43,5 @@ public struct RSDIconInfo : Codable {
     public let subtitle: String?
     
     /// The icon for this info object.
-    public let icon: RSDImageWrapper?
+    public let icon: RSDResourceImageDataObject?
 }

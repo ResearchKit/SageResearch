@@ -104,7 +104,7 @@ extension RSDWeekday : RSDChoice, RSDComparable {
     }
     
     /// Returns `nil`.
-    public var imageVendor: RSDImageVendor? {
+    public var imageData: RSDImageData? {
         return nil
     }
     
