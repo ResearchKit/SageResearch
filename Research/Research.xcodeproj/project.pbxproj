@@ -1489,7 +1489,7 @@
 		FF5C4C1C1F8C872500F311BA /* RSDTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskController.swift; sourceTree = "<group>"; };
 		FF5C4C1E1F8C874300F311BA /* RSDStepController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepController.swift; sourceTree = "<group>"; };
 		FF5C4C311F8C9DC100F311BA /* RSDResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultObject.swift; sourceTree = "<group>"; };
-		FF61FA3023A447F5006B36C5 /* MigrationNotes-v2.9.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MigrationNotes-v2.9.md"; sourceTree = "<group>"; };
+		FF61FA3023A447F5006B36C5 /* MigrationNotes-v3.0.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MigrationNotes-v3.0.md"; sourceTree = "<group>"; };
 		FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSDResourceImageDataObject+Platform.swift"; sourceTree = "<group>"; };
 		FF63E8221FBABF560060DD98 /* RSDSurveyRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSurveyRule.swift; sourceTree = "<group>"; };
 		FF63E8391FBAD54D0060DD98 /* RSDSurveyNavigationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSurveyNavigationStep.swift; sourceTree = "<group>"; };
@@ -2482,7 +2482,7 @@
 			isa = PBXGroup;
 			children = (
 				F814DD1E227509D3004579EF /* README.md */,
-				FF61FA3023A447F5006B36C5 /* MigrationNotes-v2.9.md */,
+				FF61FA3023A447F5006B36C5 /* MigrationNotes-v3.0.md */,
 				FF72B2331F6859D3004C6F15 /* Research */,
 				FF72B23E1F6859D3004C6F15 /* ResearchTests */,
 				F875575720807E2300235078 /* Research-UnitTest */,
