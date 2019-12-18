@@ -343,7 +343,7 @@ open class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
     }
     
     fileprivate static func titleLabelFont(for designSystem: RSDDesignSystem) -> UIFont {
-        return designSystem.fontRules.baseFont(for: .mediumHeader)
+        return designSystem.fontRules.font(for: .mediumHeader)
     }
 
     override open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
