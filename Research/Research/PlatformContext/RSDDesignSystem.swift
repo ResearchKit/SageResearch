@@ -143,24 +143,5 @@ open class RSDDesignSystem {
         public static let hint: TextType = "hint"    // placeholder
         public static let microHeader: TextType = "microHeader"
         public static let microDetail: TextType = "microDetail"
-        
-        // Version 1
-        @available(*, deprecated, message: "Use `xLargeHeader`")
-        public static let heading1: TextType = "heading1"
-        
-        @available(*, deprecated, message: "Use `largeHeader`")
-        public static let heading2: TextType = "heading2"
-        
-        @available(*, deprecated, message: "Use `mediumHeader` or `largeHeader`")
-        public static let heading3: TextType = "heading3"
-        
-        @available(*, deprecated, message: "Use `mediumHeader`")
-        public static let heading4: TextType = "heading4"
-        
-        @available(*, deprecated, message: "Use `smallHeader`")
-        public static let fieldHeader: TextType = "fieldHeader"
-        
-        @available(*, deprecated, message: "Use `largeNumber`")
-        public static let counter: TextType = "counter"
     }
 }

@@ -68,17 +68,6 @@ extension RSDImageData {
                 callback(self.imageIdentifier, image)
             }
         }
-        else if let imageWrapper = self as? RSDImageWrapper {
-            if let delegate = RSDImageWrapper.sharedDelegate {
-                delegate.fetchImage(for: imageWrapper, callback: callback)
-            }
-            else {
-                let image = imageWrapper.embeddedImage()
-                DispatchQueue.main.async {
-                    callback(self.imageIdentifier, image)
-                }
-            }
-        }
         else if self.imageIdentifier.starts(with: "http"),
             let url = URL(string: self.imageIdentifier) {
             let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)

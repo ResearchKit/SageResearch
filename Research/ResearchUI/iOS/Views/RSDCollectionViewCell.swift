@@ -53,11 +53,11 @@ import UIKit
                 return background
             }
             else {
-                return RSDStudyConfiguration.shared.colorPalette.primary.normal
+                return RSDDesignSystem.shared.colorRules.palette.primary.normal
             }
         }
         else {
-            return RSDStudyConfiguration.shared.colorPalette.grayScale.white
+            return RSDDesignSystem.shared.colorRules.palette.grayScale.white
         }
     }
     

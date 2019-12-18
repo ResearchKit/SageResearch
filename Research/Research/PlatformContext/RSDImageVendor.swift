@@ -1,8 +1,8 @@
 //
-//  RSDImageData.swift
+//  RSDImageVendor.swift
 //  Research
 //
-//  Copyright © 2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,46 +31,23 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
-/// The image data protocol is used to define a placeholder for image data.
-public protocol RSDImageData {
+/// `RSDImageVendor` is a protocol for defining an abstract method for fetching an image.
+@available(*, unavailable, message: "Use `RSDImageData` instead.")
+public protocol RSDImageVendor : RSDImageData {
     
-    /// A unique identifier that can be used to validate that the image shown in a reusable view
-    /// is the same image as the one fetched.
-    var imageIdentifier: String { get }
-}
-
-/// A resource image data is embedded within a resource bundle using the given platform's standard
-/// asset management tools.
-public protocol RSDResourceImageData : RSDImageData, RSDResourceDataInfo {
-}
-
-extension RSDResourceImageData {
+    /// The size of the image.
+    var size: CGSize { get }
     
-    /// The image identifier for a resource image is the `resourceName`.
-    public var imageIdentifier: String {
-        guard let bundleId = self.bundleIdentifier ?? self.packageName
-            else {
-                return self.resourceName
-        }
-        return "\(bundleId).\(self.resourceName)"
-    }
-    
-    /// The Android resource type for an image is always "drawable".
-    public var resourceType: RSDResourceNameType? {
-        return .drawable
-    }
-}
-
-/// This framework includes different decodables that implement both the `RSDResourceImageData`
-/// protocol and the `RSDImageThemeElement` protocol. This shared protocol provides for a
-/// consistent implementation for both by setting the `resourceName` to the same as the `imageName`.
-public protocol RSDThemeResourceImageData : RSDImageThemeElement, RSDResourceImageData, RSDDecodableBundleInfo {
-}
-
-extension RSDThemeResourceImageData {
-    
-    public var resourceName: String {
-        return self.imageName
-    }
+    /// Fetch the image.
+    ///
+    /// - parameters:
+    ///     - size:        The size of the image to return.
+    ///     - callback:    The callback with the identifier and image, run on the main thread.
+    func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void))
 }

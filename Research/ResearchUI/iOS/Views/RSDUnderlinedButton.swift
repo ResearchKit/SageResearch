@@ -51,14 +51,6 @@ import UIKit
         }
     }
     
-    @available(*, deprecated)
-    open var textFont : UIFont? {
-        didSet {
-            debugPrint("WARNING! Setting a deprecated property on RSDUnderlinedButton. Likely using a NIB or storyboard.")
-            refreshView()
-        }
-    }
-    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -112,7 +104,7 @@ import UIKit
             return designSystem.colorRules.underlinedTextButton(on: background, state: controlState)
         }()
         
-        let textFont = self.textFont ?? designSystem.fontRules.buttonFont(for: buttonType, state: controlState)
+        let textFont = designSystem.fontRules.buttonFont(for: buttonType, state: controlState)
         
         if let titleUnwrapped = title {
             let attributes: [NSAttributedString.Key : Any] = [
