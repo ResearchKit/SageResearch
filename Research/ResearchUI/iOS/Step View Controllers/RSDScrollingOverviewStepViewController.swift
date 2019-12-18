@@ -71,6 +71,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         return self.step as? RSDOverviewStep
     }
 
+    /// The header title for the collection view icons.
     open var iconCollectionViewHeaderTitle: String {
          return Localization.localizedString("OVERVIEW_WHAT_YOU_NEED")
     }
@@ -342,7 +343,7 @@ open class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
     }
     
     fileprivate static func titleLabelFont(for designSystem: RSDDesignSystem) -> UIFont {
-        return designSystem.fontRules.font(for: .mediumHeader)
+        return designSystem.fontRules.baseFont(for: .mediumHeader)
     }
 
     override open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
@@ -380,8 +381,6 @@ open class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
     @IBOutlet public var titleLabel: UILabel?
     @IBOutlet public var imageView: UIImageView?
 
-    open private(set) var titleTextType: RSDDesignSystem.TextType = .small
-
     public override init(frame: CGRect) {
         super.init(frame:frame)
         commonInit()
@@ -398,8 +397,8 @@ open class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
         let contentTile = designSystem.colorRules.tableCellBackground(on: background, isSelected: isSelected)
 
         contentView.backgroundColor = contentTile.color
-        titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: titleTextType)
-        titleLabel?.font = designSystem.fontRules.font(for: titleTextType, compatibleWith: traitCollection)
+        titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: .small)
+        titleLabel?.font = designSystem.fontRules.baseFont(for: .small)
     }
 
     override open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
