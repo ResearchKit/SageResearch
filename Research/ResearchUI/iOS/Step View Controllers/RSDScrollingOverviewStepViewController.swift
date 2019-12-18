@@ -75,13 +75,12 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
          return Localization.localizedString("OVERVIEW_WHAT_YOU_NEED")
     }
     
-    /// The iPhone SE width to be used for scaling the UI
-    let smallPhoneWidth = CGFloat(640)
+    /// For small phones, like the iPhone SE, the width to be used for scaling the UI.
     var isSmallScreen: Bool {
         return UIScreen.main.bounds.width <= 320
     }
 
-    /// The number of columns in the icon collection view
+    /// The number of columns in the icon collection view.
     var columnCount: Int {
         guard let itemCount = self.overviewStep?.icons?.count else { return 0 }
         switch itemCount {
@@ -92,17 +91,17 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         }
     }
     
-    /// The spacing horizontally between icon collection view cells
+    /// The spacing horizontally between icon collection view cells.
     var horizontalCellSpacing: CGFloat {
         return isSmallScreen ? 16 : 20
     }
     
-    /// The height of an icon collection view cells
+    /// The height of an icon collection view cells.
     var cellHeightAbsolute: CGFloat {
         return isSmallScreen ? 110 : 140
     }
     
-    /// The spacing vertically between icon collection view cells
+    /// The spacing vertically between icon collection view cells.
     var verticalCellSpacing: CGFloat {
         return 24
     }
@@ -266,6 +265,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
                 let icon = icons[itemIndex]
                 overviewCell.imageView?.image = icon.icon?.embeddedImage()
                 overviewCell.titleLabel?.text = icon.title
+                overviewCell.accessibilityLabel = icon.title
                 overviewCell.setNeedsUpdateConstraints()
             }
         }
@@ -281,7 +281,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         else {
             // Otherwise make the size of the section have no height.
             return CGSize.zero
-            // return CGSize(width: iconCollectionView.bounds.width, height: 0)
         }
     }
     
@@ -322,8 +321,6 @@ open class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
     
     @IBOutlet public var titleLabel: UILabel?
 
-    fileprivate static var titleTextType: RSDDesignSystem.TextType = .mediumHeader
-
     public override init(frame: CGRect) {
         super.init(frame:frame)
         commonInit()
@@ -334,18 +331,18 @@ open class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
         commonInit()
     }
 
-    func updateColorsAndFonts() {
+    private func updateColorsAndFonts() {
         let designSystem = self.designSystem ?? RSDDesignSystem()
         let background = self.backgroundColorTile ?? RSDGrayScale().white
         let contentTile = designSystem.colorRules.tableCellBackground(on: background, isSelected: isSelected)
 
         contentView.backgroundColor = contentTile.color
-        titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: RSDTitleHeaderCollectionViewHeader.titleTextType)
+        titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: .mediumHeader)
         titleLabel?.font = RSDTitleHeaderCollectionViewHeader.titleLabelFont(for: designSystem)
     }
     
     fileprivate static func titleLabelFont(for designSystem: RSDDesignSystem) -> UIFont {
-        return designSystem.fontRules.font(for: RSDTitleHeaderCollectionViewHeader.titleTextType)
+        return designSystem.fontRules.font(for: .mediumHeader)
     }
 
     override open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
