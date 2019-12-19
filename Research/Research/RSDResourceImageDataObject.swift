@@ -48,6 +48,20 @@ extension String {
     }
 }
 
+/// `RSDEmbeddedIconData` is a convenience protocol for fetching an codable image using an optional
+/// `RSDResourceImageDataObject`. This protocol implements an extension method to fetch the icon.
+public protocol RSDEmbeddedIconData {
+    
+    /// The optional `RSDResourceImageDataObject` with the pointer to the image.
+    var icon: RSDResourceImageDataObject? { get }
+}
+
+extension RSDEmbeddedIconData {
+    public var imageData: RSDImageData? {
+        return icon
+    }
+}
+
 /// Implementation of a resource image pointer that can be decoded from a string.
 public struct RSDResourceImageDataObject : RSDThemeResourceImageData, Codable {
 
