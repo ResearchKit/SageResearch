@@ -38,7 +38,7 @@ import UIKit
 #endif
 
 /// `RSDImageVendor` is a protocol for defining an abstract method for fetching an image.
-@available(*, unavailable, message: "Use `RSDImageData` instead.")
+@available(*, deprecated, message: "Use `RSDImageData` instead.")
 public protocol RSDImageVendor : RSDImageData {
     
     /// The size of the image.

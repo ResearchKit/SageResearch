@@ -72,8 +72,6 @@
 		F8112E712230B4A3005BCC93 /* RSDScoringResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8112E6F2230B4A3005BCC93 /* RSDScoringResult.swift */; };
 		F8112E722230B4A3005BCC93 /* RSDScoringResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8112E6F2230B4A3005BCC93 /* RSDScoringResult.swift */; };
 		F8112E732230B4A3005BCC93 /* RSDScoringResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8112E6F2230B4A3005BCC93 /* RSDScoringResult.swift */; };
-		F814DCF722750436004579EF /* ResearchRecorders.h in Headers */ = {isa = PBXBuildFile; fileRef = F814DCE922750435004579EF /* ResearchRecorders.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F814DCFE227504AE004579EF /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
 		F814DD0322750809004579EF /* RSDFileResultUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0222750809004579EF /* RSDFileResultUtility.swift */; };
 		F814DD0422750809004579EF /* RSDFileResultUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0222750809004579EF /* RSDFileResultUtility.swift */; };
 		F814DD0522750809004579EF /* RSDFileResultUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0222750809004579EF /* RSDFileResultUtility.swift */; };
@@ -128,8 +126,6 @@
 		F82A4A192294B35800BEBE3C /* Silence.wav in Resources */ = {isa = PBXBuildFile; fileRef = F82A4A162294B07E00BEBE3C /* Silence.wav */; };
 		F82A4AA922960BF700BEBE3C /* ResearchLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4AA022960BF700BEBE3C /* ResearchLocation.framework */; };
 		F82A4AB022960BF700BEBE3C /* ResearchLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = F82A4AA222960BF700BEBE3C /* ResearchLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F82A4AB722960C2800BEBE3C /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
-		F82A4AB822960C2800BEBE3C /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; };
 		F82A4ABB22960C3100BEBE3C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ABA22960C3100BEBE3C /* CoreLocation.framework */; };
 		F82A4ABC22960C7500BEBE3C /* CodableDistanceRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F810CF39202E34C6009C49C9 /* CodableDistanceRecorderTests.swift */; };
 		F82A4ABD22960C8000BEBE3C /* RSDDistanceRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */; };
@@ -303,7 +299,6 @@
 		F8904D4B1FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
 		F891DD1C228CFCD4001B2A57 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; };
 		F891DD23228CFCD4001B2A57 /* ResearchMotion.h in Headers */ = {isa = PBXBuildFile; fileRef = F891DD15228CFCD3001B2A57 /* ResearchMotion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F891DD2B228CFD57001B2A57 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
 		F891DD2D228CFD64001B2A57 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD2C228CFD63001B2A57 /* CoreMotion.framework */; };
 		F891DD2E228CFD88001B2A57 /* RSDMotionAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FF42058602F00752B7B /* RSDMotionAuthorization.swift */; };
 		F891DD2F228CFD91001B2A57 /* RSDMotionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0922750899004579EF /* RSDMotionRecorder.swift */; };
@@ -825,8 +820,6 @@
 		FF4329BE239F20DA0027288F /* RSDColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4329BC239F20DA0027288F /* RSDColorStyle.swift */; };
 		FF4329BF239F20DA0027288F /* RSDColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4329BC239F20DA0027288F /* RSDColorStyle.swift */; };
 		FF4329C0239F20DA0027288F /* RSDColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4329BC239F20DA0027288F /* RSDColorStyle.swift */; };
-		FF4329D923A027680027288F /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
-		FF4329DA23A027680027288F /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FF4329E223A044A20027288F /* RSDResourceImageDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4329E123A044A20027288F /* RSDResourceImageDataObject.swift */; };
 		FF4329E323A044A20027288F /* RSDResourceImageDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4329E123A044A20027288F /* RSDResourceImageDataObject.swift */; };
 		FF4329E423A044A20027288F /* RSDResourceImageDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4329E123A044A20027288F /* RSDResourceImageDataObject.swift */; };
@@ -1125,6 +1118,14 @@
 		FFF4931823AAB94F0037C54B /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */; };
 		FFF4931923AAB94F0037C54B /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */; };
 		FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */; };
+		FFFBE9DE23AD6A8800650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
+		FFFBE9DF23AD6A8800650F11 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFFBE9E123AD6A9700650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
+		FFFBE9E223AD6A9700650F11 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFFBE9E423AD6A9C00650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
+		FFFBE9E523AD6A9C00650F11 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFFBE9E723AD6A9E00650F11 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; };
+		FFFBE9E823AD6A9E00650F11 /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -1160,13 +1161,36 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FF4329D823A026670027288F /* Embed Frameworks */ = {
+		FFFBE9E023AD6A8800650F11 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FF4329DA23A027680027288F /* Research.framework in Embed Frameworks */,
+				FFFBE9DF23AD6A8800650F11 /* Research.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFFBE9E323AD6A9700650F11 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FFFBE9E223AD6A9700650F11 /* Research.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFFBE9E623AD6A9C00650F11 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FFFBE9E523AD6A9C00650F11 /* Research.framework in Embed Frameworks */,
+				FFFBE9E823AD6A9E00650F11 /* ResearchMotion.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1198,7 +1222,6 @@
 		F8112E60222F600A005BCC93 /* RSDTrackingTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTrackingTask.swift; sourceTree = "<group>"; };
 		F8112E6A2230B110005BCC93 /* RSDScoreBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDScoreBuilder.swift; sourceTree = "<group>"; };
 		F8112E6F2230B4A3005BCC93 /* RSDScoringResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDScoringResult.swift; sourceTree = "<group>"; };
-		F814DCE722750435004579EF /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F814DCE922750435004579EF /* ResearchRecorders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchRecorders.h; sourceTree = "<group>"; };
 		F814DCEA22750435004579EF /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		F814DD0222750809004579EF /* RSDFileResultUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileResultUtility.swift; sourceTree = "<group>"; };
@@ -1583,21 +1606,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		F814DCE422750435004579EF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F814DCFE227504AE004579EF /* Research.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F82A4A9D22960BF700BEBE3C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFFBE9E723AD6A9E00650F11 /* ResearchMotion.framework in Frameworks */,
+				FFFBE9E423AD6A9C00650F11 /* Research.framework in Frameworks */,
 				F82A4ABB22960C3100BEBE3C /* CoreLocation.framework in Frameworks */,
-				F82A4AB722960C2800BEBE3C /* Research.framework in Frameworks */,
-				F82A4AB822960C2800BEBE3C /* ResearchMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1613,7 +1628,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF4329D923A027680027288F /* Research.framework in Frameworks */,
+				FFFBE9DE23AD6A8800650F11 /* Research.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1638,7 +1653,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F891DD2D228CFD64001B2A57 /* CoreMotion.framework in Frameworks */,
-				F891DD2B228CFD57001B2A57 /* Research.framework in Frameworks */,
+				FFFBE9E123AD6A9700650F11 /* Research.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2514,7 +2529,6 @@
 				F8BE123521370931000AAB1E /* Research.framework */,
 				F87061A0227390110056F70E /* ResearchUI.framework */,
 				F87061A8227390110056F70E /* ResearchUITests_iOS.xctest */,
-				F814DCE722750435004579EF /* ResearchRecorders.framework */,
 				F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */,
 				F891DD1B228CFCD3001B2A57 /* ResearchMotionTests.xctest */,
 				F82A4AA022960BF700BEBE3C /* ResearchLocation.framework */,
@@ -2737,14 +2751,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		F814DCE222750435004579EF /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F814DCF722750436004579EF /* ResearchRecorders.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F82A4A9B22960BF700BEBE3C /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2841,24 +2847,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		F814DCE622750435004579EF /* ResearchRecorders (iOS) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F814DCF822750436004579EF /* Build configuration list for PBXNativeTarget "ResearchRecorders (iOS)" */;
-			buildPhases = (
-				F814DCE222750435004579EF /* Headers */,
-				F814DCE322750435004579EF /* Sources */,
-				F814DCE422750435004579EF /* Frameworks */,
-				F814DCE522750435004579EF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "ResearchRecorders (iOS)";
-			productName = "ResearchRecorders-iOS";
-			productReference = F814DCE722750435004579EF /* ResearchRecorders.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		F82A4A9F22960BF700BEBE3C /* ResearchLocation */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F82A4AB522960BF700BEBE3C /* Build configuration list for PBXNativeTarget "ResearchLocation" */;
@@ -2867,6 +2855,7 @@
 				F82A4A9C22960BF700BEBE3C /* Sources */,
 				F82A4A9D22960BF700BEBE3C /* Frameworks */,
 				F82A4A9E22960BF700BEBE3C /* Resources */,
+				FFFBE9E623AD6A9C00650F11 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2903,7 +2892,7 @@
 				F870619C227390110056F70E /* Sources */,
 				F870619D227390110056F70E /* Frameworks */,
 				F870619E227390110056F70E /* Resources */,
-				FF4329D823A026670027288F /* Embed Frameworks */,
+				FFFBE9E023AD6A8800650F11 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2958,6 +2947,7 @@
 				F891DD0F228CFCD3001B2A57 /* Sources */,
 				F891DD10228CFCD3001B2A57 /* Frameworks */,
 				F891DD11228CFCD3001B2A57 /* Resources */,
+				FFFBE9E323AD6A9700650F11 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3083,14 +3073,9 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
-					F814DCE622750435004579EF = {
-						CreatedOnToolsVersion = 10.2;
-						LastSwiftMigration = 1020;
-						ProvisioningStyle = Automatic;
-					};
 					F82A4A9F22960BF700BEBE3C = {
 						CreatedOnToolsVersion = 10.2;
 						DevelopmentTeam = KA9Z8R6M6K;
@@ -3173,7 +3158,6 @@
 				F875575520807E2300235078 /* Research-UnitTest */,
 				F870619F227390110056F70E /* ResearchUI (iOS) */,
 				F87061A7227390110056F70E /* ResearchUITests_iOS */,
-				F814DCE622750435004579EF /* ResearchRecorders (iOS) */,
 				F891DD12228CFCD3001B2A57 /* ResearchMotion */,
 				F891DD1A228CFCD3001B2A57 /* ResearchMotionTests */,
 				F82A4A9F22960BF700BEBE3C /* ResearchLocation */,
@@ -3183,13 +3167,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		F814DCE522750435004579EF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F82A4A9E22960BF700BEBE3C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3332,13 +3309,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F814DCE322750435004579EF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F82A4A9C22960BF700BEBE3C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4472,69 +4442,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		F814DCF922750436004579EF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 82;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 82;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "ResearchRecorders/Info-iOS.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchRecorders-iOS";
-				PRODUCT_NAME = ResearchRecorders;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		F814DCFA22750436004579EF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_CODE_COVERAGE = NO;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 82;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 82;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "ResearchRecorders/Info-iOS.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchRecorders-iOS";
-				PRODUCT_NAME = ResearchRecorders;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		F82A4AB122960BF700BEBE3C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -5303,15 +5210,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F814DCF822750436004579EF /* Build configuration list for PBXNativeTarget "ResearchRecorders (iOS)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F814DCF922750436004579EF /* Debug */,
-				F814DCFA22750436004579EF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		F82A4AB522960BF700BEBE3C /* Build configuration list for PBXNativeTarget "ResearchLocation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
