@@ -46,21 +46,6 @@ public protocol RSDDecodableBundleInfo : Decodable, RSDResourceInfo {
     var packageName: String? { get set }
 }
 
-extension Bundle : RSDResourceBundle {
-}
-
-extension RSDResourceInfo {
-    
-    /// The bundle returned for the given `bundleIdentifier` or `factoryBundle` if `nil`.
-    public var bundle: Bundle? {
-        guard let identifier = bundleIdentifier
-            else {
-                return self.factoryBundle as? Bundle
-        }
-        return Bundle(identifier: identifier)
-    }
-}
-
 
 /// `RSDResourceTransformer` is a protocol for getting either embedded resources or online resources.
 ///

@@ -45,6 +45,9 @@ extension RSDTaskViewModel : RSDTaskDesign {
     
     /// Implement design system management for the task view model.
     public var designSystem : RSDDesignSystem {
+        if !self.rootPathComponent.isEqual(self) {
+            return self.rootPathComponent.designSystem
+        }
         guard let taskDesign = (self.taskInfo as? RSDTaskDesign) ?? (self.task as? RSDTaskDesign)
         else {
             return RSDDesignSystem.shared

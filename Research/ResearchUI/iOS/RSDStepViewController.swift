@@ -536,7 +536,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }()
         if let action = btnAction {
             btn.setTitle(action.buttonTitle, for: .normal)
-            btn.setImage(action.buttonIcon, for: .normal)
+            btn.setImage(action.buttonImage(using: self.designSystem, compatibleWith: self.traitCollection), for: .normal)
         }
 
         // If this is a goForward button, then there is some additional logic around
