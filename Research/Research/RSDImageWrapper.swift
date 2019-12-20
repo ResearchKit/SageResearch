@@ -41,32 +41,52 @@ import UIKit
 
 /// `RSDEmbeddedIconVendor` is a convenience protocol for fetching an codable image using an optional
 /// `RSDImageWrapper`. This protocol implements an extension method to fetch the icon.
-@available(*, unavailable, message: "Use `RSDResourceImageDataObject` instead")
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 public protocol RSDEmbeddedIconVendor {
     
     /// The optional `RSDImageWrapper` with the pointer to the image.
     var icon: RSDImageWrapper? { get }
 }
 
-@available(*, unavailable, message: "Use `RSDResourceImageDataObject` instead")
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDEmbeddedIconVendor {
     public var imageVendor: RSDImageVendor? {
         return icon
     }
 }
 
-@available(*, unavailable, message: "Use `RSDResourceImageDataObject` instead")
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDImageWrapper : RSDImageVendor {
-    public var imageIdentifier: String {
+}
+
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
+extension RSDImageWrapper : RSDResourceImageData {
+    public var resourceName: String {
         return imageName
     }
+    
+    public var rawFileExtension: String? {
+        return nil
+    }
+    
+    public var factoryBundle: RSDResourceBundle? {
+        return self.bundle
+    }
+    
+    public var bundleIdentifier: String? {
+        return nil
+    }
+    
+    public var packageName: String? {
+        return nil
+    } 
 }
 #endif
 
 /// The `RSDImageWrapperDelegate` is a singleton delegate that can be used to customize the rules for fetching
 /// an image using the `RSDImageWrapper`. If defined and attached to the `RSDImageWrapper` using the static property
 /// `sharedDelegate` then the image wrapper will ask the delegate for the appropriate image.
-@available(*, unavailable, message: "Use `RSDResourceImageDataObject` instead")
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 public protocol RSDImageWrapperDelegate {
     
     /// Get an image of the appropriate size.
@@ -81,7 +101,7 @@ public protocol RSDImageWrapperDelegate {
 /// `RSDImageWrapper` vends an image. It does not handle image caching. If your app using a custom image caching,
 /// then you will need to use the shared delegate to implement this. The image wrapper is designed to allow coding of
 /// images using an `imageName` property as a key for accessing the image.
-@available(*, unavailable, message: "Use `RSDResourceImageDataObject` instead")
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 public struct RSDImageWrapper {
     
     /// The name of the image to be fetched.
@@ -160,7 +180,7 @@ public struct RSDImageWrapper {
     }
 }
 
-@available(*, unavailable, message: "Use `RSDResourceImageDataObject` instead")
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDImageWrapper : RawRepresentable {
     public typealias RawValue = String
     
@@ -181,7 +201,7 @@ extension RSDImageWrapper : RawRepresentable {
     }
 }
 
-@available(*, unavailable, message: "Use `RSDResourceImageDataObject` instead")
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDImageWrapper : ExpressibleByStringLiteral {    
     /// Required initializer for conformance to `ExpressibleByStringLiteral`.
     /// - parameter stringLiteral: The `imageName` for this image wrapper.
@@ -191,7 +211,7 @@ extension RSDImageWrapper : ExpressibleByStringLiteral {
     }
 }
 
-@available(*, unavailable, message: "Use `RSDResourceImageDataObject` instead")
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDImageWrapper : Decodable {
     
     /// Required initializer for conformance to `Decodable`.
@@ -208,6 +228,6 @@ extension RSDImageWrapper : Decodable {
     }
 }
 
-@available(*, unavailable, message: "Use `RSDResourceImageDataObject` instead")
+@available(*, deprecated, message: "Use `RSDResourceImageDataObject` instead")
 extension RSDImageWrapper : Encodable {
 }
