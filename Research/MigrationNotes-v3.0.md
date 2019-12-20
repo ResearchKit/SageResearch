@@ -18,6 +18,11 @@ RSDImageWrapper
 - Replace:
 RSDResourceImageDataObject
 
+- Find:
+RSDEmbeddedIconVendor
+- Replace: 
+RSDEmbeddedIconData
+
 ### RSDColorRules
 
 - Find:
@@ -38,3 +43,10 @@ RSDDesignSystem.shared.colorRules.palette
 var imageVendor: RSDImageVendor?
 - Replace:
 var imageData: RSDImageData?
+
+### RSDResourceTransformer
+
+- Find:
+var factoryBundle: Bundle?
+- Replace:
+var factoryBundle: RSDResourceBundle?

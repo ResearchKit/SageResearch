@@ -39,6 +39,9 @@ open class RSDTaskRepository {
     /// Singleton for the shared task repository.
     public static var shared = RSDTaskRepository()
     
+    public init() {
+    }
+    
     /// The completion handler for a fetched task.
     public typealias FetchCompletionHandler = (RSDTaskInfo, RSDTask?, Error?) -> Void
     
