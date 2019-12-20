@@ -46,6 +46,6 @@ public protocol RSDColorMappingThemeElement : RSDResourceInfo {
     
     /// The background color style for a given placement.
     /// - parameter placement: The placement of the view element.
-    /// - returns: For a given placement (header, body, footer), returns the color style?
+    /// - returns: For a given placement (header, body, footer), returns the color style
     func backgroundColorStyle(for placement: RSDColorPlacement) -> RSDColorStyle
 }
