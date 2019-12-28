@@ -6,14 +6,22 @@ osx_image: xcode11
 xcode_workspace: Research.xcworkspace
 xcode_scheme: RSDCatalog
 cache:
-- bundler
+  - bundler
+  - cocoapods
+addons:
+  homebrew:
+    packages: python3
 before_install:
-- echo -e "machine github.com\n  login $CI_USER_TOKEN" >> ~/.netrc
+  - echo -e "machine github.com\n  login $CI_USER_TOKEN" >> ~/.netrc
+  - pip3 install virtualenv
+  - virtualenv -p python3 ~/venv
+  - source ~/venv/bin/activate
 install:
-- gem install bundler
-- bundle install
+  - pip install travis-wait-improved
+  - gem install bundler
+  - bundle install
 script:
-- travis_wait 30 ./travis/build.sh
+  - travis-wait-improved --timeout 30 ./travis/build.sh
 branches:
   only:
   - master
