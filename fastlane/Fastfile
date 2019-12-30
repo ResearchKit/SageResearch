@@ -102,10 +102,10 @@ platform :ios do
   lane :archive do |options|
     scheme = options[:scheme]
     export_method = options[:export_method]
-    if is_ci
-      keychains
-      certificates
-    end
+#    if is_ci
+#      keychains
+#      certificates
+#    end
     gym(
       scheme: "#{scheme}",
       clean: true,
@@ -122,6 +122,8 @@ platform :ios do
   lane :ci_archive do |options|
     scheme = options[:scheme]
     export_method = options[:export_method]
+    keychains
+    certificates
     archive(scheme: "#{scheme}",export_method: "#{export_method}")
   end
 
@@ -164,6 +166,7 @@ platform :ios do
     scheme = options[:scheme]
     export_method = options[:export_method]
     ensure_git_status_clean
+    keychains
     certificates
     version_number = get_version_number(xcodeproj: "#{project}", target: "#{scheme}")
     next_build_number = increment_build_number(xcodeproj: "#{project}")
