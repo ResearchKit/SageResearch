@@ -101,6 +101,13 @@ platform :ios do
   lane :archive do |options|
     scheme = options[:scheme]
     export_method = options[:export_method]
+    if is_ci
+      setup_ci(
+        provider: "travis"
+      )
+      keychains
+      certificates
+    end
     gym(
       scheme: "#{scheme}",
       clean: true,
@@ -117,7 +124,6 @@ platform :ios do
   lane :ci_archive do |options|
     scheme = options[:scheme]
     export_method = options[:export_method]
-    certificates
     archive(scheme: "#{scheme}",export_method: "#{export_method}")
   end
 
