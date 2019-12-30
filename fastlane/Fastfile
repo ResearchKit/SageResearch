@@ -102,9 +102,6 @@ platform :ios do
     scheme = options[:scheme]
     export_method = options[:export_method]
     if is_ci
-      setup_ci(
-        provider: "travis"
-      )
       keychains
       certificates
     end
