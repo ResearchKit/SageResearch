@@ -109,6 +109,7 @@ platform :ios do
       output_name: "#{scheme}.ipa",
       export_method: "#{export_method}",
       destination: "generic/platform=iOS",
+      disable_xcpretty: true,
     )
   end
 
