@@ -102,9 +102,7 @@ platform :ios do
   lane :archive do |options|
     scheme = options[:scheme]
     export_method = options[:export_method]
-    if is_ci
-      keychains
-      certificates
+    certificates
     end
     gym(
       scheme: "#{scheme}",
