@@ -103,7 +103,6 @@ platform :ios do
     scheme = options[:scheme]
     export_method = options[:export_method]
     certificates
-    end
     gym(
       scheme: "#{scheme}",
       clean: true,
