@@ -174,8 +174,8 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
     /// refer to an embedded resource.
     public let url: String
     
-    /// Should this webview be presented with a "<-" style of closure or a "X" style of closure?
-    /// If nil, then default will assume "X".
+    /// Should this webview be presented with a `<-` style of closure or a `X` style of closure?
+    /// If nil, then the default will assume `X`.
     ///
     /// - note: This is only applicable to devices that use a back button or close button. Otherwise, it is
     /// ignored.
