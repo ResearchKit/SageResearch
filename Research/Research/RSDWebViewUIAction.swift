@@ -43,9 +43,8 @@ public protocol RSDWebViewUIAction : RSDUIAction, RSDResourceTransformer {
     /// to an embedded resource.
     var url: String { get }
     
-    /// Should this webview be presented with a "<-" style of closure or a "X" style of closure?
-    /// If nil, then default `RSDWebViewController` will assume that this should be set up with the older
-    /// designs that use the "Close" button on the right side.
+    /// Should this webview be presented with a `<-` style of closure or a `X` style of closure?
+    /// If nil, then the default will assume `X`.
     ///
     /// - note: This is only applicable to devices that use a back button or close button. Otherwise, it is
     /// ignored.

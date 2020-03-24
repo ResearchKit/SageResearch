@@ -67,25 +67,16 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
     open class func instantiateController(using designSystem: RSDDesignSystem = RSDDesignSystem(), action: RSDWebViewUIAction? = nil) -> (RSDWebViewController, UINavigationController) {
         let webVC = self.init()
         let navVC = UINavigationController(rootViewController: webVC)
+        navVC.modalPresentationStyle = .fullScreen
+        navVC.isNavigationBarHidden = true
 
         // Set up the model.
         webVC.designSystem = designSystem
         webVC.resourceTransformer = action
-        
-        // Set up the navigation.
-        if (action?.closeButtonTitle != nil) || (action?.usesBackButton != nil) || (action?.title != nil) {
-            navVC.isNavigationBarHidden = true
-            webVC._closeButtonTitle = action?.closeButtonTitle
-            webVC._headerTitle = action?.title
-            // TODO: syoung 03/28/2019 Implement custom animation to show "push on" style of view.
-            webVC._usesBackButton = action?.usesBackButton ?? false
-        }
-        else {
-            webVC.navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localization.buttonClose(),
-                                                                      style: .plain,
-                                                                      target: webVC,
-                                                                      action: #selector(close))
-        }
+        webVC._closeButtonTitle = action?.closeButtonTitle
+        webVC._headerTitle = action?.title
+        // TODO: syoung 03/28/2019 Implement custom animation to show "push on" style of view.
+        webVC._usesBackButton = action?.usesBackButton ?? false
 
         return (webVC, navVC)
     }
