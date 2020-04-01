@@ -294,7 +294,9 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStep(from decoder: Decoder) throws -> RSDStep? {
         guard let name = try typeName(from: decoder) else {
-            return try RSDGenericStepObject(from: decoder)
+            let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                debugDescription: "Conformance to the step protocol decoding requires a 'type' coding key.")
+            throw DecodingError.keyNotFound(TypeKeys.type, context)
         }
         let step = try decodeStep(from: decoder, with: RSDStepType(rawValue: name))
         try step?.validate()
@@ -313,7 +315,7 @@ open class RSDFactory {
         
         guard let standardType = RSDStepType.StandardType(rawValue: type.rawValue)
             else {
-                return try RSDGenericStepObject(from: decoder)
+                return nil
         }
         switch (standardType) {
         case .instruction, .active:

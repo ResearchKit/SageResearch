@@ -83,6 +83,7 @@ public protocol RSDCopyStep : RSDStep, RSDCopyWithIdentifier {
 
 /// `RSDGenericStep` is a step with key/value pairs decoded from a dictionary. This is the default step
 /// returned by `RSDFactory` for an unrecoginized type.
+@available(*, deprecated, message: "Generic step is no longer supported and will be deleted in a future version")
 public protocol RSDGenericStep : RSDStep {
     
     /// The decoded dictionary.
