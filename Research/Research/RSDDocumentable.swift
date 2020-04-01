@@ -38,6 +38,7 @@ public protocol RSDStringEnumSet : Hashable, RawRepresentable, CaseIterable wher
 }
 
 /// `RSDIntEnumSet` is a protocol for defining the set of all int values included in an enum.
+@available(*, deprecated, message: "Kotlin does not support Int enums. Implement `RSDDocumentableStringEnum` instead.")
 public protocol RSDIntEnumSet : Hashable, RawRepresentable, CaseIterable where RawValue == Int {
 }
 
@@ -64,16 +65,8 @@ public struct RSDDocumentCreator {
         RSDTextAutocapitalizationType.self,
         RSDTextAutocorrectionType.self,
         RSDTextSpellCheckingType.self,
+        RSDWeekday.self,
         ]
-        
-        return allEnums
-    }()
-    
-    let allIntEnums: [RSDDocumentableIntEnum.Type] = {
-        
-        var allEnums: [RSDDocumentableIntEnum.Type] = [
-            RSDWeekday.self,
-            ]
         
         return allEnums
     }()
@@ -178,6 +171,7 @@ extension RSDStringEnumSet {
 
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up
 /// testing of `Codable` enum objects used by this framework.
+@available(*, deprecated, message: "Kotlin does not support Int enums. Implement `RSDDocumentableStringEnum` instead.")
 protocol RSDDocumentableIntEnum : RSDDocumentable, Codable {
     
     /// The int Value for the enum.
@@ -188,6 +182,7 @@ protocol RSDDocumentableIntEnum : RSDDocumentable, Codable {
 }
 
 /// Any enum set can represent its coding keys by mapping the raw value to a string.
+@available(*, deprecated, message: "Kotlin does not support Int enums. Implement `RSDDocumentableStringEnum` instead.")
 extension RSDIntEnumSet {
     
     var intValue: Int {

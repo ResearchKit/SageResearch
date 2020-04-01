@@ -131,8 +131,8 @@ class CodableTrackedDataTests: XCTestCase {
             }
             
             XCTAssertEqual(dictionary["timeOfDay"] as? String, "08:15")
-            if let daysOfWeek = dictionary["daysOfWeek"] as? [Int] {
-                XCTAssertEqual(Set(daysOfWeek), Set([1,3,5]))
+            if let daysOfWeek = dictionary["daysOfWeek"] as? [String] {
+                XCTAssertEqual(Set(daysOfWeek), Set(["Sunday","Tuesday","Thursday"]))
             } else {
                 XCTFail("Failed to encode the daysOfWeek: \(String(describing: dictionary["daysOfWeek"]))")
             }
@@ -167,8 +167,8 @@ class CodableTrackedDataTests: XCTestCase {
             }
             
             XCTAssertEqual(dictionary["timeOfDay"] as? String, "08:00")
-            if let daysOfWeek = dictionary["daysOfWeek"] as? [Int] {
-                XCTAssertEqual(Set(daysOfWeek), Set([1,3,5]))
+            if let daysOfWeek = dictionary["daysOfWeek"] as? [String] {
+                XCTAssertEqual(Set(daysOfWeek), Set(["Sunday","Tuesday","Thursday"]))
             } else {
                 XCTFail("Failed to encode the daysOfWeek: \(String(describing: dictionary["daysOfWeek"]))")
             }
@@ -198,4 +198,22 @@ class CodableTrackedDataTests: XCTestCase {
         }
     }
     
+    func testWeeklyScheduleItem_Codable_Default_String() {
+        let json = """
+        {
+            "daysOfWeek": ["Sunday","Tuesday","Thursday"]
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            let object = try decoder.decode(RSDWeeklyScheduleObject.self, from: json)
+            
+            XCTAssertEqual(object.daysOfWeek, [.sunday, .tuesday, .thursday])
+            let timeOfDay = object.timeOfDay(on: Date())
+            XCTAssertNil(timeOfDay)
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
 }

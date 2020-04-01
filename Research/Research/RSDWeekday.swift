@@ -35,7 +35,7 @@ import Foundation
 
 /// The weekday enum assigns an enum value to each day of the week and implements `Comparable` to allow
 /// for sorting the weekdays by the order appropriate for the participant's current Locale.
-public enum RSDWeekday : Int, Codable, RSDIntEnumSet {
+public enum RSDWeekday : Int, Codable, CaseIterable {
     
     case sunday = 1
     case monday = 2
@@ -44,6 +44,9 @@ public enum RSDWeekday : Int, Codable, RSDIntEnumSet {
     case thursday = 5
     case friday = 6
     case saturday = 7
+    
+    fileprivate static let weekdayNames: [String] =
+        ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
     
     /// Set of all the weekdays (Every day).
     public static var all: Set<RSDWeekday> {
@@ -114,6 +117,31 @@ extension RSDWeekday : RSDChoice, RSDComparable {
     }
 }
 
-extension RSDWeekday : RSDDocumentableIntEnum {
+extension RSDWeekday : RSDDocumentableStringEnum {
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let name = try? container.decode(String.self) {
+            let rawValue = RSDWeekday.weekdayNames.firstIndex(where: { $0.lowercased() == name.lowercased() })! + 1
+            self.init(rawValue: rawValue)!
+        }
+        else {
+            let rawValue = try container.decode(Int.self)
+            self.init(rawValue: rawValue)!
+        }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var singleValueContainer = encoder.singleValueContainer()
+        try singleValueContainer.encode(self.stringValue)
+    }
+    
+    var stringValue: String {
+        return RSDWeekday.weekdayNames[self.rawValue - 1]
+    }
+    
+    static func allCodingKeys() -> [String] {
+        return weekdayNames
+    }
 }
 
