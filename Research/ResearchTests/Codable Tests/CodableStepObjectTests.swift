@@ -603,37 +603,4 @@ class CodableStepObjectTests: XCTestCase {
             return
         }
     }
-    
-    func testGenericStepObject_Decodable() {
-        
-        let json = """
-        {
-            "identifier": "foobar",
-            "type": "foo",
-            "title": "Hello World!",
-            "detail": "This is a test.",
-            "copyright": "This is a copyright string.",
-            "estimatedMinutes": 5,
-            "icon": "foobar"
-        }
-        """.data(using: .utf8)! // our data in native (JSON) format
-        
-        do {
-            
-            let object = try decoder.decode(RSDGenericStepObject.self, from: json)
-            
-            XCTAssertEqual(object.identifier, "foobar")
-            
-            XCTAssertEqual(object.identifier, "foobar")
-            XCTAssertEqual(object.userInfo["title"] as? String, "Hello World!")
-            XCTAssertEqual(object.userInfo["detail"] as? String, "This is a test.")
-            XCTAssertEqual(object.userInfo["copyright"] as? String, "This is a copyright string.")
-            XCTAssertEqual(object.userInfo["estimatedMinutes"] as? Int, 5)
-            XCTAssertEqual(object.userInfo["icon"] as? String, "foobar")
-            
-        } catch let err {
-            XCTFail("Failed to decode/encode object: \(err)")
-            return
-        }
-    }
 }
