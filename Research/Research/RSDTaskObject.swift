@@ -45,6 +45,7 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     public let identifier: String
     
     /// Copyright information about the task.
+    @available(*, deprecated, message: "This property has been removed from the serialization strategy.")
     open private(set) var copyright: String?
     
     /// Information about the result schema.
@@ -152,7 +153,6 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     /// - seealso: `copy(into:)`
     open func decode(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.copyright = try container.decodeIfPresent(String.self, forKey: .copyright)
         self.usesTrackedData = try container.decodeIfPresent(Bool.self, forKey: .usesTrackedData) ?? self.usesTrackedData
     }
     
@@ -279,7 +279,6 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     open func copyInto(_ copy: RSDTaskObject) {
         copy.actions = self.actions
         copy.shouldHideActions = self.shouldHideActions
-        copy.copyright = self.copyright
         copy.usesTrackedData = self.usesTrackedData
     }
     

@@ -136,6 +136,8 @@ public final class TestTaskInfo : RSDTaskInfo, RSDTaskTransformer {
     
     public var detail: String?
     
+    public var footnote: String?
+    
     public var estimatedMinutes: Int = 2
     
     public var imageData: RSDImageData?
@@ -167,7 +169,6 @@ public struct TestTask : RSDTask, RSDTrackingTask {
 
     public let identifier: String
     public let stepNavigator: RSDStepNavigator
-    public var copyright: String?
     public var schemaInfo: RSDSchemaInfo?
     public var asyncActions: [RSDAsyncActionConfiguration]?
     

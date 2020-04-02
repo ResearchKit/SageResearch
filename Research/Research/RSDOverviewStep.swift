@@ -42,7 +42,7 @@ public protocol RSDOverviewStep : class, RSDUIStep, RSDStandardPermissionsStep {
     var title: String? { get set }
     
     /// For an overview step, the text is readwrite.
-    var text: String? { get set }
+    var subtitle: String? { get set }
     
     /// For an overview step, the detail is readwrite.
     var detail: String? { get set }

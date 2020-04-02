@@ -56,7 +56,7 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "image": {    "type": "fetchable",
@@ -89,7 +89,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
             XCTAssertEqual(object.imageTheme?.imageName, "before")
@@ -133,11 +133,11 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "watch" : {
-                "text": "Watch: Some text.",
+                "subtitle": "Watch: Some text.",
                 "detail": "Watch: This is a test.",
                 "footnote": "Watch: This is a footnote."
             }
@@ -154,7 +154,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Watch: Some text.")
+            XCTAssertEqual(object.subtitle, "Watch: Some text.")
             XCTAssertEqual(object.detail, "Watch: This is a test.")
             XCTAssertEqual(object.footnote, "Watch: This is a footnote.")
             
@@ -171,7 +171,7 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "nextStepIdentifier": "boo",
@@ -213,7 +213,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
@@ -285,7 +285,7 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "active",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "duration": 30,
             "commands": ["playSoundOnStart", "vibrateOnFinish"],
             "spokenInstructions" : { "start": "Start moving",
@@ -302,7 +302,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.duration, 30)
             
             XCTAssertEqual(object.spokenInstruction(at: 0), "Start moving")
@@ -354,7 +354,7 @@ class CodableStepObjectTests: XCTestCase {
           "identifier": "step3",
           "type": "form",
           "title": "Step 3",
-          "text": "Some text.",
+          "subtitle": "Some text.",
           "inputFields": [
                           {
                           "identifier": "foo",
@@ -397,7 +397,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "step3")
             XCTAssertEqual(object.title, "Step 3")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.inputFields.count, 4)
             
             if object.inputFields.count == 4 {
@@ -457,7 +457,7 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "image": {  "type": "fetchable",
@@ -484,7 +484,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
             XCTAssertEqual(object.imageTheme?.imageName, "before")
@@ -528,7 +528,7 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "completion",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "unitText": "foos",
             "resultIdentifier": "bar",
             "stepResultIdentifier": "goo",
@@ -542,7 +542,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.unitText, "foos")
             XCTAssertEqual(object.resultIdentifier, "bar")
             XCTAssertEqual(object.stepResultIdentifier, "goo")

@@ -51,7 +51,7 @@ class CopyStepTests: XCTestCase {
     func testCopy_ActiveUIStepObject() {
         let step = RSDActiveUIStepObject(identifier: "foo", nextStepIdentifier: "bar", type: "boo")
         step.title = "title"
-        step.text = "text"
+        step.subtitle = "text"
         step.detail = "detail"
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
@@ -70,7 +70,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.stepType, "boo")
         XCTAssertEqual(copy.title, "title")
-        XCTAssertEqual(copy.text, "text")
+        XCTAssertEqual(copy.subtitle, "text")
         XCTAssertEqual(copy.detail, "detail")
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
@@ -111,7 +111,7 @@ class CopyStepTests: XCTestCase {
     func testCopyDefaultDecodable_ActiveUIStepObject() {
         let step = RSDActiveUIStepObject(identifier: "foo", nextStepIdentifier: "bar", type: "boo")
         step.title = "title"
-        step.text = "text"
+        step.subtitle = "text"
         step.detail = "detail"
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
@@ -139,7 +139,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.stepType, "boo")
         XCTAssertEqual(copy.title, "title")
-        XCTAssertEqual(copy.text, "text")
+        XCTAssertEqual(copy.subtitle, "text")
         XCTAssertEqual(copy.detail, "detail")
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
@@ -181,7 +181,7 @@ class CopyStepTests: XCTestCase {
         let inputField = RSDInputFieldObject(identifier: "goo", dataType: .base(.boolean))
         let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField], type: "boo")
         step.title = "title"
-        step.text = "text"
+        step.subtitle = "text"
         step.detail = "detail"
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
@@ -194,7 +194,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.stepType, "boo")
         XCTAssertEqual(copy.title, "title")
-        XCTAssertEqual(copy.text, "text")
+        XCTAssertEqual(copy.subtitle, "text")
         XCTAssertEqual(copy.detail, "detail")
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
@@ -221,7 +221,7 @@ class CopyStepTests: XCTestCase {
         let inputField = RSDInputFieldObject(identifier: "goo", dataType: .base(.boolean))
         let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField], type: "boo")
         step.title = "title"
-        step.text = "text"
+        step.subtitle = "text"
         step.detail = "detail"
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
@@ -243,7 +243,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.stepType, "boo")
         XCTAssertEqual(copy.title, "title")
-        XCTAssertEqual(copy.text, "text")
+        XCTAssertEqual(copy.subtitle, "text")
         XCTAssertEqual(copy.detail, "detail")
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
@@ -352,7 +352,7 @@ class CopyStepTests: XCTestCase {
     func testCopy_UIStepObject() {
         let step = RSDUIStepObject(identifier: "foo", nextStepIdentifier: "bar", type: "boo")
         step.title = "title"
-        step.text = "text"
+        step.subtitle = "text"
         step.detail = "detail"
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
@@ -365,7 +365,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.stepType, "boo")
         XCTAssertEqual(copy.title, "title")
-        XCTAssertEqual(copy.text, "text")
+        XCTAssertEqual(copy.subtitle, "text")
         XCTAssertEqual(copy.detail, "detail")
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
@@ -388,7 +388,7 @@ class CopyStepTests: XCTestCase {
     func testCopyDefaultDecodable_UIStepObject() {
         let step = RSDUIStepObject(identifier: "foo", nextStepIdentifier: "bar", type: "boo")
         step.title = "title"
-        step.text = "text"
+        step.subtitle = "text"
         step.detail = "detail"
         step.footnote = "footnote"
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
@@ -410,7 +410,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.stepType, "boo")
         XCTAssertEqual(copy.title, "title")
-        XCTAssertEqual(copy.text, "text")
+        XCTAssertEqual(copy.subtitle, "text")
         XCTAssertEqual(copy.detail, "detail")
         XCTAssertEqual(copy.footnote, "footnote")
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")

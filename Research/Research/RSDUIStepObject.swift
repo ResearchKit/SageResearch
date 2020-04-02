@@ -48,6 +48,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         case identifier
         case stepType = "type"
         case title
+        case subtitle
         case text
         case detail
         case footnote
@@ -76,15 +77,12 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     open var title: String?
     
     /// Additional text to display for the step in a localized string.
-    ///
-    /// The additional text is often displayed in a smaller font below `title`. If you need to display a long
-    /// question, it can work well to keep the title short and put the additional content in the `text`
-    /// property.
+    open var subtitle: String?
+    
+    @available(*, deprecated, message: "This should map to either `detail` or `subtitle`")
     open var text: String?
     
-    /// Additional detailed explanation for the step.
-    ///
-    /// The font size and display of this property will depend upon the device type.
+    /// The detailed text to display for the step in a localized string.
     open var detail: String?
     
     /// Additional text to display for the step in a localized string at the bottom of the view.
@@ -199,7 +197,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     /// This is a work around.
     open func copyInto(_ copy: RSDUIStepObject) {
         copy.title = self.title
-        copy.text = self.text
+        copy.subtitle = self.subtitle
         copy.detail = self.detail
         copy.footnote = self.footnote
         copy.viewTheme = self.viewTheme
@@ -341,8 +339,23 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? self.title
-        self.text = try container.decodeIfPresent(String.self, forKey: .text) ?? self.text
-        self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
+        
+        
+        if let text = try container.decodeIfPresent(String.self, forKey: .text) {
+            print("WARNING!! `text` keyword on a UIStepObject decoding is deprecated and will be deleted in future versions.")
+            if let detail = try container.decodeIfPresent(String.self, forKey: .detail) {
+                self.subtitle = text
+                self.detail = detail
+            }
+            else {
+                self.detail = text
+            }
+        }
+        else {
+            self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
+            self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle) ?? self.subtitle
+        }
+
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
         self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
         self.fullInstructionsOnly = try container.decodeIfPresent(Bool.self, forKey: .fullInstructionsOnly) ?? self.fullInstructionsOnly

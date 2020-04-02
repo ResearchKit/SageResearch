@@ -1,8 +1,8 @@
 //
-//  RSDUIStep.swift
+//  ContentNode.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,13 +31,37 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-
 import Foundation
 
-/// `RSDUIStep` is used to define a single "display unit". Depending upon the available real-estate, more
-/// than one ui step may be displayed at a time. For example, on an iPad, you may choose to group a set of
-/// questions using a `RSDSectionStep`.
-public protocol RSDUIStep: RSDStep, RSDUIActionHandler, ContentNode {
+/**
+ * This protocol is included here to support migration to kotlin.
+ *
+ * - seealso: https://github.com/Sage-Bionetworks/AssessmentModel-KotlinNative
+ */
+public protocol ContentNode {
+
+    /**
+     * The primary text to display for the node in a localized string. The UI should display this using a larger font.
+     */
+    var title: String? { get }
+
+    /**
+     * A subtitle to display for the node in a localized string.
+     */
+    var subtitle: String? { get }
+
+    /**
+     * Detail text to display for the node in a localized string.
+     */
+    var detail: String? { get }
+
+    /**
+     *
+     * Additional text to display for the node in a localized string at the bottom of the view.
+     *
+     * The footnote is intended to be displayed in a smaller font at the bottom of the screen. It is intended to be
+     * used in order to include disclaimer, copyright, etc. that is important to display to the participant but should
+     * not distract from the main purpose of the [Step] or [Assessment].
+     */
+    var footnote: String? { get }
 }
-
-
