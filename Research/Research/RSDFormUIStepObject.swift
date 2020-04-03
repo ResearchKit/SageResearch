@@ -43,6 +43,7 @@ extension CodingUserInfoKey {
 /// `RSDFormUIStepObject` is a concrete implementation of the `RSDFormUIStep` and
 /// `RSDSurveyNavigationStep` protocols. It is a subclass of `RSDUIStepObject` and can be used to display
 /// a navigable survey.
+@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
 open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNavigationStep, RSDCohortAssignmentStep {
     
     private enum CodingKeys: String, CodingKey, CaseIterable {
@@ -54,7 +55,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     
     /// Default type is `.form`.
     open override class func defaultType() -> RSDStepType {
-        return .form
+        return RSDStepType.DeprecatedType.form.type
     }
     
     /// Initializer required for `copy(with:)` implementation.

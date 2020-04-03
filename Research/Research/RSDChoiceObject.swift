@@ -41,7 +41,7 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, Codable {
     public typealias Value = T
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case value, text, detail, icon, isExclusive
+        case value, text, detail, icon, isExclusive, exclusive
     }
 
     
@@ -121,7 +121,13 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, Codable {
             text = try container.decodeIfPresent(String.self, forKey: .text)
             detail = try container.decodeIfPresent(String.self, forKey: .detail)
             icon = try container.decodeIfPresent(RSDResourceImageDataObject.self, forKey: .icon)
-            isExclusive = try container.decodeIfPresent(Bool.self, forKey: .isExclusive) ?? false
+            if let exclusive = try container.decodeIfPresent(Bool.self, forKey: .isExclusive) {
+                print("WARNING!!! The \(CodingKeys.isExclusive) key is deprecated. For consistency, this keyword has been changed to \(CodingKeys.exclusive) and support will be deleted in future versions.")
+                isExclusive = exclusive
+            }
+            else {
+                isExclusive = try container.decodeIfPresent(Bool.self, forKey: .exclusive) ?? false
+            }
         }
         catch DecodingError.typeMismatch(let type, let context) {
             // If attempting to get a dictionary fails, then look to see if this is a single value
@@ -158,7 +164,7 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, Codable {
         else {
             try container.encodeIfPresent(self.imageData?.imageIdentifier, forKey: .detail)
         }
-        try container.encode(isExclusive, forKey: .isExclusive)
+        try container.encode(isExclusive, forKey: .exclusive)
     }
 }
 
@@ -170,11 +176,11 @@ extension RSDChoiceObject : RSDDocumentableDecodableObject {
     
     static func exampleDictionary() -> [String : RSDJSONValue]? {
         if Value.self == String.self {
-            return ["value": "a", "text": "one", "iconName": "iconOne", "detail": "The number one", "isExclusive": true]
+            return ["value": "a", "text": "one", "iconName": "iconOne", "detail": "The number one", "exclusive": true]
         } else if Value.self == Bool.self {
             return ["value": true, "text": "Yes"]
         } else if Value.self == Int.self {
-            return ["value": 1, "text": "one", "iconName": "iconOne", "detail": "The number one", "isExclusive": true]
+            return ["value": 1, "text": "one", "iconName": "iconOne", "detail": "The number one", "exclusive": true]
         } else if Value.self == Double.self {
             return ["value": 1.2, "text": "one point two"]
         } else if Value.self == RSDFraction.self {

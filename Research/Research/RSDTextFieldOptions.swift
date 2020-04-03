@@ -36,6 +36,7 @@ import Foundation
 /// `RSDTextFieldOptions` defines the options for a text field.
 ///
 /// - seealso: `RSDInputField` and `RSDFormStepDataSource`
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 public protocol RSDTextFieldOptions {
     
     /// A custom text validator that can be used to validate a string.
@@ -64,6 +65,7 @@ public protocol RSDTextFieldOptions {
     var keyboardType: RSDKeyboardType { get }
 }
 
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 public protocol RSDTextValidator {
 
     /// Whether or not the text is considered valid.
@@ -72,6 +74,7 @@ public protocol RSDTextValidator {
     func isValid(_ string: String) throws -> Bool
 }
 
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 public protocol RSDRegExMatchValidator : RSDTextValidator {
     
     /// A localized custom regular expression that can be used to validate a string.
@@ -80,12 +83,14 @@ public protocol RSDRegExMatchValidator : RSDTextValidator {
     func regularExpression() throws -> NSRegularExpression
 }
 
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 public protocol RSDCodableRegExMatchValidator : RSDRegExMatchValidator {
     
     /// The regular expression pattern used to create the `NSRegularExpression` object.
     var regExPattern: String { get }
 }
 
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 extension RSDCodableRegExMatchValidator {
     
     /// A localized custom regular expression that can be used to validate a string.
@@ -94,6 +99,7 @@ extension RSDCodableRegExMatchValidator {
     }
 }
 
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 extension RSDRegExMatchValidator {
     
     /// Method for evaluating a string against the `validationRegex` for a match.
@@ -114,94 +120,4 @@ extension RSDRegExMatchValidator {
         let count = try self.regExMatches(string)
         return count > 0
     }
-}
-
-
-/// `Codable` enum for the auto-capitalization type for an input text field.
-/// - keywords: ["none", "words", "sentences", "allCharacters"]
-public enum RSDTextAutocapitalizationType : String, Codable, RSDStringEnumSet {
-    case none, words, sentences, allCharacters
-    
-    public static var all: Set<RSDTextAutocapitalizationType> {
-        return Set(orderedSet)
-    }
-    
-    static var orderedSet: [RSDTextAutocapitalizationType] {
-        return [.none, .words, .sentences, .allCharacters]
-    }
-
-    public func rawIntValue() -> Int? {
-        return RSDTextAutocapitalizationType.orderedSet.firstIndex(of: self)
-    }
-}
-
-extension RSDTextAutocapitalizationType : RSDDocumentableStringEnum {
-}
-
-
-/// `Codable` enum for the auto-correction type for an input text field.
-/// - keywords: ["default", "no", yes"]
-public enum RSDTextAutocorrectionType : String, Codable, RSDStringEnumSet {
-    case `default`, no, yes
-    
-    public static var all: Set<RSDTextAutocorrectionType> {
-        return Set(orderedSet)
-    }
-    
-    static var orderedSet: [RSDTextAutocorrectionType] {
-        return [.default, .no, .yes]
-    }
-    
-    public func rawIntValue() -> Int? {
-        return RSDTextAutocorrectionType.orderedSet.firstIndex(of: self)
-    }
-}
-
-extension RSDTextAutocorrectionType : RSDDocumentableStringEnum {
-}
-
-
-/// `Codable` enum for the spell checking type for an input text field.
-/// - keywords: ["default", "no", yes"]
-public enum RSDTextSpellCheckingType  : String, Codable, RSDStringEnumSet {
-    case `default`, no, yes
-    
-    public static var all: Set<RSDTextSpellCheckingType> {
-        return Set(orderedSet)
-    }
-    
-    static var orderedSet: [RSDTextSpellCheckingType] {
-        return [.default, .no, .yes]
-    }
-
-    public func rawIntValue() -> Int? {
-        return RSDTextSpellCheckingType.orderedSet.firstIndex(of: self)
-    }
-}
-
-extension RSDTextSpellCheckingType : RSDDocumentableStringEnum {
-}
-
-
-/// `Codable` enum for the keyboard type for an input text field.
-/// - keywords: [ "default", "asciiCapable", "numbersAndPunctuation", "URL",
-///               "numberPad", "phonePad", "namePhonePad", "emailAddress",
-///               "decimalPad", "twitter", "webSearch", "asciiCapableNumberPad"]
-public enum RSDKeyboardType  : String, Codable, RSDStringEnumSet {
-    case `default`, asciiCapable, numbersAndPunctuation, URL, numberPad, phonePad, namePhonePad, emailAddress, decimalPad, twitter, webSearch, asciiCapableNumberPad
-    
-    public static var all: Set<RSDKeyboardType> {
-        return Set(orderedSet)
-    }
-
-    static var orderedSet: [RSDKeyboardType] {
-        return [.default, .asciiCapable, .numbersAndPunctuation, .URL, .numberPad, .phonePad, .namePhonePad, .emailAddress, .decimalPad, .twitter, .webSearch, .asciiCapableNumberPad]
-    }
-
-    public func rawIntValue() -> Int? {
-        return RSDKeyboardType.orderedSet.firstIndex(of: self)
-    }
-}
-
-extension RSDKeyboardType : RSDDocumentableStringEnum {
 }

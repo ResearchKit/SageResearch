@@ -36,6 +36,7 @@ import Foundation
 /// `RSDInputFieldObject` is a `Decodable` implementation of the `RSDSurveyInputField` protocol. This is implemented as
 /// an open class so that the decoding strategy can be used to support subclasses.
 ///
+@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
 open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDCopyInputField, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {

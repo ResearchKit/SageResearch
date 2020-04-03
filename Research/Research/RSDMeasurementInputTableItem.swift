@@ -39,6 +39,7 @@ import Foundation
 /// using ft and in, whereas a child or infant will be reported in inches. The placeholder
 /// text for child or infant measurement range will be either "inches" or "centimeters",
 /// depending upon the participant's locale.
+@available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
 public final class RSDHeightInputTableItem : RSDTextInputTableItem {
     
     /// The base unit is the unit of mass that the measurement should be converted to in order

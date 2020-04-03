@@ -32,11 +32,12 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-
 public struct RSDFetchableImageThemeElementObject : RSDThemeResourceImageData, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case imageName, bundleIdentifier, packageName, imageSize = "size", placementType, rawFileExtension = "fileExtension"
+        case imageThemeType = "type", imageName, bundleIdentifier, packageName, imageSize = "size", placementType, rawFileExtension = "fileExtension"
     }
+    
+    public private(set) var imageThemeType: RSDImageThemeElementType = .fetchable
     
     /// The name of the resource.
     public let imageName: String
@@ -80,8 +81,10 @@ public struct RSDFetchableImageThemeElementObject : RSDThemeResourceImageData, C
 public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement, RSDThemeResourceImageData, Codable {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case imageNames, animationDuration, animationRepeatCount, bundleIdentifier, packageName, placementType, imageSize = "size", rawFileExtension = "fileExtension"
+        case imageThemeType = "type", imageNames, animationDuration, animationRepeatCount, bundleIdentifier, packageName, placementType, imageSize = "size", rawFileExtension = "fileExtension"
     }
+    
+    public private(set) var imageThemeType: RSDImageThemeElementType = .animated
     
     /// The list of image names for the images to include in this animation.
     public let imageNames: [String]

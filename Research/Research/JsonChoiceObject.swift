@@ -1,8 +1,8 @@
 //
-//  RSDFormUIStep.swift
+//  JsonChoiceObject.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,26 +33,61 @@
 
 import Foundation
 
-/// `RSDFormUIStep` implements additional properties used in creating a form input.
-@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by kotlin.")
-public protocol RSDFormUIStep: RSDUIStep {
-    
-    /// The `inputFields` array is used to hold a logical subgrouping of input fields. If this array holds
-    /// more than one input field, those fields should describe an input that is uses a logical subgrouping
-    /// such as birth month/year or given/family name.
-    var inputFields: [RSDInputField] { get }
+public protocol JsonComparable : RSDComparable {
+    var matchingValue: JsonElement? { get }
 }
 
-@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by kotlin.")
-extension RSDFormUIStep {
+public extension JsonComparable {
+    var matchingAnswer: Any? {
+        matchingValue?.jsonObject()
+    }
+}
+
+public protocol JsonChoice : RSDChoice, JsonComparable, Codable {
+}
+
+public extension JsonChoice {
+    var answerValue: Codable? {
+        matchingValue ?? JsonElement.null
+    }
+}
+
+public struct JsonChoiceObject : JsonChoice, Hashable {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case matchingValue = "value", text, detail, _isExclusive = "exclusive", icon
+    }
     
-    /// Look to the input fields and return true if any are choice type that include an image.
-    public var hasImageChoices: Bool {
-        for item in inputFields {
-            if let picker = item.pickerSource as? RSDChoiceOptions, picker.hasImages {
-                return true
-            }
-        }
-        return false
+    public let matchingValue: JsonElement?
+    public let text: String?
+    public let detail: String?
+    
+    public var isExclusive: Bool {
+        _isExclusive ?? false
+    }
+    private let _isExclusive: Bool?
+    
+    public var imageData: RSDImageData? {
+        icon
+    }
+    public let icon: RSDResourceImageDataObject?
+    
+    public init(matchingValue: JsonElement?,
+                text: String?,
+                detail: String? = nil,
+                isExclusive: Bool? = nil,
+                icon: RSDResourceImageDataObject? = nil) {
+        self.matchingValue = matchingValue
+        self.text = text
+        self.detail = detail
+        self._isExclusive = isExclusive
+        self.icon = icon
+    }
+    
+    public init(text: String) {
+        self.text = text
+        self.matchingValue = .string(text)
+        self.detail = nil
+        self._isExclusive = nil
+        self.icon = nil
     }
 }

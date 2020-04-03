@@ -43,7 +43,7 @@ public protocol RSDPickerDataSource {
 
 /// `RSDDatePickerMode` describes the type of UI picker to display for dates and times.
 /// - seealso: `RSDDatePickerDataSource`
-public enum RSDDatePickerMode : String {
+public enum RSDDatePickerMode : String, Codable, CaseIterable {
     
     /// Displays hour, minute, and optionally AM/PM designation depending on the locale setting (e.g. 6 | 53 | PM)
     case time
@@ -53,7 +53,20 @@ public enum RSDDatePickerMode : String {
     
     /// Displays date, hour, minute, and optionally AM/PM designation depending on the locale setting
     /// (e.g. Wed Nov 15 | 6 | 53 | PM)
-    case dateAndTime
+    case dateAndTime = "date-time"
+}
+
+extension RSDDatePickerMode {
+    public var defaultCodingFormat: String {
+        switch self {
+        case .dateAndTime:
+            return rsd_ISO8601TimestampFormatter.dateFormat
+        case .date:
+            return rsd_ISO8601DateOnlyFormatter.dateFormat
+        case .time:
+            return rsd_ISO8601TimeOnlyFormatter.dateFormat
+        }
+    }
 }
 
 /// A data source for selecting a date.

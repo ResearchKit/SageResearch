@@ -47,7 +47,7 @@ public struct RSDFormUIHint : RawRepresentable, Codable, Hashable {
     }
     
     enum StandardHints : String, Codable, CaseIterable {
-        case button, checkbox, combobox, disclosureArrow, link, list, multipleLine, picker, popover, radioButton, section, slider, textfield, toggle
+        case button, checkbox, checkmark, combobox, disclosureArrow, link, list, multipleLine, picker, popover, radioButton, section, slider, textfield, toggle
         
         var hint: RSDFormUIHint {
             return RSDFormUIHint(rawValue: self.rawValue)
@@ -59,6 +59,9 @@ public struct RSDFormUIHint : RawRepresentable, Codable, Hashable {
     
     /// List with a checkbox next to each item.
     public static let checkbox = StandardHints.checkbox.hint
+    
+    /// List with a checkmark next to each item that is selected
+    public static let checkmark = StandardHints.checkmark.hint
     
     /// Drop-down with a textfield for "other".
     public static let combobox = StandardHints.combobox.hint

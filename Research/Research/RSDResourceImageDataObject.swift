@@ -63,7 +63,7 @@ extension RSDEmbeddedIconData {
 }
 
 /// Implementation of a resource image pointer that can be decoded from a string.
-public struct RSDResourceImageDataObject : RSDThemeResourceImageData, Codable {
+public struct RSDResourceImageDataObject : RSDThemeResourceImageData, Codable, Hashable {
 
     /// The name of the image.
     public let imageName: String

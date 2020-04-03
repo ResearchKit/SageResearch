@@ -177,6 +177,7 @@ class CopyStepTests: XCTestCase {
         }
     }
     
+    @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
     func testCopy_FormUIStepObject() {
         let inputField = RSDInputFieldObject(identifier: "goo", dataType: .base(.boolean))
         let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField], type: "boo")
@@ -217,6 +218,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.inputFields.first?.dataType, .base(.boolean))
     }
     
+    @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
     func testCopyDefaultDecodable_FormUIStepObject() {
         let inputField = RSDInputFieldObject(identifier: "goo", dataType: .base(.boolean))
         let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField], type: "boo")

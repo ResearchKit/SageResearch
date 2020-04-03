@@ -34,6 +34,7 @@
 /// `RSDTextFieldOptionsObject` defines the options for a text field.
 ///
 /// - seealso: `RSDInputField` and `RSDFormStepDataSource`
+@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
 public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {

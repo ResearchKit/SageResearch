@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 
+@available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
 class CodableInputFieldObjectTests: XCTestCase {
     
     override func setUp() {
@@ -81,7 +82,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(dictionary["text"] as? String, "Some text.")
             XCTAssertEqual(dictionary["detail"] as? String, "A detail about the object")
             XCTAssertEqual(dictionary["icon"] as? String, "fooImage")
-            XCTAssertEqual(dictionary["isExclusive"] as? Bool, true)
+            XCTAssertEqual(dictionary["exclusive"] as? Bool, true)
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -121,7 +122,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(dictionary["text"] as? String, "Some text.")
             XCTAssertEqual(dictionary["detail"] as? String, "A detail about the object")
             XCTAssertEqual(dictionary["icon"] as? String, "fooImage")
-            XCTAssertEqual(dictionary["isExclusive"] as? Bool, true)
+            XCTAssertEqual(dictionary["exclusive"] as? Bool, true)
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -631,8 +632,8 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(dictionary["uiHint"] as? String, "picker")
             
             if let range = dictionary["range"] as? [String: Any] {
-                XCTAssertEqual(range["minimumDate"] as? String, "2017-02-20")
-                XCTAssertEqual(range["maximumDate"] as? String, "2017-03-20")
+                XCTAssertEqual(range["minimumValue"] as? String, "2017-02-20")
+                XCTAssertEqual(range["maximumValue"] as? String, "2017-03-20")
                 XCTAssertEqual(range["codingFormat"] as? String, "yyyy-MM-dd")
             }
             else {

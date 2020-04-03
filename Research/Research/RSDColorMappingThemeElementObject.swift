@@ -55,7 +55,7 @@ public struct RSDColorDataObject : Codable, RSDColorData {
 /// a given view as well as whether or not the foreground elements should use "light style".
 ///
 /// The mapping is handled using a dictionary of color placements to the color style for that placement.
-public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo {
+public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo, Encodable {
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case type, bundleIdentifier, packageName, placement, customColor
     }
@@ -148,7 +148,7 @@ extension RSDColorPlacementThemeElementObject : RSDDocumentableDecodableObject {
 /// a given view as well as whether or not the foreground elements should use "light style".
 ///
 /// The mapping is handled using a single style for the entire view.
-public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo {
+public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo, Encodable {
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case type, bundleIdentifier, packageName, colorStyle, customColor
     }

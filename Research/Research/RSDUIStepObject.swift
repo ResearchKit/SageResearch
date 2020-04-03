@@ -49,7 +49,6 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         case stepType = "type"
         case title
         case subtitle
-        case text
         case detail
         case footnote
         case fullInstructionsOnly
@@ -63,6 +62,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         
         //@available(*, unavailable)
         case colorTheme
+        case text
     }
 
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
@@ -340,7 +340,6 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         
         self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? self.title
         
-        
         if let text = try container.decodeIfPresent(String.self, forKey: .text) {
             print("WARNING!! `text` keyword on a UIStepObject decoding is deprecated and will be deleted in future versions.")
             if let detail = try container.decodeIfPresent(String.self, forKey: .detail) {
@@ -389,6 +388,53 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         }
     }
     
+    /// Define the encoder, but do not require protocol conformance of subclasses.
+    /// - parameter encoder: The encoder to use to encode this instance.
+    /// - throws: `EncodingError`
+    open override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.identifier, forKey: .identifier)
+        try container.encode(self.stepType, forKey: .stepType)
+        try container.encodeIfPresent(self.title, forKey: .title)
+        try container.encodeIfPresent(self.subtitle, forKey: .subtitle)
+        try container.encodeIfPresent(self.detail, forKey: .detail)
+        try container.encodeIfPresent(self.footnote, forKey: .footnote)
+        try container.encodeIfPresent(self.nextStepIdentifier, forKey: .nextStepIdentifier)
+        try container.encodeIfPresent(self.fullInstructionsOnly, forKey: .fullInstructionsOnly)
+        try container.encodeIfPresent(self.standardPermissions, forKey: .permissions)
+        try _encode(object: self.viewTheme, to: encoder, forKey: .viewTheme)
+        try _encode(object: self.imageTheme, to: encoder, forKey: .image)
+        try _encode(object: self.colorMapping, to: encoder, forKey: .colorMapping)
+        try _encode(cohortRules: self.beforeCohortRules, to: encoder, forKey: .beforeCohortRules)
+        try _encode(cohortRules: self.afterCohortRules, to: encoder, forKey: .afterCohortRules)
+    }
+    
+    private func _encode(object: Any?, to encoder: Encoder, forKey: CodingKeys) throws {
+        guard let obj = object else { return }
+        guard let encodable = obj as? Encodable else {
+            var codingPath = encoder.codingPath
+            codingPath.append(forKey)
+            let context = EncodingError.Context(codingPath: codingPath, debugDescription: "\(obj) does not conform to the `Encodable` protocol")
+            throw EncodingError.invalidValue(obj, context)
+        }
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        let nestedEncoder = container.superEncoder(forKey: forKey)
+        try encodable.encode(to: nestedEncoder)
+    }
+    
+    private func _encode(cohortRules: [RSDCohortNavigationRule]?, to encoder: Encoder, forKey: CodingKeys) throws {
+        guard let rules = cohortRules else { return }
+        guard let encodableRules = rules as? [RSDCohortNavigationRuleObject] else {
+            var codingPath = encoder.codingPath
+            codingPath.append(forKey)
+            let context = EncodingError.Context(codingPath: codingPath, debugDescription: "\(rules) does not conform to the `RSDCohortNavigationRuleObject` protocol")
+            throw EncodingError.invalidValue(rules, context)
+        }
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(encodableRules, forKey: forKey)
+    }
+
     // Overrides must be defined in the base implementation
     
     override class func codingKeys() -> [CodingKey] {

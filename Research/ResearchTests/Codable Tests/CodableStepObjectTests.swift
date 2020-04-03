@@ -198,10 +198,10 @@ class CodableStepObjectTests: XCTestCase {
                                 },
             "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps" },
-            "beforeCohortRules" : [{ "requiredCohorts" : ["boo", "goo"],
+            "beforeCohortRules" : [{ "requiredCohorts" : ["goo"],
                                     "skipToIdentifier" : "blueGu",
                                     "operator" : "any" }],
-            "afterCohortRules" : [{ "requiredCohorts" : ["foo", "baloo"],
+            "afterCohortRules" : [{ "requiredCohorts" : ["baloo"],
                                     "skipToIdentifier" : "foomanchu",
                                     "operator" : "all" }]
         }
@@ -257,7 +257,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.viewTheme?.viewIdentifier, "ActiveInstruction")
             
             if let cohortRule = object.beforeCohortRules?.first {
-                XCTAssertEqual(cohortRule.requiredCohorts, ["boo", "goo"])
+                XCTAssertEqual(cohortRule.requiredCohorts, ["goo"])
                 XCTAssertEqual(cohortRule.skipToIdentifier, "blueGu")
                 XCTAssertEqual(cohortRule.cohortOperator, .any)
             } else {
@@ -265,13 +265,45 @@ class CodableStepObjectTests: XCTestCase {
             }
             
             if let cohortRule = object.afterCohortRules?.first {
-                XCTAssertEqual(cohortRule.requiredCohorts, ["foo", "baloo"])
+                XCTAssertEqual(cohortRule.requiredCohorts, ["baloo"])
                 XCTAssertEqual(cohortRule.skipToIdentifier, "foomanchu")
                 XCTAssertEqual(cohortRule.cohortOperator, .all)
             } else {
                 XCTFail("Failed to decode before cohort rules")
             }
             
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            guard let expectedDictionary = try JSONSerialization.jsonObject(with: json, options: []) as? [String : Any]
+                else {
+                    XCTFail("input json not a dictionary")
+                    return
+            }
+            
+            expectedDictionary.forEach { (pair) in
+                let encodedValue = dictionary[pair.key]
+                XCTAssertNotNil(encodedValue, "\(pair.key)")
+                if let str = pair.value as? String {
+                    XCTAssertEqual(str, encodedValue as? String, "\(pair.key)")
+                }
+                else if let num = pair.value as? NSNumber {
+                    XCTAssertEqual(num, encodedValue as? NSNumber, "\(pair.key)")
+                }
+                else if let arr = pair.value as? NSArray {
+                    XCTAssertEqual(arr, encodedValue as? NSArray, "\(pair.key)")
+                }
+                else if let dict = pair.value as? NSDictionary {
+                    XCTAssertEqual(dict, encodedValue as? NSDictionary, "\(pair.key)")
+                }
+                else {
+                    XCTFail("Failed to match \(pair.key)")
+                }
+            }
+
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return
@@ -347,6 +379,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
     func testFormUIStepObject_Codable() {
         
         let json = """
@@ -420,6 +453,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
     func testFormUIStepObject_Codable_SingleQuestion() {
         
         let json = """
@@ -603,4 +637,7 @@ class CodableStepObjectTests: XCTestCase {
             return
         }
     }
+}
+
+extension RSDUIStepObject : Encodable {
 }

@@ -37,6 +37,7 @@ import Foundation
 /// `RSDInputFieldObject` to include a list of choices for a multiple choice or single choice input field. It
 /// is intended to be instantiated with a list of choices but can be subclassed to decode the choices using
 /// a custom decoder.
+@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
 open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptionsWithDefault {
     
     /// A list of choices for the input field.

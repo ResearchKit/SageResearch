@@ -39,6 +39,11 @@ import Foundation
  * - seealso: https://github.com/Sage-Bionetworks/AssessmentModel-KotlinNative
  */
 public protocol ContentNode {
+    
+    /**
+     * All content nodes have an identifier.
+     */
+    var identifier: String { get }
 
     /**
      * The primary text to display for the node in a localized string. The UI should display this using a larger font.

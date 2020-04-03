@@ -40,6 +40,7 @@ import Foundation
 /// when its owning step is validated.
 ///
 /// - seealso: `RSDFormUIStep`
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by kotlin.")
 public protocol RSDInputField {
     
     /// A short string that uniquely identifies the input field within the step. The identifier is
@@ -99,6 +100,7 @@ public protocol RSDPopoverInputField : RSDInputField, RSDFormUIStep {
 }
 
 /// `RSDDetailInputField` is an input field that can be presented as a step using the given transition style.
+@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
 public protocol RSDDetailInputField : RSDInputField, RSDUIStep {
     
     /// The transition style for showing the detail input.
@@ -106,6 +108,7 @@ public protocol RSDDetailInputField : RSDInputField, RSDUIStep {
 }
 
 /// Extend the input field to a mutable type.
+@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
 public protocol RSDMutableInputField : class, RSDInputField {
     
     /// Extend to allow setting.
@@ -119,6 +122,7 @@ public protocol RSDMutableInputField : class, RSDInputField {
 }
 
 /// Extend the input field to allow copying the field with a new identifier.
+@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
 public protocol RSDCopyInputField : RSDInputField {
     
     /// Return a copy of the input field with a new identifier.

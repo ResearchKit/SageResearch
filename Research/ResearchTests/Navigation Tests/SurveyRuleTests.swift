@@ -36,6 +36,7 @@ import Foundation
 import XCTest
 import Research
 
+@available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
 class SurveyRuleTests: XCTestCase {
     
     override func setUp() {

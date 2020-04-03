@@ -48,15 +48,25 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
         case active
         case completion
         case countdown
-        case demographics
         case feedback
-        case form
         case instruction
         case overview
         case section
         case transform
         case taskInfo
         case subtask
+        case simpleQuestion
+        case multipleInputQuestion
+        case choiceQuestion
+        case stringChoiceQuestion
+        
+        var type: RSDStepType {
+            return RSDStepType(rawValue: self.rawValue)
+        }
+    }
+    
+    enum DeprecatedType : String, Codable, CaseIterable {
+        case demographics, form
         
         var type: RSDStepType {
             return RSDStepType(rawValue: self.rawValue)
@@ -72,14 +82,8 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
     /// Defaults to creating a `RSDActiveUIStepObject` used as a countdown to an active step.
     public static let countdown = StandardType.countdown.type
     
-    /// Defaults to creating a `RSDFormUIStep` used to show demographics info if not already included.
-    public static let demographics = StandardType.demographics.type
-    
     /// Defaults to creating a `RSDResultSummaryStepObject` used show the user results.
     public static let feedback = StandardType.feedback.type
-    
-    /// Defaults to creating a `RSDFormUIStep`.
-    public static let form = StandardType.form.type
     
     /// Defaults to creating a `RSDActiveUIStep`.
     public static let instruction = StandardType.instruction.type
@@ -98,6 +102,11 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
     
     /// Defaults to creating a `RSDSubtaskStep`.
     public static let subtask = StandardType.subtask.type
+    
+    public static let simpleQuestion = StandardType.simpleQuestion.type
+    public static let multipleInputQuestion = StandardType.multipleInputQuestion.type
+    public static let choiceQuestion = StandardType.choiceQuestion.type
+    public static let stringChoiceQuestion = StandardType.stringChoiceQuestion.type
     
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDStepType] {
