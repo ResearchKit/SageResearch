@@ -383,14 +383,13 @@ open class RSDFactory {
     
     open func decodeAnswerType(from decoder: Decoder) throws -> AnswerType {
         guard let name = try typeName(from: decoder) else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath,
-                                                debugDescription: "Conformance to the protocol decoding requires a 'type' coding key.")
-            throw DecodingError.keyNotFound(TypeKeys.type, context)
+            print("WARNING!!! Default answerType is deprecated. \(decoder.codingPath)")
+            return try decodeDeprecatedAnswerType(from: decoder)
         }
         let typeKey = AnswerTypeType(rawValue: name)
         switch typeKey {
         case .array:
-            return try AnswerTypeString(from: decoder)
+            return try AnswerTypeArray(from: decoder)
         case .boolean:
             return try AnswerTypeBoolean(from: decoder)
         case .dateTime:
@@ -413,6 +412,12 @@ open class RSDFactory {
             throw DecodingError.typeMismatch(Codable.self, context)
         }
     }
+    
+    func decodeDeprecatedAnswerType(from decoder: Decoder) throws -> AnswerType {
+        let oldType = try RSDAnswerResultType(from: decoder)
+        return oldType.answerType
+    }
+    
     
     // MARK: Input field factory
     
@@ -886,7 +891,7 @@ open class RSDFactory {
         case .base:
             return try RSDResultObject(from: decoder)
         case .answer:
-            return try RSDAnswerResultObject(from: decoder)
+            return try AnswerResultObject(from: decoder)
         case .collection:
             return try RSDCollectionResultObject(from: decoder)
         case .task:

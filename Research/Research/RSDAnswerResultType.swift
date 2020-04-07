@@ -176,6 +176,49 @@ public struct RSDAnswerResultType : Codable, Hashable, Equatable {
     }
 }
 
+extension RSDAnswerResultType.BaseType {
+    var jsonType: JsonType {
+        switch self {
+        case .boolean:
+            return .boolean
+        case .codable:
+            return .object
+        case .data:
+            return .string
+        case .date:
+            return .string
+        case .decimal:
+            return .number
+        case .integer:
+            return .integer
+        case .string:
+            return .string
+        }
+    }
+}
+
+extension RSDAnswerResultType {
+    var answerType: AnswerType {
+        if let sequenceType = self.sequenceType {
+            switch sequenceType {
+            case .array:
+                return AnswerTypeArray(baseType: self.baseType.jsonType, sequenceSeparator: self.sequenceSeparator)
+            case .dictionary:
+                return AnswerTypeObject()
+            }
+        }
+        else if let unit = self.unit {
+            return AnswerTypeMeasurement(unit: unit)
+        }
+        else if self.baseType == .date {
+            return AnswerTypeDateTime(codingFormat: self.dateFormat)
+        }
+        else {
+            return self.baseType.jsonType.answerType
+        }
+    }
+}
+
 
 // MARK: Documentable
 

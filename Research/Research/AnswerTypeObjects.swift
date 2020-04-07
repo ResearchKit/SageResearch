@@ -44,7 +44,7 @@ public struct AnswerTypeType : RSDFactoryTypeRepresentable, Codable, Hashable {
     }
     
     static public let measurement: AnswerTypeType = "measurement"
-    static public let dateTime: AnswerTypeType = "dateTime"
+    static public let dateTime: AnswerTypeType = "date-time"
     static public let string: AnswerTypeType = AnswerTypeType(jsonType: .string)
     static public let number: AnswerTypeType = AnswerTypeType(jsonType: .number)
     static public let integer: AnswerTypeType = AnswerTypeType(jsonType: .integer)
@@ -91,49 +91,49 @@ extension JsonType {
     }
 }
 
-public struct AnswerTypeObject : RSDBaseAnswerType, Codable {
+public struct AnswerTypeObject : RSDBaseAnswerType, Codable, Hashable {
     public static let defaultJsonType: JsonType = .object
     public private(set) var type: AnswerTypeType = .object
     public init() {
     }
 }
 
-public struct AnswerTypeString : RSDBaseAnswerType, Codable {
+public struct AnswerTypeString : RSDBaseAnswerType, Codable, Hashable {
     public static let defaultJsonType: JsonType = .string
     public private(set) var type: AnswerTypeType = .string
     public init() {
     }
 }
 
-public struct AnswerTypeBoolean : RSDBaseAnswerType, Codable {
+public struct AnswerTypeBoolean : RSDBaseAnswerType, Codable, Hashable {
     public static let defaultJsonType: JsonType = .boolean
     public private(set) var type: AnswerTypeType = .boolean
     public init() {
     }
 }
 
-public struct AnswerTypeInteger : RSDBaseAnswerType, Codable {
+public struct AnswerTypeInteger : RSDBaseAnswerType, Codable, Hashable {
     public static let defaultJsonType: JsonType = .integer
     public private(set) var type: AnswerTypeType = .integer
     public init() {
     }
 }
 
-public struct AnswerTypeNumber : RSDBaseAnswerType, Codable {
+public struct AnswerTypeNumber : RSDBaseAnswerType, Codable, Hashable {
     public static let defaultJsonType: JsonType = .number
     public private(set) var type: AnswerTypeType = .number
     public init() {
     }
 }
 
-public struct AnswerTypeNull : RSDBaseAnswerType, Codable {
+public struct AnswerTypeNull : RSDBaseAnswerType, Codable, Hashable {
     public static let defaultJsonType: JsonType = .null
     public private(set) var type: AnswerTypeType = .null
     public init() {
     }
 }
 
-public struct AnswerTypeArray : AnswerType, Codable {
+public struct AnswerTypeArray : AnswerType, Codable, Hashable {
     public private(set) var type: AnswerTypeType = .array
     public let baseType: JsonType
     public let sequenceSeparator: String?
@@ -143,7 +143,7 @@ public struct AnswerTypeArray : AnswerType, Codable {
     }
 }
 
-public struct AnswerTypeDateTime : RSDBaseAnswerType, Codable {
+public struct AnswerTypeDateTime : RSDBaseAnswerType, Codable, Hashable {
     public static let defaultJsonType: JsonType = .string
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case type, _codingFormat = "codingFormat"
@@ -161,7 +161,7 @@ public struct AnswerTypeDateTime : RSDBaseAnswerType, Codable {
     }
 }
 
-public struct AnswerTypeMeasurement : RSDBaseAnswerType, Codable {
+public struct AnswerTypeMeasurement : RSDBaseAnswerType, Codable, Hashable {
     public static let defaultJsonType: JsonType = .number
     public private(set) var type: AnswerTypeType = .measurement
     public let unit: String?
@@ -171,3 +171,75 @@ public struct AnswerTypeMeasurement : RSDBaseAnswerType, Codable {
     }
 }
 
+protocol AnswerResultTypeConvertible {
+    func answerResultType() -> RSDAnswerResultType?
+}
+
+extension AnswerTypeObject : AnswerResultTypeConvertible {
+    func answerResultType() -> RSDAnswerResultType? {
+        return .codable
+    }
+}
+
+extension AnswerTypeString : AnswerResultTypeConvertible {
+    func answerResultType() -> RSDAnswerResultType? {
+        return .string
+    }
+}
+
+extension AnswerTypeBoolean : AnswerResultTypeConvertible {
+    func answerResultType() -> RSDAnswerResultType? {
+        return .boolean
+    }
+}
+
+extension AnswerTypeInteger : AnswerResultTypeConvertible {
+    func answerResultType() -> RSDAnswerResultType? {
+        return .integer
+    }
+}
+
+extension AnswerTypeNumber : AnswerResultTypeConvertible {
+    func answerResultType() -> RSDAnswerResultType? {
+        return .decimal
+    }
+}
+
+extension AnswerTypeNull : AnswerResultTypeConvertible {
+    func answerResultType() -> RSDAnswerResultType? {
+        return nil
+    }
+}
+
+extension AnswerTypeArray : AnswerResultTypeConvertible {
+    func baseResultType() -> RSDAnswerResultType.BaseType {
+        switch baseType {
+        case .boolean:
+            return .boolean
+        case .integer:
+            return .integer
+        case .number:
+            return .decimal
+        case .object:
+            return .codable
+        default:
+            return .string
+        }
+    }
+    
+    func answerResultType() -> RSDAnswerResultType? {
+        return RSDAnswerResultType(baseType: baseResultType(), sequenceType: .array, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: sequenceSeparator)
+    }
+}
+
+extension AnswerTypeDateTime : AnswerResultTypeConvertible {
+    func answerResultType() -> RSDAnswerResultType? {
+        RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: codingFormat)
+    }
+}
+
+extension AnswerTypeMeasurement : AnswerResultTypeConvertible {
+    func answerResultType() -> RSDAnswerResultType? {
+        RSDAnswerResultType(baseType: .decimal, sequenceType: nil, formDataType: nil, dateFormat: nil, unit: unit, sequenceSeparator: nil)
+    }
+}
