@@ -383,7 +383,6 @@ open class RSDFactory {
     
     open func decodeAnswerType(from decoder: Decoder) throws -> AnswerType {
         guard let name = try typeName(from: decoder) else {
-            print("WARNING!!! Default answerType is deprecated. \(decoder.codingPath)")
             return try decodeDeprecatedAnswerType(from: decoder)
         }
         let typeKey = AnswerTypeType(rawValue: name)
@@ -414,6 +413,7 @@ open class RSDFactory {
     }
     
     func decodeDeprecatedAnswerType(from decoder: Decoder) throws -> AnswerType {
+        print("WARNING!!! Default AnswerType is deprecated. \(decoder.codingPath)")
         let oldType = try RSDAnswerResultType(from: decoder)
         return oldType.answerType
     }
@@ -562,6 +562,7 @@ open class RSDFactory {
     /// - returns: An array of survey rules.
     /// - throws: `DecodingError`
     /// - seealso: `RSDInputFieldObject`
+    @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
     open func decodeSurveyRules(from rulesContainer: UnkeyedDecodingContainer, for dataType: RSDFormDataType) throws -> [RSDSurveyRule] {
         var container = rulesContainer
         var surveyRules = [RSDSurveyRule]()
@@ -575,6 +576,7 @@ open class RSDFactory {
     
     /// Overridable factory method for returning a survey rule. By default, this will return a
     /// `RSDComparableSurveyRuleObject` appropriate to the base type of the data type.
+    @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
     open func decodeSurveyRule(from decoder: Decoder, for dataType: RSDFormDataType) throws -> RSDSurveyRule {
         switch dataType.baseType {
         case .boolean:
@@ -630,6 +632,7 @@ open class RSDFactory {
     /// - returns: An appropriate instance of `RSDRange`.
     /// - throws: `DecodingError`
     /// - seealso: `RSDInputFieldObject`
+    @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
     open func decodeRange(from decoder: Decoder, for dataType: RSDFormDataType) throws -> RSDRange? {
         switch dataType.baseType {
         case .integer, .decimal, .fraction:

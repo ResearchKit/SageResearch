@@ -39,6 +39,7 @@ import Foundation
 ///
 /// - seealso: `RSDInputField` and `RSDFormUIHint`.
 ///
+@available(*, deprecated, message: "Use `AnswerType` instead")
 public enum RSDFormDataType {
     
     /// Base data types are basic types that can be defined with only a base type.
@@ -371,6 +372,7 @@ public enum RSDFormDataType {
 fileprivate let kDetailCodingKey = "detail"
 fileprivate let kPostalCodeCodingKey = "postalCode"
 
+@available(*, deprecated, message: "Use `AnswerType` instead")
 extension RSDFormDataType: RawRepresentable, Codable, Hashable {
     
     public init?(rawValue: String) {
@@ -446,6 +448,7 @@ extension RSDFormDataType: RawRepresentable, Codable, Hashable {
     }
 }
 
+@available(*, deprecated, message: "Use `AnswerType` instead")
 extension RSDFormDataType : ExpressibleByStringLiteral {
 
     public init(stringLiteral value: String) {
@@ -453,6 +456,7 @@ extension RSDFormDataType : ExpressibleByStringLiteral {
     }
 }
 
+@available(*, deprecated, message: "Use `AnswerType` instead")
 extension RSDFormDataType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allStandardTypes().map{ $0.rawValue }

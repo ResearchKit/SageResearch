@@ -112,26 +112,3 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
         }
     }
 }
-
-extension RSDAnswerResultObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func answerResultExamples() -> [RSDAnswerResultObject] {
-        let typeAndValue = RSDAnswerResultType.examplesWithValues()
-        let date = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
-        return typeAndValue.enumerated().map { (index, object) -> RSDAnswerResultObject in
-            var result = RSDAnswerResultObject(identifier: "question\(index+1)", answerType: object.answerType)
-            result.startDate = date
-            result.endDate = date
-            result.value = object.value
-            return result
-        }
-    }
-    
-    static func examples() -> [Encodable] {
-        return answerResultExamples()
-    }
-}

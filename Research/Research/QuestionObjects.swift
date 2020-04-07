@@ -35,7 +35,7 @@ import Foundation
 
 // TODO: syoung 04/06/2020 Implement ComboBoxQuestionObject supported in kotlin frameworks
 
-open class AbstractQuestionStep : RSDUIStepObject {
+open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCohortAssignmentStep {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case surveyRules, isOptional = "optional"
     }
@@ -53,18 +53,23 @@ open class AbstractQuestionStep : RSDUIStepObject {
     }
     
     open override func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
-        fatalError("TODO: Implement evaluate survey rules")
+        evaluateSurveyRules(with: result, isPeeking: isPeeking)
     }
     
     open func cohortsToApply(with result: RSDTaskResult) -> (add: Set<String>, remove: Set<String>)? {
-        fatalError("TODO: Implement evaluate survey rules")
+        evaluateCohortsToApply(with: result)
     }
     
-    /// Instantiate a step result that is appropriate for this step. The default for this class is a
-    /// `RSDCollectionResultObject`.
+    /// Instantiate a step result that is appropriate for this step.
     /// - returns: A result for this step.
     open override func instantiateStepResult() -> RSDResult {
-        fatalError("TODO: Implement returning an answer result instantiated with answerType")
+        guard let question = self as? QuestionStep else {
+            return RSDResultObject(identifier: self.identifier)
+        }
+        return AnswerResultObject(identifier: self.identifier,
+                                  answerType: question.answerType,
+                                  value: nil,
+                                  questionText: self.title ?? self.subtitle ?? self.detail)
     }
     
     open override func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {

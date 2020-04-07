@@ -149,18 +149,3 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
         }
     }
 }
-
-extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func examples() -> [Encodable] {
-        let exampleA = RSDTextFieldOptionsObject(keyboardType: .asciiCapable, autocapitalizationType: .allCharacters, isSecureTextEntry: true, maximumLength: 16, spellCheckingType: .no, autocorrectionType: .no)
-        var exampleB = RSDTextFieldOptionsObject(keyboardType: .numberPad)
-        exampleB.textValidator = try! RSDRegExValidatorObject(regExPattern: "^[0-9]*$")
-        exampleB.invalidMessage = "This input field only allows entering numbers."
-        return [exampleA, exampleB]
-    }
-}

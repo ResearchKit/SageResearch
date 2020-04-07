@@ -36,6 +36,7 @@ import Foundation
 
 /// `RSDChoicePickerTableItemGroup` subclasses `RSDInputFieldTableItemGroup` to implement a single or multiple
 /// choice question where the choices are presented as a list.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Does the item group allow for multiple choices or is it single selection?
@@ -184,6 +185,7 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
 }
 
 /// An item group for entering a boolean data type.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 public final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
     
     /// Default initializer.

@@ -35,6 +35,7 @@ import Foundation
 
 /// An item group for entering data that is a human-measurement in localized units appropriate to the
 /// size-range of a human (adult, child, infant).
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 open class RSDHumanMeasurementTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Default initializer.

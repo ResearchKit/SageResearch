@@ -127,7 +127,7 @@ extension RSDCollectionResultObject : RSDDocumentableCodableObject {
         var result = RSDCollectionResultObject(identifier: "formStep")
         result.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         result.endDate = result.startDate.addingTimeInterval(5 * 60)
-        result.inputResults = RSDAnswerResultObject.answerResultExamples()
+        result.inputResults = AnswerResultObject.answerResultExamples()
         return result
     }
     

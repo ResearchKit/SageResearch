@@ -87,7 +87,11 @@ internal struct RecursiveScoreBuilder : RSDScoreBuilder {
         else if let collectionResult = result as? RSDCollectionResult {
             return try self._recursiveGetScoringData(from: collectionResult.inputResults)
         }
+        else if let answerResult = result as? AnswerResult {
+            return answerResult.jsonValue?.jsonObject()
+        }
         else if let answerResult = result as? RSDAnswerResult {
+            print("WARNING!!! `RSDAnswerResult` is deprecated and will be deleted a future version.")
             return try answerResult.answerType.jsonEncode(from: answerResult.value)
         }
         else {

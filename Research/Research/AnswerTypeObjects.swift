@@ -171,6 +171,93 @@ public struct AnswerTypeMeasurement : RSDBaseAnswerType, Codable, Hashable {
     }
 }
 
+protocol AnswerTypeDocumentable {
+    static func exampleTypeAndValues() -> [(AnswerType, JsonElement)]
+}
+
+struct AnswerTypeExamples {
+    
+    static func examplesWithValues() -> [(AnswerType, JsonElement)] {
+        documentableTypes.flatMap { $0.exampleTypeAndValues() }
+    }
+    
+    static let documentableTypes: [AnswerTypeDocumentable.Type] = [
+        AnswerTypeBoolean.self,
+        AnswerTypeInteger.self,
+        AnswerTypeNumber.self,
+        AnswerTypeNull.self,
+        AnswerTypeObject.self,
+        AnswerTypeString.self,
+        AnswerTypeArray.self,
+        AnswerTypeDateTime.self,
+        AnswerTypeMeasurement.self,
+    ]
+}
+
+extension AnswerTypeObject : AnswerTypeDocumentable {
+    static func exampleTypeAndValues() -> [(AnswerType, JsonElement)] {
+        [(AnswerTypeObject(), .object(["foo":"ba"]))]
+    }
+}
+
+extension AnswerTypeString : AnswerTypeDocumentable {
+    static func exampleTypeAndValues() -> [(AnswerType, JsonElement)] {
+        [(AnswerTypeString(), .string("foo"))]
+    }
+}
+
+extension AnswerTypeBoolean : AnswerTypeDocumentable {
+    static func exampleTypeAndValues() -> [(AnswerType, JsonElement)] {
+        [(AnswerTypeBoolean(), .boolean(true))]
+    }
+}
+
+extension AnswerTypeInteger : AnswerTypeDocumentable {
+    static func exampleTypeAndValues() -> [(AnswerType, JsonElement)] {
+        [(AnswerTypeInteger(), .integer(42))]
+    }
+}
+
+extension AnswerTypeNumber : AnswerTypeDocumentable {
+    static func exampleTypeAndValues() -> [(AnswerType, JsonElement)] {
+        [(AnswerTypeNumber(), .number(3.14))]
+    }
+}
+
+extension AnswerTypeNull : AnswerTypeDocumentable {
+    static func exampleTypeAndValues() -> [(AnswerType, JsonElement)] {
+        [(AnswerTypeNull(), .null)]
+    }
+}
+
+extension AnswerTypeArray : AnswerTypeDocumentable {
+    static func exampleTypeAndValues() -> [(AnswerType, JsonElement)] {
+        [
+            (AnswerTypeArray(baseType: .number), .array([3.2, 5.1])),
+            (AnswerTypeArray(baseType: .integer), .array([1, 5])),
+            (AnswerTypeArray(baseType: .string), .array(["foo", "ba", "lalala"])),
+        ]
+    }
+}
+
+extension AnswerTypeDateTime : AnswerTypeDocumentable {
+    static func exampleTypeAndValues() -> [(AnswerType, JsonElement)] {
+        [
+            (AnswerTypeDateTime(codingFormat: "yyyy-MM"), .string("2020-04")),
+            (AnswerTypeDateTime(codingFormat: "HH:mm"), .string("08:30")),
+            (AnswerTypeDateTime(), .string("2017-10-16T22:28:09.000-07:00")),
+        ]
+    }
+}
+
+extension AnswerTypeMeasurement : AnswerTypeDocumentable {
+    static func exampleTypeAndValues() -> [(AnswerType, JsonElement)] {
+        [(AnswerTypeMeasurement(unit: "cm"), .number(4.2))]
+    }
+}
+
+// MARK: Deprecated AnswerResultType conversion
+
 protocol AnswerResultTypeConvertible {
     func answerResultType() -> RSDAnswerResultType?
 }

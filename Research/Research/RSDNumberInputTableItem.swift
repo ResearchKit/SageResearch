@@ -34,6 +34,7 @@
 import Foundation
 
 /// An table item for entering a number value.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 public final class RSDNumberInputTableItem : RSDTextInputTableItem {
     
     fileprivate var numberRange: RSDNumberRange?

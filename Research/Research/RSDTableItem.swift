@@ -145,6 +145,7 @@ public final class RSDImageTableItem : RSDTableItem {
 
 /// `RSDInputFieldTableItem` is an abstract base class implementation for representing an answer, or part of an
 /// answer for a given `RSDInputField`.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 open class RSDInputFieldTableItem : RSDTableItem {
     
     /// The RSDInputField representing this tableItem.

@@ -46,17 +46,9 @@ class RecursiveScoreBuilderTests: XCTestCase {
 
     func testNestedDictionaryScore() {
 
-        var answer1 = RSDAnswerResultObject(identifier: "answer1", answerType: .boolean)
-        answer1.value = true
-        
-        var answer2 = RSDAnswerResultObject(identifier: "answer2", answerType: .integer)
-        answer2.value = 2
-        
-        var answer3 = RSDAnswerResultObject(identifier: "answer3", answerType: .integer)
-        answer3.value = 3
-        
-        var answer4 = RSDAnswerResultObject(identifier: "answer4", answerType: .integer)
-        answer4.value = 3
+        let answer1 = AnswerResultObject(identifier: "answer1", value: .boolean(true))
+        let answer2 = AnswerResultObject(identifier: "answer2", value: .integer(2))
+        let answer3 = AnswerResultObject(identifier: "answer3", value: .integer(3))
         
         let score1 = TestResult(identifier: "score1", score: 1, startDate: Date(), endDate: Date())
         let score2 = TestResult(identifier: "score2", score: 2, startDate: Date(), endDate: Date())
@@ -64,7 +56,7 @@ class RecursiveScoreBuilderTests: XCTestCase {
         
         var taskResult = RSDTaskResultObject(identifier: "topLevel")
         
-        // Build section A
+        // Build section Alet
         var subResultA = RSDTaskResultObject(identifier: "sectionA")
         subResultA.appendStepHistory(with: RSDResultObject(identifier: "intruction"))
         subResultA.appendStepHistory(with: score1)

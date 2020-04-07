@@ -36,6 +36,7 @@ import Foundation
 /// `RSDTextInputTableItem` is used to represent a single row in a table that holds a text entry input field.
 /// Typically, this would be used to represent a single `RSDInputField` value, but it can also be used to represent a
 /// single component in a multiple-component field.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 open class RSDTextInputTableItem : RSDInputFieldTableItem {
     
     /// The text field options for this input.

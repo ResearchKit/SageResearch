@@ -68,7 +68,7 @@ open class RSDResultSummaryStepViewModel: RSDStepViewModel {
             }
         }
         else if answerResult.answerType.sequenceType == nil,
-            let num = (answer as? RSDJSONNumber)?.jsonNumber() {
+            let num = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber() {
             return self.numberFormatter.string(from: num)
         }
         else {

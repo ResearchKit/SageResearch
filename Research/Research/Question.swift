@@ -37,7 +37,7 @@ import Foundation
 
 
 /// An enum listing the json-types for serialization.
-public enum JsonType : String, Codable {
+public enum JsonType : String, Codable, CaseIterable {
     case string, number, integer, boolean, null, array, object
     
     var isPrimitive: Bool {

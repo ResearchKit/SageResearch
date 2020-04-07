@@ -39,7 +39,7 @@ import Foundation
 /// using ft and in, whereas a child or infant will be reported in inches. The placeholder
 /// text for child or infant measurement range will be either "inches" or "centimeters",
 /// depending upon the participant's locale.
-@available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 public final class RSDHeightInputTableItem : RSDTextInputTableItem {
     
     /// The base unit is the unit of mass that the measurement should be converted to in order
@@ -120,6 +120,7 @@ public final class RSDHeightInputTableItem : RSDTextInputTableItem {
 /// setting the weight of an infant. Typically, US participants know what their newborn baby's
 /// weight is in lb and oz. Additionally, the placeholder text for an adult or child measurement
 /// range will be either "pounds" or "kilograms", depending upon the participant's locale.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 public final class RSDMassInputTableItem : RSDTextInputTableItem {
     
     /// The base unit is the unit of mass that the measurement should be converted to in order

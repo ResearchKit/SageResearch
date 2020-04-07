@@ -112,8 +112,7 @@ class TaskViewModelTests: XCTestCase {
         
         // Create an answer result to add to the final task result.
         var taskResult = RSDTaskResultObject(identifier: "test")
-        var answerResultBlu = RSDAnswerResultObject(identifier: "blu", answerType: .string)
-        answerResultBlu.value = "goo"
+        let answerResultBlu = AnswerResultObject(identifier: "blu", value: .string("goo"))
         taskResult.appendAsyncResult(with: answerResultBlu)
         task.taskResult = taskResult
         
@@ -124,8 +123,7 @@ class TaskViewModelTests: XCTestCase {
         let startDate = taskViewModel.taskResult.startDate
         
         // Create an answer result to add to the temporary task result.
-        var answerResultFoo = RSDAnswerResultObject(identifier: "foo", answerType: .string)
-        answerResultFoo.value = "bar"
+        let answerResultFoo = AnswerResultObject(identifier: "foo", value: .string("bar"))
         taskViewModel.taskResult.appendAsyncResult(with: answerResultFoo)
         
         let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
@@ -172,7 +170,7 @@ class TestTaskViewModel : RSDTaskViewModel {
     
     override func pathComponent(for step: RSDStep) -> (node: RSDNodePathComponent, stepController: RSDStepController?)? {
         if step.identifier == stepToSkip {
-            taskResult.appendAsyncResult(with: RSDAnswerResultObject(identifier: stepToSkip!, answerType: .string, value: "foo"))
+            taskResult.appendAsyncResult(with: AnswerResultObject(identifier: stepToSkip!, value: .string("foo")))
             return nil
         }
         else {

@@ -37,6 +37,7 @@ import Foundation
 /// for a given input field.
 ///
 /// - seealso: `RSDInputField` and `RSDFormStepDataSource`
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 public enum RSDInputFieldError: Error {
     
     /// The context for the error.

@@ -381,6 +381,3 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
         return examples
     }
 }
-
-extension RSDInputFieldObject : RSDDocumentableDecodableObject {
-}

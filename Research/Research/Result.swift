@@ -60,6 +60,9 @@ public protocol AnswerResult : class, Result {
     
     /// The question text that was displayed for this answer result.
     var questionText: String? { get }
+    
+    /// The answer for the result, converted from a JsonElement if needed.
+    var value: Any? { get }
 }
 
 // TODO: syoung 04/06/2020 These are stubbed out here for reference. These will require modification

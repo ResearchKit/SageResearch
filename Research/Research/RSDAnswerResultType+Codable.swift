@@ -34,6 +34,7 @@
 import Foundation
 
 // MARK: Value Decoding
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 extension RSDAnswerResultType {
     
     /// Decode a `RSDJSONValue` from the given JSON value.
@@ -229,6 +230,7 @@ extension RSDAnswerResultType {
 }
 
 // MARK: Value Encoding
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 extension RSDAnswerResultType {
     
     /// Returns a JSON serializable object that is encoded for this answer type from the given value.
@@ -412,6 +414,7 @@ extension RSDAnswerResultType {
 }
 
 /// A wrapper that can be used to encode/decode a single answer value using the answer result type.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 fileprivate struct AnswerResultTypeCodingWrapper : Codable {
     private enum CodingKeys : String, CodingKey {
         case object, answerType

@@ -47,13 +47,10 @@ public struct RSDDocumentCreator {
     let allStringEnums: [RSDDocumentableStringEnum.Type] = {
         
         var allEnums: [RSDDocumentableStringEnum.Type] = [
-        RSDAnswerResultType.BaseType.self,
-        RSDAnswerResultType.SequenceType.self,
         RSDAsyncActionType.self,
         RSDCohortRuleOperator.self,
         RSDDateCoderObject.self,
         RSDDeviceType.self,
-        RSDFormDataType.self,
         RSDFormUIHint.self,
         RSDIdentifier.self,
         RSDKeyboardType.self,
@@ -77,14 +74,11 @@ public struct RSDDocumentCreator {
     
     let allStringLiterals: [RSDDocumentableStringLiteral.Type] = [
         RSDChoiceObject<String>.self,
-        RSDRegExValidatorObject.self,
         ]
 
     let allCodableObjects: [RSDDocumentableCodableObject.Type] = {
         var allCodableObjects: [RSDDocumentableCodableObject.Type] = [
             RSDAnimatedImageThemeElementObject.self,
-            RSDAnswerResultObject.self,
-            RSDAnswerResultType.self,
             RSDCohortNavigationRuleObject.self,
             RSDCollectionResultObject.self,
             RSDDateRangeObject.self,
@@ -96,7 +90,6 @@ public struct RSDDocumentCreator {
             RSDResultObject.self,
             RSDStandardAsyncActionConfiguration.self,
             RSDTaskResultObject.self,
-            RSDTextFieldOptionsObject.self,
             RSDUIActionObject.self,
             RSDViewThemeElementObject.self,
             RSDWebViewUIActionObject.self,
@@ -122,22 +115,12 @@ public struct RSDDocumentCreator {
         RSDComparableSurveyRuleObject<RSDFraction>.self,
         RSDUIStepObject.self,
         RSDActiveUIStepObject.self,
-        RSDFormUIStepObject.self,
         RSDOverviewStepObject.self,
         RSDResultSummaryStepObject.self,
         RSDSectionStepObject.self,
         RSDStepTransformerObject.self,
-        RSDInputFieldObject.self,
-        RSDDetailInputFieldObject.self,
-        RSDCodableChoiceInputFieldObject<Bool>.self,
-        RSDCodableChoiceInputFieldObject<String>.self,
-        RSDCodableChoiceInputFieldObject<Date>.self,
-        RSDCodableChoiceInputFieldObject<Double>.self,
-        RSDCodableChoiceInputFieldObject<Int>.self,
-        RSDCodableChoiceInputFieldObject<RSDFraction>.self,
         RSDColorPlacementThemeElementObject.self,
         RSDSingleColorThemeElementObject.self,
-        RSDMultipleComponentInputFieldObject.self,
         RSDSchemaInfoObject.self,
         RSDConditionalStepNavigatorObject.self,
         RSDTaskGroupObject.self,

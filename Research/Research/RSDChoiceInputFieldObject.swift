@@ -110,6 +110,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptionsWith
 /// `RSDInputFieldObject` to include a list of choices for a multiple choice or single choice input field.
 /// It is designed to be used by `RSDFactory` or a subclass to encode and decode the choices as a typed array
 /// of `RSDChoiceObject` objects.
+@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
 public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputFieldObject, RSDChoiceOptions {
     public typealias Value = T
     

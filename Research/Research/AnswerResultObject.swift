@@ -47,9 +47,13 @@ public final class AnswerResultObject : AnswerResult, Codable {
     public var startDate: Date = Date()
     public var endDate: Date = Date()
     
+    public var value: Any? {
+        return jsonValue?.jsonObject()
+    }
+    
     public init(identifier: String, value: JsonElement, questionText: String? = nil) {
         self.identifier = identifier
-        self.jsonAnswerType = value.jsonType.answerType
+        self.jsonAnswerType = value.answerType
         self.jsonValue = value
         self.questionText = questionText
     }
@@ -145,10 +149,28 @@ extension AnswerResultObject : RSDAnswerResult {
     public var answerType: RSDAnswerResultType {
         (self.jsonAnswerType as? AnswerResultTypeConvertible)?.answerResultType() ?? .codable
     }
+}
+
+extension AnswerResultObject : RSDDocumentableCodableObject {
     
-    public var value: Any? {
-        return jsonValue
+    static func codingKeys() -> [CodingKey] {
+        return CodingKeys.allCases
     }
-} 
+    
+    static func answerResultExamples() -> [AnswerResultObject] {
+        let typeAndValue = AnswerTypeExamples.examplesWithValues()
+        let date = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        return typeAndValue.enumerated().map { (index, object) -> AnswerResultObject in
+            let result = AnswerResultObject(identifier: "question\(index+1)", answerType: object.0, value: object.1)
+            result.startDate = date
+            result.endDate = date
+            return result
+        }
+    }
+    
+    static func examples() -> [Encodable] {
+        return answerResultExamples()
+    }
+}
 
 

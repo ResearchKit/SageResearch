@@ -75,7 +75,7 @@ public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDI
     
     public func instantiateStepResult() -> RSDResult {
         guard result == nil else { return result! }
-        return RSDAnswerResultObject(identifier: identifier, answerType: .string)
+        return AnswerResultObject(identifier: identifier, answerType: AnswerTypeString())
     }
     
     public func validate() throws {
@@ -429,11 +429,11 @@ public class TestTaskController: NSObject, RSDTaskController {
         // used to test forward/backward navigation.
         if let node = self.taskViewModel.currentNode {
             let stepResult = node.step.instantiateStepResult()
-            if let answerResult = stepResult as? RSDAnswerResultObject,
-                answerResult.value == nil, answerResult.answerType == .string {
-                var aResult = answerResult
-                aResult.value = node.identifier
-                node.taskResult.appendStepHistory(with: aResult)
+            if let answerResult = stepResult as? AnswerResultObject,
+                answerResult.jsonValue == nil,
+                answerResult.jsonAnswerType is AnswerTypeString {
+                answerResult.jsonValue = .string(node.identifier)
+                node.taskResult.appendStepHistory(with: answerResult)
             } else {
                 node.taskResult.appendStepHistory(with: stepResult)
             }

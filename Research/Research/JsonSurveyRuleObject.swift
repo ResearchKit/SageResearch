@@ -60,7 +60,6 @@ public struct JsonSurveyRuleObject : RSDComparableSurveyRule, Codable, Hashable 
     public let matchingValue: JsonElement?
 }
 
-
 // TODO: syoung 04/06/2020 Replace with JsonModel-Swift in next set of deprecations.
 /// A `Codable` element that can be used to serialize any `JsonSerializable`.
 public enum JsonElement : Codable, Hashable {
@@ -228,6 +227,35 @@ public enum JsonElement : Codable, Hashable {
         case .object(let value):
             "object".hash(into: &hasher)
             (value as NSDictionary).hash(into: &hasher)
+        }
+    }
+}
+
+extension JsonElement {
+    var answerType: AnswerType {
+        switch self {
+        case .null:
+            return AnswerTypeNull()
+        case .boolean(_):
+            return AnswerTypeBoolean()
+        case .string(_):
+            return AnswerTypeString()
+        case .integer(_):
+            return AnswerTypeInteger()
+        case .number(_):
+            return AnswerTypeNumber()
+        case .array(let arr):
+            if arr is [Int] {
+                return AnswerTypeArray(baseType: .integer)
+            } else if arr is [NSNumber] || arr is [RSDJSONNumber] {
+                return AnswerTypeArray(baseType: .number)
+            } else if arr is [String] {
+                return AnswerTypeArray(baseType: .string)
+            } else {
+                return AnswerTypeArray(baseType: .object)
+            }
+        case .object(_):
+            return AnswerTypeObject()
         }
     }
 }

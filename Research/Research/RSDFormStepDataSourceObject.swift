@@ -36,6 +36,7 @@ import Foundation
 /// `RSDFormStepDataSourceObject` is a concrete implementation of the `RSDTableDataSource` protocol that is
 /// designed to be used to supply the data source for a form step. This class inherits from `RSDStepViewModel`
 /// to allow the table view controller to use this class as its `stepViewModel`.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
     
     /// The delegate associated with this data source.
