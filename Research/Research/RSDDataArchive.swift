@@ -96,7 +96,7 @@ internal class TaskArchiver : NSObject {
     
     fileprivate var childArchives: [RSDDataArchive] = []
     fileprivate var files: Set<RSDFileManifest> = []
-    fileprivate var answerMap: [String : AnswerResultWrapper] = [:]
+    fileprivate var answerMap: [String : JsonElement] = [:]
     
     init(manager: RSDDataArchiveManager, taskResult: RSDTaskResult, scheduleIdentifier: String?) {
         self.archive = manager.dataArchiver(for: taskResult, scheduleIdentifier: scheduleIdentifier, currentArchive: nil)
@@ -212,19 +212,30 @@ internal class TaskArchiver : NSObject {
         }
         
         // If this result conforms to the answer result protocol then add it to the answer map
-        if let answerResult = result as? RSDAnswerResult {
-            if let answer = answerResult.value, !(answer is NSNull) {
-                let answerIdentifier: String = {
-                    if let key = self.manager.answerKey?(for: answerResult.identifier, with: sectionIdentifier) {
-                        return key
-                    }
-                    let sectionPrefix = (sectionIdentifier != nil) ? "\(sectionIdentifier!)_" : ""
-                    let collectionPrefix = (collectionIdentifier != nil && collectionIdentifier != result.identifier) ? "\(collectionIdentifier!)_" : ""
-                    return "\(sectionPrefix)\(collectionPrefix)\(result.identifier)"
-                }()
-                answerMap[answerIdentifier] = AnswerResultWrapper(answerResult: answerResult)
+        if let answerResult = result as? AnswerResult {
+            if let answer = answerResult.encodingValue(), answer != .null {
+                let answerIdentifier = self.answerIdentifier(for: result.identifier, sectionIdentifier, collectionIdentifier)
+                answerMap[answerIdentifier] = answer
             }
         }
+        else if let answerResult = result as? RSDAnswerResult {
+            if let answer = answerResult.value, !(answer is NSNull) {
+                let answerIdentifier = self.answerIdentifier(for: result.identifier, sectionIdentifier, collectionIdentifier)
+                let wrapper = AnswerResultWrapper(answerResult: answerResult)
+                answerMap[answerIdentifier] = try wrapper.jsonElement()
+            }
+        }
+    }
+    
+    private func answerIdentifier(for resultIdentifier: String,
+                                  _ sectionIdentifier: String?,
+                                  _ collectionIdentifier: String?) -> String {
+        if let key = self.manager.answerKey?(for: resultIdentifier, with: sectionIdentifier) {
+            return key
+        }
+        let sectionPrefix = (sectionIdentifier != nil) ? "\(sectionIdentifier!)_" : ""
+        let collectionPrefix = (collectionIdentifier != nil && collectionIdentifier != resultIdentifier) ? "\(collectionIdentifier!)_" : ""
+        return "\(sectionPrefix)\(collectionPrefix)\(resultIdentifier)"
     }
 }
 
@@ -235,4 +246,3 @@ fileprivate struct AnswerResultWrapper : Encodable {
         try answerResult.answerType.encode(answerResult.value, to: encoder)
     }
 }
-

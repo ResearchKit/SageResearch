@@ -65,12 +65,45 @@ public protocol AnswerResult : class, Result {
     var value: Any? { get }
 }
 
+public extension AnswerResult {
+    func findAnswer(with identifier:String ) -> AnswerResult? {
+        return self.identifier == identifier ? self : nil
+    }
+    
+    func encodingValue() -> JsonElement? {
+        guard let value = jsonValue, case .array(let arr) = value,
+            let answerType = self.jsonAnswerType as? AnswerTypeArray,
+            let separator = answerType.sequenceSeparator else {
+            return self.jsonValue
+        }
+        let str = arr.map {
+            if let comparableValue = $0 as? CustomStringConvertible {
+                return comparableValue.description
+            }
+            else {
+                return "\($0)"
+            }
+        }.joined(separator: separator)
+        return .string(str)
+    }
+}
+
+public protocol AnswerFinder {
+    
+    /// Find an *answer* result within this result. This method will return `nil` if there is a
+    /// result but that result does **not** conform to to the `AnswerResult` protocol.
+    ///
+    /// - parameter identifier: The identifier associated with the result.
+    /// - returns: The result or `nil` if not found.
+    func findAnswer(with identifier: String) -> AnswerResult?
+}
+
 // TODO: syoung 04/06/2020 These are stubbed out here for reference. These will require modification
 // to the protocols in order to support using them while running a task instead of the older
 // RSDResult protocols.
 
 /// A `CollectionResult` is used to describe a collection of results.
-public protocol CollectionResult : Result {
+public protocol CollectionResult : Result, AnswerFinder {
 
     /// The collection of results. This can be the async results of a sensor recorder, a response
     /// to a service call, or the results from a form where all the fields are displayed together

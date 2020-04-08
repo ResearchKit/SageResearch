@@ -109,9 +109,12 @@ extension MultipleInputQuestion {
 public protocol ChoiceQuestion : Question, RSDChoiceOptions {
     var baseType: JsonType { get }
     var inputUIHint: RSDFormUIHint { get }
+    var jsonChoices: [JsonChoice] { get }
 }
 
 public extension ChoiceQuestion {
+    
+    var choices: [RSDChoice] { jsonChoices }
     
     var answerType: AnswerType {
         return isSingleAnswer ? baseType.answerType : AnswerTypeArray(baseType: baseType)
@@ -120,22 +123,22 @@ public extension ChoiceQuestion {
     var defaultAnswer: Any? { nil }
     
     func buildInputItems()-> [InputItem] {
-        choices.map {
+        jsonChoices.map {
             ChoiceItemWrapper(choice: $0,
-                                 answerType: baseType.answerType,
-                                 isSingleAnswer: isSingleAnswer,
-                                 uiHint: inputUIHint)
+                              answerType: baseType.answerType,
+                              isSingleAnswer: isSingleAnswer,
+                              uiHint: inputUIHint)
         }
     }
 }
 
 public struct ChoiceItemWrapper : ChoiceInputItem {
-    public let choice: RSDChoice
+    public let choice: JsonChoice
     public let answerType: AnswerType
     public let isSingleAnswer: Bool
     public let inputUIHint: RSDFormUIHint
     
-    public init(choice: RSDChoice, answerType: AnswerType, isSingleAnswer: Bool, uiHint: RSDFormUIHint) {
+    public init(choice: JsonChoice, answerType: AnswerType, isSingleAnswer: Bool, uiHint: RSDFormUIHint) {
         self.choice = choice
         self.answerType = answerType
         self.isSingleAnswer = isSingleAnswer
@@ -172,5 +175,9 @@ public struct ChoiceItemWrapper : ChoiceInputItem {
     
     public func isEqualToResult(_ result: RSDResult?) -> Bool {
         return choice.isEqualToResult(result)
+    }
+    
+    public func jsonElement(selected: Bool) -> JsonElement? {
+        selected ? (choice.matchingValue ?? .null) : nil
     }
 }

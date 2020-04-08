@@ -1,8 +1,8 @@
 //
-//  RSDResultSummaryStep.swift
+//  QuestionTableItemGroup.swift
 //  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,38 +33,29 @@
 
 import Foundation
 
-/// A result summary step is used to display a result that is calculated or measured earlier in the task.
-public protocol RSDResultSummaryStep : RSDUIStep {
+open class QuestionTableItemGroup : RSDTableItemGroup {
     
-    /// Text to display as the title above the result.
-    var resultTitle: String? { get }
+    public let question: Question
     
-    /// The identifier for the result to display.
-    var resultIdentifier: String? { get }
-    
-    /// The step result identifier for the result to display.
-    var stepResultIdentifier: String? { get }
-    
-    /// The localized unit to display for this result.
-    var unitText: String? { get }
-}
+    public init(beginningRowIndex: Int, question: Question) {
+        self.question = question
+        let items: [RSDTableItem] = question.buildInputItems().enumerated().compactMap { (idx, inputItem) -> RSDTableItem? in
 
-extension RSDResultSummaryStep {
-    
-    /// Get the result to display as the answer from the task result.
-    /// - parameter taskResult: The task result for this step.
-    /// - returns: The answer (if any).
-    public func answerValueAndType(from taskResult: RSDTaskResult) -> (value: Any?, answerType: AnswerType?)? {
-        guard let resultIdentifier = self.resultIdentifier else { return nil }
-        let cResult = (self.stepResultIdentifier != nil) ? taskResult.findResult(with: self.stepResultIdentifier!) : taskResult
-        if let answerResult = (cResult as? AnswerFinder)?.findAnswer(with: resultIdentifier) {
-            return (answerResult.value, answerResult.jsonAnswerType)
+            if let textItem = inputItem as? KeyboardTextInputItem {
+                return TextInputItemTableItem(questionIdentifier: question.identifier,
+                                              rowIndex: idx + beginningRowIndex,
+                                              textItem: textItem)
+            }
+            else if let choiceItem = inputItem as? ChoiceInputItem {
+                return ChoiceInputItemTableItem(questionIdentifier: question.identifier,
+                                                rowIndex: idx + beginningRowIndex,
+                                                choiceItem: choiceItem)
+            }
+            else {
+                print("WARNING!! Failed to create a table item for \(inputItem)")
+                return nil
+            }
         }
-        else if let answerResult = (cResult as? RSDAnswerResultFinder)?.findAnswerResult(with: resultIdentifier) {
-            return (answerResult.value, answerResult.answerType.answerType)
-        }
-        else {
-            return nil
-        }
+        super.init(beginningRowIndex: beginningRowIndex, items: items)
     }
 }

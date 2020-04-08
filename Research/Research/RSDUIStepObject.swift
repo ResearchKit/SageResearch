@@ -248,7 +248,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     // MARK: Table source
     
     open func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
-        return RSDFormStepDataSourceObject(step: self, parent: parent, supportedHints: supportedHints)
+        return RSDUIStepTableDataSourceImpl(step: self, parent: parent)
     }
     
     // MARK: Decodable

@@ -122,26 +122,8 @@ public final class AnswerResultObject : AnswerResult, Codable {
             let nestedEncoder = container.superEncoder(forKey: .jsonAnswerType)
             try encodable.encode(to: nestedEncoder)
         }
-        if let encodable = self.encodingValue() {
-            let nestedEncoder = container.superEncoder(forKey: .jsonValue)
-            try encodable.encode(to: nestedEncoder)
-        }
-    }
-    
-    func encodingValue() -> Encodable? {
-        guard let value = jsonValue, case .array(let arr) = value,
-            let answerType = self.jsonAnswerType as? AnswerTypeArray,
-            let separator = answerType.sequenceSeparator else {
-            return self.jsonValue
-        }
-        return arr.map {
-            if let comparableValue = $0 as? CustomStringConvertible {
-                return comparableValue.description
-            }
-            else {
-                return "\($0)"
-            }
-        }.joined(separator: separator)
+        let jsonVal = self.encodingValue()
+        try container.encodeIfPresent(jsonVal, forKey: .jsonValue)
     }
 }
 

@@ -228,6 +228,11 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
         }
     }
     
+    // MARK: Table source
+    
+    open override func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
+        return RSDFormStepDataSourceObject(step: self, parent: parent, supportedHints: supportedHints)
+    }
     
     // Overrides must be defined in the base implementation
     

@@ -142,38 +142,3 @@ public final class RSDImageTableItem : RSDTableItem {
         super.init(identifier: imageTheme.imageIdentifier, rowIndex: rowIndex, reuseIdentifier: RSDTableItem.ReuseIdentifier.image.rawValue)
     }
 }
-
-/// `RSDInputFieldTableItem` is an abstract base class implementation for representing an answer, or part of an
-/// answer for a given `RSDInputField`.
-@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
-open class RSDInputFieldTableItem : RSDTableItem {
-    
-    /// The RSDInputField representing this tableItem.
-    public let inputField: RSDInputField
-    
-    /// The UI hint for displaying the component of the item group.
-    public let uiHint: RSDFormUIHint
-    
-    /// The answer associated with this table item component. Base class returns `nil`.
-    open var answer: Any? {
-        return nil
-    }
-    
-    /// Initialize a new RSDInputFieldTableItem.
-    /// parameters:
-    ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides.
-    ///     - inputField:    The RSDInputField representing this tableItem.
-    ///     - uiHint: The UI hint for this row of the table.
-    ///     - reuseIdentifier: The string to use as the reuse identifier.
-    ///     - identifier: The cell identifier. If `nil`, then the inputField identifier will be used.
-    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, reuseIdentifier: String? = nil, identifier: String? = nil) {
-        self.inputField = inputField
-        self.uiHint = uiHint
-        
-        // If the reuse identifier isn't passed to the initializer then set it from the ui hint.
-        let reuseId: String = reuseIdentifier ?? uiHint.stringValue
-        let itemId: String = identifier ?? inputField.identifier
-        
-        super.init(identifier: itemId, rowIndex: rowIndex, reuseIdentifier: reuseId)
-    }
-}

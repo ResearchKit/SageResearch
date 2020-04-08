@@ -50,25 +50,24 @@ open class RSDResultSummaryStepViewModel: RSDStepViewModel {
     /// Formatted and localized result.
     open var resultText: String? {
         guard let resultStep = self.step as? RSDResultSummaryStep,
-            let answerResult = resultStep.answerResult(from: taskResult),
-            let answer = answerResult.value
+            let result = resultStep.answerValueAndType(from: taskResult),
+            let answer = result.value
             else {
                 return nil
         }
+        let answerType = result.answerType ?? AnswerTypeString()
         
-        if let sequenceType = answerResult.answerType.sequenceType,
-            sequenceType == .array,
+        if let arrayType = answerType as? AnswerTypeArray,
             let answerArray = answer as? [Any] {
             let strings = answerArray.map { "\($0)" }
-            if let separator = answerResult.answerType.sequenceSeparator {
+            if let separator = arrayType.sequenceSeparator {
                 return strings.joined(separator: separator)
             }
             else {
                 return Localization.localizedAndJoin(strings)
             }
         }
-        else if answerResult.answerType.sequenceType == nil,
-            let num = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber() {
+        else if let num = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber() {
             return self.numberFormatter.string(from: num)
         }
         else {

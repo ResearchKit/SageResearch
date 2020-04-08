@@ -345,6 +345,7 @@ open class RSDFactory {
         }
     }
     
+    @available(*, deprecated, message: "Implement `QuestionStep` instead. This method will be deleted in future versions.")
     func decodeDeprecatedStep(from decoder: Decoder, with type: RSDStepType) throws -> RSDStep? {
         guard let deprecatedType = RSDStepType.DeprecatedType(rawValue: type.rawValue)
             else {
@@ -412,6 +413,7 @@ open class RSDFactory {
         }
     }
     
+    @available(*, deprecated, message: "Implement `AnswerResult` instead. This method will be deleted in future versions.")
     func decodeDeprecatedAnswerType(from decoder: Decoder) throws -> AnswerType {
         print("WARNING!!! Default AnswerType is deprecated. \(decoder.codingPath)")
         let oldType = try RSDAnswerResultType(from: decoder)

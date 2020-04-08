@@ -47,6 +47,7 @@ public protocol InputItem {
 }
 
 public protocol ChoiceInputItem : InputItem, RSDChoice {
+    func jsonElement(selected: Bool) -> JsonElement?
 }
 
 public extension ChoiceInputItem {
@@ -70,17 +71,15 @@ public extension SkipCheckboxInputItem {
     var answerType: AnswerType { AnswerTypeNull() }
     var inputUIHint: RSDFormUIHint { .checkbox }
     
+    func jsonElement(selected: Bool) -> JsonElement? {
+        selected ? (matchingValue ?? JsonElement.null) : nil
+    }
+    
     func isEqualToResult(_ result: RSDResult?) -> Bool {
-        guard let answerResult = result as? RSDAnswerResult else { return false }
-        if answerResult.value == nil, (self.matchingValue == nil || self.matchingValue == JsonElement.null) {
-            return true
-        }
-        else if let resultValue = answerResult.value as? JsonElement {
-            return resultValue == (self.matchingValue ?? JsonElement.null)
-        }
-        else {
-            return false
-        }
+        guard let answerResult = result as? AnswerResult else { return false }
+        let answer = answerResult.jsonValue ?? JsonElement.null
+        let matching = self.matchingValue ?? JsonElement.null
+        return answer == matching
     }
 }
 
@@ -93,6 +92,10 @@ public extension CheckboxInputItem {
     var answerType: AnswerType { AnswerTypeBoolean() }
     var imageData: RSDImageData? { nil }
     var answerValue: Codable? { true }
+    
+    func jsonElement(selected: Bool) -> JsonElement? {
+        .boolean(selected)
+    }
 }
 
 public protocol KeyboardTextInputItem : InputItem {

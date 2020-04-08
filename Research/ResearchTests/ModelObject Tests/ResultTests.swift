@@ -52,9 +52,6 @@ class ResultTests: XCTestCase {
             let answerResult = AnswerResultObject(identifier: $0.key, value: .integer($0.value))
             collection.appendInputResults(with: answerResult)
         }
-        
-        let answerMap = collection.answers()
-        XCTAssertEqual(answerMap as? [String : Int], answers)
 
         let answerB = AnswerResultObject(identifier: "a", value: .integer(8))
         let previous = collection.appendInputResults(with: answerB)
@@ -85,31 +82,4 @@ class ResultTests: XCTestCase {
         let removedD = collection.removeInputResult(with: "d")
         XCTAssertNil(removedD)
     }
-//
-//    func testAnswerTypeEquality_Boolean() {
-//        let a = RSDAnswerResultType(baseType: .boolean, sequenceType: nil, formDataType: .base(.boolean), dateFormat: nil, unit: nil, sequenceSeparator: nil)
-//        let b = RSDAnswerResultType.boolean
-//        XCTAssertEqual(a, b)
-//        XCTAssertEqual(a.hashValue, b.hashValue)
-//    }
-//
-//    func testAnswerTypeEquality_StringCollection() {
-//        let a = RSDAnswerResultType(baseType: .string, sequenceType: .array, formDataType: .collection(.multipleChoice, .string), dateFormat: nil, unit: nil, sequenceSeparator: "-")
-//        let b = RSDAnswerResultType(baseType: .string, sequenceType: .array, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: "-")
-//        let c = RSDAnswerResultType(baseType: .string, sequenceType: .array, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: nil)
-//        XCTAssertEqual(a, b)
-//        XCTAssertEqual(a.hashValue, b.hashValue)
-//        XCTAssertNotEqual(a, c)
-//        XCTAssertNotEqual(a.hashValue, c.hashValue)
-//    }
-//
-//    func testAnswerTypeEquality_Date() {
-//        let a = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: .base(.date), dateFormat: "YYYY-mm", unit: nil, sequenceSeparator: nil)
-//        let b = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "YYYY-mm", unit: nil, sequenceSeparator: nil)
-//        let c = RSDAnswerResultType.date
-//        XCTAssertEqual(a, b)
-//        XCTAssertEqual(a.hashValue, b.hashValue)
-//        XCTAssertNotEqual(a, c)
-//        XCTAssertNotEqual(a.hashValue, c.hashValue)
-//    }
 }

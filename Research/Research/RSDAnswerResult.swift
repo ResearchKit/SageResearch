@@ -34,6 +34,7 @@
 import Foundation
 
 /// `RSDAnswerResult` is a result that can be described using a single value.
+@available(*, deprecated, message: "Implement `AnswerResult` instead.")
 public protocol RSDAnswerResult : RSDResult, RSDAnswerResultFinder {
     
     /// The answer type of the answer result. This includes coding information required to encode and
@@ -47,6 +48,7 @@ public protocol RSDAnswerResult : RSDResult, RSDAnswerResultFinder {
     var questionText: String? { get }
 }
 
+@available(*, deprecated, message: "Implement `AnswerResult` instead.")
 extension RSDAnswerResult {
     
     /// This method will return `self` if the identifier matches the identifier of this result. Otherwise,
@@ -65,6 +67,7 @@ extension RSDAnswerResult {
 /// survey navigation to find the result for a given input field.
 ///
 /// - seealso: `RSDSurveyNavigationStep`
+@available(*, deprecated, message: "Implement `AnswerResult` instead.")
 public protocol RSDAnswerResultFinder {
     
     /// Find an *answer* result within this result. This method will return `nil` if there is a result

@@ -62,7 +62,7 @@ public struct JsonSurveyRuleObject : RSDComparableSurveyRule, Codable, Hashable 
 
 // TODO: syoung 04/06/2020 Replace with JsonModel-Swift in next set of deprecations.
 /// A `Codable` element that can be used to serialize any `JsonSerializable`.
-public enum JsonElement : Codable, Hashable {
+public enum JsonElement : Codable, Hashable, RSDJSONValue {
     case string(String)
     case integer(Int)
     case number(RSDJSONNumber)
@@ -71,10 +71,10 @@ public enum JsonElement : Codable, Hashable {
     case array([Any])
     case object([String : Any])
     
-    public func jsonObject() -> RSDJSONSerializable? {
+    public func jsonObject() -> RSDJSONSerializable {
         switch self {
         case .null:
-            return nil
+            return NSNull()
         case .boolean(let value):
             return value
         case .string(let value):
@@ -82,7 +82,7 @@ public enum JsonElement : Codable, Hashable {
         case .integer(let value):
             return value
         case .number(let value):
-            return value.jsonNumber()
+            return value.jsonNumber() ?? NSNull()
         case .array(let value):
             return value.jsonObject()
         case .object(let value):
@@ -257,5 +257,16 @@ extension JsonElement {
         case .object(_):
             return AnswerTypeObject()
         }
+    }
+}
+
+extension Encodable {
+
+    /// Return the `JsonElement` for this object using the serialization strategy for numbers and
+    /// dates defined by `SerializationFactory.shared`.
+    public func jsonElement(using factory: RSDFactory = RSDFactory.shared) throws -> JsonElement {
+        let data = try factory.createJSONEncoder().encode(self)
+        let json = try factory.createJSONDecoder().decode(JsonElement.self, from: data)
+        return json
     }
 }

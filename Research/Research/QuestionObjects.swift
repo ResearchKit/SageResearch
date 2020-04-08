@@ -60,6 +60,10 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
         evaluateCohortsToApply(with: result)
     }
     
+    open override func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
+        fatalError("Not implemented")
+    }
+    
     /// Instantiate a step result that is appropriate for this step.
     /// - returns: A result for this step.
     open override func instantiateStepResult() -> RSDResult {
@@ -291,8 +295,6 @@ open class ChoiceQuestionObject : AbstractQuestionStep, ChoiceQuestion, Encodabl
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case jsonChoices = "choices", baseType, isSingleAnswer = "singleChoice", inputUIHint = "uiHint"
     }
-    
-    public var choices: [RSDChoice] { jsonChoices }
     
     open private(set) var jsonChoices: [JsonChoice]
     open private(set) var baseType: JsonType = .string
