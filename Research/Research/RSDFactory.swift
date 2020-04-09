@@ -320,7 +320,7 @@ open class RSDFactory {
         case .instruction, .active:
             return try RSDActiveUIStepObject(from: decoder)
         case .choiceQuestion:
-            return try MultipleInputQuestionStepObject(from: decoder)
+            return try ChoiceQuestionStepObject(from: decoder)
         case .countdown:
             return try RSDCountdownUIStepObject(from: decoder)
         case .completion, .feedback:

@@ -21,7 +21,8 @@ final class RSDUIStepTableDataSourceImpl : RSDStepViewModel, RSDTableDataSource 
     ///     - step:             The RSDStep for this data source.
     ///     - taskViewModel:         The current task path for this data source.
     public override init(step: RSDStep, parent: RSDPathComponent?) {
-        self.sections = RSDUIStepTableDataSourceImpl.buildSections(step)
+        self.sections = (step as? RSDUIStep)?.buildFooterTableItems().map {
+            [RSDTableSection(identifier: "0", sectionIndex: 0, tableItems: $0)] } ?? []
         super.init(step: step, parent: parent)
     }
     
@@ -48,23 +49,6 @@ final class RSDUIStepTableDataSourceImpl : RSDStepViewModel, RSDTableDataSource 
     public func allAnswersValid() -> Bool {
         return true
     }
-    
-    /// Convenience method for building the sections of the table from the input fields.
-    /// - returns: The sections for the table.
-    private class func buildSections(_ step: RSDStep) -> [RSDTableSection] {
-        guard let uiStep = step as? RSDUIStep else { return [] }
-        
-        // add image below and footnote
-        var items: [RSDTableItem] = []
-        if let imageTheme = (step as? RSDDesignableUIStep)?.imageTheme, imageTheme.placementType == .iconAfter {
-            items.append(RSDImageTableItem(rowIndex: items.count, imageTheme: imageTheme))
-        }
-        if let footnote = uiStep.footnote {
-            items.append(RSDTextTableItem(rowIndex: items.count, text: footnote))
-        }
-        guard items.count > 0 else { return [] }
-        
-        let section = RSDTableSection(identifier: "\(0)", sectionIndex: 0, tableItems: items)
-        return [section]
-    }
 }
+
+

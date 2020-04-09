@@ -1110,6 +1110,7 @@
 		FF8B54ED1FCE6D15006B6937 /* RSDExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF8B54EE1FCE6D15006B6937 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
 		FF9557CC23060F4B00B8D60B /* RSDAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */; };
+		FF9C264B243FA48B00241202 /* QuestionTableDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C264A243FA48B00241202 /* QuestionTableDataSourceTests.swift */; };
 		FFA0717F2356B66400EA371F /* DateTableItemGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */; };
 		FFABCB9422D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9522D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
@@ -1640,6 +1641,7 @@
 		FF8E5F441F8C36F400611C23 /* RSDTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskViewModel.swift; sourceTree = "<group>"; };
 		FF8E5F461F8C3DA000611C23 /* RSDAsyncAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAsyncAction.swift; sourceTree = "<group>"; };
 		FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAppDelegate.swift; sourceTree = "<group>"; };
+		FF9C264A243FA48B00241202 /* QuestionTableDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTableDataSourceTests.swift; sourceTree = "<group>"; };
 		FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDViewThemeElementObject.swift; sourceTree = "<group>"; };
 		FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableItemGroupTests.swift; sourceTree = "<group>"; };
 		FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskControllerTests.swift; sourceTree = "<group>"; };
@@ -1911,6 +1913,7 @@
 				F829F0E91FFB4620001B0680 /* PickerDataSourceTests.swift */,
 				F818EAC5201948D0001C9FE4 /* TableItemTests.swift */,
 				FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */,
+				FF9C264A243FA48B00241202 /* QuestionTableDataSourceTests.swift */,
 			);
 			path = "DataSource Tests";
 			sourceTree = "<group>";
@@ -4094,6 +4097,7 @@
 				FF633D741FCE7A6900CF2267 /* CodableInputFieldObjectTests.swift in Sources */,
 				FF633D891FCE7A7300CF2267 /* StepControllerTests.swift in Sources */,
 				F8BAF41320488CCA004B9406 /* FormStepTableDataSourceTests.swift in Sources */,
+				FF9C264B243FA48B00241202 /* QuestionTableDataSourceTests.swift in Sources */,
 				FF225DF8243A56B000AD2461 /* CodableQuestionTests.swift in Sources */,
 				FF633D771FCE7A6900CF2267 /* CodableTaskObjectTests.swift in Sources */,
 				F8EB48CA228CDBD9000A2F69 /* RecordSampleLoggerTests.swift in Sources */,

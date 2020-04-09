@@ -33,6 +33,26 @@
 
 import Foundation
 
+extension RSDUIStep {
+
+    /// Convenience method for building the sections of the table from the input fields.
+    /// - returns: The footer items to add to the table.
+    public func buildFooterTableItems() -> [RSDTableItem]? {
+        
+        // add image below and footnote
+        var items: [RSDTableItem] = []
+        if let imageTheme = (self as? RSDDesignableUIStep)?.imageTheme, imageTheme.placementType == .iconAfter {
+            items.append(RSDImageTableItem(rowIndex: items.count, imageTheme: imageTheme))
+        }
+        if let footnote = self.footnote {
+            items.append(RSDTextTableItem(rowIndex: items.count, text: footnote))
+        }
+        
+        guard items.count > 0 else { return nil }
+        return items
+    }
+}
+
 /// `RSDTableItem` can be used to represent the type of the row to display.
 open class RSDTableItem {
     

@@ -115,4 +115,5 @@ public protocol KeyboardTextInputItem : InputItem {
 public protocol TextInputValidator {
     func answerText(for answer: Any?) -> String?
     func validateInput(text: String?) throws -> Any?
+    func validateInput(answer: Any?) throws -> Any?
 }

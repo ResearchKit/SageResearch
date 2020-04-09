@@ -34,25 +34,30 @@
 import Foundation
 
 public protocol InputItemState : class {
+    var identifier: String { get }
     var rowIndex: Int { get }
     var inputItem: InputItem { get }
     var currentAnswer: JsonElement? { get set }
-    var selected: Bool { get }
+    var storedAnswer: JsonElement? { get }
+    var selected: Bool { get set }
 }
 
 open class AbstractInputItemTableItem : RSDTableItem {
     public let inputItem: InputItem
     
-    public init(questionIdentifier: String, rowIndex: Int, inputItem: InputItem) {
+    public init(questionIdentifier: String, rowIndex: Int, inputItem: InputItem, supportedHints: Set<RSDFormUIHint>?) {
         self.inputItem = inputItem
         let identifier = (rowIndex == 0) ? questionIdentifier : "\(questionIdentifier).\(rowIndex)"
-        super.init(identifier: identifier, rowIndex: rowIndex, reuseIdentifier: inputItem.inputUIHint.rawValue)
+        let hint = inputItem.inputUIHint.bestHint(from: supportedHints)
+        super.init(identifier: identifier, rowIndex: rowIndex, reuseIdentifier: hint.rawValue)
     }
 }
 
 open class ChoiceInputItemTableItem : AbstractInputItemTableItem, InputItemState {
 
-    public var selected: Bool = false
+    public var selected: Bool
+    
+    public var storedAnswer: JsonElement? { nil }
     
     public var currentAnswer: JsonElement? {
         get {
@@ -67,23 +72,38 @@ open class ChoiceInputItemTableItem : AbstractInputItemTableItem, InputItemState
         inputItem as! ChoiceInputItem
     }
     
-    public init(questionIdentifier: String, rowIndex: Int, choiceItem: ChoiceInputItem) {
-        super.init(questionIdentifier: questionIdentifier, rowIndex: rowIndex, inputItem: choiceItem)
+    public init(questionIdentifier: String, rowIndex: Int, choiceItem: ChoiceInputItem, initialAnswer: JsonElement?, supportedHints: Set<RSDFormUIHint>?) {
+
+        self.selected = initialAnswer.map { jsonValue in
+            if case .array(let arr) = jsonValue {
+                if let selectedValue = choiceItem.jsonElement(selected: true), selectedValue != .null {
+                    return (arr as NSArray).contains(selectedValue.jsonObject())
+                }
+                else {
+                    return arr.count == 0
+                }
+            }
+            else {
+                return jsonValue == choiceItem.jsonElement(selected: true)
+            }
+        } ?? false
+
+        super.init(questionIdentifier: questionIdentifier, rowIndex: rowIndex, inputItem: choiceItem, supportedHints: supportedHints)
     }
 }
 
 open class TextInputItemTableItem : AbstractInputItemTableItem, InputItemState {
 
     public var currentAnswer: JsonElement? {
-        get { selected ? storedAnswer : nil }
+        get { selected ? (storedAnswer ?? .null) : nil }
         set(newValue) {
             storedAnswer = newValue
             selected = (newValue != nil)
         }
     }
     
-    public private(set) var storedAnswer: JsonElement? = nil
-    public var selected: Bool = false
+    public private(set) var storedAnswer: JsonElement?
+    public var selected: Bool
     public let textValidator: TextInputValidator
     
     public var textItem: KeyboardTextInputItem {
@@ -92,8 +112,13 @@ open class TextInputItemTableItem : AbstractInputItemTableItem, InputItemState {
     
     public init(questionIdentifier: String,
                 rowIndex: Int,
-                textItem: KeyboardTextInputItem) {
+                textItem: KeyboardTextInputItem,
+                initialAnswer: JsonElement?,
+                supportedHints: Set<RSDFormUIHint>?) {
+        let storedAnswer = (initialAnswer != .null) ? initialAnswer : nil
+        self.storedAnswer = storedAnswer
+        self.selected = (storedAnswer != nil)
         self.textValidator = textItem.buildTextValidator()
-        super.init(questionIdentifier: questionIdentifier, rowIndex: rowIndex, inputItem: textItem)
+        super.init(questionIdentifier: questionIdentifier, rowIndex: rowIndex, inputItem: textItem, supportedHints: supportedHints)
     }
 }

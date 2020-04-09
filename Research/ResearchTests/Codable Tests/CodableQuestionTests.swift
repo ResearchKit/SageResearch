@@ -71,7 +71,11 @@ class CodableQuestionTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(ChoiceQuestionStepObject.self, from: json)
+            let wrapper = try decoder.decode(QuestionWrapper.self, from: json)
+            guard let object = wrapper.questionStep as? ChoiceQuestionStepObject else {
+                XCTFail("Failed to decode expected question step class: \(wrapper.questionStep)")
+                return
+            }
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -160,7 +164,11 @@ class CodableQuestionTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(SimpleQuestionStepObject.self, from: json)
+            let wrapper = try decoder.decode(QuestionWrapper.self, from: json)
+            guard let object = wrapper.questionStep as? SimpleQuestionStepObject else {
+                XCTFail("Failed to decode expected question step class: \(wrapper.questionStep)")
+                return
+            }
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -242,7 +250,11 @@ class CodableQuestionTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(MultipleInputQuestionStepObject.self, from: json)
+            let wrapper = try decoder.decode(QuestionWrapper.self, from: json)
+            guard let object = wrapper.questionStep as? MultipleInputQuestionStepObject else {
+                XCTFail("Failed to decode expected question step class: \(wrapper.questionStep)")
+                return
+            }
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -331,7 +343,11 @@ class CodableQuestionTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(StringChoiceQuestionStepObject.self, from: json)
+            let wrapper = try decoder.decode(QuestionWrapper.self, from: json)
+            guard let object = wrapper.questionStep as? StringChoiceQuestionStepObject else {
+                XCTFail("Failed to decode expected question step class: \(wrapper.questionStep)")
+                return
+            }
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -399,5 +415,13 @@ class CodableQuestionTests: XCTestCase {
             XCTFail("Failed to decode/encode object: \(err)")
             return
         }
+    }
+}
+
+struct QuestionWrapper : Decodable {
+    let questionStep : QuestionStep
+    init(from decoder: Decoder) throws {
+        let step = try decoder.factory.decodeStep(from: decoder)
+        self.questionStep = step as! QuestionStep
     }
 }

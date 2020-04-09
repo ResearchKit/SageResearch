@@ -38,6 +38,10 @@ public struct PassThruValidator : TextInputValidator {
         answer.map { "\($0)" }
     }
     
+    public func validateInput(answer: Any?) throws -> Any? {
+        answer.map { "\($0)" }
+    }
+    
     public func validateInput(text: String?) throws -> Any? {
         text
     }
@@ -65,6 +69,10 @@ public struct RegExValidator : TextInputValidator, Codable {
             throw RSDValidationError.invalidValue(text, invalidMessage)
         }
         return text
+    }
+    
+    public func validateInput(answer: Any?) throws -> Any? {
+        try answer.map { try validateInput(text: "\($0)") } ?? nil
     }
     
     private func _regExMatches(_ text: String?) -> Int {
@@ -120,6 +128,8 @@ public protocol NumberValidator : TextInputValidator {
     var minInvalidMessage: String? { get }
     var maxInvalidMessage: String? { get }
     var invalidMessage: String? { get }
+    
+    func convertToValue(from number: NSNumber) -> Value
 }
 
 public extension NumberValidator {
@@ -141,11 +151,28 @@ public extension NumberValidator {
         return self.formatter.string(from: num)
     }
     
+    func validateInput(answer: Any?) throws -> Any? {
+        guard let answer = answer else { return nil }
+        if let str = answer as? String {
+            return try validateInput(text: str)
+        }
+        else if let num = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber() {
+            return try validateNumber(num)
+        }
+        else {
+            throw RSDValidationError.invalidType("\(answer) is not a String or a Number")
+        }
+    }
+    
     func validateInput(text: String?) throws -> Any? {
         guard let str = text, let num = self.formatter.number(from: str) else {
             try validateNil()
             return nil
         }
+        return try validateNumber(num)
+    }
+    
+    func validateNumber(_ num: NSNumber) throws -> Any? {
         if let min = self.minimumValue?.jsonNumber(), num.decimalValue < min.decimalValue {
             let message = self.minInvalidMessage ?? defaultInvalidMessage
             throw RSDValidationError.invalidValue(num, message)
@@ -154,7 +181,7 @@ public extension NumberValidator {
             let message = self.maxInvalidMessage ?? defaultInvalidMessage
             throw RSDValidationError.invalidValue(num, message)
         }
-        return num
+        return convertToValue(from: num)
     }
     
     func validateNil() throws {
@@ -196,6 +223,10 @@ public struct IntegerFormatOptions : Codable, NumberValidator {
     public var maxInvalidMessage: String?
     public var invalidMessage: String?
     
+    public func convertToValue(from number: NSNumber) -> Int {
+        number.intValue
+    }
+    
     public init() {
     }
 }
@@ -231,6 +262,10 @@ public struct YearFormatOptions : Codable, NumberValidator {
         maximumYear ?? ((allowFuture ?? true) ? nil : Date().year)
     }
     public var stepInterval: Int? { 1 }
+    
+    public func convertToValue(from number: NSNumber) -> Int {
+        number.intValue
+    }
 }
 
 extension Date {
@@ -278,6 +313,10 @@ public struct DoubleFormatOptions : Codable, NumberValidator {
     
     public init() {
     }
+    
+    public func convertToValue(from number: NSNumber) -> Double {
+        number.doubleValue
+    }
 }
 
 public struct DateTimeValidator : TextInputValidator {
@@ -308,10 +347,22 @@ public struct DateTimeValidator : TextInputValidator {
     }
     
     public func answerText(for answer: Any?) -> String? {
-        fatalError("TODO: Not implemented. syoung 04/03/2020")
+        if let str = answer as? String, let date = codingFormatter.date(from: str) {
+            return localizedFormatter.string(from: date)
+        }
+        else if let date = answer as? Date {
+            return localizedFormatter.string(from: date)
+        }
+        else {
+            return nil
+        }
     }
     
     public func validateInput(text: String?) throws -> Any? {
+        fatalError("TODO: Not implemented. syoung 04/03/2020")
+    }
+    
+    public func validateInput(answer: Any?) throws -> Any? {
         fatalError("TODO: Not implemented. syoung 04/03/2020")
     }
 }

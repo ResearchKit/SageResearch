@@ -62,7 +62,11 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
     }
     
     open override func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
-        fatalError("Not implemented")
+        guard let questionStep = self as? QuestionStep else {
+            debugPrint("WARNING!!! \(self) does not implement the `QuestionStep` protocol")
+            return super.instantiateDataSource(with: parent, for: supportedHints)
+        }
+        return QuestionStepDataSource(step: questionStep, parent: parent, supportedHints: supportedHints)
     }
     
     /// Instantiate a step result that is appropriate for this step.

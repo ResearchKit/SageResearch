@@ -134,6 +134,9 @@ public enum JsonElement : Codable, Hashable, RSDJSONValue {
         else if let value = obj as? RSDJSONNumber {
             self = .number(value)
         }
+        else if let num = obj as? NSNumber {
+            self = .number(num.doubleValue)
+        }
         else if let value = obj as? [RSDJSONSerializable] {
             self = .array(value)
         }
