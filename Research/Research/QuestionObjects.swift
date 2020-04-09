@@ -146,7 +146,7 @@ open class AbstractSkipQuestionStep : AbstractQuestionStep {
     }
 }
 
-public final class SimpleQuestionObject : AbstractSkipQuestionStep, SimpleQuestion, Encodable {
+public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQuestion, Encodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case inputItem
     }
@@ -208,7 +208,7 @@ public final class SimpleQuestionObject : AbstractSkipQuestionStep, SimpleQuesti
     }
 }
 
-public final class MultipleInputQuestionObject : AbstractSkipQuestionStep, MultipleInputQuestion, Encodable {
+public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, MultipleInputQuestion, Encodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case inputItems, sequenceSeparator
     }
@@ -252,7 +252,7 @@ public final class MultipleInputQuestionObject : AbstractSkipQuestionStep, Multi
     
     public override func copyInto(_ copy: RSDUIStepObject) {
         super.copyInto(copy)
-        guard let subclassCopy = copy as? MultipleInputQuestionObject else {
+        guard let subclassCopy = copy as? MultipleInputQuestionStepObject else {
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
         }
@@ -291,7 +291,7 @@ public final class MultipleInputQuestionObject : AbstractSkipQuestionStep, Multi
 /// keyword would be brittle for human-edited json files. Therefore, instead, the "type" field is
 /// defined at this level with an encoded `baseType` and an overridable method for decoding the
 /// the choices.
-open class ChoiceQuestionObject : AbstractQuestionStep, ChoiceQuestion, Encodable {
+open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, Encodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case jsonChoices = "choices", baseType, isSingleAnswer = "singleChoice", inputUIHint = "uiHint"
     }
@@ -393,7 +393,7 @@ open class ChoiceQuestionObject : AbstractQuestionStep, ChoiceQuestion, Encodabl
     }
 }
 
-public final class StringChoiceQuestionObject : ChoiceQuestionObject {
+public final class StringChoiceQuestionStepObject : ChoiceQuestionStepObject {
     public override class func defaultType() -> RSDStepType {
         .stringChoiceQuestion
     }

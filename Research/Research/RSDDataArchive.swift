@@ -213,7 +213,7 @@ internal class TaskArchiver : NSObject {
         
         // If this result conforms to the answer result protocol then add it to the answer map
         if let answerResult = result as? AnswerResult {
-            if let answer = answerResult.encodingValue(), answer != .null {
+            if let answer = try answerResult.encodingValue(), answer != .null {
                 let answerIdentifier = self.answerIdentifier(for: result.identifier, sectionIdentifier, collectionIdentifier)
                 answerMap[answerIdentifier] = answer
             }

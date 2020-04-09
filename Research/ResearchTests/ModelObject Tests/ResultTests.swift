@@ -63,7 +63,7 @@ class ResultTests: XCTestCase {
             XCTFail("Failed to return the previous answer")
         }
         
-        if let newResult = collection.findAnswerResult(with: "a") {
+        if let newResult = collection.findAnswer(with: "a") {
             XCTAssertEqual(newResult.value as? Int, 8)
         }
         else {

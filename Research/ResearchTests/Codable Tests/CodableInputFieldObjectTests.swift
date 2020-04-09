@@ -57,7 +57,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             "text": "Some text.",
             "detail": "A detail about the object",
             "icon": "fooImage",
-            "isExclusive": true
+            "exclusive": true
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -98,7 +98,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             "text": "Some text.",
             "detail": "A detail about the object",
             "icon": "fooImage",
-            "isExclusive": true
+            "exclusive": true
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -581,8 +581,8 @@ class CodableInputFieldObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "date",
             "uiHint": "picker",
-            "range" : { "minimumDate" : "2017-02-20",
-                        "maximumDate" : "2017-03-20",
+            "range" : { "minimumValue" : "2017-02-20",
+                        "maximumValue" : "2017-03-20",
                         "codingFormat" : "yyyy-MM-dd" }
         }
         """.data(using: .utf8)! // our data in native (JSON) format

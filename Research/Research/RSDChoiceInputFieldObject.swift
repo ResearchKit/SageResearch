@@ -172,7 +172,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
     ///                                "text" : "pi",
     ///                                "detail" : "Is the magic number" },
     ///                             {  "text" : "None of the above",
-    ///                                "isExclusive" : true }],
+    ///                                "exclusive" : true }],
     ///            }
     ///            """.data(using: .utf8)! // our data in native (JSON) format
     ///
@@ -240,7 +240,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
     ///                             {  "value" : false,
     ///                                "text" : "No"},
     ///                             {  "text" : "I don't know",
-    ///                                "isExclusive" : true }],
+    ///                                "exclusive" : true }],
     ///            }
     ///            """.data(using: .utf8)! // our data in native (JSON) format
     ///     ```
@@ -318,7 +318,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
                              [  "value" : false,
                                 "text" : "No"],
                              [  "text" : "I don't know",
-                                "isExclusive" : true ]],
+                                "exclusive" : true ]],
             ]
         }
         else if Value.self == Int.self {
@@ -374,7 +374,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
                                 "text" : "pi",
                                 "detail" : "Is the magic number" ],
                              [  "text" : "None of the above",
-                                "isExclusive" : true ]],
+                                "exclusive" : true ]],
             ]
         }
         else if Value.self == RSDFraction.self {

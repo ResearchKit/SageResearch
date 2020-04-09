@@ -7,7 +7,7 @@
               {
               "identifier": "step4",
               "type": "form",
-              "text": "These inputs use a formatter to parse the entered text.",
+              "detail": "These inputs use a formatter to parse the entered text.",
               "inputFields": [{
                               "identifier": "number",
                               "type": "integer",
@@ -28,7 +28,7 @@
               {
                   "identifier": "postalCode",
                   "type": "form",
-                  "text": "Enter your postal code",
+                  "title": "Enter your postal code",
                   "detail": "(Only the first 3 characters will be saved.)",
                   "inputFields": [{
                       "type": "postalCode"
@@ -38,7 +38,7 @@
               "identifier": "heightAndWeight",
               "type": "form",
               "title": "Height and Weight",
-              "text": "Enter height and weight in your current Locale.",
+              "detail": "Enter height and weight in your current Locale.",
               "inputFields": [{
                               "identifier": "heightAdult",
                               "type": "height.adult",
@@ -69,7 +69,7 @@
               "identifier": "year",
               "type": "form",
               "title": "Enter a year",
-              "text": "Enter a year in the past.",
+              "detail": "Enter a year in the past.",
               "inputFields": [{
                               "type": "year",
                               "uiHint": "textfield",

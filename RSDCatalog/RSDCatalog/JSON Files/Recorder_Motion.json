@@ -11,7 +11,7 @@
                                 "identifier": "introduction",
                                 "type": "overview",
                                 "title": "Motion Recorder",
-                                "text": "This activity shows an example of using the motion sensors.",
+                                "detail": "This activity shows an example of using the motion sensors.",
                                 "image": {
                                     "type": "fetchable",
                                     "imageName": "HoldPhone",
@@ -46,7 +46,7 @@
                                                "identifier"   : "instruction",
                                                "type"         : "instruction",
                                                "title"        : "Hold your phone",
-                                               "text"         : "After the countdown, shake your phone. This will record the calculated gravity vector and the raw gyro data.",
+                                               "detail"         : "After the countdown, shake your phone. This will record the calculated gravity vector and the raw gyro data.",
                                                "image": {
                                                    "type": "fetchable",
                                                    "imageName": "HoldPhone",
@@ -93,7 +93,7 @@
                            "identifier"   : "completion",
                            "type"         : "completion",
                            "title"        : "Great Job!",
-                           "text"         : "You have completed this task."
+                           "detail"         : "You have completed this task."
                            }
                            ]
 }

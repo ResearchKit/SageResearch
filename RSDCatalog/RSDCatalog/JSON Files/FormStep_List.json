@@ -8,7 +8,7 @@
               "identifier": "selectOne",
               "type": "form",
               "title": "Single Choice",
-              "text": "Select a single option",
+              "detail": "Select a single option",
               "inputFields" : [{
                                   "uiHint": "list",
                                   "type": "singleChoice",
@@ -19,7 +19,7 @@
               "identifier": "selectMultiple",
               "type": "form",
               "title": "Multiple Choice",
-              "text": "Select as many as you want",
+              "detail": "Select as many as you want",
               "inputFields" : [{
                                   "uiHint": "list",
                                   "type": "multipleChoice.integer",
@@ -46,7 +46,7 @@
               "identifier": "imageList",
               "type": "form",
               "title": "Single Choice with Images",
-              "text": "Select a single option",
+              "detail": "Select a single option",
               "inputFields" : [{
                                   "uiHint": "list",
                                   "type": "singleChoice.integer",

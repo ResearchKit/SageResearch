@@ -102,7 +102,7 @@ class FactoryTests: XCTestCase {
                     if stepNavigator.steps.count < expectedCount {
                         XCTAssertNotNil(stepNavigator.steps[0] as? RSDUIStepObject)
                         XCTAssertNotNil(stepNavigator.steps[1] as? RSDActiveUIStepObject)
-                        XCTAssertNotNil(stepNavigator.steps[2] as? RSDFormUIStepObject)
+                        XCTAssertNotNil(stepNavigator.steps[2] as? SimpleQuestionStepObject)
                         XCTAssertNotNil(stepNavigator.steps[3] as? RSDSectionStepObject)
                         XCTAssertNotNil(stepNavigator.steps[3] as? RSDTaskInfoStepObject)
                     }

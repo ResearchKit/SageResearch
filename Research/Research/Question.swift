@@ -49,6 +49,26 @@ public enum JsonType : String, Codable, CaseIterable {
 /// The protocol for the answer type of a question.
 public protocol AnswerType : Codable {
     var baseType: JsonType { get }
+    
+    /// Decode the JsonElement for this AnswerType from the given decoder.
+    ///
+    /// - parameter decoder: The nested decoder for this json element.
+    /// - returns: The decoded value or `nil` if the value is not present.
+    /// - throws: `DecodingError` if the encountered stored value cannot be decoded.
+    func decodeValue(from decoder: Decoder) throws -> JsonElement
+    
+    /// Decode a `JsonElement` into the expected class type.
+    ///
+    /// - parameter jsonValue: The JSON value (from an array or dictionary) with the answer.
+    /// - returns: The decoded value or `nil` if the value is not present.
+    /// - throws: `DecodingError` if the encountered stored value cannot be decoded.
+    func decodeAnswer(from jsonValue: JsonElement?) throws -> Any?
+    
+    /// Returns a `JsonElement` that is encoded for this answer type from the given value.
+    ///
+    /// - paramenter value: The value to encode.
+    /// - returns: The JSON serializable object for this encodable.
+    func encodeAnswer(from value: Any?) throws -> JsonElement
 }
 
 public protocol Question : ContentNode {

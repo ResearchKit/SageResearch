@@ -99,7 +99,7 @@ class FormStepTableDataSourceTests: XCTestCase {
               "identifier": "multipleInputs",
               "type": "form",
               "title": "Pick some values",
-              "text": "These inputs use a picker view to select the answer.",
+              "detail": "These inputs use a picker view to select the answer.",
               "inputFields": [{
                               "identifier": "date",
                               "type": "date",

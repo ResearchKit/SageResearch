@@ -63,7 +63,7 @@ class DataArchiveTests: XCTestCase {
             taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
             taskViewModel.taskResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             taskViewModel.taskResult.appendStepHistory(with: buildSingleAnswerResult(identifier: "single", answer: 5))
-            taskViewModel.taskResult.appendStepHistory(with: RSDAnswerResultObject(identifier: "only", answerType: .integer, value: 7))
+            taskViewModel.taskResult.appendStepHistory(with: AnswerResultObject(identifier: "only", value: .integer(7)))
             
             // add the second collection as a subsection
             var sectionResult = RSDTaskResultObject(identifier: "sectionA")
@@ -71,7 +71,7 @@ class DataArchiveTests: XCTestCase {
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
             sectionResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             sectionResult.appendStepHistory(with: buildSingleAnswerResult(identifier: "single", answer: 3))
-            sectionResult.appendStepHistory(with: RSDAnswerResultObject(identifier: "only", answerType: .integer, value: 9))
+            sectionResult.appendStepHistory(with: AnswerResultObject(identifier: "only", value: .integer(9)))
             taskViewModel.taskResult.appendStepHistory(with: sectionResult)
 
             let manager = TestArchiveManager()
@@ -235,23 +235,17 @@ class DataArchiveTests: XCTestCase {
         return fileResult
     }
     
-    func buildAnswerResult(identifier: String, answerType: RSDAnswerResultType, answer: Any?) -> RSDAnswerResultObject {
-        var answerResult = RSDAnswerResultObject(identifier: identifier, answerType: answerType)
-        answerResult.value = answer
-        return answerResult
-    }
-    
     func buildCollectionResult(identifier: String) -> RSDCollectionResultObject {
         var collectionResult = RSDCollectionResultObject(identifier: identifier)
         for ii in 1...3 {
-            collectionResult.appendInputResults(with: buildAnswerResult(identifier: "input\(ii)", answerType: .integer, answer: ii))
+            collectionResult.appendInputResults(with: AnswerResultObject(identifier: "input\(ii)", value: .integer(ii)))
         }
         return collectionResult
     }
     
     func buildSingleAnswerResult(identifier: String, answer: Int) -> RSDCollectionResultObject {
         var collectionResult = RSDCollectionResultObject(identifier: identifier)
-        collectionResult.appendInputResults(with: RSDAnswerResultObject(identifier: identifier, answerType: .integer, value: answer))
+        collectionResult.appendInputResults(with: AnswerResultObject(identifier: identifier, value: .integer(answer)))
         return collectionResult
     }
 }

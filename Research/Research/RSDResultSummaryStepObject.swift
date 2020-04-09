@@ -122,7 +122,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
             "identifier": "foo",
             "type": "completion",
             "title": "Hello World!",
-            "text": "Some text.",
+            "detail": "Some text.",
             "resultTitle": "This is a title",
             "resultIdentifier" : "boo",
             "unitText" : "lala"

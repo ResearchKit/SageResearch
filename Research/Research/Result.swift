@@ -70,21 +70,8 @@ public extension AnswerResult {
         return self.identifier == identifier ? self : nil
     }
     
-    func encodingValue() -> JsonElement? {
-        guard let value = jsonValue, case .array(let arr) = value,
-            let answerType = self.jsonAnswerType as? AnswerTypeArray,
-            let separator = answerType.sequenceSeparator else {
-            return self.jsonValue
-        }
-        let str = arr.map {
-            if let comparableValue = $0 as? CustomStringConvertible {
-                return comparableValue.description
-            }
-            else {
-                return "\($0)"
-            }
-        }.joined(separator: separator)
-        return .string(str)
+    func encodingValue() throws -> JsonElement? {
+        try self.jsonAnswerType?.encodeAnswer(from: self.jsonValue) ?? self.jsonValue
     }
 }
 

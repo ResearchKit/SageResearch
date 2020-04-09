@@ -74,39 +74,22 @@ public final class AnswerResultObject : AnswerResult, Codable {
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.type = try container.decode(RSDResultType.self, forKey: .type)
         self.questionText = try container.decodeIfPresent(String.self, forKey: .questionText)
-        var jsonValue: JsonElement? = try container.decodeIfPresent(JsonElement.self, forKey: .jsonValue)
         if container.contains(.jsonAnswerType) {
             let nestedDecoder = try container.superDecoder(forKey: .jsonAnswerType)
             let jsonAnswerType = try decoder.factory.decodeAnswerType(from: nestedDecoder)
-            // Special-case a sequence-separated string to convert to an array of base type.
-            if let value = jsonValue,
-                case .string(let stringValue) = value,
-                let answerType = jsonAnswerType as? AnswerTypeArray,
-                let separator = answerType.sequenceSeparator {
-                let stringArray = stringValue.components(separatedBy: separator)
-                let arr: [RSDJSONSerializable] = try stringArray.map {
-                    switch jsonAnswerType.baseType {
-                    case .integer:
-                        return ($0 as NSString).integerValue
-                    case .boolean:
-                        return ($0 as NSString).boolValue
-                    case .number:
-                        return ($0 as NSString).doubleValue
-                    case .string:
-                        return $0
-                    default:
-                        throw DecodingError.dataCorruptedError(forKey: CodingKeys.jsonAnswerType,
-                                                               in: container,
-                                                               debugDescription: "A base type of `object` is not valid for an AnswerTypeArray with a non-nil separator")
-                    }
-                }
-                jsonValue = .array(arr)
+            if container.contains(.jsonValue) {
+                let jsonValueDecoder = try container.superDecoder(forKey: .jsonValue)
+                self.jsonValue = try jsonAnswerType.decodeValue(from: jsonValueDecoder)
+            }
+            else {
+                self.jsonValue = nil
             }
             self.jsonAnswerType = jsonAnswerType
-        } else {
+        }
+        else {
+            self.jsonValue = try container.decodeIfPresent(JsonElement.self, forKey: .jsonValue)
             self.jsonAnswerType = nil
         }
-        self.jsonValue = jsonValue
         self.startDate = try container.decodeIfPresent(Date.self, forKey: .startDate) ?? Date()
         self.endDate = try container.decodeIfPresent(Date.self, forKey: .endDate) ?? Date()
     }
@@ -122,7 +105,7 @@ public final class AnswerResultObject : AnswerResult, Codable {
             let nestedEncoder = container.superEncoder(forKey: .jsonAnswerType)
             try encodable.encode(to: nestedEncoder)
         }
-        let jsonVal = self.encodingValue()
+        let jsonVal = try self.encodingValue()
         try container.encodeIfPresent(jsonVal, forKey: .jsonValue)
     }
 }
@@ -154,5 +137,4 @@ extension AnswerResultObject : RSDDocumentableCodableObject {
         return answerResultExamples()
     }
 }
-
 

@@ -135,7 +135,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     ///             "identifier": "step3",
     ///             "type": "form",
     ///             "title": "Step 3",
-    ///             "text": "Some text.",
+    ///             "detail": "Some text.",
     ///             "inputFields": [
     ///                             {
     ///                             "identifier": "foo",

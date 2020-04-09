@@ -2577,7 +2577,6 @@
 				FF78FC851FA7A5F500B8D42C /* RSDFileResultObject.swift */,
 				FF5C4C311F8C9DC100F311BA /* RSDResultObject.swift */,
 				FF8827E81F8DE8CD00CEFDF0 /* RSDTaskResultObject.swift */,
-				F8A694FD2135C3B40052EB82 /* RSDAnswerResultType+Codable.swift */,
 			);
 			name = Result;
 			sourceTree = "<group>";
@@ -2750,6 +2749,7 @@
 		FFAEE7D8243C0CD700F18BCB /* Deprecated */ = {
 			isa = PBXGroup;
 			children = (
+				F8A694FD2135C3B40052EB82 /* RSDAnswerResultType+Codable.swift */,
 				FFDAE9EA1F91324A001D0CC0 /* RSDAnswerResultObject.swift */,
 			);
 			name = Deprecated;

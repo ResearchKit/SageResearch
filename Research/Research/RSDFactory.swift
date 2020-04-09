@@ -320,13 +320,13 @@ open class RSDFactory {
         case .instruction, .active:
             return try RSDActiveUIStepObject(from: decoder)
         case .choiceQuestion:
-            return try MultipleInputQuestionObject(from: decoder)
+            return try MultipleInputQuestionStepObject(from: decoder)
         case .countdown:
             return try RSDCountdownUIStepObject(from: decoder)
         case .completion, .feedback:
             return try RSDResultSummaryStepObject(from: decoder)
         case .multipleInputQuestion:
-            return try MultipleInputQuestionObject(from: decoder)
+            return try MultipleInputQuestionStepObject(from: decoder)
         case .overview:
             return try RSDOverviewStepObject(from: decoder)
         case .section:
@@ -337,9 +337,9 @@ open class RSDFactory {
         case .transform:
             return try self.decodeTransformableStep(from: decoder)
         case .simpleQuestion:
-            return try SimpleQuestionObject(from: decoder)
+            return try SimpleQuestionStepObject(from: decoder)
         case .stringChoiceQuestion:
-            return try StringChoiceQuestionObject(from: decoder)
+            return try StringChoiceQuestionStepObject(from: decoder)
         case .subtask:
             return try RSDSubtaskStepObject(from: decoder)
         }

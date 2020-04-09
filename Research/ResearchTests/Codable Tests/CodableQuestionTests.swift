@@ -67,11 +67,11 @@ class CodableQuestionTests: XCTestCase {
             }
         """.data(using: .utf8)! // our data in native (JSON) format
         
-        XCTAssertEqual(.choiceQuestion, ChoiceQuestionObject.defaultType())
+        XCTAssertEqual(.choiceQuestion, ChoiceQuestionStepObject.defaultType())
         
         do {
             
-            let object = try decoder.decode(ChoiceQuestionObject.self, from: json)
+            let object = try decoder.decode(ChoiceQuestionStepObject.self, from: json)
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -156,11 +156,11 @@ class CodableQuestionTests: XCTestCase {
             }
         """.data(using: .utf8)! // our data in native (JSON) format
         
-        XCTAssertEqual(.simpleQuestion, SimpleQuestionObject.defaultType())
+        XCTAssertEqual(.simpleQuestion, SimpleQuestionStepObject.defaultType())
         
         do {
             
-            let object = try decoder.decode(SimpleQuestionObject.self, from: json)
+            let object = try decoder.decode(SimpleQuestionStepObject.self, from: json)
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -238,11 +238,11 @@ class CodableQuestionTests: XCTestCase {
             }
         """.data(using: .utf8)! // our data in native (JSON) format
         
-        XCTAssertEqual(.multipleInputQuestion, MultipleInputQuestionObject.defaultType())
+        XCTAssertEqual(.multipleInputQuestion, MultipleInputQuestionStepObject.defaultType())
         
         do {
             
-            let object = try decoder.decode(MultipleInputQuestionObject.self, from: json)
+            let object = try decoder.decode(MultipleInputQuestionStepObject.self, from: json)
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -327,11 +327,11 @@ class CodableQuestionTests: XCTestCase {
             }
         """.data(using: .utf8)! // our data in native (JSON) format
         
-        XCTAssertEqual(.stringChoiceQuestion, StringChoiceQuestionObject.defaultType())
+        XCTAssertEqual(.stringChoiceQuestion, StringChoiceQuestionStepObject.defaultType())
         
         do {
             
-            let object = try decoder.decode(StringChoiceQuestionObject.self, from: json)
+            let object = try decoder.decode(StringChoiceQuestionStepObject.self, from: json)
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)

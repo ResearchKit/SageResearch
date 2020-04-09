@@ -7,7 +7,7 @@
               "identifier": "selectOne",
               "type": "form",
               "title": "Single Choice",
-              "text": "Select a single option",
+              "detail": "Select a single option",
               "inputFields": [{
                               "uiHint": "picker",
                               "type": "singleChoice",
@@ -18,7 +18,7 @@
               "identifier": "imageList",
               "type": "form",
               "title": "Single Choice with Images",
-              "text": "Select a single option",
+              "detail": "Select a single option",
               "inputFields": [
                               {
                               "uiHint": "picker",
@@ -60,7 +60,7 @@
               "identifier": "multipleInputs",
               "type": "form",
               "title": "Pick some values",
-              "text": "These inputs use a picker view to select the answer.",
+              "detail": "These inputs use a picker view to select the answer.",
               "inputFields": [{
                               "identifier": "date",
                               "type": "date",
@@ -97,7 +97,7 @@
               "identifier": "heightAndWeight",
               "type": "form",
               "title": "Height and Weight",
-              "text": "If your Locale is US, these will use a picker with US Customary units.",
+              "detail": "If your Locale is US, these will use a picker with US Customary units.",
               "inputFields": [{
                               "identifier": "heightAdult",
                               "type": "height.adult",
