@@ -363,7 +363,8 @@ class CodableResultObjectTests: XCTestCase {
             "startDate": "2017-10-16T22:28:09.000-02:30",
             "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"type" : "date-time", "codingFormat" : "yyyy-MM-dd"},
-            "value": "2016-02-20"
+            "value": "2016-02-20",
+            "skipToIdentifier": "baloo"
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -373,6 +374,7 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.type, "answer")
+            XCTAssertEqual(object.skipToIdentifier, "baloo")
             XCTAssertGreaterThan(object.endDate, object.startDate)
             
             if let answerType = object.jsonAnswerType as? AnswerTypeDateTime {

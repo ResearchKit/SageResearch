@@ -33,9 +33,9 @@
 
 import Foundation
 
-public final class AnswerResultObject : AnswerResult, Codable {
+public final class AnswerResultObject : AnswerResult, RSDNavigationResult, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case type, identifier, jsonAnswerType = "answerType", jsonValue = "value", questionText, startDate, endDate
+        case type, identifier, jsonAnswerType = "answerType", jsonValue = "value", questionText, startDate, endDate, skipToIdentifier
     }
     public private(set) var type: RSDResultType = .answer
     
@@ -43,6 +43,7 @@ public final class AnswerResultObject : AnswerResult, Codable {
     public let jsonAnswerType: AnswerType?
     public var jsonValue: JsonElement?
     public var questionText: String?
+    public var skipToIdentifier: String?
     
     public var startDate: Date = Date()
     public var endDate: Date = Date()
@@ -74,6 +75,7 @@ public final class AnswerResultObject : AnswerResult, Codable {
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.type = try container.decode(RSDResultType.self, forKey: .type)
         self.questionText = try container.decodeIfPresent(String.self, forKey: .questionText)
+        self.skipToIdentifier = try container.decodeIfPresent(String.self, forKey: .skipToIdentifier)
         if container.contains(.jsonAnswerType) {
             let nestedDecoder = try container.superDecoder(forKey: .jsonAnswerType)
             let jsonAnswerType = try decoder.factory.decodeAnswerType(from: nestedDecoder)
@@ -99,6 +101,7 @@ public final class AnswerResultObject : AnswerResult, Codable {
         try container.encode(identifier, forKey: .identifier)
         try container.encode(type, forKey: .type)
         try container.encodeIfPresent(self.questionText, forKey: .questionText)
+        try container.encodeIfPresent(self.skipToIdentifier, forKey: .skipToIdentifier)
         try container.encodeIfPresent(self.startDate, forKey: .startDate)
         try container.encodeIfPresent(self.endDate, forKey: .endDate)
         if let encodable = self.jsonAnswerType {

@@ -83,7 +83,7 @@ extension RSDComparable {
     func isMatching(to value: Any?, answerType: AnswerType, op: RSDSurveyRuleOperator) -> Bool {
         
         // If this is the skip operation then the values aren't equal *unless* it's nil
-        guard let value = value
+        guard let value = value, !(value is NSNull)
             else {
                 return op == .skip ? true : false
         }
@@ -150,8 +150,8 @@ extension RSDComparable {
     func convertValue(for value: Any?, with answerType: AnswerType) -> CVarArg? {
         
         // Exit early if the answer is nil
-        guard let answerValue = value else { return nil }
-        
+        guard let answerValue = value, !(answerValue is NSNull) else { return nil }
+
         // If this is a sequence type then need to convert the value into an NSArray
         // of CVarArg values.
         if let _ = answerType as? AnswerTypeArray {

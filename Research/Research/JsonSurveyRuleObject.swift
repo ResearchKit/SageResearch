@@ -42,22 +42,30 @@ public struct JsonSurveyRuleObject : RSDComparableSurveyRule, Codable, Hashable 
     /// identifier, otherwise the `skipToIdentifier` will be assumed to be `RSDIdentifier.exit`
     public let skipToIdentifier: String?
     
-    /// Optional cohort to assign if the rule matches. If available, then an `RSDCohortRule` can be
-    /// used to track the cohort to assign depending upon how this rule evaluates.
-    public let cohort: String?
+    /// Json-Codable matching answer.
+    public let matchingValue: JsonElement?
     
     /// The rule operator to apply. If `nil`, `.equal` will be assumed unless the `expectedAnswer`
     /// is also nil, in which case `.skip` will be assumed.
     public let ruleOperator: RSDSurveyRuleOperator?
     
+    /// Optional cohort to assign if the rule matches. If available, then an `RSDCohortRule` can be
+    /// used to track the cohort to assign depending upon how this rule evaluates.
+    public let cohort: String?
+    
     /// Expected answer for the rule. If `nil`, then the operator must be .skip or this will return
     /// a nil value.
     public var matchingAnswer: Any? {
-        return matchingValue?.jsonObject()
+        guard let value = matchingValue, value != .null else { return nil }
+        return value.jsonObject()
     }
-    
-    /// Json-Codable matching answer.
-    public let matchingValue: JsonElement?
+
+    public init(skipToIdentifier: String?, matchingValue: JsonElement?, ruleOperator: RSDSurveyRuleOperator? = nil, cohort: String? = nil) {
+        self.skipToIdentifier = skipToIdentifier
+        self.cohort = cohort
+        self.ruleOperator = ruleOperator
+        self.matchingValue = matchingValue
+    }
 }
 
 // TODO: syoung 04/06/2020 Replace with JsonModel-Swift in next set of deprecations.

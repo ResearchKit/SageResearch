@@ -96,7 +96,7 @@ class CodableQuestionTests: XCTestCase {
             
             if let surveyRules = object.surveyRules as? [JsonSurveyRuleObject] {
                 let expectedRules = [
-                    JsonSurveyRuleObject(skipToIdentifier: nil, cohort: nil, ruleOperator: nil, matchingValue: .integer(0))
+                    JsonSurveyRuleObject(skipToIdentifier: nil, matchingValue: .integer(0), ruleOperator: nil, cohort: nil)
                 ]
                 XCTAssertEqual(expectedRules, surveyRules)
             }
@@ -178,7 +178,7 @@ class CodableQuestionTests: XCTestCase {
             
             if let surveyRules = object.surveyRules as? [JsonSurveyRuleObject] {
                 let expectedRules = [
-                    JsonSurveyRuleObject(skipToIdentifier: nil, cohort: nil, ruleOperator: nil, matchingValue: .integer(1900))
+                    JsonSurveyRuleObject(skipToIdentifier: nil, matchingValue: .integer(1900))
                 ]
                 XCTAssertEqual(expectedRules, surveyRules)
             }
@@ -266,7 +266,7 @@ class CodableQuestionTests: XCTestCase {
             
             if let surveyRules = object.surveyRules as? [JsonSurveyRuleObject] {
                 let expectedRules = [
-                    JsonSurveyRuleObject(skipToIdentifier: nil, cohort: nil, ruleOperator: nil, matchingValue: .integer(1900))
+                    JsonSurveyRuleObject(skipToIdentifier: nil, matchingValue: .integer(1900))
                 ]
                 XCTAssertEqual(expectedRules, surveyRules)
             }
@@ -355,7 +355,7 @@ class CodableQuestionTests: XCTestCase {
             
             if let surveyRules = object.surveyRules as? [JsonSurveyRuleObject] {
                 let expectedRules = [
-                    JsonSurveyRuleObject(skipToIdentifier: nil, cohort: nil, ruleOperator: nil, matchingValue: .string("foo"))
+                    JsonSurveyRuleObject(skipToIdentifier: nil, matchingValue: .string("foo"))
                 ]
                 XCTAssertEqual(expectedRules, surveyRules)
             }

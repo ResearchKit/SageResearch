@@ -53,7 +53,8 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
     }
     
     open override func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
-        evaluateSurveyRules(with: result, isPeeking: isPeeking)
+        evaluateSurveyRules(with: result, isPeeking: isPeeking) ??
+            super.nextStepIdentifier(with: result, isPeeking: isPeeking)
     }
     
     open func cohortsToApply(with result: RSDTaskResult) -> (add: Set<String>, remove: Set<String>)? {
@@ -146,7 +147,7 @@ open class AbstractSkipQuestionStep : AbstractQuestionStep {
     }
 }
 
-public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQuestion, Encodable {
+public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQuestion, QuestionStep, Encodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case inputItem
     }
@@ -208,7 +209,7 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
     }
 }
 
-public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, MultipleInputQuestion, Encodable {
+public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, MultipleInputQuestion, QuestionStep, Encodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case inputItems, sequenceSeparator
     }
@@ -291,7 +292,7 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
 /// keyword would be brittle for human-edited json files. Therefore, instead, the "type" field is
 /// defined at this level with an encoded `baseType` and an overridable method for decoding the
 /// the choices.
-open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, Encodable {
+open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, QuestionStep, Encodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case jsonChoices = "choices", baseType, isSingleAnswer = "singleChoice", inputUIHint = "uiHint"
     }
