@@ -53,9 +53,12 @@ extension InputItemType : ExpressibleByStringLiteral {
     public static let integer: InputItemType = "integer"
     public static let string: InputItemType = "string"
     public static let year: InputItemType = "year"
+    
     public static let dateTime: InputItemType = "date-time"
     public static let date: InputItemType = "date"
     public static let time: InputItemType = "time"
+    
+    public static let choicePicker: InputItemType = "choicePicker"
 }
 
 open class AbstractInputItemObject {
@@ -77,12 +80,14 @@ open class AbstractInputItemObject {
     public var placeholder: String?
     
     public var inputUIHint: RSDFormUIHint {
-        _inputUIHint ?? .textfield
+        get { _inputUIHint ?? type(of: self).defaultUIHint()}
+        set { _inputUIHint = newValue }
     }
     private var _inputUIHint: RSDFormUIHint?
     
     public var isOptional: Bool {
-        _isOptional ?? true
+        get { _isOptional ?? true }
+        set { _isOptional = newValue }
     }
     private var _isOptional: Bool?
     
@@ -97,7 +102,11 @@ open class AbstractInputItemObject {
     }
     
     open class func defaultType() -> InputItemType {
-        return InputItemType(rawValue: "null")
+        InputItemType(rawValue: "null")
+    }
+    
+    open class func defaultUIHint() -> RSDFormUIHint {
+        .textfield
     }
 
     open func decode(from decoder: Decoder) throws {
@@ -180,7 +189,7 @@ public struct KeyboardOptionsObject : KeyboardOptions, Codable {
                                                                    keyboardType: .numbersAndPunctuation)
 }
 
-public final class DecimalTextInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
+public final class DoubleTextInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
     public override class func defaultType() -> InputItemType {
         return .decimal
     }
@@ -385,6 +394,88 @@ public final class StringTextInputItemObject : AbstractInputItemObject, Keyboard
     public func buildPickerSource() -> RSDPickerDataSource? { nil }
 }
 
+public protocol ChoicePickerInputItem : KeyboardTextInputItem, RSDChoiceOptions {
+    var jsonChoices: [JsonChoice] { get }
+}
+
+public extension ChoicePickerInputItem {
+    var choices: [RSDChoice] { jsonChoices }
+    var keyboardOptions: KeyboardOptions { KeyboardOptionsObject() }
+    func buildTextValidator() -> TextInputValidator { PassThruValidator() }
+    func buildPickerSource() -> RSDPickerDataSource? { self }
+}
+
+open class ChoicePickerInputItemObject : AbstractInputItemObject, ChoicePickerInputItem, Codable {
+    open override class func defaultType() -> InputItemType {
+        return .choicePicker
+    }
+    
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case jsonChoices = "choices"
+    }
+    
+    open private(set) var jsonChoices: [JsonChoice]
+    open private(set) var answerType: AnswerType
+    
+    open var defaultAnswer: Any? { nil }
+    
+    open override class func defaultUIHint() -> RSDFormUIHint { .picker }
+    
+    public init(jsonChoices: [JsonChoice], resultIdentifier: String? = nil) {
+        self.jsonChoices = jsonChoices
+        self.answerType = defaultBaseType(for: jsonChoices).answerType
+        super.init(resultIdentifier: resultIdentifier)
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        self.jsonChoices = []
+        self.answerType = AnswerTypeString()
+        super.init()
+        try self.decode(from: decoder)
+    }
+    
+    override public func decode(from decoder: Decoder) throws {
+        try super.decode(from: decoder)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        var nestedContainer = try container.nestedUnkeyedContainer(forKey: .jsonChoices)
+        var choices = [JsonChoice]()
+        while !nestedContainer.isAtEnd {
+            let nestedDecoder = try nestedContainer.superDecoder()
+            let choice = try decodeJsonChoice(from: nestedDecoder)
+            choices.append(choice)
+        }
+        self.jsonChoices = choices
+        self.answerType = defaultBaseType(for: choices).answerType
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try encodeJsonChoices(to: container.nestedUnkeyedContainer(forKey: .jsonChoices))
+    }
+    
+    open func decodeJsonChoice(from decoder: Decoder) throws -> JsonChoice {
+        try JsonChoiceObject(from: decoder)
+    }
+    
+    open func encodeJsonChoices(to container: UnkeyedEncodingContainer) throws {
+        var nestedContainer = container
+        try jsonChoices.forEach {
+            let nestedEncoder = nestedContainer.superEncoder()
+            try $0.encode(to: nestedEncoder)
+        }
+    }
+}
+
+internal func defaultBaseType(for jsonChoices: [JsonChoice]) -> JsonType {
+    jsonChoices.first(where: {
+        $0.matchingValue != nil && $0.matchingValue != JsonElement.null
+    })?.matchingValue!.jsonType ?? .string
+}
+
+// Note: syoung 04/10/2020 - These classes are included to support parity with Kotlin where there
+// isn't a class for "Date" that includes both date and time.
+
 public class DateTimeInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
     public override class func defaultType() -> InputItemType {
         return .dateTime
@@ -448,6 +539,8 @@ public final class TimeInputItemObject : DateTimeInputItemObject {
     }
 }
 
+// MARK: SkipCheckboxInputItem
+
 public struct SkipCheckboxInputItemObject : SkipCheckboxInputItem, Codable, Hashable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case classType = "type", fieldLabel, matchingValue = "value"
@@ -469,7 +562,9 @@ public struct SkipCheckboxInputItemObject : SkipCheckboxInputItem, Codable, Hash
     }
 }
 
-//
+// MARK: CheckboxInputItem
+
+// TODO: syoung 04/10/2020 Add checkbox item type support. Data type = boolean?? kinda fits.
 //@Serializable
 //@SerialName("checkbox")
 //data class CheckboxInputItemObject(@SerialName("identifier")

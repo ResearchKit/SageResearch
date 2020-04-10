@@ -462,3 +462,20 @@ extension RSDFormDataType : RSDDocumentableStringEnum {
         return allStandardTypes().map{ $0.rawValue }
     }
 }
+
+@available(*, deprecated, message: "Use `AnswerType` instead")
+extension RSDFormDataType.BaseType {
+    var jsonType : JsonType {
+        switch self {
+        case .boolean: return .boolean
+        case .codable: return .object
+        case .date: return .string
+        case .decimal: return .number
+        case .duration: return .number
+        case .fraction: return .string
+        case .integer: return .integer
+        case .string: return .string
+        case .year: return .integer
+        }
+    }
+}

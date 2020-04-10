@@ -387,38 +387,21 @@ class CodableStepObjectTests: XCTestCase {
           "identifier": "step3",
           "type": "form",
           "title": "Step 3",
-          "subtitle": "Some text.",
+          "nextStepIdentifier": "blu",
           "inputFields": [
                           {
                           "identifier": "foo",
                           "type": "date",
                           "uiHint": "picker",
                           "prompt": "Foo",
-                          "range" : { "minimumDate" : "2017-02-20",
-                                      "maximumDate" : "2017-03-20",
-                                      "codingFormat" : "yyyy-MM-dd" }
+                          "range" : { "minimumDate" : "2017-02",
+                                      "maximumDate" : "2017-03",
+                                      "codingFormat" : "yyyy-MM" }
                           },
                           {
                           "identifier": "bar",
                           "type": "integer",
                           "prompt": "Bar"
-                          },
-                          {
-                           "identifier": "goo",
-                           "type": "multipleChoice",
-                           "choices" : ["never", "sometimes", "often", "always"]
-                          },
-                          {
-                            "identifier": "detail",
-                            "type": "detail",
-                            "inputFields": [{
-                                "identifier": "fieldA",
-                                "type": "string"
-                            },
-                            {
-                                "identifier": "fieldB",
-                                "type": "integer"
-                            }]
                           }
                     ]
           }
@@ -427,25 +410,39 @@ class CodableStepObjectTests: XCTestCase {
         do {
             
             let object = try decoder.decode(RSDFormUIStepObject.self, from: json)
+            let converted = try object.convertToQuestion(using: QuestionConvertionFactory())
             
-            XCTAssertEqual(object.identifier, "step3")
-            XCTAssertEqual(object.title, "Step 3")
-            XCTAssertEqual(object.subtitle, "Some text.")
-            XCTAssertEqual(object.inputFields.count, 4)
-            
-            if object.inputFields.count == 4 {
-                XCTAssertEqual(object.inputFields[0].dataType, .base(.date))
-                XCTAssertEqual(object.inputFields[1].dataType, .base(.integer))
-                XCTAssertEqual(object.inputFields[2].dataType, .collection(.multipleChoice, .string))
-                XCTAssertNotNil(object.inputFields[2] as? RSDCodableChoiceInputFieldObject<String>)
+            XCTAssertEqual(converted.identifier, "step3")
+            XCTAssertEqual(converted.title, "Step 3")
+            guard let question = converted as? MultipleInputQuestionStepObject else {
+                XCTFail("Did not convert to expected type.")
+                return
             }
             
-            if let detail = object.inputFields.last as? RSDDetailInputFieldObject {
-                XCTAssertEqual(detail.dataType, .detail(.codable))
+            XCTAssertEqual(question.nextStepIdentifier, "blu")
+            XCTAssertEqual(question.inputItems.count, 2)
+            guard let dateItem = question.inputItems.first as? DateInputItemObject,
+                let intItem = question.inputItems.last as? IntegerTextInputItemObject
+                else {
+                    XCTFail("Did not convert to expected type.")
+                    return
+            }
+            
+            XCTAssertEqual(dateItem.identifier, "foo")
+            XCTAssertEqual(dateItem.inputUIHint, .picker)
+            XCTAssertEqual(dateItem.fieldLabel, "Foo")
+            if let range = dateItem.formatOptions {
+                XCTAssertNotNil(range.maximumDate)
+                XCTAssertNotNil(range.minimumDate)
+                XCTAssertEqual(range.dateCoder?.inputFormatter.dateFormat, "yyyy-MM")
             }
             else {
-                XCTFail("Failed to decode the detail input field type.")
+                XCTFail("Did not convert to expected type.")
+                return
             }
+            
+            XCTAssertEqual(intItem.identifier, "bar")
+            XCTAssertEqual(intItem.fieldLabel, "Bar")
 
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -463,7 +460,8 @@ class CodableStepObjectTests: XCTestCase {
           "title": "Step 3",
           "inputFields": [{
             "type": "multipleChoice",
-            "choices" : ["never", "sometimes", "often", "always"]
+            "choices" : ["never", "sometimes", "often", "always"],
+            "surveyRules": [{ "matchingAnswer": "never"}]
             }]
           }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -472,11 +470,19 @@ class CodableStepObjectTests: XCTestCase {
             
             let object = try decoder.decode(RSDFormUIStepObject.self, from: json)
             
-            XCTAssertEqual(object.identifier, "step3")
-            XCTAssertEqual(object.title, "Step 3")
-            XCTAssertEqual(object.inputFields.count, 1)
-            XCTAssertEqual(object.inputFields.first?.dataType, .collection(.multipleChoice, .string))
-            XCTAssertNotNil(object.inputFields.first as? RSDCodableChoiceInputFieldObject<String>)
+            let converted = try object.convertToQuestion(using: QuestionConvertionFactory())
+            
+            XCTAssertEqual(converted.identifier, "step3")
+            XCTAssertEqual(converted.title, "Step 3")
+            guard let choiceQuestion = converted as? ChoiceQuestionStepObject else {
+                XCTFail("Did not convert to expected type.")
+                return
+            }
+            
+            XCTAssertEqual(choiceQuestion.baseType, .string)
+            XCTAssertFalse(choiceQuestion.isSingleAnswer)
+            XCTAssertEqual(choiceQuestion.jsonChoices.count, 4)
+            XCTAssertEqual(choiceQuestion.surveyRules.count, 1)
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")

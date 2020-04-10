@@ -66,11 +66,11 @@ class CodableInputItemTests: XCTestCase {
             }
         """.data(using: .utf8)! // our data in native (JSON) format
         
-        XCTAssertEqual(.decimal, DecimalTextInputItemObject.defaultType())
+        XCTAssertEqual(.decimal, DoubleTextInputItemObject.defaultType())
         
         do {
             
-            let object = try decoder.decode(DecimalTextInputItemObject.self, from: json)
+            let object = try decoder.decode(DoubleTextInputItemObject.self, from: json)
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual(.decimal, object.inputItemType)
@@ -134,8 +134,8 @@ class CodableInputItemTests: XCTestCase {
                 
         do {
             
-            let original = DecimalTextInputItemObject()
-            let object = try decoder.decode(DecimalTextInputItemObject.self, from: json)
+            let original = DoubleTextInputItemObject()
+            let object = try decoder.decode(DoubleTextInputItemObject.self, from: json)
             XCTAssertEqual(original.inputItemType, object.inputItemType)
             
             let jsonData = try encoder.encode(original)
@@ -723,6 +723,67 @@ class CodableInputItemTests: XCTestCase {
         }
     }
     
+    func testChoicePickerItemObject_Codable() {
+        
+        let json = """
+            {
+             "identifier": "foo",
+             "type": "choicePicker",
+             "uiHint": "picker",
+             "fieldLabel": "Favorite color",
+             "placeholder": "Blue, no! Red!",
+             "choices" : [
+                {  "value" : 0, "text" : "never"},
+                {  "value" : 1, "text" : "sometimes"},
+                {  "value" : 2, "text" : "often"},
+                {  "value" : 3, "text" : "always"}]
+            }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        // TODO: syoung 04/04/2020 Figure out encoding/decoding for a survey rule for a date.
+        
+        XCTAssertEqual(.choicePicker, ChoicePickerInputItemObject.defaultType())
+        
+        do {
+            
+            let object = try decoder.decode(ChoicePickerInputItemObject.self, from: json)
+            
+            XCTAssertEqual("foo", object.identifier)
+            XCTAssertEqual(.choicePicker, object.inputItemType)
+            XCTAssertEqual(.picker, object.inputUIHint)
+            XCTAssertEqual("Favorite color", object.fieldLabel)
+            XCTAssertEqual("Blue, no! Red!", object.placeholder)
+            
+            XCTAssertTrue(object.answerType is AnswerTypeInteger)
+            XCTAssertEqual(object.jsonChoices.count, 4)
+            if let choices = object.jsonChoices as? [JsonChoiceObject],
+                let last = choices.last {
+                XCTAssertEqual(last.matchingValue, .integer(3))
+                XCTAssertEqual(last.text, "always")
+            }
+            else {
+                XCTFail("Failed to decode expected choice objects")
+            }
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual("foo", dictionary["identifier"] as? String)
+            XCTAssertEqual("choicePicker", dictionary["type"] as? String)
+            XCTAssertEqual("picker", dictionary["uiHint"] as? String)
+            XCTAssertEqual("Favorite color", dictionary["fieldLabel"] as? String)
+            XCTAssertEqual("Blue, no! Red!", dictionary["placeholder"] as? String)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
     struct TestInputItemsWrapper : Decodable {
         private enum CodingKeys : String, CodingKey {
             case items
@@ -755,7 +816,7 @@ class CodableInputItemTests: XCTestCase {
             let object = try decoder.decode(TestInputItemsWrapper.self, from: json)
             
             let expectedItems: [InputItem] = [
-                DecimalTextInputItemObject(),
+                DoubleTextInputItemObject(),
                 IntegerTextInputItemObject(),
                 StringTextInputItemObject(),
                 YearTextInputItemObject(),

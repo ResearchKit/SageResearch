@@ -69,7 +69,7 @@ public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource
     
     public func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
         guard indexPath.section == itemGroup.sectionIndex else { return }
-        try itemGroup.saveAnswer(answer, at: indexPath.row)
+        try itemGroup.saveAnswer(answer, at: indexPath.item)
     }
     
     public func selectAnswer(item: RSDTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {

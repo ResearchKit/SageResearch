@@ -114,6 +114,40 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptionsWith
 public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputFieldObject, RSDChoiceOptions {
     public typealias Value = T
     
+    override public func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItem?) {
+        guard case .collection(let collectionType, _) = self.dataType,
+            ((collectionType == .singleChoice) || (collectionType == .multipleChoice))
+            else {
+                throw RSDValidationError.undefinedClassType("Not implemented for \(self.dataType)")
+        }
+        
+        let choices: [JsonChoiceObject] = self.choices.map { choice in
+            let jsonValue: JsonElement? = (choice.answerValue as? RSDJSONValue).map { JsonElement($0) }
+            return JsonChoiceObject(matchingValue: jsonValue,
+                             text: choice.text,
+                             detail: choice.detail,
+                             isExclusive: choice.isExclusive,
+                             icon: choice.imageData as? RSDResourceImageDataObject)
+        }
+        
+        if self.inputUIHint == .picker {
+            let inputItem = ChoicePickerInputItemObject(jsonChoices: choices, resultIdentifier: identifier)
+            self.copyInto(inputItem)
+            return (nil, inputItem)
+        }
+        else {
+            let question = ChoiceQuestionStepObject(identifier: identifier,
+                                                    choices: choices,
+                                                    isSingleAnswer: (collectionType == .singleChoice),
+                                                    inputUIHint: self.inputUIHint ?? .list,
+                                                    nextStepIdentifier: nextStepIdentifier)
+            if question.isOptional != self.isOptional {
+                question.isOptional = self.isOptional
+            }
+            return (question, nil)
+        }
+    }
+    
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case choices, defaultAnswer
     }

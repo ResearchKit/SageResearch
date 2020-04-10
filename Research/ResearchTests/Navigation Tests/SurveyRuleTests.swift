@@ -324,7 +324,7 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_Equal() {
         
-        let inputItem = DecimalTextInputItemObject()
+        let inputItem = DoubleTextInputItemObject()
         
         let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
         step.surveyRules = [
@@ -344,7 +344,7 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_LessThan() {
         
-        let inputItem = DecimalTextInputItemObject()
+        let inputItem = DoubleTextInputItemObject()
         
         let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
         step.surveyRules = [
@@ -364,7 +364,7 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_GreaterThan() {
         
-        let inputItem = DecimalTextInputItemObject()
+        let inputItem = DoubleTextInputItemObject()
          
         let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
         step.surveyRules = [
@@ -384,7 +384,7 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_NotGreaterThan() {
         
-        let inputItem = DecimalTextInputItemObject()
+        let inputItem = DoubleTextInputItemObject()
          
         let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
         step.surveyRules = [
@@ -404,7 +404,7 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_NotLessThan() {
         
-        let inputItem = DecimalTextInputItemObject()
+        let inputItem = DoubleTextInputItemObject()
          
         let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
         step.surveyRules = [
@@ -424,7 +424,7 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_LessThanOrEqual() {
         
-        let inputItem = DecimalTextInputItemObject()
+        let inputItem = DoubleTextInputItemObject()
          
         let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
         step.surveyRules = [
@@ -444,7 +444,7 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_NotEqual_True() {
         
-        let inputItem = DecimalTextInputItemObject()
+        let inputItem = DoubleTextInputItemObject()
          
         let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
         step.surveyRules = [
@@ -462,7 +462,7 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_NotEqual_False() {
         
-        let inputItem = DecimalTextInputItemObject()
+        let inputItem = DoubleTextInputItemObject()
          
         let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
         step.surveyRules = [

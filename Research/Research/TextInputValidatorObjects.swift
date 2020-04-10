@@ -37,14 +37,8 @@ public struct PassThruValidator : TextInputValidator {
     public func answerText(for answer: Any?) -> String? {
         answer.map { "\($0)" }
     }
-    
-    public func validateInput(answer: Any?) throws -> Any? {
-        answer.map { "\($0)" }
-    }
-    
-    public func validateInput(text: String?) throws -> Any? {
-        text
-    }
+    public func validateInput(answer: Any?) throws -> Any? { answer }
+    public func validateInput(text: String?) throws -> Any? { text }
 }
 
 public struct RegExValidator : TextInputValidator, Codable {

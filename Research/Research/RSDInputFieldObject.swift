@@ -33,11 +33,165 @@
 
 import Foundation
 
+extension Date {
+    func yearComponent() -> Int {
+        Calendar.iso8601.component(.year, from: self)
+    }
+}
+
 /// `RSDInputFieldObject` is a `Decodable` implementation of the `RSDSurveyInputField` protocol. This is implemented as
 /// an open class so that the decoding strategy can be used to support subclasses.
 ///
 @available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
-open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDCopyInputField, Codable {
+open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSDMutableInputField, RSDCopyInputField, Codable {
+    
+    open func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItem?) {
+        switch self.dataType {
+        case .base(let baseType):
+            switch baseType {
+            case .date:
+                return (nil, buildDateInputItem())
+            case .decimal:
+                return (nil, buildDoubleInputItem())
+            case .integer:
+                return (nil, buildIntegerInputItem())
+            case .string:
+                return (nil, buildStringInputItem())
+            case .year:
+                return (nil, buildYearInputItem())
+            default:
+                throw RSDValidationError.undefinedClassType("\(self.dataType) is not implemented.")
+            }
+        
+        case .dateRange(let range):
+            return (nil, buildDateInputItem(type: range))
+            
+        default:
+            throw RSDValidationError.undefinedClassType("\(self.dataType) is not implemented.")
+        }
+    }
+    
+    func buildDateInputItem(type: RSDFormDataType.DateRangeType? = nil) -> InputItem {
+        let rangeType = type ?? dateRangeType()
+        let inputItem: DateTimeInputItemObject = {
+            switch rangeType {
+            case .timestamp:
+                return DateTimeInputItemObject(resultIdentifier: self.identifier)
+            case .dateOnly:
+                return DateInputItemObject(resultIdentifier: self.identifier)
+            case .timeOnly:
+                return TimeInputItemObject(resultIdentifier: self.identifier)
+            }
+        }()
+        copyInto(inputItem)
+        if let formatOptions = self.range as? RSDDateRangeObject {
+            inputItem.formatOptions = formatOptions
+        }
+        return inputItem
+    }
+    
+    func dateRangeType() -> RSDFormDataType.DateRangeType {
+        guard let range = self.range as? RSDDateRange else { return .timestamp }
+        let components = range.calendarComponents
+        let dateComponents : Set<Calendar.Component> = [.year, .month, .day]
+        let timeComponents : Set<Calendar.Component> = [.hour, .minute, .second]
+        if components.intersection(dateComponents).count == 0 {
+            return .timeOnly
+        }
+        else if components.intersection(timeComponents).count == 0 {
+            return .dateOnly
+        }
+        else {
+            return .timestamp
+        }
+    }
+    
+    func buildDoubleInputItem() -> InputItem {
+        let inputItem = DoubleTextInputItemObject(resultIdentifier: self.identifier)
+        copyInto(inputItem)
+        if let range = self.range as? RSDNumberRange {
+            var formatOptions = DoubleFormatOptions()
+            formatOptions.minimumValue = range.minimumValue.map { ($0 as NSNumber).doubleValue }
+            formatOptions.maximumValue = range.maximumValue.map { ($0 as NSNumber).doubleValue }
+            formatOptions.stepInterval = range.stepInterval.map { ($0 as NSNumber).doubleValue }
+            formatOptions.invalidMessage = self.textFieldOptions?.invalidMessage
+            if let unit = range.unit, inputItem.placeholder == nil {
+                inputItem.placeholder = unit
+            }
+            if let formatter = self.formatter as? NumberFormatter {
+                formatOptions.maximumFractionDigits = formatter.maximumFractionDigits
+            }
+            inputItem.formatOptions = formatOptions
+        }
+        return inputItem
+    }
+    
+    func buildIntegerInputItem() -> InputItem {
+        let inputItem = IntegerTextInputItemObject(resultIdentifier: self.identifier)
+        copyInto(inputItem)
+        if let range = self.range as? RSDNumberRange {
+            var formatOptions = IntegerFormatOptions()
+            formatOptions.minimumValue = range.minimumValue.map { ($0 as NSNumber).intValue }
+            formatOptions.maximumValue = range.maximumValue.map { ($0 as NSNumber).intValue }
+            formatOptions.stepInterval = range.stepInterval.map { ($0 as NSNumber).intValue }
+            formatOptions.invalidMessage = self.textFieldOptions?.invalidMessage
+            if let unit = range.unit, inputItem.placeholder == nil {
+                inputItem.placeholder = unit
+            }
+            inputItem.formatOptions = formatOptions
+        }
+        if let keyboardOptions = self.textFieldOptions {
+            inputItem.keyboardOptionsObject =
+                KeyboardOptionsObject(isSecureTextEntry: keyboardOptions.isSecureTextEntry,
+                                      autocapitalizationType: .none,
+                                      autocorrectionType: .no,
+                                      spellCheckingType: .no,
+                                      keyboardType: .numberPad)
+        }
+        return inputItem
+    }
+    
+    func buildStringInputItem() -> InputItem {
+        let inputItem = StringTextInputItemObject(resultIdentifier: self.identifier)
+        copyInto(inputItem)
+        if let keyboardOptions = self.textFieldOptions {
+            inputItem.keyboardOptionsObject =
+                KeyboardOptionsObject(isSecureTextEntry: keyboardOptions.isSecureTextEntry,
+                                      autocapitalizationType: keyboardOptions.autocapitalizationType,
+                                      autocorrectionType: keyboardOptions.autocorrectionType,
+                                      spellCheckingType: keyboardOptions.spellCheckingType,
+                                      keyboardType: keyboardOptions.keyboardType)
+            if let validator = keyboardOptions.textValidator as? RSDRegExMatchValidator,
+                let regEx = try? validator.regularExpression(),
+                let invalidMessage = keyboardOptions.invalidMessage {
+                inputItem.regExValidator = RegExValidator(pattern: regEx,
+                                                          invalidMessage: invalidMessage)
+            }
+        }
+        return inputItem
+    }
+    
+    func buildYearInputItem() -> InputItem {
+        let inputItem = YearTextInputItemObject(resultIdentifier: self.identifier)
+        copyInto(inputItem)
+        if let range = self.range as? RSDDateRange {
+            var formatOptions = YearFormatOptions()
+            formatOptions.allowFuture = range.shouldAllowFuture
+            formatOptions.allowPast = range.shouldAllowPast
+            formatOptions.minimumYear = range.minDate?.yearComponent()
+            formatOptions.maximumYear = range.maxDate?.yearComponent()
+            formatOptions.invalidMessage = self.textFieldOptions?.invalidMessage
+            inputItem.formatOptions = formatOptions
+        }
+        else if let range = self.range as? RSDNumberRange {
+            var formatOptions = YearFormatOptions()
+            formatOptions.minimumYear = range.minimumValue.map { ($0 as NSNumber).intValue }
+            formatOptions.maximumYear = range.maximumValue.map { ($0 as NSNumber).intValue }
+            formatOptions.invalidMessage = self.textFieldOptions?.invalidMessage
+            inputItem.formatOptions = formatOptions
+        }
+        return inputItem
+    }
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier
@@ -147,6 +301,17 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
         copy.isOptional = self.isOptional
         copy.surveyRules = self.surveyRules
         copy._formatter = self._formatter
+    }
+    
+    public func copyInto(_ copy: AbstractInputItemObject) {
+        copy.fieldLabel = self.inputPrompt
+        copy.placeholder = self.placeholder
+        if let uiHint = self.inputUIHint {
+            copy.inputUIHint = uiHint
+        }
+        if copy.isOptional != self.isOptional {
+            copy.isOptional = self.isOptional
+        }
     }
     
     /// Validate the input field to check for any configuration that should throw an error.

@@ -508,7 +508,7 @@ open class RSDFactory {
     func decodeInputItem(from decoder: Decoder, with type: InputItemType) throws -> InputItem {
         switch type {
         case .decimal:
-            return try DecimalTextInputItemObject(from: decoder)
+            return try DoubleTextInputItemObject(from: decoder)
         case .integer:
             return try IntegerTextInputItemObject(from: decoder)
         case .string:
@@ -521,6 +521,8 @@ open class RSDFactory {
             return try DateInputItemObject(from: decoder)
         case .time:
             return try TimeInputItemObject(from: decoder)
+        case .choicePicker:
+            return try ChoicePickerInputItemObject(from: decoder)
         default:
             let context = DecodingError.Context(codingPath: decoder.codingPath,
                                                 debugDescription: "Cannot decode InputItem with type '\(type)'")
@@ -1099,6 +1101,7 @@ open class RSDFactory {
     /// to use when encoding objects.
     open func createJSONEncoder() -> JSONEncoder {
         let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted]
         encoder.dateEncodingStrategy = .custom({ (date, encoder) in
             let string = self.encodeString(from: date, codingPath: encoder.codingPath)
             var container = encoder.singleValueContainer()
