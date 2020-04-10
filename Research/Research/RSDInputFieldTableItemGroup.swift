@@ -149,7 +149,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
         guard let answerResult = result as? RSDAnswerResult,
             answerResult.answerType == answerType
             else {
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Result answer type for \(result) not expected type.")
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Result answer type for \(result) not expected type.")
                 throw RSDInputFieldError.invalidType(context)
         }
         try self.setAnswer(answerResult.value)

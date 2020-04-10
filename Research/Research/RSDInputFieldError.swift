@@ -33,11 +33,7 @@
 
 import Foundation
 
-/// `RSDInputFieldError` is used by the `RSDFormStepDataSource` when validating a user-entered answer
-/// for a given input field.
-///
-/// - seealso: `RSDInputField` and `RSDFormStepDataSource`
-@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
+/// `RSDInputFieldError` is used when validating a user-entered answer.
 public enum RSDInputFieldError: Error {
     
     /// The context for the error.
@@ -46,8 +42,6 @@ public enum RSDInputFieldError: Error {
         let identifier: String?
         /// The value being validated.
         let value: Any?
-        /// The expected answer result type.
-        let answerResult: RSDAnswerResultType
         /// A debug description for the error.
         let debugDescription: String
     }

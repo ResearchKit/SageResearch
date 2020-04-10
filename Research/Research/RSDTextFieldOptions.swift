@@ -37,7 +37,7 @@ import Foundation
 ///
 /// - seealso: `RSDInputField` and `RSDFormStepDataSource`
 @available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
-public protocol RSDTextFieldOptions {
+public protocol RSDTextFieldOptions : KeyboardOptions {
     
     /// A custom text validator that can be used to validate a string.
     var textValidator: RSDTextValidator? { get }

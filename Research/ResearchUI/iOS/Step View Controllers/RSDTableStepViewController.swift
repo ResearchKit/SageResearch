@@ -68,20 +68,19 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         return self.stepViewModel as? RSDTableDataSource
     }
     
-    /// Convenience property for accessing the form step (if casting the step to a `RSDFormUIStep` is
-    /// applicable).
-    public var formStep: RSDFormUIStep? {
-        return step as? RSDFormUIStep
+    /// Convenience property for accessing the question step.
+    public var questionStep: QuestionStep? {
+        return step as? QuestionStep
     }
 
     /// Static method to determine if this view controller class supports the provided step.
     open class func doesSupport(_ step: RSDStep) -> Bool {
         // Only UI steps are supported
         guard let _ = step as? RSDUIStep else { return false }
-        if let tableStep = step as? RSDFormUIStep {
+        if let tableStep = step as? ChoiceQuestion {
             // TODO: syoung 02/26/2018 Implement support for image selection.
             // https://github.com/ResearchKit/SageResearch/issues/11
-            return !tableStep.hasImageChoices
+            return !tableStep.jsonChoices.contains(where: { $0.imageData != nil })
         } else {
             return true
         }
@@ -256,7 +255,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         {
             tableData = source
         } else {
-            tableData = RSDFormStepDataSourceObject(step: step, parent: parent, supportedHints: supportedHints)
+            tableData = RSDUIStepTableDataSourceImpl(step: step, parent: parent)
         }
         tableData.delegate = self
         return tableData
@@ -289,7 +288,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             }
         }
         else {
-            let isFeatured = formStep?.inputFields.count ?? 0 <= 1
+            let isFeatured = (step is SimpleQuestion)
             let reuseId = RSDFormUIHint(rawValue: reuseIdentifier)
             switch reuseId {
             case .checkbox:
@@ -349,7 +348,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         super.setupHeader(header)
         guard let stepHeader = header as? RSDStepHeaderView else { return }
         
-        if formStep?.inputFields.count ?? 0 > 0 {
+        if questionStep != nil {
             // We have a minimum height for ORKFormSteps because these step usually have just a title and
             // description and the design generally calls for quite a bit of margin above and below the
             // labels. So we set a minimum size
@@ -529,7 +528,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Configure a text view cell.
     func configure(textViewCell: RSDStepTextViewCell, at indexPath: IndexPath) {
-        guard let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
+        guard let tableItem = tableData?.tableItem(at: indexPath) as? TextInputItemState
             else {
                 return
         }
@@ -546,16 +545,15 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
         
         // use the keyboard properties defined for this step
-        if let textAnswerFormat = tableItem.textFieldOptions {
-            textViewCell.textView.keyboardType = textAnswerFormat.keyboardType.keyboardType()
-            textViewCell.textView.isSecureTextEntry = textAnswerFormat.isSecureTextEntry
-            textViewCell.textView.autocapitalizationType = textAnswerFormat.autocapitalizationType.textAutocapitalizationType()
-            textViewCell.textView.autocorrectionType = textAnswerFormat.autocorrectionType.textAutocorrectionType()
-            textViewCell.textView.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
-        }
+        let textAnswerFormat = tableItem.keyboardOptions
+        textViewCell.textView.keyboardType = textAnswerFormat.keyboardType.keyboardType()
+        textViewCell.textView.isSecureTextEntry = textAnswerFormat.isSecureTextEntry
+        textViewCell.textView.autocapitalizationType = textAnswerFormat.autocapitalizationType.textAutocapitalizationType()
+        textViewCell.textView.autocorrectionType = textAnswerFormat.autocorrectionType.textAutocorrectionType()
+        textViewCell.textView.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
         
         // populate the field label
-        textViewCell.viewLabel.text = tableItem.inputField.inputPrompt
+        textViewCell.viewLabel.text = tableItem.inputPrompt
         
         // Set the answer.
         setTextAnswer(on: textViewCell, with: tableItem)
@@ -563,7 +561,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Configure a text field cell.
     func configure(textFieldCell: RSDStepTextFieldCell, at indexPath: IndexPath) {
-        guard let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
+        guard let tableItem = tableData?.tableItem(at: indexPath) as? TextInputItemState
             else {
                 return
         }
@@ -580,13 +578,12 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
         
         // use the keyboard properties defined for this step
-        if let textAnswerFormat = tableItem.textFieldOptions {
-            textFieldCell.textField.keyboardType = textAnswerFormat.keyboardType.keyboardType()
-            textFieldCell.textField.isSecureTextEntry = textAnswerFormat.isSecureTextEntry
-            textFieldCell.textField.autocapitalizationType = textAnswerFormat.autocapitalizationType.textAutocapitalizationType()
-            textFieldCell.textField.autocorrectionType = textAnswerFormat.autocorrectionType.textAutocorrectionType()
-            textFieldCell.textField.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
-        }
+        let textAnswerFormat = tableItem.keyboardOptions
+        textFieldCell.textField.keyboardType = textAnswerFormat.keyboardType.keyboardType()
+        textFieldCell.textField.isSecureTextEntry = textAnswerFormat.isSecureTextEntry
+        textFieldCell.textField.autocapitalizationType = textAnswerFormat.autocapitalizationType.textAutocapitalizationType()
+        textFieldCell.textField.autocorrectionType = textAnswerFormat.autocorrectionType.textAutocorrectionType()
+        textFieldCell.textField.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
         
         // Add support for picker views
         let pickerView = textFieldCell.textField.inputView as? (RSDPickerViewProtocol & UIView)
@@ -597,7 +594,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
 
         // populate the field label
-        textFieldCell.fieldLabel.text = tableItem.inputField.inputPrompt
+        textFieldCell.fieldLabel.text = tableItem.inputPrompt
         
         // populate the text field placeholder label
         textFieldCell.placeholder = tableItem.placeholder
@@ -610,7 +607,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     /// an answer for a user input, the value that was entered by the user should be kept. However, if the
     /// controller modifies the answer for some reason, that updated value should be honored.
     open func refreshAnswer(at indexPath: IndexPath) {
-        guard let tableItem = self.tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem,
+        guard let tableItem = self.tableData?.tableItem(at: indexPath) as? TextInputItemState,
             let cell = self.tableView.cellForRow(at: tableItem.indexPath)
             else {
                 debugPrint("WARNING: Could not update answer.")
@@ -628,13 +625,13 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
     }
     
-    private func setTextAnswer(on textFieldCell: RSDStepTextFieldCell, with tableItem: RSDTextInputTableItem) {
+    private func setTextAnswer(on textFieldCell: RSDStepTextFieldCell, with tableItem: TextInputItemState) {
         textFieldCell.textField.text = tableItem.answerText
         let picker = textFieldCell.textField.inputView as? RSDPickerViewProtocol
         picker?.answer = tableItem.answer
     }
     
-    private func setTextAnswer(on textViewCell: RSDStepTextViewCell, with tableItem: RSDTextInputTableItem) {
+    private func setTextAnswer(on textViewCell: RSDStepTextViewCell, with tableItem: TextInputItemState) {
         textViewCell.textView.text = tableItem.answerText
     }
     
@@ -668,7 +665,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     /// - parameters:
     ///     - textInputItem: The table item.
     ///     - indexPath: The index path.
-    open func instantiatePickerView(textInputItem: RSDTextInputTableItem, indexPath:IndexPath) -> (RSDPickerViewProtocol & UIView)? {
+    open func instantiatePickerView(textInputItem: TextInputItemState, indexPath:IndexPath) -> (RSDPickerViewProtocol & UIView)? {
         if let pickerSource = textInputItem.pickerSource as? RSDDatePickerDataSource {
             return RSDDatePicker(pickerSource: pickerSource, indexPath: indexPath)
         }
@@ -678,7 +675,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         else if let pickerSource = textInputItem.pickerSource as? RSDNumberPickerDataSource {
             return RSDNumberPickerView(pickerSource: pickerSource, indexPath: indexPath)
         }
-        debugPrint("Could not instantiate an appropriate picker for \(textInputItem.inputField.identifier): \(String(describing: textInputItem.pickerSource))")
+        debugPrint("Could not instantiate an appropriate picker for \(textInputItem.identifier): \(String(describing: textInputItem.pickerSource))")
         return nil
     }
     
@@ -695,8 +692,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let tableData = self.tableData else { return }
         
-        if let item = tableData.tableItem(at: indexPath) as? RSDChoiceTableItem {
-            didSelectItem(item, at: indexPath)
+        if let item = tableData.tableItem(at: indexPath) as? ChoiceInputItemState {
+            didSelectItem(item as! RSDTableItem, at: indexPath)
         }
         else {
             
@@ -873,7 +870,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         guard let picker = ((sender as? UITextField)?.inputView ?? sender) as? RSDPickerViewProtocol,
             let textField = activeTextInputView as? RSDStepTextField,
             picker.indexPath == textField.indexPath,
-            let inputItem = self.tableData?.tableItem(at: picker.indexPath) as? RSDTextInputTableItem
+            let inputItem = self.tableData?.tableItem(at: picker.indexPath) as? TextInputItemState
             else {
                 return
         }
@@ -925,9 +922,9 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     }
 
     /// Get the table item associated with a given text field.
-    public func tableItem(for textInputView: RSDStepTextInputView) -> RSDTextInputTableItem? {
+    public func tableItem(for textInputView: RSDStepTextInputView) -> TextInputItemState? {
         guard let indexPath = textInputView.indexPath,
-            let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem?
+            let tableItem = tableData?.tableItem(at: indexPath) as? TextInputItemState?
             else {
                 return nil
         }
@@ -1015,9 +1012,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Show a validation error message that is appropriate for the given context.
     open func showValidationError(title: String?, message: String?, context: RSDInputFieldError.Context?, at indexPath: IndexPath) {
-        let invalidMessage = (tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem)?.textFieldOptions?.invalidMessage
         self.presentAlertWithOk(title: nil,
-                             message: invalidMessage ?? message ?? Localization.localizedString("VALIDATION_ERROR_GENERIC"),
+                             message: message ?? Localization.localizedString("VALIDATION_ERROR_GENERIC"),
                              actionHandler: nil)
     }
     

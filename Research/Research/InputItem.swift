@@ -110,6 +110,11 @@ public protocol KeyboardTextInputItem : InputItem {
      * This can be used to return a class used to format and/or validate the text input.
      */
     func buildTextValidator() -> TextInputValidator
+    
+    /**
+     * For certain types of input items, there may be a picker associated with it.
+     */
+    func buildPickerSource() -> RSDPickerDataSource?
 }
 
 public protocol TextInputValidator {

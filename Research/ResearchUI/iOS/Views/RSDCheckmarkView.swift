@@ -214,7 +214,7 @@ fileprivate let defaultSize: CGFloat = 122
     
     override public var tableItem: RSDTableItem! {
         didSet {
-            guard let item = tableItem as? RSDChoiceTableItem else { return }
+            guard let item = tableItem as? ChoiceInputItemState else { return }
             buttonView.label.text = item.choice.text
             isSelected = item.selected
         }

@@ -132,11 +132,11 @@ public final class RSDNumberInputTableItem : RSDTextInputTableItem {
         if let number = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber(), let range = numberRange {
             let decimal = number.decimalValue
             if let min = range.minimumValue, decimal < min {
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Value entered is outside allowed range.")
                 throw RSDInputFieldError.lessThanMinimumValue(min, context)
             }
             if let max = range.maximumValue, decimal > max {
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Value entered is outside allowed range.")
                 throw RSDInputFieldError.greaterThanMaximumValue(max, context)
             }
         }

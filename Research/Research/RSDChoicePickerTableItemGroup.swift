@@ -152,7 +152,7 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
     /// - throws: `RSDInputFieldError` if the selection is invalid.
     open func select(_ item: RSDChoiceTableItem, indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard let selectableItems = self.items as? [RSDChoiceTableItem] else {
-            let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: nil, answerResult: answerType, debugDescription: "This input field does not support selection.")
+            let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: nil, debugDescription: "This input field does not support selection.")
             throw RSDInputFieldError.invalidType(context)
         }
         

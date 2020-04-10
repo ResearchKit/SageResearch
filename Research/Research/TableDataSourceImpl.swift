@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class RSDUIStepTableDataSourceImpl : RSDStepViewModel, RSDTableDataSource {
+public final class RSDUIStepTableDataSourceImpl : RSDStepViewModel, RSDTableDataSource {
     
     /// The delegate associated with this data source.
     public weak var delegate: RSDTableDataSourceDelegate?

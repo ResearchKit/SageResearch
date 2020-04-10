@@ -218,6 +218,17 @@ public final class DecimalTextInputItemObject : AbstractInputItemObject, Keyboar
     public func buildTextValidator() -> TextInputValidator {
         formatOptions ?? DoubleFormatOptions()
     }
+    
+    public func buildPickerSource() -> RSDPickerDataSource? {
+        guard let options = formatOptions else { return nil }
+        let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
+        return RSDNumberPickerDataSourceObject(minimum: max,
+                                               maximum: min,
+                                               stepInterval: stepInterval,
+                                               numberFormatter: options.formatter)
+    }
 }
 
 public final class IntegerTextInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
@@ -263,6 +274,17 @@ public final class IntegerTextInputItemObject : AbstractInputItemObject, Keyboar
     public func buildTextValidator() -> TextInputValidator {
         formatOptions ?? IntegerFormatOptions()
     }
+    
+    public func buildPickerSource() -> RSDPickerDataSource? {
+        guard let options = formatOptions else { return nil }
+        let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
+        return RSDNumberPickerDataSourceObject(minimum: max,
+                                               maximum: min,
+                                               stepInterval: stepInterval,
+                                               numberFormatter: options.formatter)
+    }
 }
 
 public final class YearTextInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
@@ -302,6 +324,17 @@ public final class YearTextInputItemObject : AbstractInputItemObject, KeyboardTe
 
     public func buildTextValidator() -> TextInputValidator {
         formatOptions ?? YearFormatOptions()
+    }
+    
+    public func buildPickerSource() -> RSDPickerDataSource? {
+        guard let options = formatOptions else { return nil }
+        let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
+        return RSDNumberPickerDataSourceObject(minimum: max,
+                                               maximum: min,
+                                               stepInterval: stepInterval,
+                                               numberFormatter: options.formatter)
     }
 }
 
@@ -348,6 +381,8 @@ public final class StringTextInputItemObject : AbstractInputItemObject, Keyboard
     public func buildTextValidator() -> TextInputValidator {
         regExValidator ?? PassThruValidator()
     }
+    
+    public func buildPickerSource() -> RSDPickerDataSource? { nil }
 }
 
 public class DateTimeInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
@@ -394,6 +429,10 @@ public class DateTimeInputItemObject : AbstractInputItemObject, KeyboardTextInpu
 
     public func buildTextValidator() -> TextInputValidator {
         DateTimeValidator(pickerMode: pickerMode, range: formatOptions)
+    }
+    
+    public func buildPickerSource() -> RSDPickerDataSource? {
+        formatOptions.map { $0.dataSource().0 } ?? nil 
     }
 }
 

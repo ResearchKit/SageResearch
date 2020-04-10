@@ -127,10 +127,10 @@ import UIKit
     
     override public var tableItem: RSDTableItem! {
         didSet {
-            guard let item = tableItem as? RSDChoiceTableItem else { return }
+            guard let item = tableItem as? ChoiceInputItemState else { return }
+            isSelected = item.selected
             titleLabel?.text = item.choice.text
             detailLabel?.text = item.choice.detail
-            isSelected = item.selected
         }
     }
 }

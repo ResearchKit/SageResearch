@@ -35,7 +35,7 @@ import Foundation
 
 /// `RSDChoiceTableItem` is used to represent a single row in a table where the user picks from a list of choices.
 @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
-open class RSDChoiceTableItem : RSDInputFieldTableItem {
+open class RSDChoiceTableItem : RSDInputFieldTableItem, ChoiceInputItemState {
     
     /// The choice for a single or multiple choice input field.
     open private(set) var choice: RSDChoice

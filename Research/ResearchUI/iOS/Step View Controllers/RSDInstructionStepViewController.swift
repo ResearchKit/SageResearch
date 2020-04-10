@@ -178,6 +178,11 @@ open class RSDInstructionStepViewController: RSDPermissionStepViewController {
                 return false
         }
         
+        // Question steps are not supported.
+        if step is QuestionStep {
+            return false
+        }
+        
         // Form input fields are not supported.
         if let formStep = step as? RSDFormUIStep, formStep.inputFields.count > 0 {
             return false

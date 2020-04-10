@@ -53,7 +53,7 @@ open class AbstractInputItemTableItem : RSDTableItem {
     }
 }
 
-open class ChoiceInputItemTableItem : AbstractInputItemTableItem, InputItemState {
+open class ChoiceInputItemTableItem : AbstractInputItemTableItem, InputItemState, ChoiceInputItemState {
 
     public var selected: Bool
     
@@ -71,6 +71,8 @@ open class ChoiceInputItemTableItem : AbstractInputItemTableItem, InputItemState
     public var choiceItem: ChoiceInputItem {
         inputItem as! ChoiceInputItem
     }
+    
+    public var choice: RSDChoice { choiceItem }
     
     public init(questionIdentifier: String, rowIndex: Int, choiceItem: ChoiceInputItem, initialAnswer: JsonElement?, supportedHints: Set<RSDFormUIHint>?) {
 
@@ -92,19 +94,11 @@ open class ChoiceInputItemTableItem : AbstractInputItemTableItem, InputItemState
     }
 }
 
-open class TextInputItemTableItem : AbstractInputItemTableItem, InputItemState {
-
-    public var currentAnswer: JsonElement? {
-        get { selected ? (storedAnswer ?? .null) : nil }
-        set(newValue) {
-            storedAnswer = newValue
-            selected = (newValue != nil)
-        }
-    }
-    
+open class TextInputItemTableItem : AbstractInputItemTableItem, InputItemState, TextInputItemState {
     public private(set) var storedAnswer: JsonElement?
     public var selected: Bool
     public let textValidator: TextInputValidator
+    public let pickerSource: RSDPickerDataSource?
     
     public var textItem: KeyboardTextInputItem {
         inputItem as! KeyboardTextInputItem
@@ -119,6 +113,43 @@ open class TextInputItemTableItem : AbstractInputItemTableItem, InputItemState {
         self.storedAnswer = storedAnswer
         self.selected = (storedAnswer != nil)
         self.textValidator = textItem.buildTextValidator()
+        self.pickerSource = textItem.buildPickerSource()
         super.init(questionIdentifier: questionIdentifier, rowIndex: rowIndex, inputItem: textItem, supportedHints: supportedHints)
+    }
+    
+    public var currentAnswer: JsonElement? {
+        get { selected ? (storedAnswer ?? .null) : nil }
+        set(newValue) {
+            storedAnswer = newValue
+            selected = (newValue != nil)
+        }
+    }
+    
+    public var placeholder: String? {
+        textItem.placeholder
+    }
+    
+    public var uiHint: RSDFormUIHint {
+        textItem.inputUIHint
+    }
+    
+    public var answerText: String? {
+        textValidator.answerText(for: currentAnswer.map { $0.jsonObject() } ?? nil)
+    }
+    
+    public var answer: Any? {
+        currentAnswer.map { $0 == .null ? nil : $0 } ?? nil
+    }
+    
+    public var keyboardOptions: KeyboardOptions {
+        textItem.keyboardOptions
+    }
+    
+    public var inputPrompt: String? {
+        textItem.fieldLabel
+    }
+    
+    public func answerText(for answer: Any?) -> String? {
+        textValidator.answerText(for: answer)
     }
 }
