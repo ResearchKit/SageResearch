@@ -366,16 +366,16 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
     
     private func _recordPedometerData(_ data: CMPedometerData) {
         
-        var stepCountResult = RSDAnswerResultObject(identifier: ResultIdentifier.stepCount.stringValue, answerType: RSDAnswerResultType(baseType: .decimal))
-        stepCountResult.value = data.numberOfSteps
+        let stepCountResult = AnswerResultObject(identifier: ResultIdentifier.stepCount.stringValue,
+                                                 value: .integer(data.numberOfSteps.intValue))
         self.appendResults(stepCountResult)
         
-        var pedometerDistanceResult = RSDAnswerResultObject(identifier: ResultIdentifier.pedometerDistance.stringValue, answerType: RSDAnswerResultType(baseType: .decimal))
-        pedometerDistanceResult.value = data.distance
+        let pedometerDistanceResult = AnswerResultObject(identifier: ResultIdentifier.pedometerDistance.stringValue,
+                                                         value: .number(data.distance?.doubleValue ?? 0.0))
         self.appendResults(pedometerDistanceResult)
         
-        var gpsDistanceResult = RSDAnswerResultObject(identifier: ResultIdentifier.gpsDistance.stringValue, answerType: RSDAnswerResultType(baseType: .decimal))
-        gpsDistanceResult.value = totalDistance
+        let gpsDistanceResult = AnswerResultObject(identifier: ResultIdentifier.gpsDistance.stringValue,
+                                                   value: .number(totalDistance))
         self.appendResults(gpsDistanceResult)
         
         // Release the pedometer
