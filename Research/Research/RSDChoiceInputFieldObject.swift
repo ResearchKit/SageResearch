@@ -126,7 +126,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
             return JsonChoiceObject(matchingValue: jsonValue,
                              text: choice.text,
                              detail: choice.detail,
-                             isExclusive: choice.isExclusive,
+                             isExclusive: choice.isExclusive ? true : nil,
                              icon: choice.imageData as? RSDResourceImageDataObject)
         }
         

@@ -140,7 +140,7 @@ open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSD
             }
             inputItem.formatOptions = formatOptions
         }
-        if let keyboardOptions = self.textFieldOptions {
+        if let keyboardOptions = self.textFieldOptions, keyboardOptions.isSecureTextEntry {
             inputItem.keyboardOptionsObject =
                 KeyboardOptionsObject(isSecureTextEntry: keyboardOptions.isSecureTextEntry,
                                       autocapitalizationType: .none,

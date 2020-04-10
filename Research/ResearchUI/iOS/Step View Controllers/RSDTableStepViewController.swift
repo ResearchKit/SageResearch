@@ -75,15 +75,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
 
     /// Static method to determine if this view controller class supports the provided step.
     open class func doesSupport(_ step: RSDStep) -> Bool {
-        // Only UI steps are supported
-        guard let _ = step as? RSDUIStep else { return false }
-        if let tableStep = step as? ChoiceQuestion {
-            // TODO: syoung 02/26/2018 Implement support for image selection.
-            // https://github.com/ResearchKit/SageResearch/issues/11
-            return !tableStep.jsonChoices.contains(where: { $0.imageData != nil })
-        } else {
-            return true
-        }
+        return step is RSDUIStep
     }
     
     
@@ -1002,7 +994,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                     assertionFailure("Unhandled error when saving text entry: \(err)")
                 }
             } else {
-                assertionFailure("Unhandled error when saving text entry: \(err)")
+                message = err.localizedDescription
             }
             self.showValidationError(title: nil, message: message, context: context, at: indexPath)
         }

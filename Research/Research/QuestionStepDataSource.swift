@@ -58,6 +58,12 @@ public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource
         self.itemGroup = itemGroup
         super.init(step: step, parent: parent)
     }
+    
+    /// Specifies whether the next button should be enabled based on the validity of the answers for
+    /// all form items.
+    override public var isForwardEnabled: Bool {
+        return super.isForwardEnabled && allAnswersValid()
+    }
 
     public func allAnswersValid() -> Bool {
         itemGroup.isAnswerValid
@@ -70,12 +76,14 @@ public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource
     public func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
         guard indexPath.section == itemGroup.sectionIndex else { return }
         try itemGroup.saveAnswer(answer, at: indexPath.item)
+        delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
     }
     
     public func selectAnswer(item: RSDTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard indexPath.section == itemGroup.sectionIndex else {
             return (false, false)
         }
+        delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
         return try itemGroup.toggleSelection(at: indexPath.item)
     }
 }

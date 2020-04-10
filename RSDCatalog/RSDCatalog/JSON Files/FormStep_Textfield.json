@@ -5,34 +5,20 @@
     },
     "steps": [
               {
-              "identifier": "step4",
-              "type": "form",
-              "detail": "These inputs use a formatter to parse the entered text.",
-              "inputFields": [{
-                              "identifier": "number",
-                              "type": "integer",
-                              "prompt": "Pick a number between -2 and +3",
-                              "uiHint": "textfield",
-                              "range" : {   "minimumValue" : -2,
-                                            "maximumValue" : 3,
-                                            "stepInterval" : 1}
-                              },
-                              {
-                              "identifier": "duration",
-                              "type": "duration",
-                              "uiHint": "textfield",
-                              "prompt": "Enter a duration of time."
-                              }
-                              ]
-              },
-              {
-                  "identifier": "postalCode",
-                  "type": "form",
-                  "title": "Enter your postal code",
-                  "detail": "(Only the first 3 characters will be saved.)",
-                  "inputFields": [{
-                      "type": "postalCode"
-                  }]
+                "inputItem" : {
+                  "optional" : false,
+                  "formatOptions" : {
+                    "maximumValue" : 3,
+                    "stepInterval" : 1,
+                    "minimumValue" : -2
+                  },
+                  "uiHint" : "textfield",
+                  "type" : "integer"
+                },
+                "title" : "Pick a number between -2 and +3",
+                "type" : "simpleQuestion",
+                "identifier" : "step4",
+                "optional" : false
               },
               {
               "identifier": "heightAndWeight",
@@ -66,15 +52,20 @@
                               ]
               },
               {
-              "identifier": "year",
-              "type": "form",
-              "title": "Enter a year",
-              "detail": "Enter a year in the past.",
-              "inputFields": [{
-                              "type": "year",
-                              "uiHint": "textfield",
-                              "range": { "allowFuture": false }
-                              }]
+                "inputItem" : {
+                  "formatOptions" : {
+                    "allowFuture" : false
+                  },
+                  "uiHint" : "textfield",
+                  "type" : "year",
+                  "identifier" : "year",
+                  "optional" : false
+                },
+                "title" : "Enter a year",
+                "detail" : "Enter a year in the past.",
+                "type" : "simpleQuestion",
+                "identifier" : "year",
+                "optional" : false
               }
               ]
 }

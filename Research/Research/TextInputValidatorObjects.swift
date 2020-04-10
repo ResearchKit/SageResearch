@@ -60,7 +60,8 @@ public struct RegExValidator : TextInputValidator, Codable {
     
     public func validateInput(text: String?) throws -> Any? {
         guard _regExMatches(text) == 1 else {
-            throw RSDValidationError.invalidValue(text, invalidMessage)
+            let context = RSDInputFieldError.Context(identifier: nil, value: text, debugDescription: invalidMessage)
+            throw RSDInputFieldError.invalidRegex(text, context)
         }
         return text
     }
@@ -154,7 +155,8 @@ public extension NumberValidator {
             return try validateNumber(num)
         }
         else {
-            throw RSDValidationError.invalidType("\(answer) is not a String or a Number")
+            let context = RSDInputFieldError.Context(identifier: nil, value: answer, debugDescription: "\(answer) is not a String or a Number")
+            throw RSDInputFieldError.invalidType(context)
         }
     }
     
@@ -169,18 +171,21 @@ public extension NumberValidator {
     func validateNumber(_ num: NSNumber) throws -> Any? {
         if let min = self.minimumValue?.jsonNumber(), num.decimalValue < min.decimalValue {
             let message = self.minInvalidMessage ?? defaultInvalidMessage
-            throw RSDValidationError.invalidValue(num, message)
+            let context = RSDInputFieldError.Context(identifier: nil, value: num, debugDescription: message)
+            throw RSDInputFieldError.lessThanMinimumValue(min.decimalValue, context)
         }
         if let max = self.maximumValue?.jsonNumber(), num.decimalValue > max.decimalValue {
             let message = self.maxInvalidMessage ?? defaultInvalidMessage
-            throw RSDValidationError.invalidValue(num, message)
+            let context = RSDInputFieldError.Context(identifier: nil, value: num, debugDescription: message)
+            throw RSDInputFieldError.greaterThanMaximumValue(max.decimalValue, context)
         }
         return convertToValue(from: num)
     }
     
     func validateNil() throws {
         guard minimumValue == nil && maximumValue == nil else {
-            throw RSDValidationError.invalidValue(nil, self.defaultInvalidMessage)
+            let context = RSDInputFieldError.Context(identifier: nil, value: nil, debugDescription: self.defaultInvalidMessage)
+            throw RSDInputFieldError.invalidType(context)
         }
     }
 }

@@ -97,7 +97,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     
     /// Should this step be displayed if and only if the flag has been set for displaying the full
     /// instructions?
-    open var fullInstructionsOnly: Bool = false
+    open var fullInstructionsOnly: Bool { _fullInstructionsOnly ?? false }
+    private var _fullInstructionsOnly: Bool?
     
     /// The view info used to create a custom step.
     open var viewTheme: RSDViewThemeElement?
@@ -209,7 +210,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         copy.beforeCohortRules = self.beforeCohortRules
         copy.afterCohortRules = self.afterCohortRules
         copy.standardPermissions = self.standardPermissions
-        copy.fullInstructionsOnly = self.fullInstructionsOnly
+        copy._fullInstructionsOnly = self._fullInstructionsOnly
     }
 
     // MARK: Result management
@@ -357,7 +358,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
 
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
         self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
-        self.fullInstructionsOnly = try container.decodeIfPresent(Bool.self, forKey: .fullInstructionsOnly) ?? self.fullInstructionsOnly
+        self._fullInstructionsOnly = try container.decodeIfPresent(Bool.self, forKey: .fullInstructionsOnly) ?? self._fullInstructionsOnly
     
         self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
         self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
@@ -401,7 +402,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         try container.encodeIfPresent(self.detail, forKey: .detail)
         try container.encodeIfPresent(self.footnote, forKey: .footnote)
         try container.encodeIfPresent(self.nextStepIdentifier, forKey: .nextStepIdentifier)
-        try container.encodeIfPresent(self.fullInstructionsOnly, forKey: .fullInstructionsOnly)
+        try container.encodeIfPresent(self._fullInstructionsOnly, forKey: .fullInstructionsOnly)
         try container.encodeIfPresent(self.standardPermissions, forKey: .permissions)
         try _encode(object: self.viewTheme, to: encoder, forKey: .viewTheme)
         try _encode(object: self.imageTheme, to: encoder, forKey: .image)

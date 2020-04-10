@@ -2222,13 +2222,6 @@
 			path = ResearchToolbox;
 			sourceTree = "<group>";
 		};
-		F891DCFB228CF9D0001B2A57 /* ResearchToolboxTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ResearchToolboxTests;
-			sourceTree = "<group>";
-		};
 		F891DD07228CFA7D001B2A57 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -2600,7 +2593,6 @@
 				F82A4AAC22960BF700BEBE3C /* ResearchLocationTests */,
 				F814DCE822750435004579EF /* ResearchRecorders */,
 				F891DCF0228CF9D0001B2A57 /* ResearchToolbox */,
-				F891DCFB228CF9D0001B2A57 /* ResearchToolboxTests */,
 				FF72B2321F6859D3004C6F15 /* Products */,
 				F875575F20807E8B00235078 /* Frameworks */,
 			);
