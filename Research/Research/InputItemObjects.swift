@@ -59,6 +59,7 @@ extension InputItemType : ExpressibleByStringLiteral {
     public static let time: InputItemType = "time"
     
     public static let choicePicker: InputItemType = "choicePicker"
+    public static let checkbox: InputItemType = "checkbox"
 }
 
 open class AbstractInputItemObject {
@@ -79,7 +80,7 @@ open class AbstractInputItemObject {
     public var fieldLabel: String?
     public var placeholder: String?
     
-    public var inputUIHint: RSDFormUIHint {
+    open var inputUIHint: RSDFormUIHint {
         get { _inputUIHint ?? type(of: self).defaultUIHint()}
         set { _inputUIHint = newValue }
     }
@@ -158,11 +159,11 @@ public struct KeyboardOptionsObject : KeyboardOptions, Codable {
     public var keyboardType: RSDKeyboardType { _keyboardType ?? .default }
     private var _keyboardType: RSDKeyboardType?
     
-    public init(isSecureTextEntry: Bool = false,
-                autocapitalizationType: RSDTextAutocapitalizationType = .none,
-                autocorrectionType: RSDTextAutocorrectionType = .no,
-                spellCheckingType: RSDTextSpellCheckingType = .no,
-                keyboardType: RSDKeyboardType = .default) {
+    public init(isSecureTextEntry: Bool? = nil,
+                autocapitalizationType: RSDTextAutocapitalizationType? = nil,
+                autocorrectionType: RSDTextAutocorrectionType? = nil,
+                spellCheckingType: RSDTextSpellCheckingType? = nil,
+                keyboardType: RSDKeyboardType? = nil) {
         _isSecureTextEntry = isSecureTextEntry
         _autocapitalizationType = autocapitalizationType
         _autocorrectionType = autocorrectionType
@@ -171,25 +172,25 @@ public struct KeyboardOptionsObject : KeyboardOptions, Codable {
     }
     
     public static let integerEntryOptions = KeyboardOptionsObject(isSecureTextEntry: false,
-                                                                 autocapitalizationType: .none,
+                                                                  autocapitalizationType: RSDTextAutocapitalizationType.none,
                                                                  autocorrectionType: .no,
                                                                  spellCheckingType: .no,
                                                                  keyboardType: .numberPad)
 
     public static let decimalEntryOptions = KeyboardOptionsObject(isSecureTextEntry: false,
-                                                                  autocapitalizationType: .none,
+                                                                  autocapitalizationType: RSDTextAutocapitalizationType.none,
                                                                   autocorrectionType: .no,
                                                                   spellCheckingType: .no,
                                                                   keyboardType: .decimalPad)
     
     public static let dateTimeEntryOptions = KeyboardOptionsObject(isSecureTextEntry: false,
-                                                                   autocapitalizationType: .none,
+                                                                   autocapitalizationType: RSDTextAutocapitalizationType.none,
                                                                    autocorrectionType: .no,
                                                                    spellCheckingType: .no,
                                                                    keyboardType: .numbersAndPunctuation)
 }
 
-public final class DoubleTextInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
+public final class DoubleTextInputItemObject : AbstractInputItemObject, DoubleTextInputItem, Codable {
     public override class func defaultType() -> InputItemType {
         return .decimal
     }
@@ -220,27 +221,9 @@ public final class DoubleTextInputItemObject : AbstractInputItemObject, Keyboard
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.formatOptions, forKey: .formatOptions)
     }
-    
-    public let answerType: AnswerType = AnswerTypeNumber()
-    public let keyboardOptions: KeyboardOptions = KeyboardOptionsObject.decimalEntryOptions
-    
-    public func buildTextValidator() -> TextInputValidator {
-        formatOptions ?? DoubleFormatOptions()
-    }
-    
-    public func buildPickerSource() -> RSDPickerDataSource? {
-        guard let options = formatOptions else { return nil }
-        let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
-        let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
-        let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
-        return RSDNumberPickerDataSourceObject(minimum: max,
-                                               maximum: min,
-                                               stepInterval: stepInterval,
-                                               numberFormatter: options.formatter)
-    }
 }
 
-public final class IntegerTextInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
+public final class IntegerTextInputItemObject : AbstractInputItemObject, IntegerTextInputItem, Codable {
     public override class func defaultType() -> InputItemType {
         return .integer
     }
@@ -251,7 +234,6 @@ public final class IntegerTextInputItemObject : AbstractInputItemObject, Keyboar
     
     public var formatOptions: IntegerFormatOptions?
     
-    public let answerType: AnswerType = AnswerTypeInteger()
     public var keyboardOptions: KeyboardOptions {
         keyboardOptionsObject ?? KeyboardOptionsObject.integerEntryOptions
     }
@@ -279,24 +261,9 @@ public final class IntegerTextInputItemObject : AbstractInputItemObject, Keyboar
         try container.encodeIfPresent(self.formatOptions, forKey: .formatOptions)
         try container.encodeIfPresent(self.keyboardOptionsObject, forKey: .keyboardOptions)
     }
-
-    public func buildTextValidator() -> TextInputValidator {
-        formatOptions ?? IntegerFormatOptions()
-    }
-    
-    public func buildPickerSource() -> RSDPickerDataSource? {
-        guard let options = formatOptions else { return nil }
-        let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
-        let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
-        let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
-        return RSDNumberPickerDataSourceObject(minimum: max,
-                                               maximum: min,
-                                               stepInterval: stepInterval,
-                                               numberFormatter: options.formatter)
-    }
 }
 
-public final class YearTextInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
+public final class YearTextInputItemObject : AbstractInputItemObject, YearTextInputItem, Codable {
     public override class func defaultType() -> InputItemType {
         return .year
     }
@@ -306,9 +273,6 @@ public final class YearTextInputItemObject : AbstractInputItemObject, KeyboardTe
     }
     
     public var formatOptions: YearFormatOptions?
-    
-    public let answerType: AnswerType = AnswerTypeInteger()
-    public var keyboardOptions: KeyboardOptions { KeyboardOptionsObject.integerEntryOptions }
         
     public override init(resultIdentifier: String? = nil) {
         super.init(resultIdentifier: resultIdentifier)
@@ -329,21 +293,6 @@ public final class YearTextInputItemObject : AbstractInputItemObject, KeyboardTe
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.formatOptions, forKey: .formatOptions)
-    }
-
-    public func buildTextValidator() -> TextInputValidator {
-        formatOptions ?? YearFormatOptions()
-    }
-    
-    public func buildPickerSource() -> RSDPickerDataSource? {
-        guard let options = formatOptions else { return nil }
-        let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
-        let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
-        let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
-        return RSDNumberPickerDataSourceObject(minimum: max,
-                                               maximum: min,
-                                               stepInterval: stepInterval,
-                                               numberFormatter: options.formatter)
     }
 }
 
@@ -392,17 +341,6 @@ public final class StringTextInputItemObject : AbstractInputItemObject, Keyboard
     }
     
     public func buildPickerSource() -> RSDPickerDataSource? { nil }
-}
-
-public protocol ChoicePickerInputItem : KeyboardTextInputItem, RSDChoiceOptions {
-    var jsonChoices: [JsonChoice] { get }
-}
-
-public extension ChoicePickerInputItem {
-    var choices: [RSDChoice] { jsonChoices }
-    var keyboardOptions: KeyboardOptions { KeyboardOptionsObject() }
-    func buildTextValidator() -> TextInputValidator { PassThruValidator() }
-    func buildPickerSource() -> RSDPickerDataSource? { self }
 }
 
 open class ChoicePickerInputItemObject : AbstractInputItemObject, ChoicePickerInputItem, Codable {
@@ -476,7 +414,7 @@ internal func defaultBaseType(for jsonChoices: [JsonChoice]) -> JsonType {
 // Note: syoung 04/10/2020 - These classes are included to support parity with Kotlin where there
 // isn't a class for "Date" that includes both date and time.
 
-public class DateTimeInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
+public class DateTimeInputItemObject : AbstractInputItemObject, DateTimeInputItem, Codable {
     public override class func defaultType() -> InputItemType {
         return .dateTime
     }
@@ -485,17 +423,11 @@ public class DateTimeInputItemObject : AbstractInputItemObject, KeyboardTextInpu
         case formatOptions
     }
     
-    fileprivate var pickerMode: RSDDatePickerMode {
+    public var pickerMode: RSDDatePickerMode {
         RSDDatePickerMode(rawValue: self.inputItemType.rawValue) ?? .dateAndTime
     }
 
     public var formatOptions: RSDDateRangeObject?
-    public let keyboardOptions: KeyboardOptions = KeyboardOptionsObject.dateTimeEntryOptions
-
-    public var answerType: AnswerType {
-        let codingFormat = formatOptions?.dateCoder?.inputFormatter.dateFormat ?? pickerMode.defaultCodingFormat
-        return AnswerTypeDateTime(codingFormat: codingFormat)
-    }
     
     public override init(resultIdentifier: String? = nil) {
         super.init(resultIdentifier: resultIdentifier)
@@ -516,14 +448,6 @@ public class DateTimeInputItemObject : AbstractInputItemObject, KeyboardTextInpu
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.formatOptions, forKey: .formatOptions)
-    }
-
-    public func buildTextValidator() -> TextInputValidator {
-        DateTimeValidator(pickerMode: pickerMode, range: formatOptions)
-    }
-    
-    public func buildPickerSource() -> RSDPickerDataSource? {
-        formatOptions.map { $0.dataSource().0 } ?? nil 
     }
 }
 
@@ -564,11 +488,25 @@ public struct SkipCheckboxInputItemObject : SkipCheckboxInputItem, Codable, Hash
 
 // MARK: CheckboxInputItem
 
-// TODO: syoung 04/10/2020 Add checkbox item type support. Data type = boolean?? kinda fits.
-//@Serializable
-//@SerialName("checkbox")
-//data class CheckboxInputItemObject(@SerialName("identifier")
-//                                   override val resultIdentifier: String,
-//                                   override val fieldLabel: String) : CheckboxInputItem
+public struct CheckboxInputItemObject : CheckboxInputItem, Codable, Hashable {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case inputItemType = "type", fieldLabel, detail, identifier
+    }
+    public private(set) var inputItemType: InputItemType = .checkbox
+    
+    public var identifier: String?
+    public let fieldLabel: String
+    public let detail: String?
+    
+    public var text: String? {
+        return fieldLabel
+    }
+
+    public init(fieldLabel: String, resultIdentifier: String?, detail: String? = nil) {
+        self.fieldLabel = fieldLabel
+        self.detail = detail
+        self.identifier = resultIdentifier
+    }
+}
 
 // TODO: syoung 04/04/2020 Add support for measurement types.

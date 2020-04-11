@@ -521,6 +521,8 @@ open class RSDFactory {
             return try DateInputItemObject(from: decoder)
         case .time:
             return try TimeInputItemObject(from: decoder)
+        case .checkbox:
+            return try CheckboxInputItemObject(from: decoder)
         case .choicePicker:
             return try ChoicePickerInputItemObject(from: decoder)
         default:

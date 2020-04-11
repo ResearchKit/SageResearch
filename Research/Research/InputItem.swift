@@ -83,7 +83,7 @@ public extension SkipCheckboxInputItem {
     }
 }
 
-public protocol CheckboxInputItem : ChoiceInputItem {
+public protocol CheckboxInputItem : ChoiceInputItem, RSDComparable {
 }
 
 public extension CheckboxInputItem {
@@ -92,6 +92,7 @@ public extension CheckboxInputItem {
     var answerType: AnswerType { AnswerTypeBoolean() }
     var imageData: RSDImageData? { nil }
     var answerValue: Codable? { true }
+    var matchingAnswer: Any? { true }
     
     func jsonElement(selected: Bool) -> JsonElement? {
         .boolean(selected)
@@ -121,4 +122,113 @@ public protocol TextInputValidator {
     func answerText(for answer: Any?) -> String?
     func validateInput(text: String?) throws -> Any?
     func validateInput(answer: Any?) throws -> Any?
+}
+
+public protocol DoubleTextInputItem : KeyboardTextInputItem {
+    var formatOptions: DoubleFormatOptions? { get }
+}
+
+public extension DoubleTextInputItem {
+    var answerType: AnswerType { AnswerTypeNumber() }
+    var keyboardOptions: KeyboardOptions { KeyboardOptionsObject.decimalEntryOptions }
+    
+    func buildTextValidator() -> TextInputValidator {
+        formatOptions ?? DoubleFormatOptions()
+    }
+    
+    func buildPickerSource() -> RSDPickerDataSource? {
+        guard let options = formatOptions else { return nil }
+        let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
+        return RSDNumberPickerDataSourceObject(minimum: max,
+                                               maximum: min,
+                                               stepInterval: stepInterval,
+                                               numberFormatter: options.formatter)
+    }
+}
+
+public protocol IntegerTextInputItem : KeyboardTextInputItem {
+    var formatOptions: IntegerFormatOptions? { get }
+}
+
+public extension IntegerTextInputItem {
+    var answerType: AnswerType { AnswerTypeInteger() }
+    
+    func buildTextValidator() -> TextInputValidator {
+        formatOptions ?? IntegerFormatOptions()
+    }
+    
+    func buildPickerSource() -> RSDPickerDataSource? {
+        guard let options = formatOptions else { return nil }
+        let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
+        return RSDNumberPickerDataSourceObject(minimum: max,
+                                               maximum: min,
+                                               stepInterval: stepInterval,
+                                               numberFormatter: options.formatter)
+    }
+}
+
+public protocol YearTextInputItem : KeyboardTextInputItem {
+    var formatOptions: YearFormatOptions? { get }
+}
+
+public extension YearTextInputItem {
+    var answerType: AnswerType { AnswerTypeInteger() }
+    
+    var keyboardOptions: KeyboardOptions { KeyboardOptionsObject.integerEntryOptions }
+    
+    func buildTextValidator() -> TextInputValidator {
+        formatOptions ?? YearFormatOptions()
+    }
+    
+    func buildPickerSource() -> RSDPickerDataSource? {
+        guard let options = formatOptions else { return nil }
+        let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
+        let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
+        return RSDNumberPickerDataSourceObject(minimum: max,
+                                               maximum: min,
+                                               stepInterval: stepInterval,
+                                               numberFormatter: options.formatter)
+    }
+}
+
+public protocol ChoicePickerInputItem : KeyboardTextInputItem, RSDChoiceOptions {
+    var jsonChoices: [JsonChoice] { get }
+}
+
+public extension ChoicePickerInputItem {
+    var choices: [RSDChoice] { jsonChoices }
+    var keyboardOptions: KeyboardOptions { KeyboardOptionsObject() }
+    func buildTextValidator() -> TextInputValidator { PassThruValidator() }
+    func buildPickerSource() -> RSDPickerDataSource? { self }
+}
+
+public protocol DateTimeInputItem : KeyboardTextInputItem {
+    var pickerMode: RSDDatePickerMode { get }
+    var formatOptions: RSDDateRangeObject? { get }
+}
+
+public extension DateTimeInputItem {
+    
+    var keyboardOptions: KeyboardOptions {
+        KeyboardOptionsObject.dateTimeEntryOptions
+    }
+
+    var answerType: AnswerType {
+        let codingFormat = formatOptions?.dateCoder?.inputFormatter.dateFormat ?? pickerMode.defaultCodingFormat
+        return AnswerTypeDateTime(codingFormat: codingFormat)
+    }
+    
+    
+    func buildTextValidator() -> TextInputValidator {
+        DateTimeValidator(pickerMode: pickerMode, range: formatOptions)
+    }
+    
+    func buildPickerSource() -> RSDPickerDataSource? {
+        formatOptions.map { $0.dataSource().0 } ?? nil
+    }
 }
