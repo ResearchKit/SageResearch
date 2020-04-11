@@ -135,6 +135,14 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
             self.copyInto(inputItem)
             return (nil, inputItem)
         }
+        else if choices.count == 1, let choice = choices.first,
+            let match = choice.matchingValue, match == .boolean(true),
+            let text = choice.text {
+            let inputItem = CheckboxInputItemObject(fieldLabel: text,
+                                                    resultIdentifier: self.identifier,
+                                                    detail: choice.detail)
+            return (nil, inputItem)
+        }
         else {
             let question = ChoiceQuestionStepObject(identifier: identifier,
                                                     choices: choices,
