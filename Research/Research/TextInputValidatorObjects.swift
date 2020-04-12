@@ -358,10 +358,79 @@ public struct DateTimeValidator : TextInputValidator {
     }
     
     public func validateInput(text: String?) throws -> Any? {
-        fatalError("TODO: Not implemented. syoung 04/03/2020")
+        guard let text = text else { return nil }
+        guard let date = localizedFormatter.date(from: text) else {
+            let context = RSDInputFieldError.Context(identifier: nil, value: text, debugDescription: "'\(text)' could not be converted to a date.")
+            throw RSDInputFieldError.invalidFormatter(localizedFormatter, context)
+        }
+        try validateDate(date: date)
+        return date
     }
     
     public func validateInput(answer: Any?) throws -> Any? {
-        fatalError("TODO: Not implemented. syoung 04/03/2020")
+        guard let answer = answer else { return nil }
+        if let text = answer as? String {
+            return try validateInput(text: text)
+        }
+        else if let json = answer as? JsonElement, case .string(let text) = json {
+            return try validateInput(text: text)
+        }
+        else if let date = answer as? Date {
+            try validateDate(date: date)
+            return date
+        }
+        else {
+            let context = RSDInputFieldError.Context(identifier: nil, value: answer, debugDescription: "\(answer) is not supported for \(self)")
+            throw RSDInputFieldError.invalidType(context)
+        }
     }
+    
+    func validateDate(date: Date) throws {
+        if let minDate = range?.minimumDate, date < minDate {
+            let context = RSDInputFieldError.Context(identifier: nil,
+                                                     value: date,
+                                                     debugDescription: "\(date) is is less than \(minDate)")
+            throw RSDInputFieldError.lessThanMinimumDate(minDate, context)
+        }
+        else if let maxDate = range?.maximumDate, date > maxDate {
+            let context = RSDInputFieldError.Context(identifier: nil,
+                                                     value: date,
+                                                     debugDescription: "\(date) is is greater than \(maxDate)")
+            throw RSDInputFieldError.greaterThanMaximumDate(maxDate, context)
+        }
+    }
+}
+
+extension Formatter {
+    func convertString(from string: String) throws -> Any? {
+        var obj: AnyObject?
+        var err: NSString?
+        self.getObjectValue(&obj, for: string, errorDescription: &err)
+        if err != nil {
+            let context = RSDInputFieldError.Context(identifier: nil, value: string, debugDescription: (err! as String))
+            throw RSDInputFieldError.invalidFormatter(self, context)
+        } else {
+            return obj
+        }
+    }
+}
+
+protocol MeasurementFormatter {
+    func convertString(from string: String) throws -> Any?
+}
+
+extension MeasurementFormatter {
+    func measurement(from string: String) throws -> NSMeasurement {
+        guard let value = try convertString(from: string) as? NSMeasurement else {
+            let context = RSDInputFieldError.Context(identifier: nil, value: string, debugDescription: "'\(string)' could not be converted to a length of measurement")
+            throw RSDInputFieldError.invalidType(context)
+        }
+        return value
+    }
+}
+
+extension RSDLengthFormatter : MeasurementFormatter {
+}
+
+extension RSDMassFormatter : MeasurementFormatter {
 }
