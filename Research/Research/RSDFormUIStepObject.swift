@@ -49,7 +49,7 @@ open class QuestionConvertionFactory {
     open func buildQuestion(identifier: String,
                             nextStepIdentifier: String?,
                             questions: [AbstractQuestionStep],
-                            inputItems: [InputItem]) throws -> AbstractQuestionStep {
+                            inputItems: [InputItemBuilder]) throws -> AbstractQuestionStep {
         
         guard (questions.count == 0 && inputItems.count > 0) ||
             (questions.count == 1 && inputItems.count == 0) else {
@@ -77,7 +77,7 @@ open class QuestionConvertionFactory {
 
 @available(*, deprecated)
 public protocol ConvertableInputField : RSDInputField {
-    func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItem?)
+    func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItemBuilder?)
 }
 
 @available(*, deprecated)
@@ -94,7 +94,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, ConvertableFormStep, RSDSurvey
     open func convertToQuestion(using factory: QuestionConvertionFactory) throws -> (QuestionStep & Encodable) {
         var questions: [AbstractQuestionStep] = []
         var surveyRules: [RSDSurveyRule] = []
-        var inputItems: [InputItem] = []
+        var inputItems: [InputItemBuilder] = []
         var isOptional = true
         
         try inputFields.forEach {

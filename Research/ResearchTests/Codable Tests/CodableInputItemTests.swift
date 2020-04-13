@@ -784,18 +784,11 @@ class CodableInputItemTests: XCTestCase {
         }
     }
     
-    func testHeightInputItemObject() {
-        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
-        
-        let original = HeightInputItemObject()
-        XCTAssertEqual(.picker, original.inputUIHint)
-    }
-    
     struct TestInputItemsWrapper : Decodable {
         private enum CodingKeys : String, CodingKey {
             case items
         }
-        let items: [InputItem]
+        let items: [InputItemBuilder]
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let listContainer = try container.nestedUnkeyedContainer(forKey: .items)
@@ -813,7 +806,9 @@ class CodableInputItemTests: XCTestCase {
                 {"type": "year"},
                 {"type": "date-time"},
                 {"type": "date"},
-                {"type": "time"}
+                {"type": "time"},
+                {"type": "height"},
+                {"type": "weight"},
             ]
         }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -822,14 +817,17 @@ class CodableInputItemTests: XCTestCase {
             
             let object = try decoder.decode(TestInputItemsWrapper.self, from: json)
             
-            let expectedItems: [InputItem] = [
+            let expectedItems: [InputItemBuilder] = [
                 DoubleTextInputItemObject(),
                 IntegerTextInputItemObject(),
                 StringTextInputItemObject(),
                 YearTextInputItemObject(),
                 DateTimeInputItemObject(),
                 DateInputItemObject(),
-                TimeInputItemObject()]
+                TimeInputItemObject(),
+                HeightInputItemBuilderObject(),
+                WeightInputItemBuilderObject(),
+            ]
             
             guard expectedItems.count == object.items.count else {
                 XCTAssertEqual(expectedItems.count, object.items.count)

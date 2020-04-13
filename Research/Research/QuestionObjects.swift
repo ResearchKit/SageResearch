@@ -156,14 +156,14 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
         case inputItem
     }
     
-    public private(set) var inputItem: InputItem = StringTextInputItemObject()
+    public private(set) var inputItem: InputItemBuilder = StringTextInputItemObject()
 
     public override class func defaultType() -> RSDStepType {
         .simpleQuestion
     }
     
     public init(identifier: String,
-                inputItem: InputItem = StringTextInputItemObject(),
+                inputItem: InputItemBuilder = StringTextInputItemObject(),
                 nextStepIdentifier: String? = nil,
                 skipCheckbox: SkipCheckboxInputItem? = nil) {
         self.inputItem = inputItem
@@ -218,7 +218,7 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
         case inputItems, sequenceSeparator
     }
     
-    public private(set) var inputItems: [InputItem]
+    public private(set) var inputItems: [InputItemBuilder]
     public private(set) var sequenceSeparator: String?
 
     public override class func defaultType() -> RSDStepType {
@@ -226,7 +226,7 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
     }
     
     public init(identifier: String,
-                inputItems: [InputItem],
+                inputItems: [InputItemBuilder],
                 nextStepIdentifier: String? = nil,
                 skipCheckbox: SkipCheckboxInputItem? = nil,
                 sequenceSeparator: String? = nil) {

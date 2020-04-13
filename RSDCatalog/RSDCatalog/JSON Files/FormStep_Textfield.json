@@ -1,71 +1,73 @@
 {
     "identifier": "textfield",
     "actions": {
-        "cancel": { "type": "default", "iconName": "closeActivity" }
+        "cancel": {
+            "type": "default",
+            "iconName": "closeActivity"
+        }
     },
-    "steps": [
-              {
-                "inputItem" : {
-                  "optional" : false,
-                  "formatOptions" : {
-                    "maximumValue" : 3,
-                    "stepInterval" : 1,
-                    "minimumValue" : -2
-                  },
-                  "uiHint" : "textfield",
-                  "type" : "integer"
+    "steps": [{
+            "inputItem": {
+                "optional": false,
+                "formatOptions": {
+                    "maximumValue": 3,
+                    "stepInterval": 1,
+                    "minimumValue": -2
                 },
-                "title" : "Pick a number between -2 and +3",
-                "type" : "simpleQuestion",
-                "identifier" : "step4",
-                "optional" : false
-              },
-              {
-              "identifier": "heightAndWeight",
-              "type": "form",
-              "title": "Height and Weight",
-              "detail": "Enter height and weight in your current Locale.",
-              "inputFields": [{
-                              "identifier": "heightAdult",
-                              "type": "height.adult",
-                              "uiHint": "textfield",
-                              "prompt": "Enter a height for an adult"
-                              },
-                              {
-                              "identifier": "weightAdult",
-                              "type": "weight.adult",
-                              "uiHint": "textfield",
-                              "prompt": "Enter a weight for an adult"
-                              },
-                              {
-                              "identifier": "heightInfant",
-                              "type": "height.infant",
-                              "uiHint": "textfield",
-                              "prompt": "Enter a height for a baby"
-                              },
-                              {
-                              "identifier": "weightInfant",
-                              "type": "weight.infant",
-                              "uiHint": "textfield",
-                              "prompt": "Enter a weight for a baby"
-                              }
-                              ]
-              },
-              {
-                "inputItem" : {
-                  "formatOptions" : {
-                    "allowFuture" : false
-                  },
-                  "uiHint" : "textfield",
-                  "type" : "year",
-                  "identifier" : "year",
-                  "optional" : false
+                "uiHint": "textfield",
+                "type": "integer"
+            },
+            "title": "Pick a number between -2 and +3",
+            "type": "simpleQuestion",
+            "identifier": "step4",
+            "optional": false
+        },
+        {
+            "identifier": "heightAndWeight",
+            "type": "form",
+            "title": "Height and Weight",
+            "detail": "Enter height and weight in your current Locale.",
+            "inputFields": [{
+                    "identifier": "heightAdult",
+                    "type": "height.adult",
+                    "uiHint": "textfield",
+                    "prompt": "Enter a height for an adult"
                 },
-                "title" : "Enter a year",
-                "detail" : "Enter a year in the past.",
-                "type" : "simpleQuestion",
-                "identifier" : "year",
-                "optional" : false
-              }
-              ]
+                {
+                    "identifier": "weightAdult",
+                    "type": "weight.adult",
+                    "uiHint": "textfield",
+                    "prompt": "Enter a weight for an adult"
+                },
+                {
+                    "identifier": "heightInfant",
+                    "type": "height.infant",
+                    "uiHint": "textfield",
+                    "prompt": "Enter a height for a baby"
+                },
+                {
+                    "identifier": "weightInfant",
+                    "type": "weight.infant",
+                    "uiHint": "textfield",
+                    "prompt": "Enter a weight for a baby"
+                }
+            ]
+        },
+        {
+            "inputItem": {
+                "formatOptions": {
+                    "allowFuture": false
+                },
+                "uiHint": "textfield",
+                "type": "year",
+                "identifier": "year",
+                "optional": false
+            },
+            "title": "Enter a year",
+            "detail": "Enter a year in the past.",
+            "type": "simpleQuestion",
+            "identifier": "year",
+            "optional": false
+        }
+    ]
 }

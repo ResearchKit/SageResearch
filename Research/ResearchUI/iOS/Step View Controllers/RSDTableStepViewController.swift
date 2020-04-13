@@ -867,6 +867,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                 return
         }
         textField.text = inputItem.answerText(for: picker.answer)
+        try? self.tableData?.saveAnswer(picker.answer ?? NSNull(), at: inputItem.indexPath)
         if picker.answer != nil {
             didChangeTextInputView(textField)
         }

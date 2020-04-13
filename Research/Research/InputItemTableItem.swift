@@ -134,7 +134,7 @@ open class TextInputItemTableItem : AbstractInputItemTableItem, InputItemState, 
     }
     
     public var answerText: String? {
-        textValidator.answerText(for: currentAnswer.map { $0.jsonObject() } ?? nil)
+        self.answerText(for: currentAnswer)
     }
     
     public var answer: Any? {
@@ -150,6 +150,6 @@ open class TextInputItemTableItem : AbstractInputItemTableItem, InputItemState, 
     }
     
     public func answerText(for answer: Any?) -> String? {
-        textValidator.answerText(for: answer)
+        pickerSource.map { $0.textAnswer(from: answer) ?? "" } ?? textValidator.answerText(for: answer)
     }
 }

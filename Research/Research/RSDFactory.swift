@@ -485,9 +485,9 @@ open class RSDFactory {
     
     // MARK: InputItem
     
-    public func decodeInputItems(from itemsContainer: UnkeyedDecodingContainer) throws -> [InputItem] {
+    public func decodeInputItems(from itemsContainer: UnkeyedDecodingContainer) throws -> [InputItemBuilder] {
         var container = itemsContainer
-        var items = [InputItem]()
+        var items = [InputItemBuilder]()
         while !container.isAtEnd {
             let nestedDecoder = try container.superDecoder()
             let item = try self.decodeInputItem(from: nestedDecoder)
@@ -496,7 +496,7 @@ open class RSDFactory {
         return items
     }
     
-    public func decodeInputItem(from decoder: Decoder) throws -> InputItem {
+    public func decodeInputItem(from decoder: Decoder) throws -> InputItemBuilder {
         guard let name = try typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath,
                                                 debugDescription: "Conformance to the step protocol decoding requires a 'type' coding key.")
@@ -505,7 +505,7 @@ open class RSDFactory {
         return try decodeInputItem(from: decoder, with: InputItemType(rawValue: name))
     }
     
-    func decodeInputItem(from decoder: Decoder, with type: InputItemType) throws -> InputItem {
+    func decodeInputItem(from decoder: Decoder, with type: InputItemType) throws -> InputItemBuilder {
         switch type {
         case .decimal:
             return try DoubleTextInputItemObject(from: decoder)
@@ -525,6 +525,12 @@ open class RSDFactory {
             return try CheckboxInputItemObject(from: decoder)
         case .choicePicker:
             return try ChoicePickerInputItemObject(from: decoder)
+        case .stringChoicePicker:
+            return try StringChoicePickerInputItemObject(from: decoder)
+        case .height:
+            return try HeightInputItemBuilderObject(from: decoder)
+        case .weight:
+            return try WeightInputItemBuilderObject(from: decoder)
         default:
             let context = DecodingError.Context(codingPath: decoder.codingPath,
                                                 debugDescription: "Cannot decode InputItem with type '\(type)'")

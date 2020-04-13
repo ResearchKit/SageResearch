@@ -114,7 +114,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptionsWith
 public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputFieldObject, RSDChoiceOptions {
     public typealias Value = T
     
-    override public func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItem?) {
+    override public func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItemBuilder?) {
         guard case .collection(let collectionType, _) = self.dataType,
             ((collectionType == .singleChoice) || (collectionType == .multipleChoice))
             else {

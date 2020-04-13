@@ -220,11 +220,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         // if the answer result value is nil.
         XCTAssertTrue(dataSource.allAnswersValid())
         
-        guard let aResult = dataSource.itemGroup.answerResult
-            else {
-                XCTFail("Failed to add answer result")
-                return
-        }
+        let aResult = dataSource.itemGroup.answerResult
         
         // But the answer result should use a nil value.
         XCTAssertNotNil(aResult.value)
@@ -274,11 +270,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         // if the answer result value is nil.
         XCTAssertTrue(dataSource.allAnswersValid())
         
-        guard let aResult = dataSource.itemGroup.answerResult
-            else {
-                XCTFail("Failed to add answer result")
-                return
-        }
+        let aResult = dataSource.itemGroup.answerResult
         
         // But the answer result should use a nil value.
         XCTAssertNotNil(aResult.value)
@@ -336,11 +328,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         // if the answer result value is nil.
         XCTAssertTrue(dataSource.allAnswersValid())
         
-        guard let aResult = dataSource.itemGroup.answerResult
-            else {
-                XCTFail("Failed to add answer result")
-                return
-        }
+        let aResult = dataSource.itemGroup.answerResult
         
         // But the answer result should use a nil value.
         XCTAssertNotNil(aResult.value)
@@ -392,11 +380,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         // if the answer result value is nil.
         XCTAssertTrue(dataSource.allAnswersValid())
         
-        guard let aResult = dataSource.itemGroup.answerResult
-            else {
-                XCTFail("Failed to add answer result")
-                return
-        }
+        let aResult = dataSource.itemGroup.answerResult
         
         // But the answer should be empty
         XCTAssertNotNil(aResult.value)
@@ -446,11 +430,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         // if the answer result value is nil.
         XCTAssertTrue(dataSource.allAnswersValid())
         
-        guard let aResult = dataSource.itemGroup.answerResult
-            else {
-                XCTFail("Failed to add answer result")
-                return
-        }
+        let aResult = dataSource.itemGroup.answerResult
         
         // But the answer result should use a nil value.
         XCTAssertNotNil(aResult.value)
@@ -508,11 +488,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         // if the answer result value is nil.
         XCTAssertTrue(dataSource.allAnswersValid())
         
-        guard let aResult = dataSource.itemGroup.answerResult
-            else {
-                XCTFail("Failed to add answer result")
-                return
-        }
+        let aResult = dataSource.itemGroup.answerResult
         
         // But the answer result should use a nil value.
         XCTAssertNotNil(aResult.value)
@@ -570,11 +546,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         // if the answer result value is nil.
         XCTAssertTrue(dataSource.allAnswersValid())
         
-        guard let aResult = dataSource.itemGroup.answerResult
-            else {
-                XCTFail("Failed to add answer result")
-                return
-        }
+        let aResult = dataSource.itemGroup.answerResult
         
         // But the answer result should use a nil value.
         XCTAssertNotNil(aResult.value)
@@ -630,11 +602,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         // if the answer result value is nil.
         XCTAssertTrue(dataSource.allAnswersValid())
         
-        guard let aResult = dataSource.itemGroup.answerResult
-            else {
-                XCTFail("Failed to add answer result")
-                return
-        }
+        let aResult = dataSource.itemGroup.answerResult
         
         // But the answer result should use a nil value.
         XCTAssertNotNil(aResult.value)
@@ -688,11 +656,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         // if the answer result value is nil.
         XCTAssertTrue(dataSource.allAnswersValid())
         
-        guard let aResult = dataSource.itemGroup.answerResult
-            else {
-                XCTFail("Failed to add answer result")
-                return
-        }
+        let aResult = dataSource.itemGroup.answerResult
         
         // But the answer result should use a nil value.
         XCTAssertNotNil(aResult.value)
@@ -767,11 +731,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         // if the answer result value is nil.
         XCTAssertTrue(dataSource.allAnswersValid())
         
-        guard let aResult = dataSource.itemGroup.answerResult
-            else {
-                XCTFail("Failed to add answer result")
-                return
-        }
+        let aResult = dataSource.itemGroup.answerResult
         
         // But the answer result should use a nil value.
         XCTAssertEqual(aResult.jsonValue, .object(["year":2019,"string":"boo"]))

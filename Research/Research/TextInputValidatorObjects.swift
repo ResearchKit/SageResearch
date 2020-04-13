@@ -35,7 +35,8 @@ import Foundation
 
 public struct PassThruValidator : TextInputValidator {
     public func answerText(for answer: Any?) -> String? {
-        answer.map { "\($0)" }
+        let value = (answer as? JsonElement).map { $0 != .null ? $0.jsonObject() : nil } ?? answer
+        return value.map { "\($0)" }
     }
     public func validateInput(answer: Any?) throws -> Any? { answer }
     public func validateInput(text: String?) throws -> Any? { text }
@@ -417,6 +418,7 @@ extension Formatter {
 
 protocol MeasurementFormatter {
     func convertString(from string: String) throws -> Any?
+    func string(for obj: Any?) -> String?
 }
 
 extension MeasurementFormatter {
@@ -433,4 +435,32 @@ extension RSDLengthFormatter : MeasurementFormatter {
 }
 
 extension RSDMassFormatter : MeasurementFormatter {
+}
+
+protocol MeasurementTextInputValidator : TextInputValidator {
+    var answerType: AnswerType { get }
+    var measurementFormatter : MeasurementFormatter { get }
+}
+
+extension MeasurementTextInputValidator {
+    
+    public func answerText(for answer: Any?) -> String? {
+        guard let answer = answer else { return nil }
+        if let jsonValue = answer as? JsonElement,
+            let value = try? self.answerType.decodeAnswer(from: jsonValue) {
+            return measurementFormatter.string(for: value)
+        }
+        else {
+            return measurementFormatter.string(for: answer)
+        }
+    }
+    
+    public func validateInput(text: String?) throws -> Any? {
+        guard let text = text else { return nil }
+        return try self.measurementFormatter.measurement(from: text)
+    }
+    
+    public func validateInput(answer: Any?) throws -> Any? {
+        return answer
+    }
 }

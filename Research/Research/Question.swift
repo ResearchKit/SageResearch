@@ -93,7 +93,7 @@ public protocol SkipCheckboxQuestion : Question {
 }
 
 public protocol SimpleQuestion : SkipCheckboxQuestion {
-    var inputItem: InputItem { get }
+    var inputItem: InputItemBuilder { get }
 }
 
 extension SimpleQuestion {
@@ -107,12 +107,12 @@ extension SimpleQuestion {
     }
     
     public func buildInputItems() -> [InputItem] {
-        return [inputItem, skipCheckbox].compactMap { $0 }
+        return [inputItem.buildInputItem(for: self), skipCheckbox].compactMap { $0 }
     }
 }
 
 public protocol MultipleInputQuestion : SkipCheckboxQuestion {
-    var inputItems: [InputItem] { get }
+    var inputItems: [InputItemBuilder] { get }
     var sequenceSeparator: String?  { get }
 }
 
@@ -127,7 +127,7 @@ extension MultipleInputQuestion {
     }
     
     public func buildInputItems() -> [InputItem] {
-        var all = inputItems
+        var all = inputItems.map { $0.buildInputItem(for: self) }
         skipCheckbox.map { all.append($0) }
         return all
     }

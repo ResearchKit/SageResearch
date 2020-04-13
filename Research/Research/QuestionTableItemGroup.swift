@@ -119,15 +119,19 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
     open func saveAnswer(_ answer: Any, at index: Int) throws {
         if let textItem = self.items[index] as? TextInputItemTableItem {
             let answer = try textItem.textValidator.validateInput(answer: answer)
-            textItem.currentAnswer = JsonElement(answer as? RSDJSONValue)
+            textItem.currentAnswer = jsonElement(for: answer, at: index)
         }
         else if let choiceItem = self.items[index] as? ChoiceInputItemTableItem {
-            choiceItem.currentAnswer = JsonElement(answer as? RSDJSONValue)
+            choiceItem.currentAnswer = jsonElement(for: answer, at: index)
         }
         else {
             throw RSDValidationError.invalidType("Could not convert answer for \(self.items[index]). Unknown cast.")
         }
         try updateAnswer()
+    }
+    
+    open func jsonElement(for answer: Any?, at index: Int) -> JsonElement {
+        (answer as? JsonElement) ?? JsonElement(answer as? RSDJSONValue)
     }
     
     private func updateAnswer() throws {

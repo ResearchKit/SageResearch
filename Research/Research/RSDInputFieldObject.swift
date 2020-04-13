@@ -45,7 +45,7 @@ extension Date {
 @available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
 open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSDMutableInputField, RSDCopyInputField, Codable {
     
-    open func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItem?) {
+    open func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItemBuilder?) {
         switch self.dataType {
         case .base(let baseType):
             switch baseType {
@@ -65,13 +65,17 @@ open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSD
         
         case .dateRange(let range):
             return (nil, buildDateInputItem(type: range))
+        
+        case .measurement(let measurementType, let measurementRange):
+            let item = try buildMeasurementInputItem(measurementType: measurementType, measurementRange: measurementRange)
+            return (nil, item)
             
         default:
             throw RSDValidationError.undefinedClassType("\(self.dataType) is not implemented.")
         }
     }
     
-    func buildDateInputItem(type: RSDFormDataType.DateRangeType? = nil) -> InputItem {
+    func buildDateInputItem(type: RSDFormDataType.DateRangeType? = nil) -> InputItemBuilder {
         let rangeType = type ?? dateRangeType()
         let inputItem: DateTimeInputItemObject = {
             switch rangeType {
@@ -106,7 +110,7 @@ open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSD
         }
     }
     
-    func buildDoubleInputItem() -> InputItem {
+    func buildDoubleInputItem() -> InputItemBuilder {
         let inputItem = DoubleTextInputItemObject(resultIdentifier: self.identifier)
         copyInto(inputItem)
         if let range = self.range as? RSDNumberRange {
@@ -126,7 +130,7 @@ open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSD
         return inputItem
     }
     
-    func buildIntegerInputItem() -> InputItem {
+    func buildIntegerInputItem() -> InputItemBuilder {
         let inputItem = IntegerTextInputItemObject(resultIdentifier: self.identifier)
         copyInto(inputItem)
         if let range = self.range as? RSDNumberRange {
@@ -151,7 +155,7 @@ open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSD
         return inputItem
     }
     
-    func buildStringInputItem() -> InputItem {
+    func buildStringInputItem() -> InputItemBuilder {
         let inputItem = StringTextInputItemObject(resultIdentifier: self.identifier)
         copyInto(inputItem)
         if let keyboardOptions = self.textFieldOptions {
@@ -171,7 +175,7 @@ open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSD
         return inputItem
     }
     
-    func buildYearInputItem() -> InputItem {
+    func buildYearInputItem() -> InputItemBuilder {
         let inputItem = YearTextInputItemObject(resultIdentifier: self.identifier)
         copyInto(inputItem)
         if let range = self.range as? RSDDateRange {
@@ -191,6 +195,29 @@ open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSD
             inputItem.formatOptions = formatOptions
         }
         return inputItem
+    }
+    
+    func buildMeasurementInputItem(measurementType: RSDFormDataType.MeasurementType,
+                                   measurementRange: RSDFormDataType.MeasurementRange) throws -> InputItemBuilder {
+        let range: HumanMeasurementRange = {
+            switch measurementRange {
+            case .adult: return .adult
+            case .child: return .child
+            case .infant: return .infant
+            }
+        }()
+        switch measurementType {
+        case .height:
+            let builder = HeightInputItemBuilderObject(measurementRange: range, resultIdentifier: self.identifier)
+            copyInto(builder)
+            return builder
+        case .weight:
+            let builder = WeightInputItemBuilderObject(measurementRange: range, resultIdentifier: self.identifier)
+            copyInto(builder)
+            return builder
+        default:
+            throw RSDValidationError.invalidType("\(measurementType) is not supported for conversion.")
+        }
     }
     
     private enum CodingKeys : String, CodingKey, CaseIterable {

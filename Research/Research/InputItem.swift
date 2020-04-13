@@ -36,14 +36,22 @@ import Foundation
 
 // TODO: syoung 04/02/2020 Add documentation for the Kotlin interfaces.
 
-public protocol InputItem {
-    var identifier: String? { get }
+public protocol InputItemBuilder {
     var answerType: AnswerType { get }
+    func buildInputItem(for question: Question) -> InputItem
+}
+
+public protocol InputItem : InputItemBuilder {
+    var identifier: String? { get }
     var inputUIHint: RSDFormUIHint { get }
     var fieldLabel: String? { get }
     var placeholder: String? { get }
     var isOptional: Bool { get }
     var isExclusive: Bool { get }
+}
+
+public extension InputItem {
+    func buildInputItem(for question: Question) -> InputItem { self }
 }
 
 public protocol ChoiceInputItem : InputItem, RSDChoice {
@@ -141,8 +149,8 @@ public extension DoubleTextInputItem {
         let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
         let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
         let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
-        return RSDNumberPickerDataSourceObject(minimum: max,
-                                               maximum: min,
+        return RSDNumberPickerDataSourceObject(minimum: min,
+                                               maximum: max,
                                                stepInterval: stepInterval,
                                                numberFormatter: options.formatter)
     }
@@ -164,8 +172,8 @@ public extension IntegerTextInputItem {
         let max = options.maximumValue.map { ($0 as NSNumber).decimalValue } ?? 0
         let min = options.minimumValue.map { ($0 as NSNumber).decimalValue } ?? 0
         let stepInterval = options.stepInterval.map { ($0 as NSNumber).decimalValue }
-        return RSDNumberPickerDataSourceObject(minimum: max,
-                                               maximum: min,
+        return RSDNumberPickerDataSourceObject(minimum: min,
+                                               maximum: max,
                                                stepInterval: stepInterval,
                                                numberFormatter: options.formatter)
     }
