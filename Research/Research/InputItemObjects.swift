@@ -60,6 +60,8 @@ extension InputItemType : ExpressibleByStringLiteral {
     
     public static let choicePicker: InputItemType = "choicePicker"
     public static let checkbox: InputItemType = "checkbox"
+    
+    public static let height: InputItemType = "height"
 }
 
 open class AbstractInputItemObject {
@@ -77,11 +79,11 @@ open class AbstractInputItemObject {
     
     public private(set) var inputItemType: InputItemType
     public private(set) var identifier: String?
-    public var fieldLabel: String?
-    public var placeholder: String?
+    open var fieldLabel: String?
+    open var placeholder: String?
     
     open var inputUIHint: RSDFormUIHint {
-        get { _inputUIHint ?? type(of: self).defaultUIHint()}
+        get { _inputUIHint ?? defaultUIHint()}
         set { _inputUIHint = newValue }
     }
     private var _inputUIHint: RSDFormUIHint?
@@ -106,7 +108,7 @@ open class AbstractInputItemObject {
         InputItemType(rawValue: "null")
     }
     
-    open class func defaultUIHint() -> RSDFormUIHint {
+    open func defaultUIHint() -> RSDFormUIHint {
         .textfield
     }
 
@@ -357,7 +359,7 @@ open class ChoicePickerInputItemObject : AbstractInputItemObject, ChoicePickerIn
     
     open var defaultAnswer: Any? { nil }
     
-    open override class func defaultUIHint() -> RSDFormUIHint { .picker }
+    open override func defaultUIHint() -> RSDFormUIHint { .picker }
     
     public init(jsonChoices: [JsonChoice], resultIdentifier: String? = nil) {
         self.jsonChoices = jsonChoices
@@ -510,3 +512,82 @@ public struct CheckboxInputItemObject : CheckboxInputItem, Codable, Hashable {
 }
 
 // TODO: syoung 04/04/2020 Add support for measurement types.
+
+public enum HumanMeasurementRange : String, Codable, CaseIterable {
+    case adult, child, infant
+}
+
+public class AbstractMeasurementInputItemObject : AbstractInputItemObject {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case measurementRange
+    }
+    
+    public var measurementRange: HumanMeasurementRange?
+    
+    public init(measurementRange: HumanMeasurementRange? = nil, resultIdentifier: String? = nil) {
+        self.measurementRange = measurementRange
+        super.init(resultIdentifier: resultIdentifier)
+    }
+    
+    required public init(from decoder: Decoder) throws {
+        self.measurementRange = nil
+        super.init()
+        try self.decode(from: decoder)
+    }
+    
+    override public func decode(from decoder: Decoder) throws {
+        try super.decode(from: decoder)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.measurementRange = try container.decodeIfPresent(HumanMeasurementRange.self, forKey: .measurementRange) ?? self.measurementRange
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(self.measurementRange, forKey: .measurementRange)
+    }
+}
+
+public protocol HeightInputItem : KeyboardTextInputItem {
+    var measurementRange: HumanMeasurementRange? { get }
+    
+}
+
+public extension HeightInputItem {
+    var answerType: AnswerType {
+        AnswerTypeMeasurement(unit: "cm")
+    }
+    
+    var keyboardOptions: KeyboardOptions {
+        KeyboardOptionsObject.decimalEntryOptions
+    }
+    
+    func defaultRange() -> HumanMeasurementRange { .adult }
+    
+    func usesUSUnitPicker() -> Bool {
+        (measurementRange ?? defaultRange()) == .adult && !Locale.current.usesMetricSystem
+    }
+    
+    func buildLengthFormatter() -> RSDLengthFormatter {
+        RSDLengthFormatter(forChildUse: (measurementRange ?? defaultRange()) != .adult)
+    }
+    
+    func buildTextValidator() -> TextInputValidator {
+        fatalError("Not implemented")
+    }
+    
+    func buildPickerSource() -> RSDPickerDataSource? {
+        guard usesUSUnitPicker() else { return nil }
+        return RSDUSHeightPickerDataSourceObject(formatter: buildLengthFormatter())
+    }
+}
+
+public final class HeightInputItemObject : AbstractMeasurementInputItemObject, HeightInputItem {
+    public override class func defaultType() -> InputItemType {
+        .height
+    }
+    
+    public override func defaultUIHint() -> RSDFormUIHint {
+        usesUSUnitPicker() ? .picker : .textfield
+    }
+}

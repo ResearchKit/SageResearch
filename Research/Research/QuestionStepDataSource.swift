@@ -42,13 +42,26 @@ public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource
     
     public init(step: QuestionStep, parent: RSDPathComponent?, supportedHints: Set<RSDFormUIHint>? = nil) {
         
-        let initialResult = (parent as? RSDTaskViewModel)?.previousResult(for: step) as? AnswerResult
-        
+        let previousValue: JsonElement? = {
+            guard let taskVM = parent as? RSDTaskViewModel else { return nil }
+            if let previousResult = taskVM.previousResult(for: step) {
+                return (previousResult as? AnswerResult)?.jsonValue
+            }
+            guard let dataManager = taskVM.dataManager,
+                (dataManager.shouldUsePreviousAnswers?(for: taskVM.identifier) ?? false),
+                let dictionary = taskVM.previousTaskData?.json as? [String : Any],
+                let value = dictionary[step.identifier] as? RSDJSONValue
+                else {
+                    return nil
+            }
+            return JsonElement(value)
+        }()
+
         let idx = 0
         let itemGroup = QuestionTableItemGroup(beginningRowIndex: idx,
                                                question: step,
                                                supportedHints: supportedHints,
-                                               initialResult: initialResult)
+                                               initialValue: previousValue)
         var sections = [RSDTableSection(identifier: step.identifier, sectionIndex: idx, tableItems: itemGroup.items)]
         step.buildFooterTableItems().map {
             sections.append(RSDTableSection(identifier: "footer", sectionIndex: idx + 1, tableItems: $0))
@@ -56,6 +69,9 @@ public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource
         
         self.sections = sections
         self.itemGroup = itemGroup
+        
+        parent?.taskResult.appendStepHistory(with: itemGroup.answerResult as! RSDResult)
+        
         super.init(step: step, parent: parent)
     }
     
@@ -83,7 +99,8 @@ public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource
         guard indexPath.section == itemGroup.sectionIndex else {
             return (false, false)
         }
+        let ret = try itemGroup.toggleSelection(at: indexPath.item)
         delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
-        return try itemGroup.toggleSelection(at: indexPath.item)
+        return ret
     }
 }

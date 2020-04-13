@@ -784,6 +784,13 @@ class CodableInputItemTests: XCTestCase {
         }
     }
     
+    func testHeightInputItemObject() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let original = HeightInputItemObject()
+        XCTAssertEqual(.picker, original.inputUIHint)
+    }
+    
     struct TestInputItemsWrapper : Decodable {
         private enum CodingKeys : String, CodingKey {
             case items

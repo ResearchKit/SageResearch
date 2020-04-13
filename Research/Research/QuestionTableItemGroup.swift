@@ -37,20 +37,23 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
     
     public let question: Question
     
-    public var answerResult: AnswerResult?
+    public let answerResult: AnswerResult
     
     open override var isAnswerValid: Bool {
-        return question.isOptional || (answerResult != nil)
+        return question.isOptional || (answerResult.jsonValue != nil)
     }
     
-    public init(beginningRowIndex: Int, question: Question, supportedHints: Set<RSDFormUIHint>?, initialResult: AnswerResult?) {
+    public init(beginningRowIndex: Int,
+                question: Question,
+                supportedHints: Set<RSDFormUIHint>?,
+                initialValue: JsonElement?) {
         self.question = question
-        self.answerResult = initialResult
+        self.answerResult = question.instantiateAnswerResult()
+        self.answerResult.jsonValue = initialValue
         let items: [RSDTableItem] = question.buildInputItems().enumerated().compactMap { (idx, inputItem) -> RSDTableItem? in
             
             let initialAnswer: JsonElement? = {
-                guard let initialResult = initialResult else { return nil }
-                guard let jsonValue = initialResult.jsonValue, jsonValue != .null else { return .null }
+                guard let jsonValue = initialValue, jsonValue != .null else { return .null }
                 if case .object(let dictionary) = jsonValue {
                     let identifier = inputItem.identifier ?? question.identifier
                     return (dictionary[identifier] as? RSDJSONValue).map { JsonElement($0) }
@@ -128,9 +131,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
     }
     
     private func updateAnswer() throws {
-        let answerResult = self.answerResult ?? AnswerResultObject(identifier: question.identifier, answerType: question.answerType)
         answerResult.jsonValue = try buildAnswer()
-        self.answerResult = answerResult
     }
     
     open func buildAnswer() throws -> JsonElement {

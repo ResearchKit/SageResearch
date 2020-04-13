@@ -76,9 +76,16 @@ public protocol Question : ContentNode {
     var isSingleAnswer: Bool { get }
     var answerType: AnswerType { get }
     func buildInputItems() -> [InputItem]
+    func instantiateAnswerResult() -> AnswerResult
 }
 
 public protocol QuestionStep : Question, RSDUIStep {
+}
+
+public extension QuestionStep {
+    func instantiateAnswerResult() -> AnswerResult {
+        instantiateStepResult() as! AnswerResult
+    }
 }
 
 public protocol SkipCheckboxQuestion : Question {
