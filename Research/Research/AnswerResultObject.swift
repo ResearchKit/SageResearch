@@ -109,6 +109,7 @@ public final class AnswerResultObject : AnswerResult, RSDNavigationResult, Codab
     }
 }
 
+@available(*, deprecated)
 extension AnswerResultObject : RSDAnswerResult {
     public var answerType: RSDAnswerResultType {
         (self.jsonAnswerType as? AnswerResultTypeConvertible)?.answerResultType() ?? .codable

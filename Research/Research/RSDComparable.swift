@@ -68,7 +68,7 @@ extension RSDComparable {
         }
         
         if let answerResult = result as? AnswerResult {
-            return isMatching(to: answerResult.value,
+            return isMatching(to: answerResult.jsonValue?.jsonObject(),
                               answerType: answerResult.jsonAnswerType ?? AnswerTypeString(),
                               op: op)
         }

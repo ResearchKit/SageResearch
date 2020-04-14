@@ -239,6 +239,7 @@ internal class TaskArchiver : NSObject {
     }
 }
 
+@available(*, deprecated)
 fileprivate struct AnswerResultWrapper : Encodable {
     let answerResult : RSDAnswerResult
     

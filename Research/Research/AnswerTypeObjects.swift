@@ -563,46 +563,54 @@ extension AnswerTypeMeasurement : AnswerTypeDocumentable {
 
 // MARK: Deprecated AnswerResultType conversion
 
+@available(*, deprecated)
 protocol AnswerResultTypeConvertible {
     func answerResultType() -> RSDAnswerResultType?
 }
 
+@available(*, deprecated)
 extension AnswerTypeObject : AnswerResultTypeConvertible {
     func answerResultType() -> RSDAnswerResultType? {
         return .codable
     }
 }
 
+@available(*, deprecated)
 extension AnswerTypeString : AnswerResultTypeConvertible {
     func answerResultType() -> RSDAnswerResultType? {
         return .string
     }
 }
 
+@available(*, deprecated)
 extension AnswerTypeBoolean : AnswerResultTypeConvertible {
     func answerResultType() -> RSDAnswerResultType? {
         return .boolean
     }
 }
 
+@available(*, deprecated)
 extension AnswerTypeInteger : AnswerResultTypeConvertible {
     func answerResultType() -> RSDAnswerResultType? {
         return .integer
     }
 }
 
+@available(*, deprecated)
 extension AnswerTypeNumber : AnswerResultTypeConvertible {
     func answerResultType() -> RSDAnswerResultType? {
         return .decimal
     }
 }
 
+@available(*, deprecated)
 extension AnswerTypeNull : AnswerResultTypeConvertible {
     func answerResultType() -> RSDAnswerResultType? {
         return nil
     }
 }
 
+@available(*, deprecated)
 extension AnswerTypeArray : AnswerResultTypeConvertible {
     func baseResultType() -> RSDAnswerResultType.BaseType {
         switch baseType {
@@ -624,12 +632,14 @@ extension AnswerTypeArray : AnswerResultTypeConvertible {
     }
 }
 
+@available(*, deprecated)
 extension AnswerTypeDateTime : AnswerResultTypeConvertible {
     func answerResultType() -> RSDAnswerResultType? {
         RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: codingFormat)
     }
 }
 
+@available(*, deprecated)
 extension AnswerTypeMeasurement : AnswerResultTypeConvertible {
     func answerResultType() -> RSDAnswerResultType? {
         RSDAnswerResultType(baseType: .decimal, sequenceType: nil, formDataType: nil, dateFormat: nil, unit: unit, sequenceSeparator: nil)
