@@ -35,7 +35,7 @@ import Foundation
 
 
 /// `RSDInputFieldTableItem` is an abstract base class implementation for representing an answer, or part of an
-/// answer for a given `RSDInputField`.
+/// answer, for a given `RSDInputField`.
 @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 open class RSDInputFieldTableItem : RSDTableItem {
     
