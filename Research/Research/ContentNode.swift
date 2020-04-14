@@ -34,7 +34,7 @@
 import Foundation
 
 /**
- * This protocol is included here to support migration to kotlin.
+ * This protocol is included here to support migration to Kotlin.
  *
  * - seealso: https://github.com/Sage-Bionetworks/AssessmentModel-KotlinNative
  */

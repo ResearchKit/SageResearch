@@ -34,7 +34,7 @@
 import Foundation
 
 /// `RSDFormUIStep` implements additional properties used in creating a form input.
-@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by kotlin.")
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 public protocol RSDFormUIStep: RSDUIStep {
     
     /// The `inputFields` array is used to hold a logical subgrouping of input fields. If this array holds
@@ -43,7 +43,7 @@ public protocol RSDFormUIStep: RSDUIStep {
     var inputFields: [RSDInputField] { get }
 }
 
-@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by kotlin.")
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 extension RSDFormUIStep {
     
     /// Look to the input fields and return true if any are choice type that include an image.

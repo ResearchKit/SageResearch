@@ -35,7 +35,7 @@ import Foundation
 
 /// `RSDSurveyNavigationStep` evaluates `RSDSurveyRule` objects that are associated with each input field to determine
 /// if the step navigation should skip to another step.
-@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by kotlin.")
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 public protocol RSDSurveyNavigationStep : RSDNavigationRule {
     
     /// Identifier to skip to if all input fields have nil answers.
@@ -48,14 +48,14 @@ public protocol RSDSurveyNavigationStep : RSDNavigationRule {
 /// `RSDSurveyInputField` extends the `RSDInputField` protocol to also support an array of `RSDSurveyRule` objects.
 /// These rules are evaluated on the `RSDAnswerResult` given for this input field and if they evaluate to `true`
 /// then they are used to return the next identifier.
-@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by kotlin.")
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 public protocol RSDSurveyInputField : RSDInputField {
 
     /// A list of survey rules associated with this input field.
     var surveyRules: [RSDSurveyRule]? { get }
 }
 
-@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by kotlin.")
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 extension RSDSurveyNavigationStep {
 
     /// Evaluate the survey rules for the given task result and return the next identifier.

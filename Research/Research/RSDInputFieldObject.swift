@@ -42,7 +42,7 @@ extension Date {
 /// `RSDInputFieldObject` is a `Decodable` implementation of the `RSDSurveyInputField` protocol. This is implemented as
 /// an open class so that the decoding strategy can be used to support subclasses.
 ///
-@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by kotlin.")
+@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by Kotlin.")
 open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSDMutableInputField, RSDCopyInputField, Codable {
     
     open func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItemBuilder?) {

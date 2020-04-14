@@ -502,7 +502,7 @@ public struct SkipCheckboxInputItemObject : SkipCheckboxInputItem, Codable, Hash
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case classType = "type", fieldLabel, matchingValue = "value"
     }
-    // This private field is a work-around for kotlin serialization which requires a "type" field
+    // This private field is a work-around for Kotlin serialization which requires a "type" field
     // for polymorphic decoding and does not allow for decoding using a default type. syoung 04/06/2020
     private var classType: String? = "skipCheckbox"
     

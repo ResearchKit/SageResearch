@@ -33,7 +33,7 @@
 
 import Foundation
 
-// TODO: syoung 04/06/2020 Implement ComboBoxQuestionObject supported in kotlin frameworks
+// TODO: syoung 04/06/2020 Implement ComboBoxQuestionObject supported in Kotlin frameworks
 
 open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCohortAssignmentStep {
     private enum CodingKeys : String, CodingKey, CaseIterable {
@@ -290,7 +290,7 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
 }
 
 /// This is declared as an open class to allow for serialization of custom `jsonChoices` with a
-/// serialization pattern that matches the requirements of kotlin serialization. In kotlin, there
+/// serialization pattern that matches the requirements of Kotlin serialization. In Kotlin, there
 /// is a one-to-one mapping of the "type" keyword to class. Since the `jsonChoice` objects all
 /// require using the same class type for the choices, requiring those json maps to include a "type"
 /// keyword would be brittle for human-edited json files. Therefore, instead, the "type" field is
