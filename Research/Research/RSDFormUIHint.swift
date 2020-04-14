@@ -60,7 +60,7 @@ public struct RSDFormUIHint : RawRepresentable, Codable, Hashable {
     /// List with a checkbox next to each item.
     public static let checkbox = StandardHints.checkbox.hint
     
-    /// List with a checkmark next to each item that is selected
+    /// List with a checkmark next to each item that is selected.
     public static let checkmark = StandardHints.checkmark.hint
     
     /// Drop-down with a textfield for "other".
@@ -151,4 +151,3 @@ extension RSDFormUIHint : RSDDocumentableStringEnum {
         return allStandardHints.map{ $0.rawValue }
     }
 }
-
