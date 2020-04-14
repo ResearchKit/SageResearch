@@ -335,7 +335,7 @@ open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, Ques
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.inputUIHint = try container.decodeIfPresent(RSDFormUIHint.self, forKey: .inputUIHint) ?? self.inputUIHint
         
-        // The following are only applicable at the base level and not dependant on the device type.
+        // The following are only applicable at the base level and not dependent on the device type.
         guard deviceType == nil else { return }
         
         self.baseType = try container.decodeIfPresent(JsonType.self, forKey: .baseType) ?? type(of: self).defaultBaseType()
