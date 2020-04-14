@@ -39,7 +39,7 @@ public struct JsonSurveyRuleObject : RSDComparableSurveyRule, Codable, Hashable 
     }
     
     /// Optional skip identifier for this rule. If available, this will be used as the skip
-    /// identifier, otherwise the `skipToIdentifier` will be assumed to be `RSDIdentifier.exit`
+    /// identifier; otherwise the `skipToIdentifier` will be assumed to be `RSDIdentifier.exit`.
     public let skipToIdentifier: String?
     
     /// Json-Codable matching answer.
