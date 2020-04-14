@@ -39,6 +39,7 @@ import Foundation
 ///
 /// - seealso: `RSDInputField` and `RSDFormUIHint`.
 ///
+@available(*, deprecated, message: "Use `AnswerType` instead")
 public enum RSDFormDataType {
     
     /// Base data types are basic types that can be defined with only a base type.
@@ -371,6 +372,7 @@ public enum RSDFormDataType {
 fileprivate let kDetailCodingKey = "detail"
 fileprivate let kPostalCodeCodingKey = "postalCode"
 
+@available(*, deprecated, message: "Use `AnswerType` instead")
 extension RSDFormDataType: RawRepresentable, Codable, Hashable {
     
     public init?(rawValue: String) {
@@ -446,6 +448,7 @@ extension RSDFormDataType: RawRepresentable, Codable, Hashable {
     }
 }
 
+@available(*, deprecated, message: "Use `AnswerType` instead")
 extension RSDFormDataType : ExpressibleByStringLiteral {
 
     public init(stringLiteral value: String) {
@@ -453,8 +456,26 @@ extension RSDFormDataType : ExpressibleByStringLiteral {
     }
 }
 
+@available(*, deprecated, message: "Use `AnswerType` instead")
 extension RSDFormDataType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
+    }
+}
+
+@available(*, deprecated, message: "Use `AnswerType` instead")
+extension RSDFormDataType.BaseType {
+    var jsonType : JsonType {
+        switch self {
+        case .boolean: return .boolean
+        case .codable: return .object
+        case .date: return .string
+        case .decimal: return .number
+        case .duration: return .number
+        case .fraction: return .string
+        case .integer: return .integer
+        case .string: return .string
+        case .year: return .integer
+        }
     }
 }

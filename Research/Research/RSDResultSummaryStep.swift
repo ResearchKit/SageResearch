@@ -54,14 +54,17 @@ extension RSDResultSummaryStep {
     /// Get the result to display as the answer from the task result.
     /// - parameter taskResult: The task result for this step.
     /// - returns: The answer (if any).
-    public func answerResult(from taskResult: RSDTaskResult) -> RSDAnswerResult? {
-        guard let resultIdentifier = self.resultIdentifier,
-            let cResult = (self.stepResultIdentifier != nil) ? taskResult.findResult(with: self.stepResultIdentifier!) : taskResult,
-            let collectionResult = cResult as? RSDAnswerResultFinder,
-            let answerResult = collectionResult.findAnswerResult(with: resultIdentifier)
-            else {
-                return nil
+    public func answerValueAndType(from taskResult: RSDTaskResult) -> (value: Any?, answerType: AnswerType?)? {
+        guard let resultIdentifier = self.resultIdentifier else { return nil }
+        let cResult = (self.stepResultIdentifier != nil) ? taskResult.findResult(with: self.stepResultIdentifier!) : taskResult
+        if let answerResult = (cResult as? AnswerFinder)?.findAnswer(with: resultIdentifier) {
+            return (answerResult.value, answerResult.jsonAnswerType)
         }
-        return answerResult
+        else if let answerResult = (cResult as? RSDAnswerResultFinder)?.findAnswerResult(with: resultIdentifier) {
+            return (answerResult.value, answerResult.answerType.answerType)
+        }
+        else {
+            return nil
+        }
     }
 }

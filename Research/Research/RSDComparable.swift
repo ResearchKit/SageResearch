@@ -67,8 +67,23 @@ extension RSDComparable {
             return true
         }
         
+        if let answerResult = result as? AnswerResult {
+            return isMatching(to: answerResult.jsonValue?.jsonObject(),
+                              answerType: answerResult.jsonAnswerType ?? AnswerTypeString(),
+                              op: op)
+        }
+        else if let answerResult = result as? RSDAnswerResult {
+            return isMatching(to: answerResult.value, answerType: answerResult.answerType.answerType, op: op)
+        }
+        else {
+            return op == .skip ? true : false
+        }
+    }
+    
+    func isMatching(to value: Any?, answerType: AnswerType, op: RSDSurveyRuleOperator) -> Bool {
+        
         // If this is the skip operation then the values aren't equal *unless* it's nil
-        guard let answerResult = result as? RSDAnswerResult, let value = answerResult.value
+        guard let value = value, !(value is NSNull)
             else {
                 return op == .skip ? true : false
         }
@@ -76,8 +91,8 @@ extension RSDComparable {
             return false
         }
         
-        guard let predicate = rulePredicate(with: answerResult.answerType, op: op),
-            let cValue = convertValue(for: value, with: answerResult.answerType)
+        guard let predicate = rulePredicate(with: answerType, op: op),
+            let cValue = convertValue(for: value, with: answerType)
             else {
                 return false
         }
@@ -89,12 +104,12 @@ extension RSDComparable {
         }
     }
     
-    func rulePredicate(with answerType: RSDAnswerResultType, op: RSDSurveyRuleOperator) -> NSPredicate? {
+    func rulePredicate(with answerType: AnswerType, op: RSDSurveyRuleOperator) -> NSPredicate? {
         
         // Exit early if operator or value are unsupported
         guard let answerValue = convertValue(for: matchingAnswer, with: answerType) else { return nil }
-        let isArray = (answerType.sequenceType == .array)
-        let isDecimal = (answerType.baseType == .decimal)
+        let isArray = (answerType is AnswerTypeArray)
+        let isDecimal = (answerType.baseType == .number)
         
         switch(op) {
         case .skip:
@@ -132,34 +147,21 @@ extension RSDComparable {
         }
     }
     
-    func convertValue(for value: Any?, with answerType: RSDAnswerResultType) -> CVarArg? {
+    func convertValue(for value: Any?, with answerType: AnswerType) -> CVarArg? {
         
         // Exit early if the answer is nil
-        guard let answerValue = value else { return nil }
-        
+        guard let answerValue = value, !(answerValue is NSNull) else { return nil }
+
         // If this is a sequence type then need to convert the value into an NSArray
         // of CVarArg values.
-        if let sequenceType = answerType.sequenceType {
-            guard sequenceType == .array else {
-                assertionFailure("Unsupported sequenceType: \(sequenceType)")
-                return nil
-            }
-            let array = value as? [Any] ?? [answerValue]
-            let baseType = RSDAnswerResultType(baseType: answerType.baseType)
+        if let _ = answerType as? AnswerTypeArray {
+            let obj = (answerValue as? JsonElement)?.jsonObject() ?? value
+            let array: [Any] = obj as? [Any] ?? [answerValue]
+            let baseType = answerType.baseType.answerType
             let ret = array.compactMap { self.convertValue(for: $0, with: baseType) }
             return ret.count == array.count ? ret : nil
         }
-        
-        // Otherwise, look at the base type
-        switch answerType.baseType {
-        case .string:
-            if let comparableValue = answerValue as? CustomStringConvertible {
-                return comparableValue.description
-            }
-            else {
-                return "\(answerValue)" as NSString
-            }
-        case .date:
+        else if let _ = answerType as? AnswerTypeDateTime {
             if let date = answerValue as? NSDate {
                 return date
             } else if let dateString = answerValue as? String,
@@ -169,11 +171,20 @@ extension RSDComparable {
                 assertionFailure("Failed to convert \(answerValue) to a date.")
                 return nil
             }
-        case .data:
-            assertionFailure("data base type is unsupported")
-            return nil
-        default:
-            return (answerValue as? NSNumber) ?? (answerValue as? RSDJSONNumber)?.jsonNumber()
+        }
+        else {
+            // Otherwise, look at the base type
+            switch answerType.baseType {
+            case .string:
+                if let comparableValue = answerValue as? CustomStringConvertible {
+                    return comparableValue.description
+                }
+                else {
+                    return "\(answerValue)" as NSString
+                }
+            default:
+                return (answerValue as? NSNumber) ?? (answerValue as? RSDJSONNumber)?.jsonNumber()
+            }
         }
     }
 }

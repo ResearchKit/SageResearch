@@ -100,7 +100,7 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
             "identifier": "foo",
             "type": "active",
             "title": "Hello World!",
-            "text": "Some text.",
+            "detail": "Some text.",
             "permissions" : [["permissionType": "location"]],
             "icons": [ [ "icon":"Foo1", "title": "A SMOOTH SURFACE"] ]
         ]

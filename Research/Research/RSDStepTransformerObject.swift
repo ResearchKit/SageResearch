@@ -58,9 +58,9 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
     ///             "type"               : "transform",
     ///             "steps"   : [{   "identifier"   : "instruction",
     ///                                         "title"        : "This is a replacement title for the instruction.",
-    ///                                         "text"         : "This is some replacement text." },
+    ///                                         "detail"         : "This is some replacement text." },
     ///                                     {   "identifier"   : "feedback",
-    ///                                         "text"         : "Your pre run heart rate is" }
+    ///                                         "detail"         : "Your pre run heart rate is" }
     ///                                     ],
     ///            "resourceTransformer"    : { "resourceName": "HeartrateStep.json"}
     ///            }

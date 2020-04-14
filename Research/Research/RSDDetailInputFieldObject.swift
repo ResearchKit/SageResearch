@@ -33,6 +33,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {

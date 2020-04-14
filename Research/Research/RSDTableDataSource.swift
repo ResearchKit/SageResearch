@@ -150,3 +150,24 @@ extension RSDTableDataSource {
         }
     }
 }
+
+public protocol ItemState : class {
+    var identifier: String { get }
+    var indexPath: IndexPath { get }
+}
+
+public protocol TextInputItemState : ItemState {
+    var answerText: String? { get }
+    var answer: Any? { get }
+    var keyboardOptions: KeyboardOptions { get }
+    var inputPrompt: String? { get }
+    var placeholder: String? { get }
+    var uiHint: RSDFormUIHint { get }
+    var pickerSource: RSDPickerDataSource? { get }
+    func answerText(for answer: Any?) -> String?
+}
+
+public protocol ChoiceInputItemState : ItemState {
+    var selected: Bool { get }
+    var choice: RSDChoice { get }
+}

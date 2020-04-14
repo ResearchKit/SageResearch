@@ -61,9 +61,8 @@ public protocol RSDResult : Encodable {
 extension RSDResult {
     
     func shortDescription() -> String {
-        if let answerResult = self as? RSDAnswerResult {
-            let valueString = (answerResult.value == nil) ? "nil" : "\(answerResult.value!)"
-            return "{\(self.identifier) : \(valueString))}"
+        if let answerResult = self as? AnswerResult {
+            return "{\(self.identifier) : \(String(describing: answerResult.value)))}"
         }
         else if let collectionResult = self as? RSDCollectionResult {
             return "{\(self.identifier) : \(collectionResult.inputResults.map ({ $0.shortDescription() }))}"

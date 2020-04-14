@@ -36,10 +36,19 @@ import Foundation
 /// `RSDTextInputTableItem` is used to represent a single row in a table that holds a text entry input field.
 /// Typically, this would be used to represent a single `RSDInputField` value, but it can also be used to represent a
 /// single component in a multiple-component field.
-open class RSDTextInputTableItem : RSDInputFieldTableItem {
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
+open class RSDTextInputTableItem : RSDInputFieldTableItem, TextInputItemState {
     
     /// The text field options for this input.
     open private(set) var textFieldOptions: RSDTextFieldOptions?
+    
+    public var keyboardOptions: KeyboardOptions {
+        textFieldOptions ?? KeyboardOptionsObject()
+    }
+    
+    public var inputPrompt: String? {
+        inputField.inputPrompt
+    }
     
     /// The placeholder text for this input.
     open private(set) var placeholder: String?
@@ -143,11 +152,11 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
             case .date:
                 if let date = answer as? Date, let range = inputField.range as? RSDDateRange {
                     if let minDate = range.minimumDate, date < minDate {
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
+                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Value entered is outside allowed range.")
                         throw RSDInputFieldError.lessThanMinimumDate(minDate, context)
                     }
                     if let maxDate = range.maximumDate, date > maxDate {
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
+                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Value entered is outside allowed range.")
                         throw RSDInputFieldError.greaterThanMaximumDate(maxDate, context)
                     }
                 }
@@ -156,11 +165,11 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
                 if let string = answer as? String {
                     if let validator = self.textFieldOptions?.textValidator, let isValid = try? validator.isValid(string), !isValid {
                         let debugDescription = self.textFieldOptions?.invalidMessage ?? "Invalid regex"
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: debugDescription)
+                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: debugDescription)
                         throw RSDInputFieldError.invalidRegex(self.textFieldOptions?.invalidMessage, context)
                     }
                     else if let maxLen = self.textFieldOptions?.maximumLength, maxLen > 0, string.count > maxLen {
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Exceeds max length of \(maxLen)")
+                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Exceeds max length of \(maxLen)")
                         throw RSDInputFieldError.exceedsMaxLength(maxLen, context)
                     }
                 }
@@ -188,7 +197,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
             } else if array.count == 1 {
                 answer = array.first!
             } else {
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Array Type \(answer) is not supported for \(inputField.identifier)")
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Array Type \(answer) is not supported for \(inputField.identifier)")
                 throw RSDInputFieldError.invalidType(context)
             }
         }
@@ -202,7 +211,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
                 var err: NSString?
                 formatter.getObjectValue(&obj, for: string, errorDescription: &err)
                 if err != nil {
-                    let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: (err! as String))
+                    let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: (err! as String))
                     throw RSDInputFieldError.invalidFormatter(formatter, context)
                 } else {
                     return obj
@@ -214,7 +223,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
             } else if answerType.baseType == .decimal {
                 return NSNumber(value: (string as NSString).doubleValue)
             } else {
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "String Type \(answer) is not supported for \(inputField.identifier)")
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "String Type \(answer) is not supported for \(inputField.identifier)")
                 throw RSDInputFieldError.invalidType(context)
             }
         }
@@ -222,7 +231,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
             if answerType.baseType == .date {
                 return date
             } else {
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Date Type \(answer) is not supported for \(inputField.identifier)")
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Date Type \(answer) is not supported for \(inputField.identifier)")
                 throw RSDInputFieldError.invalidType(context)
             }
         }
@@ -233,11 +242,11 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
             case .integer, .decimal:
                 return num
             default:
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Number Type \(answer) is not supported for \(inputField.identifier)")
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Number Type \(answer) is not supported for \(inputField.identifier)")
                 throw RSDInputFieldError.invalidType(context)
             }
         } else {
-            let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "\(answer) is not supported for \(inputField.identifier)")
+            let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "\(answer) is not supported for \(inputField.identifier)")
             throw RSDInputFieldError.invalidType(context)
         }
     }

@@ -23,7 +23,7 @@
                                                "identifier"   : "instruction",
                                                "type"         : "instruction",
                                                "title"        : "Please hold your phone",
-                                               "text"         : "Go outside. After the countdown step, begin walking with your phone."
+                                               "detail"         : "Go outside. After the countdown step, begin walking with your phone."
                                                },
                                                {
                                                "identifier"     : "countdown",
@@ -47,7 +47,7 @@
                            "identifier"   : "completion",
                            "type"         : "completion",
                            "title"        : "Great Job!",
-                           "text"         : "You have completed this task."
+                           "detail"         : "You have completed this task."
                            }
                            ]
 }

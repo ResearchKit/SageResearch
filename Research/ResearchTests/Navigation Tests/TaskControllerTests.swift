@@ -180,13 +180,13 @@ class TaskControllerTests: XCTestCase {
         
         let beforeResult2 = beforeStepHistory.first(where: { $0.identifier == "step2" })
         XCTAssertNotNil(beforeResult2)
-        let beforeAnswerResult2 = beforeResult2 as? RSDAnswerResult
+        let beforeAnswerResult2 = beforeResult2 as? AnswerResult
         XCTAssertNotNil(beforeAnswerResult2)
         XCTAssertEqual(beforeAnswerResult2?.value as? String, "step2")
         
         let beforeResult3 = beforeStepHistory.first(where: { $0.identifier == "step3" })
         XCTAssertNotNil(beforeResult3)
-        let beforeAnswerResult3 = beforeResult3 as? RSDAnswerResult
+        let beforeAnswerResult3 = beforeResult3 as? AnswerResult
         XCTAssertNotNil(beforeAnswerResult3)
         XCTAssertEqual(beforeAnswerResult3?.value as? String, "step3")
         
@@ -210,17 +210,16 @@ class TaskControllerTests: XCTestCase {
         
         let previousResult2 = taskController.taskViewModel.previousResults?.first(where: { $0.identifier == "step2" })
         XCTAssertNotNil(previousResult2)
-        let answerResult2 = previousResult2 as? RSDAnswerResult
+        let answerResult2 = previousResult2 as? AnswerResult
         XCTAssertNotNil(answerResult2)
         XCTAssertEqual(answerResult2?.value as? String, "step2")
 
         let previousResult3 = taskController.taskViewModel.previousResults?.first(where: { $0.identifier == "step3" })
         XCTAssertNotNil(previousResult3)
-        let answerResult3 = previousResult3 as? RSDAnswerResult
+        let answerResult3 = previousResult3 as? AnswerResult
         XCTAssertNotNil(answerResult3)
         XCTAssertEqual(answerResult3?.value as? String, "step3")
     }
-    
     
     func testNavigation_ForwardFrom5X() {
         var steps: [RSDStep] = []
@@ -780,7 +779,7 @@ class TestTracker : RSDTrackingTask {
     
     func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?) {
         guard stepsToSkip.contains(step.identifier) else { return (false, nil) }
-        let stepResult = RSDAnswerResultObject(identifier: step.identifier, answerType: .string, value: "foo")
+        let stepResult = AnswerResultObject(identifier: step.identifier, value: .string("foo"))
         return (true, stepResult)
     }
 }

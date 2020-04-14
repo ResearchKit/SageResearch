@@ -35,6 +35,7 @@ import Foundation
 
 /// `RSDMultipleComponentInputFieldObject` extends the properties of `RSDInputFieldObject` with information
 /// required to create a multiple component input field.
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultipleComponentOptions {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {

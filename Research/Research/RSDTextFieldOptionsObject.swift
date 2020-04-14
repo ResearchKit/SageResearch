@@ -34,6 +34,7 @@
 /// `RSDTextFieldOptionsObject` defines the options for a text field.
 ///
 /// - seealso: `RSDInputField` and `RSDFormStepDataSource`
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
@@ -146,20 +147,5 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
             }
             try encodable.encode(to: nestedEncoder)
         }
-    }
-}
-
-extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func examples() -> [Encodable] {
-        let exampleA = RSDTextFieldOptionsObject(keyboardType: .asciiCapable, autocapitalizationType: .allCharacters, isSecureTextEntry: true, maximumLength: 16, spellCheckingType: .no, autocorrectionType: .no)
-        var exampleB = RSDTextFieldOptionsObject(keyboardType: .numberPad)
-        exampleB.textValidator = try! RSDRegExValidatorObject(regExPattern: "^[0-9]*$")
-        exampleB.invalidMessage = "This input field only allows entering numbers."
-        return [exampleA, exampleB]
     }
 }

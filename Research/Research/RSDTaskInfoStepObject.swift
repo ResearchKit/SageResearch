@@ -36,7 +36,7 @@ import Foundation
 public struct RSDTaskInfoObject : RSDTaskInfo, Decodable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, title, subtitle, detail, icon, _estimatedMinutes = "estimatedMinutes", _embeddedResource = "taskTransformer", _schemaInfoObject = "schemaInfo"
+        case identifier, title, subtitle, detail, footnote, icon, _estimatedMinutes = "estimatedMinutes", _embeddedResource = "taskTransformer", _schemaInfoObject = "schemaInfo"
     }
     
     /// A short string that uniquely identifies the task. The identifier is reproduced as the
@@ -52,6 +52,8 @@ public struct RSDTaskInfoObject : RSDTaskInfo, Decodable {
     /// Additional detail text to display for the task. Generally, this would be displayed
     /// while the task is being fetched.
     public var detail: String?
+    
+    public var footnote: String?
     
     /// The estimated number of minutes that the task will take. If `0`, then this is ignored.
     public var estimatedMinutes: Int {
@@ -93,6 +95,7 @@ public struct RSDTaskInfoObject : RSDTaskInfo, Decodable {
         copy.title = self.title
         copy.subtitle = self.subtitle
         copy.detail = self.detail
+        copy.footnote = self.footnote
         copy.estimatedMinutes = self.estimatedMinutes
         copy.icon = self.icon
         copy._taskTransformer = self.resourceTransformer

@@ -39,10 +39,11 @@ public protocol RSDEmbeddedResourceUIAction: RSDUIAction, RSDDecodableBundleInfo
 /// `RSDUIActionObject` is a concrete implementation of `RSDUIAction` that can be used to customize the
 /// title and image displayed for a given action of the UI.
 public struct RSDUIActionObject : RSDEmbeddedResourceUIAction {
-    
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case buttonTitle, iconName, bundleIdentifier, packageName
+        case objectType = "type", buttonTitle, iconName, bundleIdentifier, packageName
     }
+    
+    public private(set) var objectType: RSDUIActionObjectType = .defaultNavigation
     
     /// The title to display on the button associated with this action.
     public var buttonTitle: String?
@@ -90,10 +91,11 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction {
 
 /// `RSDNavigationUIActionObject` implements an action for navigating to another step in a task.
 public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavigationUIAction, Codable {
-    
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case skipToIdentifier, buttonTitle, iconName, bundleIdentifier, packageName
+        case objectType = "type", skipToIdentifier, buttonTitle, iconName, bundleIdentifier, packageName
     }
+    
+    public private(set) var objectType: RSDUIActionObjectType = .navigation
     
     /// The identifier for the step to skip to if the action is called.
     public let skipToIdentifier: String
@@ -126,10 +128,11 @@ public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavi
 /// `RSDReminderUIActionObject` implements an action for setting up a local notification to remind
 /// the participant about doing a particular task later.
 public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDReminderUIAction, Codable {
-    
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case reminderIdentifier, _buttonTitle = "buttonTitle", iconName, bundleIdentifier, packageName
+        case objectType = "type", reminderIdentifier, _buttonTitle = "buttonTitle", iconName, bundleIdentifier, packageName
     }
+    
+    public private(set) var objectType: RSDUIActionObjectType = .reminder
     
     /// The identifier for a `UNNotificationRequest`.
     public let reminderIdentifier: String
@@ -165,10 +168,11 @@ public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDRemind
 /// `RSDWebViewUIActionObject` implements an action that includes a pointer to a url that can display in a
 /// webview. The url can either be fully qualified or optionally point to an embedded resource. 
 public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebViewUIAction, Codable {
-
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case url, usesBackButton, title, closeButtonTitle, buttonTitle, iconName, bundleIdentifier, packageName
+        case objectType = "type", url, usesBackButton, title, closeButtonTitle, buttonTitle, iconName, bundleIdentifier, packageName
     }
+    
+    public private(set) var objectType: RSDUIActionObjectType = .webView
     
     /// The url to load in the webview. If this is not a fully qualified url string, then it is assumed to
     /// refer to an embedded resource.
@@ -239,10 +243,11 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
 /// `RSDVideoViewUIActionObject` implements an action that includes a pointer to a url that can display in a
 /// `AVPlayerViewController`. The url can either be fully qualified or optionally point to an embedded resource.
 public struct RSDVideoViewUIActionObject : RSDEmbeddedResourceUIAction, RSDVideoViewUIAction, Codable {
-    
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case url, buttonTitle, iconName, bundleIdentifier, packageName
+        case objectType = "type", url, buttonTitle, iconName, bundleIdentifier, packageName
     }
+    
+    public private(set) var objectType: RSDUIActionObjectType = .videoView
     
     /// The url to load in the webview. If this is not a fully qualified url string, then it is assumed to
     /// refer to an embedded resource.

@@ -47,7 +47,7 @@ public struct RSDFormUIHint : RawRepresentable, Codable, Hashable {
     }
     
     enum StandardHints : String, Codable, CaseIterable {
-        case button, checkbox, combobox, disclosureArrow, link, list, multipleLine, picker, popover, radioButton, section, slider, textfield, toggle
+        case button, checkbox, checkmark, combobox, disclosureArrow, link, list, multipleLine, picker, popover, radioButton, section, slider, textfield, toggle
         
         var hint: RSDFormUIHint {
             return RSDFormUIHint(rawValue: self.rawValue)
@@ -59,6 +59,9 @@ public struct RSDFormUIHint : RawRepresentable, Codable, Hashable {
     
     /// List with a checkbox next to each item.
     public static let checkbox = StandardHints.checkbox.hint
+    
+    /// List with a checkmark next to each item that is selected.
+    public static let checkmark = StandardHints.checkmark.hint
     
     /// Drop-down with a textfield for "other".
     public static let combobox = StandardHints.combobox.hint
@@ -100,6 +103,29 @@ public struct RSDFormUIHint : RawRepresentable, Codable, Hashable {
     public static var allStandardHints: Set<RSDFormUIHint> {
         return Set(StandardHints.allCases.map { $0.hint })
     }
+    
+    static func standardHintCategories() -> [String : [RSDFormUIHint]] {
+        return [
+            "choice" : [.list, .checkbox, .checkmark, .combobox, .radioButton],
+            "picker" : [.picker, .slider],
+            "text" : [.textfield, .multipleLine, .popover],
+            "detail" : [.section, .disclosureArrow, .button, .link],
+        ]
+    }
+    
+    /// If the hint is not in the supported list, then look for an acceptable alternative.
+    func bestHint(from supportedHints: Set<RSDFormUIHint>?) -> RSDFormUIHint {
+        guard let supportedHints = supportedHints, !supportedHints.contains(self) else {
+            return self
+        }
+        guard let matchingHints = RSDFormUIHint.standardHintCategories().first(where: { $0.value.contains(self) }),
+            let matching = matchingHints.value.first(where: { supportedHints.contains($0) })
+            else {
+                debugPrint("WARNING!!! Could not find a UIHint to use as a replacement for \(self) that matches the supported hints: \(supportedHints)")
+                return self
+        }
+        return matching
+    }
 }
 
 extension RSDFormUIHint : Equatable {
@@ -125,4 +151,3 @@ extension RSDFormUIHint : RSDDocumentableStringEnum {
         return allStandardHints.map{ $0.rawValue }
     }
 }
-

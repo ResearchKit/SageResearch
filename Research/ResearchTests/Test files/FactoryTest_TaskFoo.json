@@ -4,7 +4,7 @@
               "identifier": "step1",
               "type": "instruction",
               "title": "Step 1",
-              "text": "Some text.",
+              "subtitle": "Some text.",
               "detail": "This is a test.",
               "footnote": "This is a footnote.",
               "image": {    "type": "fetchable",
@@ -18,7 +18,7 @@
               "identifier": "step2",
               "type": "active",
               "title": "Step 2",
-              "text": "Some text.",
+              "subtitle": "Some text.",
               "actions": {"goForward": { "type": "default", "buttonTitle" : "You're done" },
                           "cancel": { "type": "default", "iconName" : "closeX" }},
               "shouldHideActions": ["goBackward", "learnMore", "skip"],
@@ -30,24 +30,12 @@
               },
               {
               "identifier": "step3",
-              "type": "form",
-              "title": "Step 3",
-              "text": "Some text.",
-              "inputFields": [
-                              {
-                              "identifier": "foo",
-                              "type": "date",
-                              "uiHint": "picker",
-                              "prompt": "Foo",
-                              "range" : { "minimumDate" : "2017-02-20",
-                                          "maximumDate" : "2017-03-20",
-                                          "codingFormat" : "yyyy-MM-dd" }
-                              },
-                              {
-                              "identifier": "bar",
-                              "type": "integer",
-                              "prompt": "Bar"
-                              }]
+              "type": "simpleQuestion",
+              "title": "Hello World!",
+              "optional": false,
+              "inputItem":{"type" : "year"},
+              "skipCheckbox":{"type":"skipCheckbox","fieldLabel":"No answer"},
+              "surveyRules": [{ "matchingAnswer": 1900}]
               },
               {
               "identifier": "step4",

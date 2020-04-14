@@ -37,7 +37,7 @@ import Foundation
 /// `RSDTaskInfo` includes information to display about a task before the task is fetched.
 /// This can be used to display a collection of tasks and only load the task when selected
 /// by the participant.
-public protocol RSDTaskInfo : RSDCopyWithIdentifier {
+public protocol RSDTaskInfo : RSDCopyWithIdentifier, ContentNode {
     
     /// A short string that uniquely identifies the task.
     var identifier: String { get }
@@ -66,4 +66,8 @@ public protocol RSDTaskInfo : RSDCopyWithIdentifier {
     /// information container for a **step** that loads the task using a service to fetch the
     /// task, then this pointer can be `nil`.
     var resourceTransformer : RSDTaskTransformer? { get }
+}
+
+public extension RSDTaskInfo {
+    var footnote: String? { nil }
 }

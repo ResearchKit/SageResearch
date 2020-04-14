@@ -56,7 +56,7 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "image": {    "type": "fetchable",
@@ -89,7 +89,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
             XCTAssertEqual(object.imageTheme?.imageName, "before")
@@ -133,11 +133,11 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "watch" : {
-                "text": "Watch: Some text.",
+                "subtitle": "Watch: Some text.",
                 "detail": "Watch: This is a test.",
                 "footnote": "Watch: This is a footnote."
             }
@@ -154,7 +154,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Watch: Some text.")
+            XCTAssertEqual(object.subtitle, "Watch: Some text.")
             XCTAssertEqual(object.detail, "Watch: This is a test.")
             XCTAssertEqual(object.footnote, "Watch: This is a footnote.")
             
@@ -171,7 +171,7 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "nextStepIdentifier": "boo",
@@ -198,10 +198,10 @@ class CodableStepObjectTests: XCTestCase {
                                 },
             "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps" },
-            "beforeCohortRules" : [{ "requiredCohorts" : ["boo", "goo"],
+            "beforeCohortRules" : [{ "requiredCohorts" : ["goo"],
                                     "skipToIdentifier" : "blueGu",
                                     "operator" : "any" }],
-            "afterCohortRules" : [{ "requiredCohorts" : ["foo", "baloo"],
+            "afterCohortRules" : [{ "requiredCohorts" : ["baloo"],
                                     "skipToIdentifier" : "foomanchu",
                                     "operator" : "all" }]
         }
@@ -213,7 +213,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
@@ -257,7 +257,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.viewTheme?.viewIdentifier, "ActiveInstruction")
             
             if let cohortRule = object.beforeCohortRules?.first {
-                XCTAssertEqual(cohortRule.requiredCohorts, ["boo", "goo"])
+                XCTAssertEqual(cohortRule.requiredCohorts, ["goo"])
                 XCTAssertEqual(cohortRule.skipToIdentifier, "blueGu")
                 XCTAssertEqual(cohortRule.cohortOperator, .any)
             } else {
@@ -265,13 +265,45 @@ class CodableStepObjectTests: XCTestCase {
             }
             
             if let cohortRule = object.afterCohortRules?.first {
-                XCTAssertEqual(cohortRule.requiredCohorts, ["foo", "baloo"])
+                XCTAssertEqual(cohortRule.requiredCohorts, ["baloo"])
                 XCTAssertEqual(cohortRule.skipToIdentifier, "foomanchu")
                 XCTAssertEqual(cohortRule.cohortOperator, .all)
             } else {
                 XCTFail("Failed to decode before cohort rules")
             }
             
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            guard let expectedDictionary = try JSONSerialization.jsonObject(with: json, options: []) as? [String : Any]
+                else {
+                    XCTFail("input json not a dictionary")
+                    return
+            }
+            
+            expectedDictionary.forEach { (pair) in
+                let encodedValue = dictionary[pair.key]
+                XCTAssertNotNil(encodedValue, "\(pair.key)")
+                if let str = pair.value as? String {
+                    XCTAssertEqual(str, encodedValue as? String, "\(pair.key)")
+                }
+                else if let num = pair.value as? NSNumber {
+                    XCTAssertEqual(num, encodedValue as? NSNumber, "\(pair.key)")
+                }
+                else if let arr = pair.value as? NSArray {
+                    XCTAssertEqual(arr, encodedValue as? NSArray, "\(pair.key)")
+                }
+                else if let dict = pair.value as? NSDictionary {
+                    XCTAssertEqual(dict, encodedValue as? NSDictionary, "\(pair.key)")
+                }
+                else {
+                    XCTFail("Failed to match \(pair.key)")
+                }
+            }
+
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return
@@ -285,7 +317,7 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "active",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "duration": 30,
             "commands": ["playSoundOnStart", "vibrateOnFinish"],
             "spokenInstructions" : { "start": "Start moving",
@@ -302,7 +334,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.duration, 30)
             
             XCTAssertEqual(object.spokenInstruction(at: 0), "Start moving")
@@ -347,6 +379,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
     func testFormUIStepObject_Codable() {
         
         let json = """
@@ -354,38 +387,21 @@ class CodableStepObjectTests: XCTestCase {
           "identifier": "step3",
           "type": "form",
           "title": "Step 3",
-          "text": "Some text.",
+          "nextStepIdentifier": "blu",
           "inputFields": [
                           {
                           "identifier": "foo",
                           "type": "date",
                           "uiHint": "picker",
                           "prompt": "Foo",
-                          "range" : { "minimumDate" : "2017-02-20",
-                                      "maximumDate" : "2017-03-20",
-                                      "codingFormat" : "yyyy-MM-dd" }
+                          "range" : { "minimumDate" : "2017-02",
+                                      "maximumDate" : "2017-03",
+                                      "codingFormat" : "yyyy-MM" }
                           },
                           {
                           "identifier": "bar",
                           "type": "integer",
                           "prompt": "Bar"
-                          },
-                          {
-                           "identifier": "goo",
-                           "type": "multipleChoice",
-                           "choices" : ["never", "sometimes", "often", "always"]
-                          },
-                          {
-                            "identifier": "detail",
-                            "type": "detail",
-                            "inputFields": [{
-                                "identifier": "fieldA",
-                                "type": "string"
-                            },
-                            {
-                                "identifier": "fieldB",
-                                "type": "integer"
-                            }]
                           }
                     ]
           }
@@ -394,25 +410,49 @@ class CodableStepObjectTests: XCTestCase {
         do {
             
             let object = try decoder.decode(RSDFormUIStepObject.self, from: json)
+            let converted = try object.convertToQuestion(using: QuestionConvertionFactory())
             
-            XCTAssertEqual(object.identifier, "step3")
-            XCTAssertEqual(object.title, "Step 3")
-            XCTAssertEqual(object.text, "Some text.")
-            XCTAssertEqual(object.inputFields.count, 4)
-            
-            if object.inputFields.count == 4 {
-                XCTAssertEqual(object.inputFields[0].dataType, .base(.date))
-                XCTAssertEqual(object.inputFields[1].dataType, .base(.integer))
-                XCTAssertEqual(object.inputFields[2].dataType, .collection(.multipleChoice, .string))
-                XCTAssertNotNil(object.inputFields[2] as? RSDCodableChoiceInputFieldObject<String>)
+            XCTAssertEqual(converted.identifier, "step3")
+            XCTAssertEqual(converted.title, "Step 3")
+            guard let question = converted as? MultipleInputQuestionStepObject else {
+                XCTFail("Did not convert to expected type.")
+                return
             }
             
-            if let detail = object.inputFields.last as? RSDDetailInputFieldObject {
-                XCTAssertEqual(detail.dataType, .detail(.codable))
+            XCTAssertEqual(question.nextStepIdentifier, "blu")
+            XCTAssertEqual(question.inputItems.count, 2)
+            guard let dateItem = question.inputItems.first as? DateInputItemObject,
+                let intItem = question.inputItems.last as? IntegerTextInputItemObject
+                else {
+                    XCTFail("Did not convert to expected type.")
+                    return
+            }
+            
+            XCTAssertEqual(dateItem.identifier, "foo")
+            XCTAssertEqual(dateItem.inputUIHint, .picker)
+            XCTAssertEqual(dateItem.fieldLabel, "Foo")
+            if let range = dateItem.formatOptions {
+                XCTAssertNotNil(range.maximumDate)
+                XCTAssertNotNil(range.minimumDate)
+                XCTAssertEqual(range.dateCoder?.inputFormatter.dateFormat, "yyyy-MM")
             }
             else {
-                XCTFail("Failed to decode the detail input field type.")
+                XCTFail("Did not convert to expected type.")
+                return
             }
+            
+            XCTAssertEqual(intItem.identifier, "bar")
+            XCTAssertEqual(intItem.fieldLabel, "Bar")
+            
+            let jsonData = try encoder.encode(question)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+
+            XCTAssertEqual(dictionary["type"] as? String, "multipleInputQuestion")
+            XCTAssertEqual(dictionary["identifier"] as? String, "step3")
 
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -420,6 +460,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
     func testFormUIStepObject_Codable_SingleQuestion() {
         
         let json = """
@@ -429,7 +470,8 @@ class CodableStepObjectTests: XCTestCase {
           "title": "Step 3",
           "inputFields": [{
             "type": "multipleChoice",
-            "choices" : ["never", "sometimes", "often", "always"]
+            "choices" : ["never", "sometimes", "often", "always"],
+            "surveyRules": [{ "matchingAnswer": "never"}]
             }]
           }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -438,11 +480,29 @@ class CodableStepObjectTests: XCTestCase {
             
             let object = try decoder.decode(RSDFormUIStepObject.self, from: json)
             
-            XCTAssertEqual(object.identifier, "step3")
-            XCTAssertEqual(object.title, "Step 3")
-            XCTAssertEqual(object.inputFields.count, 1)
-            XCTAssertEqual(object.inputFields.first?.dataType, .collection(.multipleChoice, .string))
-            XCTAssertNotNil(object.inputFields.first as? RSDCodableChoiceInputFieldObject<String>)
+            let converted = try object.convertToQuestion(using: QuestionConvertionFactory())
+            
+            XCTAssertEqual(converted.identifier, "step3")
+            XCTAssertEqual(converted.title, "Step 3")
+            guard let choiceQuestion = converted as? ChoiceQuestionStepObject else {
+                XCTFail("Did not convert to expected type.")
+                return
+            }
+            
+            XCTAssertEqual(choiceQuestion.baseType, .string)
+            XCTAssertFalse(choiceQuestion.isSingleAnswer)
+            XCTAssertEqual(choiceQuestion.jsonChoices.count, 4)
+            XCTAssertEqual(choiceQuestion.surveyRules.count, 1)
+            
+            let jsonData = try encoder.encode(choiceQuestion)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+
+            XCTAssertEqual(dictionary["type"] as? String, "choiceQuestion")
+            XCTAssertEqual(dictionary["identifier"] as? String, "step3")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -457,7 +517,7 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "image": {  "type": "fetchable",
@@ -484,7 +544,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
             XCTAssertEqual(object.imageTheme?.imageName, "before")
@@ -528,7 +588,7 @@ class CodableStepObjectTests: XCTestCase {
             "identifier": "foo",
             "type": "completion",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "unitText": "foos",
             "resultIdentifier": "bar",
             "stepResultIdentifier": "goo",
@@ -542,7 +602,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
-            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.subtitle, "Some text.")
             XCTAssertEqual(object.unitText, "foos")
             XCTAssertEqual(object.resultIdentifier, "bar")
             XCTAssertEqual(object.stepResultIdentifier, "goo")
@@ -603,37 +663,7 @@ class CodableStepObjectTests: XCTestCase {
             return
         }
     }
-    
-    func testGenericStepObject_Decodable() {
-        
-        let json = """
-        {
-            "identifier": "foobar",
-            "type": "foo",
-            "title": "Hello World!",
-            "detail": "This is a test.",
-            "copyright": "This is a copyright string.",
-            "estimatedMinutes": 5,
-            "icon": "foobar"
-        }
-        """.data(using: .utf8)! // our data in native (JSON) format
-        
-        do {
-            
-            let object = try decoder.decode(RSDGenericStepObject.self, from: json)
-            
-            XCTAssertEqual(object.identifier, "foobar")
-            
-            XCTAssertEqual(object.identifier, "foobar")
-            XCTAssertEqual(object.userInfo["title"] as? String, "Hello World!")
-            XCTAssertEqual(object.userInfo["detail"] as? String, "This is a test.")
-            XCTAssertEqual(object.userInfo["copyright"] as? String, "This is a copyright string.")
-            XCTAssertEqual(object.userInfo["estimatedMinutes"] as? Int, 5)
-            XCTAssertEqual(object.userInfo["icon"] as? String, "foobar")
-            
-        } catch let err {
-            XCTFail("Failed to decode/encode object: \(err)")
-            return
-        }
-    }
+}
+
+extension RSDUIStepObject : Encodable {
 }

@@ -2,7 +2,7 @@
 //  RSDFactory.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -294,7 +294,9 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStep(from decoder: Decoder) throws -> RSDStep? {
         guard let name = try typeName(from: decoder) else {
-            return try RSDGenericStepObject(from: decoder)
+            let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                debugDescription: "Conformance to step protocol decoding requires a 'type' coding key.")
+            throw DecodingError.keyNotFound(TypeKeys.type, context)
         }
         let step = try decodeStep(from: decoder, with: RSDStepType(rawValue: name))
         try step?.validate()
@@ -310,11 +312,18 @@ open class RSDFactory {
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
-        
-        guard let standardType = RSDStepType.StandardType(rawValue: type.rawValue)
-            else {
-                return try RSDGenericStepObject(from: decoder)
+        if let standardType = RSDStepType.StandardType(rawValue: type.rawValue) {
+            return try decodeStandardStep(from: decoder, standardType: standardType)
         }
+        else if let questionType = RSDStepType.QuestionType(rawValue: type.rawValue) {
+            return try decodeQuestionStep(from: decoder, questionType: questionType)
+        }
+        else {
+            return try decodeDeprecatedStep(from: decoder, with: type)
+        }
+    }
+    
+    func decodeStandardStep(from decoder: Decoder, standardType: RSDStepType.StandardType) throws -> RSDStep {
         switch (standardType) {
         case .instruction, .active:
             return try RSDActiveUIStepObject(from: decoder)
@@ -324,8 +333,6 @@ open class RSDFactory {
             return try RSDResultSummaryStepObject(from: decoder)
         case .overview:
             return try RSDOverviewStepObject(from: decoder)
-        case .form, .demographics:
-            return try RSDFormUIStepObject(from: decoder)
         case .section:
             return try RSDSectionStepObject(from: decoder)
         case .taskInfo:
@@ -335,6 +342,34 @@ open class RSDFactory {
             return try self.decodeTransformableStep(from: decoder)
         case .subtask:
             return try RSDSubtaskStepObject(from: decoder)
+        }
+    }
+    
+    func decodeQuestionStep(from decoder: Decoder, questionType: RSDStepType.QuestionType) throws -> RSDStep {
+        switch (questionType) {
+        case .choiceQuestion:
+            return try ChoiceQuestionStepObject(from: decoder)
+        case .multipleInputQuestion:
+            return try MultipleInputQuestionStepObject(from: decoder)
+        case .simpleQuestion:
+            return try SimpleQuestionStepObject(from: decoder)
+        case .stringChoiceQuestion:
+            return try StringChoiceQuestionStepObject(from: decoder)
+        }
+    }
+    
+    @available(*, deprecated, message: "Implement `QuestionStep` instead. This method will be deleted in future versions.")
+    func decodeDeprecatedStep(from decoder: Decoder, with type: RSDStepType) throws -> RSDStep? {
+        guard let deprecatedType = RSDStepType.DeprecatedType(rawValue: type.rawValue)
+            else {
+                return nil
+        }
+        
+        switch deprecatedType {
+        case .form, .demographics:
+            print("WARNING!!! Step type '\(type)' is deprecated and decoding support will be removed in future releases.")
+            let formStep = try RSDFormUIStepObject(from: decoder)
+            return formStep
         }
     }
     
@@ -358,6 +393,46 @@ open class RSDFactory {
         return transform.transformedStep
     }
     
+    // MARK: Answer type factory
+    
+    open func decodeAnswerType(from decoder: Decoder) throws -> AnswerType {
+        guard let name = try typeName(from: decoder) else {
+            return try decodeDeprecatedAnswerType(from: decoder)
+        }
+        let typeKey = AnswerTypeType(rawValue: name)
+        switch typeKey {
+        case .array:
+            return try AnswerTypeArray(from: decoder)
+        case .boolean:
+            return try AnswerTypeBoolean(from: decoder)
+        case .dateTime:
+            return try AnswerTypeDateTime(from: decoder)
+        case .integer:
+            return try AnswerTypeInteger(from: decoder)
+        case .measurement:
+            return try AnswerTypeMeasurement(from: decoder)
+        case .null:
+            return try AnswerTypeNull(from: decoder)
+        case .number:
+            return try AnswerTypeNumber(from: decoder)
+        case .object:
+            return try AnswerTypeObject(from: decoder)
+        case .string:
+            return try AnswerTypeString(from: decoder)
+        default:
+            let codingPath = decoder.codingPath
+            let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Could not find supported answer type")
+            throw DecodingError.typeMismatch(Codable.self, context)
+        }
+    }
+    
+    @available(*, deprecated, message: "Implement `AnswerResult` instead. This method will be deleted in future versions.")
+    func decodeDeprecatedAnswerType(from decoder: Decoder) throws -> AnswerType {
+        print("WARNING!!! Default AnswerType is deprecated. \(decoder.codingPath)")
+        let oldType = try RSDAnswerResultType(from: decoder)
+        return oldType.answerType
+    }
+    
     
     // MARK: Input field factory
     
@@ -368,6 +443,7 @@ open class RSDFactory {
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDFormUIStepObject`
+    @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
     open func decodeInputField(from decoder: Decoder) throws -> RSDInputField? {
         let dataType = try RSDInputFieldObject.dataType(from: decoder)
         let inputField = try decodeInputField(from: decoder, with: dataType)
@@ -383,6 +459,7 @@ open class RSDFactory {
     ///     - dataType: The type for this input field.
     /// - returns: The input field (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
     open func decodeInputField(from decoder:Decoder, with dataType: RSDFormDataType) throws -> RSDInputField? {
         switch dataType {
         case .collection(let collectionType, _):
@@ -416,6 +493,61 @@ open class RSDFactory {
         
         default:
             return try RSDInputFieldObject(from: decoder)
+        }
+    }
+    
+    // MARK: InputItem
+    
+    public func decodeInputItems(from itemsContainer: UnkeyedDecodingContainer) throws -> [InputItemBuilder] {
+        var container = itemsContainer
+        var items = [InputItemBuilder]()
+        while !container.isAtEnd {
+            let nestedDecoder = try container.superDecoder()
+            let item = try self.decodeInputItem(from: nestedDecoder)
+            items.append(item)
+        }
+        return items
+    }
+    
+    public func decodeInputItem(from decoder: Decoder) throws -> InputItemBuilder {
+        guard let name = try typeName(from: decoder) else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                debugDescription: "Conformance to the step protocol decoding requires a 'type' coding key.")
+            throw DecodingError.keyNotFound(TypeKeys.type, context)
+        }
+        return try decodeInputItem(from: decoder, with: InputItemType(rawValue: name))
+    }
+    
+    func decodeInputItem(from decoder: Decoder, with type: InputItemType) throws -> InputItemBuilder {
+        switch type {
+        case .decimal:
+            return try DoubleTextInputItemObject(from: decoder)
+        case .integer:
+            return try IntegerTextInputItemObject(from: decoder)
+        case .string:
+            return try StringTextInputItemObject(from: decoder)
+        case .year:
+            return try YearTextInputItemObject(from: decoder)
+        case .dateTime:
+            return try DateTimeInputItemObject(from: decoder)
+        case .date:
+            return try DateInputItemObject(from: decoder)
+        case .time:
+            return try TimeInputItemObject(from: decoder)
+        case .checkbox:
+            return try CheckboxInputItemObject(from: decoder)
+        case .choicePicker:
+            return try ChoicePickerInputItemObject(from: decoder)
+        case .stringChoicePicker:
+            return try StringChoicePickerInputItemObject(from: decoder)
+        case .height:
+            return try HeightInputItemBuilderObject(from: decoder)
+        case .weight:
+            return try WeightInputItemBuilderObject(from: decoder)
+        default:
+            let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                debugDescription: "Cannot decode InputItem with type '\(type)'")
+            throw DecodingError.keyNotFound(TypeKeys.type, context)
         }
     }
     
@@ -455,6 +587,7 @@ open class RSDFactory {
     /// - returns: An array of survey rules.
     /// - throws: `DecodingError`
     /// - seealso: `RSDInputFieldObject`
+    @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
     open func decodeSurveyRules(from rulesContainer: UnkeyedDecodingContainer, for dataType: RSDFormDataType) throws -> [RSDSurveyRule] {
         var container = rulesContainer
         var surveyRules = [RSDSurveyRule]()
@@ -468,6 +601,7 @@ open class RSDFactory {
     
     /// Overridable factory method for returning a survey rule. By default, this will return a
     /// `RSDComparableSurveyRuleObject` appropriate to the base type of the data type.
+    @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
     open func decodeSurveyRule(from decoder: Decoder, for dataType: RSDFormDataType) throws -> RSDSurveyRule {
         switch dataType.baseType {
         case .boolean:
@@ -489,6 +623,21 @@ open class RSDFactory {
         }
     }
     
+    open func decodeSurveyRules(from rulesContainer: UnkeyedDecodingContainer) throws -> [RSDSurveyRule] {
+        var container = rulesContainer
+        var surveyRules = [RSDSurveyRule]()
+        while !container.isAtEnd {
+            let nestedDecoder = try container.superDecoder()
+            let surveyRule = try self.decodeSurveyRule(from: nestedDecoder)
+            surveyRules.append(surveyRule)
+        }
+        return surveyRules
+    }
+    
+    open func decodeSurveyRule(from decoder: Decoder) throws -> RSDSurveyRule {
+        return try JsonSurveyRuleObject(from: decoder)
+    }
+    
     
     // MARK: Range factory
     
@@ -508,6 +657,7 @@ open class RSDFactory {
     /// - returns: An appropriate instance of `RSDRange`.
     /// - throws: `DecodingError`
     /// - seealso: `RSDInputFieldObject`
+    @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
     open func decodeRange(from decoder: Decoder, for dataType: RSDFormDataType) throws -> RSDRange? {
         switch dataType.baseType {
         case .integer, .decimal, .fraction:
@@ -543,6 +693,7 @@ open class RSDFactory {
     /// - returns: The text validator created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDTextFieldOptionsObject`
+    @available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
     open func decodeTextValidator(from decoder: Decoder) throws -> RSDTextValidator? {
         return try RSDRegExValidatorObject(from: decoder)
     }
@@ -768,7 +919,7 @@ open class RSDFactory {
         case .base:
             return try RSDResultObject(from: decoder)
         case .answer:
-            return try RSDAnswerResultObject(from: decoder)
+            return try AnswerResultObject(from: decoder)
         case .collection:
             return try RSDCollectionResultObject(from: decoder)
         case .task:
@@ -971,6 +1122,7 @@ open class RSDFactory {
     /// to use when encoding objects.
     open func createJSONEncoder() -> JSONEncoder {
         let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted]
         encoder.dateEncodingStrategy = .custom({ (date, encoder) in
             let string = self.encodeString(from: date, codingPath: encoder.codingPath)
             var container = encoder.singleValueContainer()

@@ -36,7 +36,7 @@ import Foundation
 
 /// `RSDCollectionResult` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
-public protocol RSDCollectionResult : RSDResult, RSDAnswerResultFinder {
+public protocol RSDCollectionResult : RSDResult, RSDAnswerResultFinder, AnswerFinder {
     
     /// The list of input results associated with this step. These are generally assumed to be answers to
     /// field inputs, but they are not required to implement the `RSDAnswerResult` protocol.
@@ -50,26 +50,6 @@ extension RSDCollectionResult {
     /// - returns: The result or `nil` if not found.
     public func findResult(with identifier: String) -> RSDResult? {
         return self.inputResults.first(where: { $0.identifier == identifier })
-    }
-    
-    /// Find an *answer* result within this collection. This method will return `nil` if there is a result
-    /// but that result does **not** conform to to the `RSDAnswerResult` protocol.
-    ///
-    /// - seealso: `RSDAnswerResultFinder`
-    ///
-    /// - parameter identifier: The identifier associated with the result.
-    /// - returns: The result or `nil` if not found.
-    public func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
-        return self.findResult(with: identifier) as? RSDAnswerResult
-    }
-    
-    /// Return a mapping of all the `RSDAnswerResult` objects in this collection as a mapping
-    /// of the identifier to the value.
-    public func answers() -> [String : Any] {
-        return self.inputResults.reduce(into: [String : Any]()) { (hashtable, result) in
-            guard let answerResult = result as? RSDAnswerResult, let value = answerResult.value else { return }
-            hashtable[answerResult.identifier] = value
-        }
     }
     
     /// Append the result to the end of the input results, replacing the previous instance with the same identifier.
@@ -94,5 +74,25 @@ extension RSDCollectionResult {
             return nil
         }
         return inputResults.remove(at: idx)
+    }
+}
+
+public extension RSDCollectionResult {  // RSDAnswerResultFinder
+    /// Find an *answer* result within this collection. This method will return `nil` if there is a result
+    /// but that result does **not** conform to to the `RSDAnswerResult` protocol.
+    ///
+    /// - seealso: `RSDAnswerResultFinder`
+    ///
+    /// - parameter identifier: The identifier associated with the result.
+    /// - returns: The result or `nil` if not found.
+    @available(*, deprecated, message: "Use `AnswerFinder.findAnswer` instead.")
+    func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
+        return self.findResult(with: identifier) as? RSDAnswerResult
+    }
+}
+
+public extension RSDCollectionResult {  // AnswerFinder
+    func findAnswer(with identifier: String) -> AnswerResult? {
+        self.findResult(with: identifier) as? AnswerResult
     }
 }

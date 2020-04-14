@@ -37,29 +37,10 @@ import Foundation
 /// `RSDUIStep` is used to define a single "display unit". Depending upon the available real-estate, more
 /// than one ui step may be displayed at a time. For example, on an iPad, you may choose to group a set of
 /// questions using a `RSDSectionStep`.
-public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
-    
-    /// The primary text to display for the step in a localized string.
-    var title: String? { get }
-    
-    /// Additional text to display for the step in a localized string.
-    ///
-    /// The additional text is often displayed in a smaller font below `title`. If you need to display a
-    /// long question, it can work well to keep the title short and put the additional content in the
-    /// `text` property.
-    var text: String? { get }
-    
-    /// Additional detailed explanation for the step.
-    ///
-    /// The font size and display of this property will depend upon the device type.
-    var detail: String? { get }
-    
-    /// Additional text to display for the step in a localized string at the bottom of the view.
-    ///
-    /// The footnote is intended to be displayed in a smaller font at the bottom of the screen. It is
-    /// intended to be used in order to include disclaimer, copyright, etc. that is important to display in
-    /// the step but should not distract from the main purpose of the step.
-    var footnote: String? { get }
+public protocol RSDUIStep: RSDStep, RSDUIActionHandler, ContentNode {
 }
 
-
+extension RSDUIStep {
+    @available(*, deprecated, message: "This protocol has changed. Use `subtitle` or `detail` instead.")
+    public var text: String? { self.subtitle }
+}

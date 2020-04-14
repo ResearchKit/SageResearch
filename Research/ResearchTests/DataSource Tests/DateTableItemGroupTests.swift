@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 
+@available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
 class DateTableItemGroupTests: XCTestCase {
 
     override func setUp() {

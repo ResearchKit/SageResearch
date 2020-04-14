@@ -54,6 +54,8 @@ public enum RSDValidationError : Error {
     /// Unsupported data type.
     case invalidType(String)
     
+    case invalidValue(Any?, String)
+    
     /// Expected identifier was not found.
     case identifierNotFound(Any, String, String)
     
@@ -82,6 +84,8 @@ public enum RSDValidationError : Error {
             return -6
         case .unexpectedNullObject(_):
             return -7
+        case .invalidValue(_, _):
+            return -8
         }
     }
     
@@ -96,6 +100,7 @@ public enum RSDValidationError : Error {
         case .invalidType(let str): description = str
         case .identifierNotFound(_, _, let str): description = str
         case .unexpectedNullObject(let str): description = str
+        case .invalidValue(_, let str): description = str
         }
         return ["NSDebugDescription": description]
     }

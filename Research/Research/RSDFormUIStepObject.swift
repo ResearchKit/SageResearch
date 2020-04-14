@@ -40,11 +40,86 @@ extension CodingUserInfoKey {
     public static let stepIdentifier = CodingUserInfoKey(rawValue: "RSDFormUIStepObject.stepIdentifier")!
 }
 
+@available(*, deprecated)
+open class QuestionConvertionFactory {
+    
+    public init() {
+    }
+
+    open func buildQuestion(identifier: String,
+                            nextStepIdentifier: String?,
+                            questions: [AbstractQuestionStep],
+                            inputItems: [InputItemBuilder]) throws -> AbstractQuestionStep {
+        
+        guard (questions.count == 0 && inputItems.count > 0) ||
+            (questions.count == 1 && inputItems.count == 0) else {
+                throw RSDValidationError.invalidValue(identifier, "\(type(of: self)) cannot build question with these question and input items for \(identifier).")
+        }
+        
+        if let question = questions.first {
+            return question
+        }
+        else if inputItems.count == 1 {
+            return SimpleQuestionStepObject(identifier: identifier,
+                                            inputItem: inputItems.first!,
+                                            nextStepIdentifier: nextStepIdentifier,
+                                            skipCheckbox: nil)
+        }
+        else {
+            return MultipleInputQuestionStepObject(identifier: identifier,
+                                                   inputItems: inputItems,
+                                                   nextStepIdentifier: nextStepIdentifier,
+                                                   skipCheckbox: nil,
+                                                   sequenceSeparator: nil)
+        }
+    }
+}
+
+@available(*, deprecated)
+public protocol ConvertableInputField : RSDInputField {
+    func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItemBuilder?)
+}
+
+@available(*, deprecated)
+public protocol ConvertableFormStep : RSDFormUIStep {
+    func convertToQuestion(using factory: QuestionConvertionFactory) throws -> (QuestionStep & Encodable)
+}
+
 /// `RSDFormUIStepObject` is a concrete implementation of the `RSDFormUIStep` and
 /// `RSDSurveyNavigationStep` protocols. It is a subclass of `RSDUIStepObject` and can be used to display
 /// a navigable survey.
-open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNavigationStep, RSDCohortAssignmentStep {
-    
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
+open class RSDFormUIStepObject : RSDUIStepObject, ConvertableFormStep, RSDSurveyNavigationStep, RSDCohortAssignmentStep {
+
+    open func convertToQuestion(using factory: QuestionConvertionFactory) throws -> (QuestionStep & Encodable) {
+        var questions: [AbstractQuestionStep] = []
+        var surveyRules: [RSDSurveyRule] = []
+        var inputItems: [InputItemBuilder] = []
+        var isOptional = true
+        
+        try inputFields.forEach {
+            guard let field = $0 as? ConvertableInputField else {
+                throw RSDValidationError.undefinedClassType("\($0) does not implement the ConvertableInputField protocol")
+            }
+            let (qn, it) = try field.convertToQuestionOrInputItem(nextStepIdentifier: self.nextStepIdentifier)
+            if let rulesProvider = field as? RSDSurveyInputField, let rules = rulesProvider.surveyRules {
+                surveyRules.append(contentsOf: rules)
+            }
+            qn.map { questions.append($0) }
+            it.map { inputItems.append($0) }
+            isOptional = isOptional && field.isOptional
+        }
+        
+        let qStep = try factory.buildQuestion(identifier: self.identifier,
+                                              nextStepIdentifier: self.nextStepIdentifier,
+                                              questions: questions,
+                                              inputItems: inputItems)
+        super.copyInto(qStep)
+        qStep.surveyRules = surveyRules
+        qStep.isOptional = isOptional
+        return qStep as! (QuestionStep & Encodable)
+    }
+
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case inputFields, identifier
     }
@@ -54,7 +129,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     
     /// Default type is `.form`.
     open override class func defaultType() -> RSDStepType {
-        return .form
+        return RSDStepType.DeprecatedType.form.type
     }
     
     /// Initializer required for `copy(with:)` implementation.
@@ -134,7 +209,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     ///             "identifier": "step3",
     ///             "type": "form",
     ///             "title": "Step 3",
-    ///             "text": "Some text.",
+    ///             "detail": "Some text.",
     ///             "inputFields": [
     ///                             {
     ///                             "identifier": "foo",
@@ -227,6 +302,11 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
         }
     }
     
+    // MARK: Table source
+    
+    open override func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
+        return RSDFormStepDataSourceObject(step: self, parent: parent, supportedHints: supportedHints)
+    }
     
     // Overrides must be defined in the base implementation
     

@@ -49,24 +49,21 @@ class ResultTests: XCTestCase {
         var collection = RSDCollectionResultObject(identifier: "test")
         let answers = ["a" : 3, "b": 5, "c" : 7]
         answers.forEach {
-            let answerResult = RSDAnswerResultObject(identifier: $0.key, answerType: .integer, value: $0.value)
+            let answerResult = AnswerResultObject(identifier: $0.key, value: .integer($0.value))
             collection.appendInputResults(with: answerResult)
         }
-        
-        let answerMap = collection.answers()
-        XCTAssertEqual(answerMap as? [String : Int], answers)
 
-        let answerB = RSDAnswerResultObject(identifier: "a", answerType: .integer, value: 8)
+        let answerB = AnswerResultObject(identifier: "a", value: .integer(8))
         let previous = collection.appendInputResults(with: answerB)
         XCTAssertNotNil(previous)
-        if let previousResult = previous as? RSDAnswerResultObject {
+        if let previousResult = previous as? AnswerResultObject {
             XCTAssertEqual(previousResult.value as? Int, 3)
         }
         else {
             XCTFail("Failed to return the previous answer")
         }
         
-        if let newResult = collection.findAnswerResult(with: "a") {
+        if let newResult = collection.findAnswer(with: "a") {
             XCTAssertEqual(newResult.value as? Int, 8)
         }
         else {
@@ -75,7 +72,7 @@ class ResultTests: XCTestCase {
         
         let removed = collection.removeInputResult(with: "b")
         XCTAssertNotNil(removed)
-        if let removedResult = removed as? RSDAnswerResultObject {
+        if let removedResult = removed as? AnswerResultObject {
             XCTAssertEqual(removedResult.value as? Int, 5)
         }
         else {
@@ -84,32 +81,5 @@ class ResultTests: XCTestCase {
         
         let removedD = collection.removeInputResult(with: "d")
         XCTAssertNil(removedD)
-    }
-    
-    func testAnswerTypeEquality_Boolean() {
-        let a = RSDAnswerResultType(baseType: .boolean, sequenceType: nil, formDataType: .base(.boolean), dateFormat: nil, unit: nil, sequenceSeparator: nil)
-        let b = RSDAnswerResultType.boolean
-        XCTAssertEqual(a, b)
-        XCTAssertEqual(a.hashValue, b.hashValue)
-    }
-
-    func testAnswerTypeEquality_StringCollection() {
-        let a = RSDAnswerResultType(baseType: .string, sequenceType: .array, formDataType: .collection(.multipleChoice, .string), dateFormat: nil, unit: nil, sequenceSeparator: "-")
-        let b = RSDAnswerResultType(baseType: .string, sequenceType: .array, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: "-")
-        let c = RSDAnswerResultType(baseType: .string, sequenceType: .array, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: nil)
-        XCTAssertEqual(a, b)
-        XCTAssertEqual(a.hashValue, b.hashValue)
-        XCTAssertNotEqual(a, c)
-        XCTAssertNotEqual(a.hashValue, c.hashValue)
-    }
-    
-    func testAnswerTypeEquality_Date() {
-        let a = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: .base(.date), dateFormat: "YYYY-mm", unit: nil, sequenceSeparator: nil)
-        let b = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "YYYY-mm", unit: nil, sequenceSeparator: nil)
-        let c = RSDAnswerResultType.date
-        XCTAssertEqual(a, b)
-        XCTAssertEqual(a.hashValue, b.hashValue)
-        XCTAssertNotEqual(a, c)
-        XCTAssertNotEqual(a.hashValue, c.hashValue)
     }
 }

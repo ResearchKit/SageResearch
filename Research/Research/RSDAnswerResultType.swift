@@ -41,6 +41,7 @@ import Foundation
 ///
 /// - seealso: `RSDAnswerResult` and `RSDFormDataType`
 ///
+@available(*, deprecated, message: "Use `AnswerType` instead")
 public struct RSDAnswerResultType : Codable, Hashable, Equatable {
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case baseType, sequenceType, formDataType, dateFormat, dateLocaleIdentifier, unit, sequenceSeparator
@@ -176,139 +177,48 @@ public struct RSDAnswerResultType : Codable, Hashable, Equatable {
     }
 }
 
-
-// MARK: Documentable
-
-extension RSDAnswerResultType.BaseType : RSDDocumentableStringEnum {
+@available(*, deprecated, message: "Use `AnswerType` instead")
+extension RSDAnswerResultType.BaseType {
+    var jsonType: JsonType {
+        switch self {
+        case .boolean:
+            return .boolean
+        case .codable:
+            return .object
+        case .data:
+            return .string
+        case .date:
+            return .string
+        case .decimal:
+            return .number
+        case .integer:
+            return .integer
+        case .string:
+            return .string
+        }
+    }
 }
 
-extension RSDAnswerResultType.SequenceType : RSDDocumentableStringEnum {
-}
-
-extension RSDAnswerResultType : RSDDocumentableCodableObject {
-
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func examples() -> [Encodable] {
-        let examples = examplesWithValues()
-        return examples.map{ $0.answerType }
-    }
-
-    static func examplesWithValues() -> [(answerType: RSDAnswerResultType, value: Any)] {
-        var examples: [(RSDAnswerResultType, Any)] = []
-        
-        func addExamples(sequenceType: SequenceType?) {
-            let baseTypes = BaseType.allCases
-            for baseType in baseTypes {
-                switch baseType {
-                case .boolean:
-                    if sequenceType == nil {
-                        examples.append((RSDAnswerResultType.boolean, true))
-                    }
-                    
-                case .data:
-                    if sequenceType == nil {
-                        let data = Data(base64Encoded: "A4B8")!
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), data))
-                    }
-                    
-                case .date:
-                    
-                    func createValue() -> Any {
-                        if sequenceType == nil {
-                            return Date(timeIntervalSince1970: 200000)
-                        } else {
-                            switch sequenceType! {
-                            case .array:
-                                return [Date(timeIntervalSince1970: 200000), Date(timeIntervalSince1970: 230000)]
-                            case .dictionary:
-                                return ["timestamp": Date(timeIntervalSince1970: 200000)]
-                            }
-                        }
-                    }
-                    
-                    let dateFormats = [RSDFactory.shared.timestampFormatter.dateFormat,
-                                       RSDFactory.shared.timeOnlyFormatter.dateFormat,
-                                       RSDFactory.shared.dateOnlyFormatter.dateFormat]
-                    examples.append((RSDAnswerResultType(baseType: .date, sequenceType: sequenceType), createValue()))
-                    for dateFormat in dateFormats {
-                        var answerType = RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: dateFormat)
-                        answerType.dateLocaleIdentifier = RSDAnswerResultType.defaultDateLocaleIdentifier
-                        examples.append((answerType, createValue()))
-                    }
-                
-                case .decimal:
-                    let value: Any = {
-                        if sequenceType == nil {
-                            return Double.pi
-                        } else {
-                            switch sequenceType! {
-                            case .array:
-                                return [123.45, 345.67]
-                            case .dictionary:
-                                return ["pi": Double.pi]
-                            }
-                        }
-                    }()
-                    examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
-                    if sequenceType == nil {
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: "kg", sequenceSeparator: nil), 54.4311))
-                    }
-                    if sequenceType == .array {
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: "m", sequenceSeparator: ","), [1234.56, 9876.54]))
-                    }
-                    
-                case .integer:
-                    let value: Any = {
-                        if sequenceType == nil {
-                            return 1
-                        } else {
-                            switch sequenceType! {
-                            case .array:
-                                return [1, 2, 3]
-                            case .dictionary:
-                                return ["one": 1, "two": 2]
-                            }
-                        }
-                    }()
-                    examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
-                    if sequenceType == nil {
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: "hr", sequenceSeparator: nil), 2))
-                    }
-                    if sequenceType == .array {
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: "-"), [206, 555, 1212]))
-                    }
-                    
-                case .string:
-                    let value: Any = {
-                        if sequenceType == nil {
-                            return "alpha"
-                        } else {
-                            switch sequenceType! {
-                            case .array:
-                                return ["alpha", "beta", "charlie"]
-                            case .dictionary:
-                                return ["one": "alpha", "two": "beta"]
-                            }
-                        }
-                    }()
-                    examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
-                    if sequenceType == .array {
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: "/"), ["and","or"]))
-                    }
-                    
-                case .codable:
-                    break
-                }
+@available(*, deprecated, message: "Use `AnswerType` instead")
+extension RSDAnswerResultType {
+    var answerType: AnswerType {
+        if let sequenceType = self.sequenceType {
+            switch sequenceType {
+            case .array:
+                return AnswerTypeArray(baseType: self.baseType.jsonType, sequenceSeparator: self.sequenceSeparator)
+            case .dictionary:
+                return AnswerTypeObject()
             }
         }
-        
-        addExamples(sequenceType: nil)
-        SequenceType.allCases.forEach { addExamples(sequenceType: $0) }
-        
-        return examples
+        else if let unit = self.unit {
+            return AnswerTypeMeasurement(unit: unit)
+        }
+        else if self.baseType == .date {
+            return AnswerTypeDateTime(codingFormat: self.dateFormat)
+        }
+        else {
+            return self.baseType.jsonType.answerType
+        }
     }
 }
 

@@ -38,7 +38,8 @@ import Foundation
 public struct RSDDateRangeObject : RSDDateRange, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case minDate = "minimumDate", maxDate = "maximumDate", allowFuture, allowPast, minuteInterval, codingFormat, defaultDate
+        case minDate = "minimumValue", maxDate = "maximumValue", allowFuture, allowPast, minuteInterval, codingFormat, defaultDate
+        case minimumDate, maximumDate
     }
     
     /// The minimum allowed date. When the value of this property is `nil`, then the `allowPast`
@@ -63,7 +64,7 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     
     /// The date encoder to use for formatting the result. If `nil` then the result, `minDate`, and
     /// `maxDate` are assumed to be used for time and date with the default coding implementation.
-    public let dateCoder: RSDDateCoder?
+    public var dateCoder: RSDDateCoder?
     
     /// The date that should be set initially.
     public let defaultDate: Date?
@@ -141,10 +142,18 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
         var defaultDate: Date?
         let dateCoder = try container.decodeIfPresent(RSDDateCoderObject.self, forKey: .codingFormat)
         if dateCoder != nil {
-            if let dateStr = try container.decodeIfPresent(String.self, forKey: .minDate) {
+            if let dateStr = try container.decodeIfPresent(String.self, forKey: .minimumDate) {
+                print("WARNING!!! 'minimumDate' is a deprecated key. Use 'minimumValue' instead.")
                 minDate = dateCoder!.date(from: dateStr)
             }
-            if let dateStr = try container.decodeIfPresent(String.self, forKey: .maxDate) {
+            else if let dateStr = try container.decodeIfPresent(String.self, forKey: .minDate) {
+                minDate = dateCoder!.date(from: dateStr)
+            }
+            if let dateStr = try container.decodeIfPresent(String.self, forKey: .maximumDate) {
+                print("WARNING!!! 'maximumDate' is a deprecated key. Use 'maximumValue' instead.")
+                maxDate = dateCoder!.date(from: dateStr)
+            }
+            else if let dateStr = try container.decodeIfPresent(String.self, forKey: .maxDate) {
                 maxDate = dateCoder!.date(from: dateStr)
             }
             if let dateStr = try container.decodeIfPresent(String.self, forKey: .defaultDate) {
@@ -152,8 +161,20 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
             }
         }
         else {
-            minDate = try container.decodeIfPresent(Date.self, forKey: .minDate)
-            maxDate = try container.decodeIfPresent(Date.self, forKey: .maxDate)
+            if let min = try container.decodeIfPresent(Date.self, forKey: .minimumDate) {
+                print("WARNING!!! 'minimumDate' is a deprecated key. Use 'minimumValue' instead.")
+                minDate = min
+            }
+            else {
+                minDate = try container.decodeIfPresent(Date.self, forKey: .minDate)
+            }
+            if let max = try container.decodeIfPresent(Date.self, forKey: .maximumDate) {
+                print("WARNING!!! 'maximumDate' is a deprecated key. Use 'maximumValue' instead.")
+                maxDate = max
+            }
+            else {
+                maxDate = try container.decodeIfPresent(Date.self, forKey: .maxDate)
+            }
             defaultDate = try container.decodeIfPresent(Date.self, forKey: .defaultDate)
         }
         
@@ -210,3 +231,21 @@ extension RSDDateRangeObject : RSDDocumentableCodableObject {
         return dateRangeExamples()
     }
 }
+
+extension RSDDateCoder {
+    fileprivate var formatType: RSDDatePickerMode {
+        let dateComponents : Set<Calendar.Component> = [.year, .month, .day]
+        let timeComponents : Set<Calendar.Component> = [.hour, .minute]
+        let components = calendarComponents
+        if components.intersection(dateComponents).count == 0 {
+            return .time
+        }
+        else if components.intersection(timeComponents).count == 0 {
+            return .date
+        }
+        else {
+            return .dateAndTime
+        }
+    }
+}
+

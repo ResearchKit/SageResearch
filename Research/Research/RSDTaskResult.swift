@@ -36,7 +36,7 @@ import Foundation
 
 /// `RSDTaskResult` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
-public protocol RSDTaskResult : RSDResult, RSDAnswerResultFinder {
+public protocol RSDTaskResult : RSDResult, RSDAnswerResultFinder, AnswerFinder {
     
     /// A unique identifier for this task run.
     var taskRunUUID: UUID { get }
@@ -78,29 +78,7 @@ extension RSDTaskResult  {
         return self.stepHistory.first(where: { $0.identifier == identifier })
     }
     
-    /// Find an *answer* result within this collection. This method will return `nil` if there is a result
-    /// but that result does **not** conform to to the `RSDAnswerResult` protocol.
-    ///
-    /// - seealso: `RSDAnswerResultFinder`
-    ///
-    /// - parameter identifier: The identifier associated with the result.
-    /// - returns: The result or `nil` if not found.
-    public func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
-        for result in stepHistory {
-            if let answerResult = (result as? RSDAnswerResultFinder)?.findAnswerResult(with: identifier) {
-                return answerResult
-            }
-        }
-        if let results = asyncResults {
-            for result in results {
-                if let answerResult = (result as? RSDAnswerResultFinder)?.findAnswerResult(with: identifier) {
-                    return answerResult
-                }
-            }
-        }
-        return nil
-    }
-    
+
     /// Append the result to the end of the step history, replacing the previous instance with the same identifier.
     /// - parameter result:  The result to add to the step history.
     /// - returns: The previous result or `nil` if there wasn't one.
@@ -139,5 +117,50 @@ extension RSDTaskResult  {
         else {
             asyncResults!.append(result)
         }
+    }
+}
+
+public extension RSDTaskResult {
+    /// Find an *answer* result within this collection. This method will return `nil` if there is a result
+    /// but that result does **not** conform to to the `RSDAnswerResult` protocol.
+    ///
+    /// - seealso: `RSDAnswerResultFinder`
+    ///
+    /// - parameter identifier: The identifier associated with the result.
+    /// - returns: The result or `nil` if not found.
+    @available(*, deprecated, message: "Use `AnswerFinder.findAnswer` instead.")
+    func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
+        for result in stepHistory {
+            if let answerResult = (result as? RSDAnswerResultFinder)?.findAnswerResult(with: identifier) {
+                return answerResult
+            }
+        }
+        if let results = asyncResults {
+            for result in results {
+                if let answerResult = (result as? RSDAnswerResultFinder)?.findAnswerResult(with: identifier) {
+                    return answerResult
+                }
+            }
+        }
+        return nil
+    }
+    
+}
+
+public extension RSDTaskResult {
+    func findAnswer(with identifier:String ) -> AnswerResult? {
+        for result in stepHistory {
+            if let answerResult = (result as? AnswerFinder)?.findAnswer(with: identifier) {
+                return answerResult
+            }
+        }
+        if let results = asyncResults {
+            for result in results {
+                if let answerResult = (result as? AnswerFinder)?.findAnswer(with: identifier) {
+                    return answerResult
+                }
+            }
+        }
+        return nil
     }
 }

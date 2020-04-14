@@ -33,6 +33,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 open class RSDPostalCodeTableItem : RSDTextInputTableItem {
     
     // TODO: syoung 10/07/2019 Replace this with a more clever form that asks for the user to

@@ -48,7 +48,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         case identifier
         case stepType = "type"
         case title
-        case text
+        case subtitle
         case detail
         case footnote
         case fullInstructionsOnly
@@ -62,6 +62,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         
         //@available(*, unavailable)
         case colorTheme
+        case text
     }
 
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
@@ -76,15 +77,12 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     open var title: String?
     
     /// Additional text to display for the step in a localized string.
-    ///
-    /// The additional text is often displayed in a smaller font below `title`. If you need to display a long
-    /// question, it can work well to keep the title short and put the additional content in the `text`
-    /// property.
+    open var subtitle: String?
+    
+    @available(*, deprecated, message: "This should map to either `detail` or `subtitle`")
     open var text: String?
     
-    /// Additional detailed explanation for the step.
-    ///
-    /// The font size and display of this property will depend upon the device type.
+    /// The detailed text to display for the step in a localized string.
     open var detail: String?
     
     /// Additional text to display for the step in a localized string at the bottom of the view.
@@ -99,7 +97,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     
     /// Should this step be displayed if and only if the flag has been set for displaying the full
     /// instructions?
-    open var fullInstructionsOnly: Bool = false
+    open var fullInstructionsOnly: Bool { _fullInstructionsOnly ?? false }
+    private var _fullInstructionsOnly: Bool?
     
     /// The view info used to create a custom step.
     open var viewTheme: RSDViewThemeElement?
@@ -199,7 +198,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     /// This is a work around.
     open func copyInto(_ copy: RSDUIStepObject) {
         copy.title = self.title
-        copy.text = self.text
+        copy.subtitle = self.subtitle
         copy.detail = self.detail
         copy.footnote = self.footnote
         copy.viewTheme = self.viewTheme
@@ -211,7 +210,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         copy.beforeCohortRules = self.beforeCohortRules
         copy.afterCohortRules = self.afterCohortRules
         copy.standardPermissions = self.standardPermissions
-        copy.fullInstructionsOnly = self.fullInstructionsOnly
+        copy._fullInstructionsOnly = self._fullInstructionsOnly
     }
 
     // MARK: Result management
@@ -250,7 +249,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     // MARK: Table source
     
     open func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
-        return RSDFormStepDataSourceObject(step: self, parent: parent, supportedHints: supportedHints)
+        return RSDUIStepTableDataSourceImpl(step: self, parent: parent)
     }
     
     // MARK: Decodable
@@ -269,7 +268,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     ///                "identifier": "foo",
     ///                "type": "instruction",
     ///                "title": "Hello World!",
-    ///                "text": "Some text.",
+    ///                "subtitle": "Some text.",
     ///                "detail": "This is a test.",
     ///                "footnote": "This is a footnote.",
     ///                "nextStepIdentifier": "boo",
@@ -341,11 +340,25 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? self.title
-        self.text = try container.decodeIfPresent(String.self, forKey: .text) ?? self.text
-        self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
+        
+        if let text = try container.decodeIfPresent(String.self, forKey: .text) {
+            debugPrint("WARNING!!! `text` keyword on a UIStepObject decoding is deprecated and will be deleted in future versions.")
+            if let detail = try container.decodeIfPresent(String.self, forKey: .detail) {
+                self.subtitle = text
+                self.detail = detail
+            }
+            else {
+                self.detail = text
+            }
+        }
+        else {
+            self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
+            self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle) ?? self.subtitle
+        }
+
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
         self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
-        self.fullInstructionsOnly = try container.decodeIfPresent(Bool.self, forKey: .fullInstructionsOnly) ?? self.fullInstructionsOnly
+        self._fullInstructionsOnly = try container.decodeIfPresent(Bool.self, forKey: .fullInstructionsOnly) ?? self._fullInstructionsOnly
     
         self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
         self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
@@ -376,6 +389,53 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         }
     }
     
+    /// Define the encoder, but do not require protocol conformance of subclasses.
+    /// - parameter encoder: The encoder to use to encode this instance.
+    /// - throws: `EncodingError`
+    open override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.identifier, forKey: .identifier)
+        try container.encode(self.stepType, forKey: .stepType)
+        try container.encodeIfPresent(self.title, forKey: .title)
+        try container.encodeIfPresent(self.subtitle, forKey: .subtitle)
+        try container.encodeIfPresent(self.detail, forKey: .detail)
+        try container.encodeIfPresent(self.footnote, forKey: .footnote)
+        try container.encodeIfPresent(self.nextStepIdentifier, forKey: .nextStepIdentifier)
+        try container.encodeIfPresent(self._fullInstructionsOnly, forKey: .fullInstructionsOnly)
+        try container.encodeIfPresent(self.standardPermissions, forKey: .permissions)
+        try _encode(object: self.viewTheme, to: encoder, forKey: .viewTheme)
+        try _encode(object: self.imageTheme, to: encoder, forKey: .image)
+        try _encode(object: self.colorMapping, to: encoder, forKey: .colorMapping)
+        try _encode(cohortRules: self.beforeCohortRules, to: encoder, forKey: .beforeCohortRules)
+        try _encode(cohortRules: self.afterCohortRules, to: encoder, forKey: .afterCohortRules)
+    }
+    
+    private func _encode(object: Any?, to encoder: Encoder, forKey: CodingKeys) throws {
+        guard let obj = object else { return }
+        guard let encodable = obj as? Encodable else {
+            var codingPath = encoder.codingPath
+            codingPath.append(forKey)
+            let context = EncodingError.Context(codingPath: codingPath, debugDescription: "\(obj) does not conform to the `Encodable` protocol")
+            throw EncodingError.invalidValue(obj, context)
+        }
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        let nestedEncoder = container.superEncoder(forKey: forKey)
+        try encodable.encode(to: nestedEncoder)
+    }
+    
+    private func _encode(cohortRules: [RSDCohortNavigationRule]?, to encoder: Encoder, forKey: CodingKeys) throws {
+        guard let rules = cohortRules else { return }
+        guard let encodableRules = rules as? [RSDCohortNavigationRuleObject] else {
+            var codingPath = encoder.codingPath
+            codingPath.append(forKey)
+            let context = EncodingError.Context(codingPath: codingPath, debugDescription: "\(rules) does not conform to the `RSDCohortNavigationRuleObject` protocol")
+            throw EncodingError.invalidValue(rules, context)
+        }
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(encodableRules, forKey: forKey)
+    }
+
     // Overrides must be defined in the base implementation
     
     override class func codingKeys() -> [CodingKey] {
@@ -390,7 +450,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
-            "text": "Some text.",
+            "subtitle": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "nextStepIdentifier": "boo",

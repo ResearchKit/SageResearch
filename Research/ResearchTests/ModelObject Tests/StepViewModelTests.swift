@@ -163,8 +163,7 @@ class StepViewModelTests: XCTestCase {
     
     func testResultSummaryStepViewModel_String() {
         let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo")
-        var answerResult = RSDAnswerResultObject(identifier: "foo", answerType: .string)
-        answerResult.value = "blu"
+        let answerResult = AnswerResultObject(identifier: "foo", value: .string("blu"))
         var taskResult = RSDTaskResultObject(identifier: "magoo")
         taskResult.stepHistory = [answerResult]
         let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)
@@ -177,8 +176,7 @@ class StepViewModelTests: XCTestCase {
     
     func testResultSummaryStepViewModel_Decimal() {
         let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo")
-        var answerResult = RSDAnswerResultObject(identifier: "foo", answerType: .decimal)
-        answerResult.value = 1.234211
+        let answerResult = AnswerResultObject(identifier: "foo", value: .number(1.234211))
         var taskResult = RSDTaskResultObject(identifier: "magoo")
         taskResult.stepHistory = [answerResult]
         let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)
@@ -193,13 +191,11 @@ class StepViewModelTests: XCTestCase {
         let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo", unitText: nil, stepResultIdentifier: "step2")
 
         var result1 = RSDCollectionResultObject(identifier: "step1")
-        var answerResult1 = RSDAnswerResultObject(identifier: "foo", answerType: .string)
-        answerResult1.value = "magoo"
+        let answerResult1 = AnswerResultObject(identifier: "foo", value: .string("magoo"))
         result1.inputResults = [answerResult1, RSDResultObject(identifier: "roo")]
         
         var result2 = RSDCollectionResultObject(identifier: "step2")
-        var answerResult2 = RSDAnswerResultObject(identifier: "foo", answerType: .string)
-        answerResult2.value = "blu"
+        let answerResult2 = AnswerResultObject(identifier: "foo", value: .string("blu"))
         result2.inputResults = [answerResult2, RSDResultObject(identifier: "roo")]
         
         var taskResult = RSDTaskResultObject(identifier: "magoo")

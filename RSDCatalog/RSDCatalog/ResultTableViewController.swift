@@ -83,15 +83,19 @@ class ResultTableViewController: UITableViewController {
         if let answerResult = result as? RSDAnswerResult {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.answer.stringValue, for: indexPath) as! ImageTableViewCell
             cell.subtitleLabel?.text = answerResult.value != nil ? String(describing: answerResult.value!) : "nil"
-        } else if let fileResult = result as? RSDFileResult {
+        }
+        else if let fileResult = result as? RSDFileResult {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.file.stringValue, for: indexPath) as! ImageTableViewCell
             cell.subtitleLabel?.text = fileResult.url != nil ? String(describing: fileResult.url!.lastPathComponent) : "nil"
-        } else if (result is RSDCollectionResult) || (result is RSDTaskResult) {
+        }
+        else if (result is RSDCollectionResult) || (result is RSDTaskResult) {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.section.stringValue, for: indexPath) as! ImageTableViewCell
-        } else if let errorResult = result as? RSDErrorResult {
+        }
+        else if let errorResult = result as? RSDErrorResult {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.error.stringValue, for: indexPath) as! ImageTableViewCell
             cell.subtitleLabel?.text = errorResult.errorDescription
-        } else {
+        }
+        else {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.base.stringValue, for: indexPath) as! ImageTableViewCell
         }
         cell.titleLabel?.text = result.identifier

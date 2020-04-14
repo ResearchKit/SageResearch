@@ -39,6 +39,7 @@ import Foundation
 /// This step is intended for use as a placeholder step for decoding a step that may be defined using a customized subtype
 /// or for replacing properties on an `RSDMutableStep`.
 ///
+@available(*, deprecated, message: "Generic step is no longer supported and will be deleted in a future version")
 public struct RSDGenericStepObject : RSDGenericStep, Decodable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {

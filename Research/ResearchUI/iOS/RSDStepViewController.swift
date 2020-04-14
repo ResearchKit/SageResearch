@@ -274,13 +274,13 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         
         // Set up label text.
         stepTitleLabel?.text = uiStep?.title
-        stepTextLabel?.text = uiStep?.text
+        stepTextLabel?.text = uiStep?.subtitle
         if let detail = uiStep?.detail {
             if let detailLabel = self.stepDetailLabel {
                 detailLabel.text = detail
             }
             else {
-                stepTextLabel?.text = (uiStep?.text == nil) ? detail : "\(uiStep!.text!)\n\n\(detail)"
+                stepTextLabel?.text = (uiStep?.subtitle == nil) ? detail : "\(uiStep!.subtitle!)\n\n\(detail)"
             }
         }
         

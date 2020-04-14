@@ -36,6 +36,7 @@ import Foundation
 
 /// `RSDChoicePickerTableItemGroup` subclasses `RSDInputFieldTableItemGroup` to implement a single or multiple
 /// choice question where the choices are presented as a list.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Does the item group allow for multiple choices or is it single selection?
@@ -151,7 +152,7 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
     /// - throws: `RSDInputFieldError` if the selection is invalid.
     open func select(_ item: RSDChoiceTableItem, indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard let selectableItems = self.items as? [RSDChoiceTableItem] else {
-            let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: nil, answerResult: answerType, debugDescription: "This input field does not support selection.")
+            let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: nil, debugDescription: "This input field does not support selection.")
             throw RSDInputFieldError.invalidType(context)
         }
         
@@ -184,6 +185,7 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
 }
 
 /// An item group for entering a boolean data type.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 public final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
     
     /// Default initializer.

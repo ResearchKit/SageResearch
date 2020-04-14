@@ -38,6 +38,7 @@ public protocol RSDStringEnumSet : Hashable, RawRepresentable, CaseIterable wher
 }
 
 /// `RSDIntEnumSet` is a protocol for defining the set of all int values included in an enum.
+@available(*, deprecated, message: "Kotlin does not support Int enums. Implement `RSDDocumentableStringEnum` instead.")
 public protocol RSDIntEnumSet : Hashable, RawRepresentable, CaseIterable where RawValue == Int {
 }
 
@@ -46,13 +47,10 @@ public struct RSDDocumentCreator {
     let allStringEnums: [RSDDocumentableStringEnum.Type] = {
         
         var allEnums: [RSDDocumentableStringEnum.Type] = [
-        RSDAnswerResultType.BaseType.self,
-        RSDAnswerResultType.SequenceType.self,
         RSDAsyncActionType.self,
         RSDCohortRuleOperator.self,
         RSDDateCoderObject.self,
         RSDDeviceType.self,
-        RSDFormDataType.self,
         RSDFormUIHint.self,
         RSDIdentifier.self,
         RSDKeyboardType.self,
@@ -64,16 +62,8 @@ public struct RSDDocumentCreator {
         RSDTextAutocapitalizationType.self,
         RSDTextAutocorrectionType.self,
         RSDTextSpellCheckingType.self,
+        RSDWeekday.self,
         ]
-        
-        return allEnums
-    }()
-    
-    let allIntEnums: [RSDDocumentableIntEnum.Type] = {
-        
-        var allEnums: [RSDDocumentableIntEnum.Type] = [
-            RSDWeekday.self,
-            ]
         
         return allEnums
     }()
@@ -84,14 +74,11 @@ public struct RSDDocumentCreator {
     
     let allStringLiterals: [RSDDocumentableStringLiteral.Type] = [
         RSDChoiceObject<String>.self,
-        RSDRegExValidatorObject.self,
         ]
 
     let allCodableObjects: [RSDDocumentableCodableObject.Type] = {
         var allCodableObjects: [RSDDocumentableCodableObject.Type] = [
             RSDAnimatedImageThemeElementObject.self,
-            RSDAnswerResultObject.self,
-            RSDAnswerResultType.self,
             RSDCohortNavigationRuleObject.self,
             RSDCollectionResultObject.self,
             RSDDateRangeObject.self,
@@ -103,7 +90,6 @@ public struct RSDDocumentCreator {
             RSDResultObject.self,
             RSDStandardAsyncActionConfiguration.self,
             RSDTaskResultObject.self,
-            RSDTextFieldOptionsObject.self,
             RSDUIActionObject.self,
             RSDViewThemeElementObject.self,
             RSDWebViewUIActionObject.self,
@@ -129,22 +115,12 @@ public struct RSDDocumentCreator {
         RSDComparableSurveyRuleObject<RSDFraction>.self,
         RSDUIStepObject.self,
         RSDActiveUIStepObject.self,
-        RSDFormUIStepObject.self,
         RSDOverviewStepObject.self,
         RSDResultSummaryStepObject.self,
         RSDSectionStepObject.self,
         RSDStepTransformerObject.self,
-        RSDInputFieldObject.self,
-        RSDDetailInputFieldObject.self,
-        RSDCodableChoiceInputFieldObject<Bool>.self,
-        RSDCodableChoiceInputFieldObject<String>.self,
-        RSDCodableChoiceInputFieldObject<Date>.self,
-        RSDCodableChoiceInputFieldObject<Double>.self,
-        RSDCodableChoiceInputFieldObject<Int>.self,
-        RSDCodableChoiceInputFieldObject<RSDFraction>.self,
         RSDColorPlacementThemeElementObject.self,
         RSDSingleColorThemeElementObject.self,
-        RSDMultipleComponentInputFieldObject.self,
         RSDSchemaInfoObject.self,
         RSDConditionalStepNavigatorObject.self,
         RSDTaskGroupObject.self,
@@ -178,6 +154,7 @@ extension RSDStringEnumSet {
 
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up
 /// testing of `Codable` enum objects used by this framework.
+@available(*, deprecated, message: "Kotlin does not support Int enums. Implement `RSDDocumentableStringEnum` instead.")
 protocol RSDDocumentableIntEnum : RSDDocumentable, Codable {
     
     /// The int Value for the enum.
@@ -188,6 +165,7 @@ protocol RSDDocumentableIntEnum : RSDDocumentable, Codable {
 }
 
 /// Any enum set can represent its coding keys by mapping the raw value to a string.
+@available(*, deprecated, message: "Kotlin does not support Int enums. Implement `RSDDocumentableStringEnum` instead.")
 extension RSDIntEnumSet {
     
     var intValue: Int {

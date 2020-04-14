@@ -48,21 +48,18 @@ class SurveyRuleTests: XCTestCase {
         super.tearDown()
     }
     
-    func testActionSkipRule_NilResult() {
+    func testActionSkipRule_NilAnswer() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let inputItem1 = StringTextInputItemObject(resultIdentifier: "field1")
+        let inputItem2 = IntegerTextInputItemObject(resultIdentifier: "field2")
+        
         let skipAction = RSDNavigationUIActionObject(skipToIdentifier: "bar", buttonTitle: "Prefer not to answer")
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
+        let step = MultipleInputQuestionStepObject(identifier: "foo", inputItems: [inputItem1, inputItem2])
         step.actions = [.navigation(.skip) : skipAction]
         
-        var taskResult = RSDTaskResultObject(identifier: "boobaloo")
-        taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction1"))
-        taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction2"))
-        
-        let collectionResult = RSDCollectionResultObject(identifier: "foo")
-        taskResult.appendStepHistory(with: collectionResult)
+        let (taskResult, answerResult) = createTaskResult(for: step, with: nil)
+        answerResult.skipToIdentifier = "bar"
 
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -71,16 +68,18 @@ class SurveyRuleTests: XCTestCase {
         XCTAssertEqual(navigatingIdentifier, "bar")
     }
     
-    func testActionSkipRule_NilAnswer() {
+    func testActionSkipRule_NonNilAnswer() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let inputItem1 = StringTextInputItemObject(resultIdentifier: "field1")
+        let inputItem2 = IntegerTextInputItemObject(resultIdentifier: "field2")
+        
         let skipAction = RSDNavigationUIActionObject(skipToIdentifier: "bar", buttonTitle: "Prefer not to answer")
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
+        let step = MultipleInputQuestionStepObject(identifier: "foo", inputItems: [inputItem1, inputItem2])
         step.actions = [.navigation(.skip) : skipAction]
         
-        let taskResult = createTaskResult(answerType: .integer, value: nil)
+        let (taskResult, answerResult) = createTaskResult(for: step, with: .object(["field1":"boo","field2":3]))
+        answerResult.skipToIdentifier = "bar"
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -112,15 +111,15 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Always() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
-        
         let rule = RSDComparableSurveyRuleObject<Int>(skipToIdentifier: "always", matchingValue: nil, ruleOperator: .always)
-        inputField2.surveyRules = [rule]
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
+        let inputItem1 = StringTextInputItemObject(resultIdentifier: "field1")
+        let inputItem2 = IntegerTextInputItemObject(resultIdentifier: "field2")
         
-        let taskResult = createTaskResult(answerType: .integer, value: 2)
+        let step = MultipleInputQuestionStepObject(identifier: "foo", inputItems: [inputItem1, inputItem2])
+        step.surveyRules = [rule]
+        
+        let (taskResult, _) = createTaskResult(for: step, with: .object(["field1":"boo","field2":3]))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -133,18 +132,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Integer_Equal() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let inputItem = IntegerTextInputItemObject()
         
-        inputField2.surveyRules = [
-            createRule("lessThan", 1, .lessThan),
-            createRule("equal", 2, .equal),
-            createRule("greaterThan", 3, .greaterThan)
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+            createRule("lessThan", .integer(1), .lessThan, nil),
+            createRule("equal", .integer(2), .equal, nil),
+            createRule("greaterThan", .integer(3), .greaterThan, nil)
         ]
-
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
         
-        let taskResult = createTaskResult(answerType: .integer, value: 2)
+        let (taskResult, _) = createTaskResult(for: step, with: .integer(2))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -155,15 +152,13 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Integer_Equal_Default() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let rule = createRule("equal", .integer(3), nil, nil)
         
-        let rule = RSDComparableSurveyRuleObject<Int>(skipToIdentifier: "equal", matchingValue: 2, ruleOperator: nil)
-        inputField2.surveyRules = [ rule ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .integer, value: 2)
+        let inputItem = IntegerTextInputItemObject()
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [ rule ]
+
+        let (taskResult, _) = createTaskResult(for: step, with: .integer(3))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -174,15 +169,13 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Integer_Skip_Default() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let rule = createRule("skip", nil, nil, nil)
         
-        let rule = RSDComparableSurveyRuleObject<Int>(skipToIdentifier: "skip", matchingValue: nil, ruleOperator: nil)
-        inputField2.surveyRules = [ rule ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .integer, value: nil)
+        let inputItem = IntegerTextInputItemObject()
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [ rule ]
+
+        let (taskResult, _) = createTaskResult(for: step, with: .null)
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -193,18 +186,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Integer_LessThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let inputItem = IntegerTextInputItemObject()
         
-        inputField2.surveyRules = [
-            createRule("lessThan", 1, .lessThan),
-            createRule("equal", 2, .equal),
-            createRule("greaterThan", 3, .greaterThan)
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+            createRule("lessThan", .integer(1), .lessThan, nil),
+            createRule("equal", .integer(2), .equal, nil),
+            createRule("greaterThan", .integer(3), .greaterThan, nil)
         ]
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .integer, value: 0)
+        let (taskResult, _) = createTaskResult(for: step, with: .integer(0))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -215,18 +206,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Integer_GreaterThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let inputItem = IntegerTextInputItemObject()
         
-        inputField2.surveyRules = [
-            createRule("lessThan", 1, .lessThan),
-            createRule("equal", 2, .equal),
-            createRule("greaterThan", 3, .greaterThan)
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+            createRule("lessThan", .integer(1), .lessThan, nil),
+            createRule("equal", .integer(2), .equal, nil),
+            createRule("greaterThan", .integer(3), .greaterThan, nil)
         ]
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .integer, value: 4)
+        let (taskResult, _) = createTaskResult(for: step, with: .integer(4))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -237,18 +226,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Integer_NotGreaterThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let inputItem = IntegerTextInputItemObject()
         
-        inputField2.surveyRules = [
-            createRule("lessThan", 1, .lessThan),
-            createRule("equal", 2, .equal),
-            createRule("greaterThan", 3, .greaterThan)
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+            createRule("lessThan", .integer(1), .lessThan, nil),
+            createRule("equal", .integer(2), .equal, nil),
+            createRule("greaterThan", .integer(3), .greaterThan, nil)
         ]
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .integer, value: 3)
+        let (taskResult, _) = createTaskResult(for: step, with: .integer(3))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -259,18 +246,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Integer_NotLessThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let inputItem = IntegerTextInputItemObject()
         
-        inputField2.surveyRules = [
-            createRule("lessThan", 1, .lessThan),
-            createRule("equal", 2, .equal),
-            createRule("greaterThan", 3, .greaterThan)
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+            createRule("lessThan", .integer(1), .lessThan, nil),
+            createRule("equal", .integer(2), .equal, nil),
+            createRule("greaterThan", .integer(3), .greaterThan, nil)
         ]
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .integer, value: 1)
+        let (taskResult, _) = createTaskResult(for: step, with: .integer(1))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -281,18 +266,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Integer_LessThanOrEqual() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let inputItem = IntegerTextInputItemObject()
         
-        inputField2.surveyRules = [
-            createRule("lessThanEqual", 1, .lessThanEqual),
-            createRule("equal", 2, .equal),
-            createRule("greaterThanEqual", 3, .greaterThanEqual)
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+            createRule("lessThanEqual", .integer(1), .lessThanEqual, nil),
+            createRule("equal", .integer(2), .equal, nil),
+            createRule("greaterThanEqual", .integer(3), .greaterThanEqual, nil)
         ]
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .integer, value: 1)
+        let (taskResult, _) = createTaskResult(for: step, with: .integer(1))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -303,16 +286,14 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Integer_NotEqual_True() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let inputItem = IntegerTextInputItemObject()
         
-        inputField2.surveyRules = [
-            createRule("notEqual", 2, .notEqual),
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+            createRule("notEqual", .integer(2), .notEqual, nil),
         ]
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .integer, value: 3)
+        let (taskResult, _) = createTaskResult(for: step, with: .integer(3))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -323,16 +304,14 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Integer_NotEqual_False() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        let inputItem = IntegerTextInputItemObject()
         
-        inputField2.surveyRules = [
-            createRule("notEqual", 2, .notEqual),
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+            createRule("notEqual", .integer(2), .notEqual, nil),
         ]
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .integer, value: 2)
+        let (taskResult, _) = createTaskResult(for: step, with: .integer(2))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -345,18 +324,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_Equal() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.decimal))
+        let inputItem = DoubleTextInputItemObject()
         
-        inputField2.surveyRules = [
-            createRule("lessThan", 1.0, .lessThan),
-            createRule("equal", 2.0, .equal),
-            createRule("greaterThan", 3.0, .greaterThan)
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+            createRule("lessThan", .number(1.0), .lessThan, nil),
+            createRule("equal", .number(2.0), .equal, nil),
+            createRule("greaterThan", .number(3.0), .greaterThan, nil)
         ]
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .decimal, value: 2.0)
+        let (taskResult, _) = createTaskResult(for: step, with: .number(2.0000000000001))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -367,18 +344,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_LessThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.decimal))
+        let inputItem = DoubleTextInputItemObject()
         
-        inputField2.surveyRules = [
-            createRule("lessThan", 1.0, .lessThan),
-            createRule("equal", 2.0, .equal),
-            createRule("greaterThan", 3.0, .greaterThan)
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+            createRule("lessThan", .number(1.0), .lessThan, nil),
+            createRule("equal", .number(2.0), .equal, nil),
+            createRule("greaterThan", .number(3.0), .greaterThan, nil)
         ]
         
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .decimal, value: 0.0)
+        let (taskResult, _) = createTaskResult(for: step, with: .number(0.0))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -389,18 +364,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_GreaterThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.decimal))
-        
-        inputField2.surveyRules = [
-            createRule("lessThan", 1.0, .lessThan),
-            createRule("equal", 2.0, .equal),
-            createRule("greaterThan", 3.0, .greaterThan)
+        let inputItem = DoubleTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("lessThan", .number(1.0), .lessThan, nil),
+             createRule("equal", .number(2.0), .equal, nil),
+             createRule("greaterThan", .number(3.0), .greaterThan, nil)
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .decimal, value: 4.0)
+
+        let (taskResult, _) = createTaskResult(for: step, with: .number(4.0))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -411,18 +384,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_NotGreaterThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.decimal))
-        
-        inputField2.surveyRules = [
-            createRule("lessThan", 1.0, .lessThan),
-            createRule("equal", 2.0, .equal),
-            createRule("greaterThan", 3.0, .greaterThan)
+        let inputItem = DoubleTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("lessThan", .number(1.0), .lessThan, nil),
+             createRule("equal", .number(2.0), .equal, nil),
+             createRule("greaterThan", .number(3.0), .greaterThan, nil)
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .decimal, value: 3.0)
+
+        let (taskResult, _) = createTaskResult(for: step, with: .number(3.0))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -433,18 +404,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_NotLessThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.decimal))
-        
-        inputField2.surveyRules = [
-            createRule("lessThan", 1.0, .lessThan),
-            createRule("equal", 2.0, .equal),
-            createRule("greaterThan", 3.0, .greaterThan)
+        let inputItem = DoubleTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("lessThan", .number(1.0), .lessThan, nil),
+             createRule("equal", .number(2.0), .equal, nil),
+             createRule("greaterThan", .number(3.0), .greaterThan, nil)
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .decimal, value: 1.0)
+
+        let (taskResult, _) = createTaskResult(for: step, with: .number(1.0))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -455,18 +424,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_LessThanOrEqual() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.decimal))
-        
-        inputField2.surveyRules = [
-            createRule("lessThanEqual", 1.0, .lessThanEqual),
-            createRule("equal", 2.0, .equal),
-            createRule("greaterThanEqual", 3.0, .greaterThanEqual)
+        let inputItem = DoubleTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("lessThanEqual", .number(1.0), .lessThanEqual, nil),
+             createRule("equal", .number(2.0), .equal, nil),
+             createRule("greaterThanEqual", .number(3.0), .greaterThanEqual, nil)
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .decimal, value: 1.0)
+
+        let (taskResult, _) = createTaskResult(for: step, with: .number(1.0))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -477,16 +444,14 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_NotEqual_True() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.decimal))
-        
-        inputField2.surveyRules = [
-            createRule("notEqual", 2.0, .notEqual),
+        let inputItem = DoubleTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("notEqual", .number(2.0), .notEqual, nil),
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .decimal, value: 3.0)
+
+        let (taskResult, _) = createTaskResult(for: step, with: .number(3.0))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -497,16 +462,14 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Decimal_NotEqual_False() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.decimal))
-        
-        inputField2.surveyRules = [
-            createRule("notEqual", 2.0, .notEqual),
+        let inputItem = DoubleTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("notEqual", .number(2.0), .notEqual, nil),
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .decimal, value: 2.0)
+
+        let (taskResult, _) = createTaskResult(for: step, with: .number(2.0))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -519,18 +482,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_String_Equal() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
-        
-        inputField2.surveyRules = [
-            createRule("lessThan", "beta", .lessThan),
-            createRule("equal", "charlie", .equal),
-            createRule("greaterThan", "delta", .greaterThan)
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("lessThan", .string("beta"), .lessThan, nil),
+             createRule("equal", .string("charlie"), .equal, nil),
+             createRule("greaterThan", .string("delta"), .greaterThan, nil)
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .string, value: "charlie")
+
+        let (taskResult, _) = createTaskResult(for: step, with: .string("charlie"))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -541,18 +502,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_String_LessThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
-        
-        inputField2.surveyRules = [
-            createRule("lessThan", "beta", .lessThan),
-            createRule("equal", "charlie", .equal),
-            createRule("greaterThan", "delta", .greaterThan)
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("lessThan", .string("beta"), .lessThan, nil),
+             createRule("equal", .string("charlie"), .equal, nil),
+             createRule("greaterThan", .string("delta"), .greaterThan, nil)
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .string, value: "alpha")
+
+        let (taskResult, _) = createTaskResult(for: step, with: .string("alpha"))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -563,18 +522,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_String_GreaterThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
-        
-        inputField2.surveyRules = [
-            createRule("lessThan", "beta", .lessThan),
-            createRule("equal", "charlie", .equal),
-            createRule("greaterThan", "delta", .greaterThan)
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("lessThan", .string("beta"), .lessThan, nil),
+             createRule("equal", .string("charlie"), .equal, nil),
+             createRule("greaterThan", .string("delta"), .greaterThan, nil)
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .string, value: "gamma")
+
+        let (taskResult, _) = createTaskResult(for: step, with: .string("gamma"))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -585,18 +542,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_String_NotGreaterThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
-        
-        inputField2.surveyRules = [
-            createRule("lessThan", "beta", .lessThan),
-            createRule("equal", "charlie", .equal),
-            createRule("greaterThan", "delta", .greaterThan)
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("lessThan", .string("beta"), .lessThan, nil),
+             createRule("equal", .string("charlie"), .equal, nil),
+             createRule("greaterThan", .string("delta"), .greaterThan, nil)
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .string, value: "delta")
+
+        let (taskResult, _) = createTaskResult(for: step, with: .string("delta"))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -607,18 +562,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_String_NotLessThan() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
-        
-        inputField2.surveyRules = [
-            createRule("lessThan", "beta", .lessThan),
-            createRule("equal", "charlie", .equal),
-            createRule("greaterThan", "delta", .greaterThan)
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("lessThan", .string("beta"), .lessThan, nil),
+             createRule("equal", .string("charlie"), .equal, nil),
+             createRule("greaterThan", .string("delta"), .greaterThan, nil)
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .string, value: "beta")
+
+        let (taskResult, _) = createTaskResult(for: step, with: .string("beta"))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -629,18 +582,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_String_LessThanOrEqual() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
-        
-        inputField2.surveyRules = [
-            createRule("lessThanEqual", "beta", .lessThanEqual),
-            createRule("equal", "charlie", .equal),
-            createRule("greaterThanEqual", "delta", .greaterThanEqual)
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("lessThanEqual", .string("beta"), .lessThanEqual, nil),
+             createRule("equal", .string("charlie"), .equal, nil),
+             createRule("greaterThanEqual", .string("delta"), .greaterThanEqual, nil)
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .string, value: "beta")
+
+        let (taskResult, _) = createTaskResult(for: step, with: .string("beta"))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -651,16 +602,14 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_String_NotEqual_True() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
-        
-        inputField2.surveyRules = [
-            createRule("notEqual", "charlie", .notEqual),
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("notEqual", .string("charlie"), .notEqual, nil),
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .string, value: "hoover")
+
+        let (taskResult, _) = createTaskResult(for: step, with: .string("hoover"))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -671,16 +620,14 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_String_NotEqual_False() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
-        
-        inputField2.surveyRules = [
-            createRule("notEqual", "charlie", .notEqual),
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule("notEqual", .string("charlie"), .notEqual, nil),
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .string, value: "charlie")
+
+        let (taskResult, _) = createTaskResult(for: step, with: .string("charlie"))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -693,17 +640,17 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Boolean_Equal_True() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.boolean))
+        let step = ChoiceQuestionStepObject(identifier: "foo", choices: [
+            JsonChoiceObject(matchingValue: .boolean(true), text: "Yes"),
+            JsonChoiceObject(matchingValue: .boolean(false), text: "No")
+        ])
         
-        inputField2.surveyRules = [
-            createRule("equal", true, .equal),
+        step.surveyRules = [
+             createRule("equal", .boolean(true), .equal, nil),
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .boolean, value: true)
-        
+
+        let (taskResult, _) = createTaskResult(for: step, with: .boolean(true))
+
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
@@ -713,16 +660,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Boolean_Equal_False() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.boolean))
+        let step = ChoiceQuestionStepObject(identifier: "foo", choices: [
+            JsonChoiceObject(matchingValue: .boolean(true), text: "Yes"),
+            JsonChoiceObject(matchingValue: .boolean(false), text: "No")
+        ])
         
-        inputField2.surveyRules = [
-            createRule("equal", true, .equal),
+        step.surveyRules = [
+             createRule("equal", .boolean(true), .equal, nil),
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .boolean, value: false)
+
+        let (taskResult, _) = createTaskResult(for: step, with: .boolean(false))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -733,16 +680,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Boolean_NotEqual_True() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.boolean))
+        let step = ChoiceQuestionStepObject(identifier: "foo", choices: [
+            JsonChoiceObject(matchingValue: .boolean(true), text: "Yes"),
+            JsonChoiceObject(matchingValue: .boolean(false), text: "No")
+        ])
         
-        inputField2.surveyRules = [
-            createRule("notEqual", true, .notEqual),
+        step.surveyRules = [
+             createRule("notEqual", .boolean(true), .notEqual, nil),
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .boolean, value: false)
+
+        let (taskResult, _) = createTaskResult(for: step, with: .boolean(false))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -753,16 +700,16 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Boolean_NotEqual_False() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.boolean))
+        let step = ChoiceQuestionStepObject(identifier: "foo", choices: [
+            JsonChoiceObject(matchingValue: .boolean(true), text: "Yes"),
+            JsonChoiceObject(matchingValue: .boolean(false), text: "No")
+        ])
         
-        inputField2.surveyRules = [
-            createRule("notEqual", true, .notEqual),
+        step.surveyRules = [
+             createRule("notEqual", .boolean(true), .notEqual, nil),
         ]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .boolean, value: true)
+
+        let (taskResult, _) = createTaskResult(for: step, with: .boolean(true))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -775,18 +722,17 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Cohort_Equal() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
-        
-        let rule1 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "charlie", ruleOperator: .equal, cohort: "c")
-        let rule2 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "delta", ruleOperator: .equal, cohort: "d")
-        let rule3 = RSDComparableSurveyRuleObject<String>(skipToIdentifier: nil, matchingValue: nil, ruleOperator: nil, cohort: "skip")
-        let rule4 = RSDComparableSurveyRuleObject<String>(skipToIdentifier: nil, matchingValue: nil, ruleOperator: .always, cohort: "always")
-        inputField2.surveyRules = [rule1, rule2, rule3, rule4]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .string, value: "charlie")
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule(nil, .string("charlie"), .equal, "c"),
+             createRule(nil, .string("delta"), .equal, "d"),
+             createRule(nil, .null, nil, "skip"),
+             createRule(nil, nil, .always, "always")
+        ]
+
+        let (taskResult, _) = createTaskResult(for: step, with: .string("charlie"))
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -804,20 +750,19 @@ class SurveyRuleTests: XCTestCase {
     
     func testSurveyRule_Cohort_Skip() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
-        
-        let rule1 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "charlie", ruleOperator: .equal, cohort: "c")
-        let rule2 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "delta", ruleOperator: .equal, cohort: "d")
-        let rule3 = RSDComparableSurveyRuleObject<String>(skipToIdentifier: nil, matchingValue: nil, ruleOperator: nil, cohort: "skip")
-        inputField2.surveyRules = [rule1, rule2, rule3]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule(nil, .string("charlie"), .equal, "c"),
+             createRule(nil, .string("delta"), .equal, "d"),
+             createRule(nil, .null, nil, "skip"),
+        ]
+
         let after1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
         step.afterCohortRules = [after1]
         
-        let taskResult = createTaskResult(answerType: .string, value: nil)
+        let (taskResult, _) = createTaskResult(for: step, with: nil)
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -835,16 +780,18 @@ class SurveyRuleTests: XCTestCase {
     
     func testCohortTrackingRule_NextStep() {
         
-        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
-        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
+        let inputItem = StringTextInputItemObject()
+         
+        let step = SimpleQuestionStepObject(identifier: "foo", inputItem: inputItem)
+        step.surveyRules = [
+             createRule(nil, .string("charlie"), .equal, "c"),
+             createRule(nil, .string("delta"), .equal, "d"),
+        ]
+
+        let after1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        step.afterCohortRules = [after1]
         
-        let rule1 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "charlie", ruleOperator: .equal, cohort: "c")
-        let rule2 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "delta", ruleOperator: .equal, cohort: "d")
-        inputField2.surveyRules = [rule1, rule2]
-        
-        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
-        
-        let taskResult = createTaskResult(answerType: .string, value: "charlie")
+        let (taskResult, _) = createTaskResult(for: step, with: .string("charlie"))
         
         let tracker = RSDCohortTrackingRule(initialCohorts: ["d", "test"])
         
@@ -1057,23 +1004,19 @@ class SurveyRuleTests: XCTestCase {
     
     // Helper methods
     
-    func createRule<Value : Codable>(_ skipIdentifier: String?, _ matchingValue: Value, _ ruleOperator:RSDSurveyRuleOperator) -> RSDComparableSurveyRuleObject<Value> {
-        return RSDComparableSurveyRuleObject<Value>(skipToIdentifier: skipIdentifier, matchingValue: matchingValue, ruleOperator: ruleOperator)
+    func createRule(_ skipIdentifier: String?, _ matchingValue: JsonElement?, _ ruleOperator: RSDSurveyRuleOperator?, _ cohort: String?) -> JsonSurveyRuleObject {
+        return JsonSurveyRuleObject(skipToIdentifier: skipIdentifier, matchingValue: matchingValue, ruleOperator: ruleOperator, cohort: cohort)
     }
     
-    func createTaskResult(answerType: RSDAnswerResultType, value: Any?) -> RSDTaskResultObject {
-        
+    func createTaskResult(for step: QuestionStep, with jsonValue: JsonElement?) -> (RSDTaskResultObject, AnswerResultObject) {
         var taskResult = RSDTaskResultObject(identifier: "boobaloo")
         taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction1"))
         taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction2"))
         
-        var collectionResult = RSDCollectionResultObject(identifier: "foo")
-        collectionResult.appendInputResults(with: RSDAnswerResultObject(identifier: "field1", answerType: RSDAnswerResultType.string))
-        var answerResult = RSDAnswerResultObject(identifier: "field2", answerType: answerType)
-        answerResult.value = value
-        collectionResult.appendInputResults(with: answerResult)
-        taskResult.appendStepHistory(with: collectionResult)
+        let answerResult = step.instantiateStepResult() as! AnswerResultObject
+        taskResult.appendStepHistory(with: answerResult)
+        answerResult.jsonValue = jsonValue
         
-        return taskResult
+        return (taskResult, answerResult)
     }
 }

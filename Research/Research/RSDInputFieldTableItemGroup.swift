@@ -34,6 +34,7 @@
 import Foundation
 
 /// `RSDInputFieldTableItemGroup` is used to represent a single input field.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     
     /// The input field associated with this item group.
@@ -148,7 +149,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
         guard let answerResult = result as? RSDAnswerResult,
             answerResult.answerType == answerType
             else {
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Result answer type for \(result) not expected type.")
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Result answer type for \(result) not expected type.")
                 throw RSDInputFieldError.invalidType(context)
         }
         try self.setAnswer(answerResult.value)
@@ -171,6 +172,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
 }
 
 /// An item group for entering text.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 public final class RSDTextFieldTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Default initializer.
@@ -186,6 +188,7 @@ public final class RSDTextFieldTableItemGroup : RSDInputFieldTableItemGroup {
 
 
 /// An item group for entering a date.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 public final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Default initializer.
@@ -242,6 +245,7 @@ public final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
 
 
 /// An item group for entering a number value.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 public final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Default initializer.
@@ -257,6 +261,7 @@ public final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
 
 
 /// An item group for entering data requiring a multiple component format.
+@available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 public final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Default initializer.

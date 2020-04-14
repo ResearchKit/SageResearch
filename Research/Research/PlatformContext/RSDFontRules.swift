@@ -304,7 +304,7 @@ extension UIFont {
     public func withTraits(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
         guard let descriptor = fontDescriptor.withSymbolicTraits(traits)
             else {
-                debugPrint("WARNING!! Failed to create font with \(traits)")
+                debugPrint("WARNING!!! Failed to create font with \(traits)")
                 return self
         }
         return UIFont(descriptor: descriptor, size: 0)

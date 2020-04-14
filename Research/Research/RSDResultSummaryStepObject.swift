@@ -55,14 +55,10 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
     /// the result is not in the result set.
     open func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool {
         guard resultIdentifier != nil else { return false }
-        guard let taskResult = result,
-            let answerResult = self.answerResult(from: taskResult)
-            else {
-                return true
-        }
-        return (answerResult.value == nil)
+        guard let taskResult = result else { return true }
+        let value = self.answerValueAndType(from: taskResult)?.value
+        return (value == nil)
     }
-    
     
     // MARK: Initializers
     
@@ -126,7 +122,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
             "identifier": "foo",
             "type": "completion",
             "title": "Hello World!",
-            "text": "Some text.",
+            "detail": "Some text.",
             "resultTitle": "This is a title",
             "resultIdentifier" : "boo",
             "unitText" : "lala"

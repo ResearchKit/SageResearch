@@ -33,6 +33,26 @@
 
 import Foundation
 
+extension RSDUIStep {
+
+    /// Convenience method for building the sections of the table from the input fields.
+    /// - returns: The footer items to add to the table.
+    public func buildFooterTableItems() -> [RSDTableItem]? {
+        
+        // add image below and footnote
+        var items: [RSDTableItem] = []
+        if let imageTheme = (self as? RSDDesignableUIStep)?.imageTheme, imageTheme.placementType == .iconAfter {
+            items.append(RSDImageTableItem(rowIndex: items.count, imageTheme: imageTheme))
+        }
+        if let footnote = self.footnote {
+            items.append(RSDTextTableItem(rowIndex: items.count, text: footnote))
+        }
+        
+        guard items.count > 0 else { return nil }
+        return items
+    }
+}
+
 /// `RSDTableItem` can be used to represent the type of the row to display.
 open class RSDTableItem {
     
@@ -140,39 +160,5 @@ public final class RSDImageTableItem : RSDTableItem {
     public init(rowIndex: Int, imageTheme: RSDImageThemeElement) {
         self.imageTheme = imageTheme
         super.init(identifier: imageTheme.imageIdentifier, rowIndex: rowIndex, reuseIdentifier: RSDTableItem.ReuseIdentifier.image.rawValue)
-    }
-}
-
-/// `RSDInputFieldTableItem` is an abstract base class implementation for representing an answer, or part of an
-/// answer for a given `RSDInputField`.
-open class RSDInputFieldTableItem : RSDTableItem {
-    
-    /// The RSDInputField representing this tableItem.
-    public let inputField: RSDInputField
-    
-    /// The UI hint for displaying the component of the item group.
-    public let uiHint: RSDFormUIHint
-    
-    /// The answer associated with this table item component. Base class returns `nil`.
-    open var answer: Any? {
-        return nil
-    }
-    
-    /// Initialize a new RSDInputFieldTableItem.
-    /// parameters:
-    ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides.
-    ///     - inputField:    The RSDInputField representing this tableItem.
-    ///     - uiHint: The UI hint for this row of the table.
-    ///     - reuseIdentifier: The string to use as the reuse identifier.
-    ///     - identifier: The cell identifier. If `nil`, then the inputField identifier will be used.
-    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, reuseIdentifier: String? = nil, identifier: String? = nil) {
-        self.inputField = inputField
-        self.uiHint = uiHint
-        
-        // If the reuse identifier isn't passed to the initializer then set it from the ui hint.
-        let reuseId: String = reuseIdentifier ?? uiHint.stringValue
-        let itemId: String = identifier ?? inputField.identifier
-        
-        super.init(identifier: itemId, rowIndex: rowIndex, reuseIdentifier: reuseId)
     }
 }

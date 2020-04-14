@@ -35,6 +35,7 @@ import Foundation
 
 /// The `RSDRegExValidatorObject` is a concrete implementation of the `RSDCodableRegExMatchValidator`
 /// that can be used to create a regex validation of an input string using a regex pattern.
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 public struct RSDRegExValidatorObject : RSDCodableRegExMatchValidator {
     
     /// A localized custom regular expression that can be used to validate a string.
@@ -47,6 +48,7 @@ public struct RSDRegExValidatorObject : RSDCodableRegExMatchValidator {
     }
 }
 
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 extension RSDRegExValidatorObject : RawRepresentable, Equatable {
     
     /// The `regExPattern` is used to represent the regex.
@@ -66,6 +68,7 @@ extension RSDRegExValidatorObject : RawRepresentable, Equatable {
     }
 }
 
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 extension RSDRegExValidatorObject : Decodable {
     
     /// Required initializer for conformance to `Decodable`.
@@ -80,9 +83,11 @@ extension RSDRegExValidatorObject : Decodable {
     }
 }
 
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 extension RSDRegExValidatorObject : Encodable {
 }
 
+@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
 extension RSDRegExValidatorObject : RSDDocumentableStringLiteral {
     static func examples() -> [String] {
         return ["^[0-9]*$"]

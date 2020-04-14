@@ -10,4 +10,7 @@
    <FileRef
       location = "group:RK1Translator/../RSDTest/RSDTest.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:JsonConverter/JsonConverter.xcodeproj">
+   </FileRef>
 </Workspace>

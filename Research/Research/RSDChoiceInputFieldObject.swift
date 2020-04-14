@@ -37,6 +37,7 @@ import Foundation
 /// `RSDInputFieldObject` to include a list of choices for a multiple choice or single choice input field. It
 /// is intended to be instantiated with a list of choices but can be subclassed to decode the choices using
 /// a custom decoder.
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptionsWithDefault {
     
     /// A list of choices for the input field.
@@ -109,8 +110,51 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptionsWith
 /// `RSDInputFieldObject` to include a list of choices for a multiple choice or single choice input field.
 /// It is designed to be used by `RSDFactory` or a subclass to encode and decode the choices as a typed array
 /// of `RSDChoiceObject` objects.
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputFieldObject, RSDChoiceOptions {
     public typealias Value = T
+    
+    override public func convertToQuestionOrInputItem(nextStepIdentifier: String?) throws -> (ChoiceQuestionStepObject?, InputItemBuilder?) {
+        guard case .collection(let collectionType, _) = self.dataType,
+            ((collectionType == .singleChoice) || (collectionType == .multipleChoice))
+            else {
+                throw RSDValidationError.undefinedClassType("Not implemented for \(self.dataType)")
+        }
+        
+        let choices: [JsonChoiceObject] = self.choices.map { choice in
+            let jsonValue: JsonElement? = (choice.answerValue as? RSDJSONValue).map { JsonElement($0) }
+            return JsonChoiceObject(matchingValue: jsonValue,
+                             text: choice.text,
+                             detail: choice.detail,
+                             isExclusive: choice.isExclusive ? true : nil,
+                             icon: choice.imageData as? RSDResourceImageDataObject)
+        }
+        
+        if self.inputUIHint == .picker {
+            let inputItem = ChoicePickerInputItemObject(jsonChoices: choices, resultIdentifier: identifier)
+            self.copyInto(inputItem)
+            return (nil, inputItem)
+        }
+        else if choices.count == 1, let choice = choices.first,
+            let match = choice.matchingValue, match == .boolean(true),
+            let text = choice.text {
+            let inputItem = CheckboxInputItemObject(fieldLabel: text,
+                                                    resultIdentifier: self.identifier,
+                                                    detail: choice.detail)
+            return (nil, inputItem)
+        }
+        else {
+            let question = ChoiceQuestionStepObject(identifier: identifier,
+                                                    choices: choices,
+                                                    isSingleAnswer: (collectionType == .singleChoice),
+                                                    inputUIHint: self.inputUIHint ?? .list,
+                                                    nextStepIdentifier: nextStepIdentifier)
+            if question.isOptional != self.isOptional {
+                question.isOptional = self.isOptional
+            }
+            return (question, nil)
+        }
+    }
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case choices, defaultAnswer
@@ -170,7 +214,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
     ///                                "text" : "pi",
     ///                                "detail" : "Is the magic number" },
     ///                             {  "text" : "None of the above",
-    ///                                "isExclusive" : true }],
+    ///                                "exclusive" : true }],
     ///            }
     ///            """.data(using: .utf8)! // our data in native (JSON) format
     ///
@@ -238,7 +282,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
     ///                             {  "value" : false,
     ///                                "text" : "No"},
     ///                             {  "text" : "I don't know",
-    ///                                "isExclusive" : true }],
+    ///                                "exclusive" : true }],
     ///            }
     ///            """.data(using: .utf8)! // our data in native (JSON) format
     ///     ```
@@ -316,7 +360,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
                              [  "value" : false,
                                 "text" : "No"],
                              [  "text" : "I don't know",
-                                "isExclusive" : true ]],
+                                "exclusive" : true ]],
             ]
         }
         else if Value.self == Int.self {
@@ -372,7 +416,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
                                 "text" : "pi",
                                 "detail" : "Is the magic number" ],
                              [  "text" : "None of the above",
-                                "isExclusive" : true ]],
+                                "exclusive" : true ]],
             ]
         }
         else if Value.self == RSDFraction.self {

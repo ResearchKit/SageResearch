@@ -46,6 +46,7 @@ class PickerDataSourceTests: XCTestCase {
         super.tearDown()
     }
     
+    @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
     func testMultipleComponentPicker() {
         
         let json = """
