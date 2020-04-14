@@ -390,7 +390,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             let (qn, it) = try object.convertToQuestionOrInputItem(nextStepIdentifier: "goo")
             
             guard qn == nil, let item = it as? DateInputItemObject else {
-                XCTFail("Failed to decode expeced question or input item.")
+                XCTFail("Failed to decode expected question or input item.")
                 return
             }
 
