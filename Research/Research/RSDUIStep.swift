@@ -40,4 +40,7 @@ import Foundation
 public protocol RSDUIStep: RSDStep, RSDUIActionHandler, ContentNode {
 }
 
-
+extension RSDUIStep {
+    @available(*, deprecated, message: "This protocol has changed. Use `subtitle` or `detail` instead.")
+    public var text: String? { self.subtitle }
+}

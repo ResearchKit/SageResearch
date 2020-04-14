@@ -1838,6 +1838,7 @@
 		F802F3E1204DF1D40027CB00 /* Results */ = {
 			isa = PBXGroup;
 			children = (
+				FFAEE7D2243C007300F18BCB /* Result.swift */,
 				FF72B25C1F687199004C6F15 /* RSDResult.swift */,
 				F82D11162125EAF300EA1A33 /* RSDCollectionResult.swift */,
 				F82D110E2125EA7400EA1A33 /* RSDErrorResult.swift */,
@@ -2662,7 +2663,6 @@
 		FF72B2551F685F6D004C6F15 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
-				FFAEE7D2243C007300F18BCB /* Result.swift */,
 				FF225DF9243A6AF700AD2461 /* Deprecated */,
 				F82D1122212603C800EA1A33 /* Common */,
 				F8475BB32125E57A0031D802 /* AsyncAction */,

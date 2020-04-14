@@ -43,6 +43,9 @@ public protocol Result : Encodable, NSCopying {
 
     /// The identifier for the result.
     var identifier: String { get }
+    
+    /// A String that indicates the type of the result. This is used to decode the result.
+    var type: RSDResultType { get }
 }
 
 /// An `AnswerResult` is used to hold a serializable answer to a question or measurement. This
@@ -60,12 +63,14 @@ public protocol AnswerResult : class, Result {
     
     /// The question text that was displayed for this answer result.
     var questionText: String? { get }
-    
-    /// The answer for the result, converted from a JsonElement if needed.
-    var value: Any? { get }
 }
 
 public extension AnswerResult {
+    
+    var value: Any? {
+        return jsonValue?.jsonObject()
+    }
+    
     func findAnswer(with identifier:String ) -> AnswerResult? {
         return self.identifier == identifier ? self : nil
     }

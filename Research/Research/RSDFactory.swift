@@ -313,17 +313,17 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
         if let standardType = RSDStepType.StandardType(rawValue: type.rawValue) {
-            return try decodeStandardType(from: decoder, standardType: standardType)
+            return try decodeStandardStep(from: decoder, standardType: standardType)
         }
-        else if let standardType = RSDStepType.StandardType(rawValue: type.rawValue) {
-            return try decodeStandardType(from: decoder, standardType: standardType)
+        else if let questionType = RSDStepType.QuestionType(rawValue: type.rawValue) {
+            return try decodeQuestionStep(from: decoder, questionType: questionType)
         }
         else {
             return try decodeDeprecatedStep(from: decoder, with: type)
         }
     }
     
-    func decodeStandardType(from decoder: Decoder, standardType: RSDStepType.StandardType) throws -> RSDStep {
+    func decodeStandardStep(from decoder: Decoder, standardType: RSDStepType.StandardType) throws -> RSDStep {
         switch (standardType) {
         case .instruction, .active:
             return try RSDActiveUIStepObject(from: decoder)
@@ -345,7 +345,7 @@ open class RSDFactory {
         }
     }
     
-    func decodeQuestionType(from decoder: Decoder, questionType: RSDStepType.QuestionType) throws -> RSDStep {
+    func decodeQuestionStep(from decoder: Decoder, questionType: RSDStepType.QuestionType) throws -> RSDStep {
         switch (questionType) {
         case .choiceQuestion:
             return try ChoiceQuestionStepObject(from: decoder)

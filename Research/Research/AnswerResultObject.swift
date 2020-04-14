@@ -48,10 +48,6 @@ public final class AnswerResultObject : AnswerResult, RSDNavigationResult, Codab
     public var startDate: Date = Date()
     public var endDate: Date = Date()
     
-    public var value: Any? {
-        return jsonValue?.jsonObject()
-    }
-    
     public init(identifier: String, value: JsonElement, questionText: String? = nil) {
         self.identifier = identifier
         self.jsonAnswerType = value.answerType
