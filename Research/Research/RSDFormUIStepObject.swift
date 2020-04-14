@@ -88,7 +88,7 @@ public protocol ConvertableFormStep : RSDFormUIStep {
 /// `RSDFormUIStepObject` is a concrete implementation of the `RSDFormUIStep` and
 /// `RSDSurveyNavigationStep` protocols. It is a subclass of `RSDUIStepObject` and can be used to display
 /// a navigable survey.
-@available(*, deprecated, message: "Use `RSDQuestion` instead. This protocol is not supported by Kotlin.")
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 open class RSDFormUIStepObject : RSDUIStepObject, ConvertableFormStep, RSDSurveyNavigationStep, RSDCohortAssignmentStep {
 
     open func convertToQuestion(using factory: QuestionConvertionFactory) throws -> (QuestionStep & Encodable) {

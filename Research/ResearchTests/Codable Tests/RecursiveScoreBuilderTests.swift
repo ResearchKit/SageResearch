@@ -56,7 +56,7 @@ class RecursiveScoreBuilderTests: XCTestCase {
         
         var taskResult = RSDTaskResultObject(identifier: "topLevel")
         
-        // Build section Alet
+        // Build section A
         var subResultA = RSDTaskResultObject(identifier: "sectionA")
         subResultA.appendStepHistory(with: RSDResultObject(identifier: "intruction"))
         subResultA.appendStepHistory(with: score1)

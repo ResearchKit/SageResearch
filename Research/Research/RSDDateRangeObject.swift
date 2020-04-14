@@ -33,16 +33,6 @@
 
 import Foundation
 
-// TODO: syoung 02/18/2020 In SageResearch change "minimumDate" -> "minimumValue" and "maximumDate" -> "maximumValue"
-
-//@Serializable
-//@SerialName("date")
-//data class DateFormatOptions(override val allowFuture: Boolean = true,
-//                             override val allowPast: Boolean = true,
-//                             override val minimumValue: String? = null,
-//                             override val maximumValue: String? = null,
-//                             override val codingFormat: String = ISO8601Format.DateOnly.formatString) : DateTimeFormatOptions
-
 /// `RSDDateRangeObject` is a concrete implementation of a `RSDDateRange` that defines the range of values appropriate
 /// for a `date` data type.
 public struct RSDDateRangeObject : RSDDateRange, Codable {
