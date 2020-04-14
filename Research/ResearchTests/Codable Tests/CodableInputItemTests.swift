@@ -70,7 +70,8 @@ class CodableInputItemTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(DoubleTextInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<DoubleTextInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual(.decimal, object.inputItemType)
@@ -135,7 +136,8 @@ class CodableInputItemTests: XCTestCase {
         do {
             
             let original = DoubleTextInputItemObject()
-            let object = try decoder.decode(DoubleTextInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<DoubleTextInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             XCTAssertEqual(original.inputItemType, object.inputItemType)
             
             let jsonData = try encoder.encode(original)
@@ -178,7 +180,8 @@ class CodableInputItemTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(IntegerTextInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<IntegerTextInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual(.integer, object.inputItemType)
@@ -241,7 +244,8 @@ class CodableInputItemTests: XCTestCase {
         do {
             
             let original = IntegerTextInputItemObject()
-            let object = try decoder.decode(IntegerTextInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<IntegerTextInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             XCTAssertEqual(original.inputItemType, object.inputItemType)
             
             let jsonData = try encoder.encode(original)
@@ -282,7 +286,8 @@ class CodableInputItemTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(YearTextInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<YearTextInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual(.year, object.inputItemType)
@@ -347,7 +352,8 @@ class CodableInputItemTests: XCTestCase {
                 
         do {
             
-            let object = try decoder.decode(YearTextInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<YearTextInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             
             XCTAssertEqual(.year, object.inputItemType)
             if let range = object.formatOptions {
@@ -395,7 +401,8 @@ class CodableInputItemTests: XCTestCase {
         do {
             
             let original = YearTextInputItemObject()
-            let object = try decoder.decode(YearTextInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<YearTextInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             XCTAssertEqual(original.inputItemType, object.inputItemType)
             
             let jsonData = try encoder.encode(original)
@@ -437,7 +444,8 @@ class CodableInputItemTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(StringTextInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<StringTextInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual(.string, object.inputItemType)
@@ -507,7 +515,8 @@ class CodableInputItemTests: XCTestCase {
         do {
             
             let original = StringTextInputItemObject()
-            let object = try decoder.decode(StringTextInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<StringTextInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             XCTAssertEqual(original.inputItemType, object.inputItemType)
             
             let jsonData = try encoder.encode(original)
@@ -548,7 +557,8 @@ class CodableInputItemTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(DateInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<DateInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual(.date, object.inputItemType)
@@ -606,7 +616,8 @@ class CodableInputItemTests: XCTestCase {
         do {
             
             let original = DateInputItemObject()
-            let object = try decoder.decode(DateInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<DateInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             XCTAssertEqual(original.inputItemType, object.inputItemType)
             
             let jsonData = try encoder.encode(original)
@@ -647,7 +658,8 @@ class CodableInputItemTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(TimeInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<TimeInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual(.time, object.inputItemType)
@@ -705,7 +717,8 @@ class CodableInputItemTests: XCTestCase {
         do {
             
             let original = TimeInputItemObject()
-            let object = try decoder.decode(TimeInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<TimeInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             XCTAssertEqual(original.inputItemType, object.inputItemType)
             
             let jsonData = try encoder.encode(original)
@@ -729,7 +742,6 @@ class CodableInputItemTests: XCTestCase {
             {
              "identifier": "foo",
              "type": "choicePicker",
-             "uiHint": "picker",
              "fieldLabel": "Favorite color",
              "placeholder": "Blue, no! Red!",
              "choices" : [
@@ -746,7 +758,8 @@ class CodableInputItemTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(ChoicePickerInputItemObject.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<ChoicePickerInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual(.choicePicker, object.inputItemType)
@@ -774,7 +787,6 @@ class CodableInputItemTests: XCTestCase {
             
             XCTAssertEqual("foo", dictionary["identifier"] as? String)
             XCTAssertEqual("choicePicker", dictionary["type"] as? String)
-            XCTAssertEqual("picker", dictionary["uiHint"] as? String)
             XCTAssertEqual("Favorite color", dictionary["fieldLabel"] as? String)
             XCTAssertEqual("Blue, no! Red!", dictionary["placeholder"] as? String)
             
@@ -784,60 +796,55 @@ class CodableInputItemTests: XCTestCase {
         }
     }
     
-    struct TestInputItemsWrapper : Decodable {
-        private enum CodingKeys : String, CodingKey {
-            case items
-        }
-        let items: [InputItemBuilder]
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            let listContainer = try container.nestedUnkeyedContainer(forKey: .items)
-            self.items = try decoder.factory.decodeInputItems(from: listContainer)
-        }
-    }
-    
-    func testTextInputItemsFactory() {
+    func testStringChoicePickerItemObject_Codable() {
+        
         let json = """
-        {
-            "items":[
-                {"type": "decimal"},
-                {"type": "integer"},
-                {"type": "string"},
-                {"type": "year"},
-                {"type": "date-time"},
-                {"type": "date"},
-                {"type": "time"},
-                {"type": "height"},
-                {"type": "weight"},
-            ]
-        }
+            {
+             "identifier": "foo",
+             "type": "stringChoicePicker",
+             "fieldLabel": "Favorite color",
+             "placeholder": "Blue, no! Red!",
+             "choices" : ["never","sometimes","often","always"]
+            }
         """.data(using: .utf8)! // our data in native (JSON) format
+        
+        // TODO: syoung 04/04/2020 Figure out encoding/decoding for a survey rule for a date.
+        
+        XCTAssertEqual(.stringChoicePicker, StringChoicePickerInputItemObject.defaultType())
         
         do {
             
-            let object = try decoder.decode(TestInputItemsWrapper.self, from: json)
+            let wrapper = try decoder.decode(InputItemWrapper<StringChoicePickerInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
             
-            let expectedItems: [InputItemBuilder] = [
-                DoubleTextInputItemObject(),
-                IntegerTextInputItemObject(),
-                StringTextInputItemObject(),
-                YearTextInputItemObject(),
-                DateTimeInputItemObject(),
-                DateInputItemObject(),
-                TimeInputItemObject(),
-                HeightInputItemBuilderObject(),
-                WeightInputItemBuilderObject(),
-            ]
+            XCTAssertEqual("foo", object.identifier)
+            XCTAssertEqual(.stringChoicePicker, object.inputItemType)
+            XCTAssertEqual(.picker, object.inputUIHint)
+            XCTAssertEqual("Favorite color", object.fieldLabel)
+            XCTAssertEqual("Blue, no! Red!", object.placeholder)
             
-            guard expectedItems.count == object.items.count else {
-                XCTAssertEqual(expectedItems.count, object.items.count)
-                return
+            XCTAssertTrue(object.answerType is AnswerTypeString)
+            XCTAssertEqual(object.jsonChoices.count, 4)
+            if let choices = object.jsonChoices as? [JsonChoiceObject],
+                let last = choices.last {
+                XCTAssertEqual(last.matchingValue, .string("always"))
+                XCTAssertEqual(last.text, "always")
+            }
+            else {
+                XCTFail("Failed to decode expected choice objects")
             }
             
-            object.items.enumerated().forEach { (idx, item) in
-                let expected = expectedItems[idx]
-                XCTAssertEqual("\(type(of: expected))", "\(type(of: item))")
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
             }
+            
+            XCTAssertEqual("foo", dictionary["identifier"] as? String)
+            XCTAssertEqual("stringChoicePicker", dictionary["type"] as? String)
+            XCTAssertEqual("Favorite color", dictionary["fieldLabel"] as? String)
+            XCTAssertEqual("Blue, no! Red!", dictionary["placeholder"] as? String)
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -845,6 +852,173 @@ class CodableInputItemTests: XCTestCase {
         }
     }
     
+    func testHeightInputItemObject_Codable() {
+        
+        let json = """
+            {
+             "type": "height",
+             "identifier": "foo",
+             "fieldLabel": "Favorite color",
+             "placeholder": "Blue, no! Red!",
+             "measurementRange": "infant"
+            }
+        """.data(using: .utf8)! // our data in native (JSON) format
+                
+        do {
+            
+            let wrapper = try decoder.decode(InputItemWrapper<HeightInputItemBuilderObject>.self, from: json)
+            let object = wrapper.inputItem
+            XCTAssertEqual(.height, object.inputItemType)
+            XCTAssertEqual("foo", object.identifier)
+            XCTAssertEqual("Favorite color", object.fieldLabel)
+            XCTAssertEqual("Blue, no! Red!", object.placeholder)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testHeightInputItemObject_Codable_Default() {
+        
+        let json = """
+            {
+             "type": "height"
+            }
+        """.data(using: .utf8)! // our data in native (JSON) format
+                
+        do {
+            
+            let original = HeightInputItemBuilderObject()
+            let wrapper = try decoder.decode(InputItemWrapper<HeightInputItemBuilderObject>.self, from: json)
+            let object = wrapper.inputItem
+            XCTAssertEqual(original.inputItemType, object.inputItemType)
+            
+            let jsonData = try encoder.encode(original)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual("height", dictionary["type"] as? String)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testWeightInputItemObject_Codable() {
+        
+        let json = """
+            {
+             "type": "weight",
+             "identifier": "foo",
+             "fieldLabel": "Favorite color",
+             "placeholder": "Blue, no! Red!",
+             "measurementRange": "infant"
+            }
+        """.data(using: .utf8)! // our data in native (JSON) format
+                
+        do {
+            
+            let wrapper = try decoder.decode(InputItemWrapper<WeightInputItemBuilderObject>.self, from: json)
+            let object = wrapper.inputItem
+            XCTAssertEqual(.weight, object.inputItemType)
+            XCTAssertEqual("foo", object.identifier)
+            XCTAssertEqual("Favorite color", object.fieldLabel)
+            XCTAssertEqual("Blue, no! Red!", object.placeholder)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testWeightInputItemObject_Codable_Default() {
+        
+        let json = """
+            {
+             "type": "weight"
+            }
+        """.data(using: .utf8)! // our data in native (JSON) format
+                
+        do {
+            
+            let original = WeightInputItemBuilderObject()
+            let wrapper = try decoder.decode(InputItemWrapper<WeightInputItemBuilderObject>.self, from: json)
+            let object = wrapper.inputItem
+            XCTAssertEqual(original.inputItemType, object.inputItemType)
+            
+            let jsonData = try encoder.encode(original)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual("weight", dictionary["type"] as? String)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testCheckboxInputItemObject_Codable() {
+        let json = """
+            {
+             "type": "checkbox",
+             "identifier": "foo",
+             "fieldLabel": "prefer not to answer",
+             "detail": "more text"
+            }
+        """.data(using: .utf8)! // our data in native (JSON) format
+                
+        do {
+            
+            let original = CheckboxInputItemObject(fieldLabel: "prefer not to answer",
+                                                   resultIdentifier: "foo",
+                                                   detail: "more text")
+            let wrapper = try decoder.decode(InputItemWrapper<CheckboxInputItemObject>.self, from: json)
+            let object = wrapper.inputItem
+            XCTAssertEqual(original, object)
+            
+            let jsonData = try encoder.encode(original)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? NSDictionary
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            guard let expectedDictionary = try JSONSerialization.jsonObject(with: json, options: []) as? NSDictionary
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(expectedDictionary, dictionary)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    struct InputItemWrapper<Value : InputItemBuilder> : Decodable {
+        let inputItem : Value
+        init(from decoder: Decoder) throws {
+            let value = try decoder.factory.decodeInputItem(from: decoder)
+            guard let inputItem = value as? Value else {
+                let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to decode \(Value.self)")
+                throw DecodingError.typeMismatch(Value.self, context)
+            }
+            self.inputItem = inputItem
+        }
+    }
+    
+    // Special-case the skip checkbox to not use the factory on iOS, but still require the "type"
+
     func testSkipCheckboxInputItemObject() {
         let json = """
             {

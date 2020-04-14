@@ -43,8 +43,6 @@ class CodableQuestionTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-    
-//    public static let stringChoiceQuestion = StandardType.stringChoiceQuestion.type
 
     func testChoiceQuestion_Codable() {
         
@@ -71,11 +69,8 @@ class CodableQuestionTests: XCTestCase {
         
         do {
             
-            let wrapper = try decoder.decode(QuestionWrapper.self, from: json)
-            guard let object = wrapper.questionStep as? ChoiceQuestionStepObject else {
-                XCTFail("Failed to decode expected question step class: \(wrapper.questionStep)")
-                return
-            }
+            let wrapper = try decoder.decode(QuestionWrapper<ChoiceQuestionStepObject>.self, from: json)
+            let object = wrapper.questionStep
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -164,11 +159,8 @@ class CodableQuestionTests: XCTestCase {
         
         do {
             
-            let wrapper = try decoder.decode(QuestionWrapper.self, from: json)
-            guard let object = wrapper.questionStep as? SimpleQuestionStepObject else {
-                XCTFail("Failed to decode expected question step class: \(wrapper.questionStep)")
-                return
-            }
+            let wrapper = try decoder.decode(QuestionWrapper<SimpleQuestionStepObject>.self, from: json)
+            let object = wrapper.questionStep
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -250,11 +242,8 @@ class CodableQuestionTests: XCTestCase {
         
         do {
             
-            let wrapper = try decoder.decode(QuestionWrapper.self, from: json)
-            guard let object = wrapper.questionStep as? MultipleInputQuestionStepObject else {
-                XCTFail("Failed to decode expected question step class: \(wrapper.questionStep)")
-                return
-            }
+            let wrapper = try decoder.decode(QuestionWrapper<MultipleInputQuestionStepObject>.self, from: json)
+            let object = wrapper.questionStep
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -343,11 +332,8 @@ class CodableQuestionTests: XCTestCase {
         
         do {
             
-            let wrapper = try decoder.decode(QuestionWrapper.self, from: json)
-            guard let object = wrapper.questionStep as? StringChoiceQuestionStepObject else {
-                XCTFail("Failed to decode expected question step class: \(wrapper.questionStep)")
-                return
-            }
+            let wrapper = try decoder.decode(QuestionWrapper<StringChoiceQuestionStepObject>.self, from: json)
+            let object = wrapper.questionStep
             
             XCTAssertEqual("foo", object.identifier)
             XCTAssertEqual("Hello World!", object.title)
@@ -416,16 +402,16 @@ class CodableQuestionTests: XCTestCase {
             return
         }
     }
-}
-
-struct QuestionWrapper : Decodable {
-    let questionStep : QuestionStep
-    init(from decoder: Decoder) throws {
-        let step = try decoder.factory.decodeStep(from: decoder)
-        guard let qStep = step as? QuestionStep else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to decode a QuestionStep")
-            throw DecodingError.typeMismatch(QuestionStep.self, context)
+    
+    struct QuestionWrapper<Value : QuestionStep> : Decodable {
+        let questionStep : Value
+        init(from decoder: Decoder) throws {
+            let step = try decoder.factory.decodeStep(from: decoder)
+            guard let qStep = step as? Value else {
+                let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to decode a QuestionStep")
+                throw DecodingError.typeMismatch(Value.self, context)
+            }
+            self.questionStep = qStep
         }
-        self.questionStep = qStep
     }
 }
