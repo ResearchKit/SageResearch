@@ -168,8 +168,7 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
                 skipCheckbox: SkipCheckboxInputItem? = nil) {
         self.inputItem = inputItem
         super.init(identifier: identifier,
-                   nextStepIdentifier: nextStepIdentifier,
-                   type: .simpleQuestion)
+                   nextStepIdentifier: nextStepIdentifier)
         self.skipCheckbox = skipCheckbox
     }
     
@@ -220,7 +219,7 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
     
     public private(set) var inputItems: [InputItemBuilder]
     public private(set) var sequenceSeparator: String?
-
+    
     public override class func defaultType() -> RSDStepType {
         .multipleInputQuestion
     }
@@ -232,9 +231,7 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
                 sequenceSeparator: String? = nil) {
         self.inputItems = inputItems
         self.sequenceSeparator = sequenceSeparator
-        super.init(identifier: identifier,
-                   nextStepIdentifier: nextStepIdentifier,
-                   type: .simpleQuestion)
+        super.init(identifier: identifier, nextStepIdentifier: nextStepIdentifier)
         self.skipCheckbox = skipCheckbox
     }
     

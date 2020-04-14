@@ -443,6 +443,16 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(intItem.identifier, "bar")
             XCTAssertEqual(intItem.fieldLabel, "Bar")
+            
+            let jsonData = try encoder.encode(question)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+
+            XCTAssertEqual(dictionary["type"] as? String, "multipleInputQuestion")
+            XCTAssertEqual(dictionary["identifier"] as? String, "step3")
 
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -483,6 +493,16 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertFalse(choiceQuestion.isSingleAnswer)
             XCTAssertEqual(choiceQuestion.jsonChoices.count, 4)
             XCTAssertEqual(choiceQuestion.surveyRules.count, 1)
+            
+            let jsonData = try encoder.encode(choiceQuestion)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+
+            XCTAssertEqual(dictionary["type"] as? String, "choiceQuestion")
+            XCTAssertEqual(dictionary["identifier"] as? String, "step3")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
