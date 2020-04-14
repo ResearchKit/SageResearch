@@ -63,7 +63,7 @@ extension SurveyRuleNavigation {
     ///                     display? If peeking at the next step then this parameter will be `true`.
     /// - returns: The identifier for the step to skip to if the rules are `true`.
     public func evaluateSurveyRules(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
-        // Do not apply rules when the navigation is only peaking
+        // Do not apply rules when the navigation is only peeking
         guard !isPeeking else { return nil }
         // If the result is nil then return the skipToNil value
         guard let finder = result,
