@@ -1816,6 +1816,7 @@
 				FF1D6D2D1F82FB2C00B05349 /* RSDTaskInfoStep.swift */,
 				F83722402233133100C9A2EA /* RSDStandardPermissionsStep.swift */,
 				F8366DAF21418C6700EBA88D /* RSDSubtaskStep.swift */,
+				FFEA2F55243673C7008695D6 /* Questions */,
 				F802F3E6204DF3130027CB00 /* UI Step */,
 			);
 			name = Steps;
@@ -1859,7 +1860,6 @@
 				F8BE112D21360358000AAB1E /* RSDTableStep.swift */,
 				F8864AD62163F96500DF57CF /* RSDResultSummaryStep.swift */,
 				F8BE1128213602DB000AAB1E /* RSDActiveUIStep.swift */,
-				FFEA2F55243673C7008695D6 /* Questions */,
 				FF4329AC239EFA760027288F /* Themed UI */,
 			);
 			name = "UI Step";

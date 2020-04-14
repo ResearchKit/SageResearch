@@ -35,8 +35,16 @@ serialization and in finding the result for a matching step.
 
 The `RSDAnswerResultType` has been replaced with `AnswerType` which is a protocol that conforms to the 
 polymorphic serialization pattern used by Kotlin and `RSDFactory`. Additionally, the `jsonValue` replaces the 
-`value` as the `Codable` object that is used to store the value.
+`value` as the `Codable` object that is used to store the value. The key into the JSON dictionary is still "value".
 
+## RSDUIFormStep and RSDInputField
 
+Kotlin serialization does not support the more complex set of interfaces and extensions that were originally used 
+to support BridgeSDK, AppCore, and ResearchKit model objects using the same generic table view. Therefore,
+these protocols have been deprecated.
 
-
+Included with this version of SageResearch are some tools to help migrate your JSON files and model objects to 
+the `Question` and `InputItem` protocols. Specifically, `JsonConverter` is a *very* rough tool that you can modify
+to use a factory to decode JSON from `RSDUIFormStepObject` subclasses and convert to `QuestionStep` 
+objects that match the `Encodable` protocol. This code is included as-in and is not expected to be able to map
+without some work on your part to create the `Codable` object that conform to the newer protocols.
