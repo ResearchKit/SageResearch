@@ -312,21 +312,25 @@ open class RSDFactory {
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
-        guard let standardType = RSDStepType.StandardType(rawValue: type.rawValue)
-            else {
-                return try decodeDeprecatedStep(from: decoder, with: type)
+        if let standardType = RSDStepType.StandardType(rawValue: type.rawValue) {
+            return try decodeStandardType(from: decoder, standardType: standardType)
         }
+        else if let standardType = RSDStepType.StandardType(rawValue: type.rawValue) {
+            return try decodeStandardType(from: decoder, standardType: standardType)
+        }
+        else {
+            return try decodeDeprecatedStep(from: decoder, with: type)
+        }
+    }
+    
+    func decodeStandardType(from decoder: Decoder, standardType: RSDStepType.StandardType) throws -> RSDStep {
         switch (standardType) {
         case .instruction, .active:
             return try RSDActiveUIStepObject(from: decoder)
-        case .choiceQuestion:
-            return try ChoiceQuestionStepObject(from: decoder)
         case .countdown:
             return try RSDCountdownUIStepObject(from: decoder)
         case .completion, .feedback:
             return try RSDResultSummaryStepObject(from: decoder)
-        case .multipleInputQuestion:
-            return try MultipleInputQuestionStepObject(from: decoder)
         case .overview:
             return try RSDOverviewStepObject(from: decoder)
         case .section:
@@ -336,12 +340,21 @@ open class RSDFactory {
             return RSDTaskInfoStepObject(with: taskInfo)
         case .transform:
             return try self.decodeTransformableStep(from: decoder)
+        case .subtask:
+            return try RSDSubtaskStepObject(from: decoder)
+        }
+    }
+    
+    func decodeQuestionType(from decoder: Decoder, questionType: RSDStepType.QuestionType) throws -> RSDStep {
+        switch (questionType) {
+        case .choiceQuestion:
+            return try ChoiceQuestionStepObject(from: decoder)
+        case .multipleInputQuestion:
+            return try MultipleInputQuestionStepObject(from: decoder)
         case .simpleQuestion:
             return try SimpleQuestionStepObject(from: decoder)
         case .stringChoiceQuestion:
             return try StringChoiceQuestionStepObject(from: decoder)
-        case .subtask:
-            return try RSDSubtaskStepObject(from: decoder)
         }
     }
     

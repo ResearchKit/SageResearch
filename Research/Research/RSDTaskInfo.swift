@@ -67,3 +67,7 @@ public protocol RSDTaskInfo : RSDCopyWithIdentifier, ContentNode {
     /// task, then this pointer can be `nil`.
     var resourceTransformer : RSDTaskTransformer? { get }
 }
+
+public extension RSDTaskInfo {
+    var footnote: String? { nil }
+}

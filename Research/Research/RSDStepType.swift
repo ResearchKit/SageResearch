@@ -55,6 +55,13 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
         case transform
         case taskInfo
         case subtask
+        
+        var type: RSDStepType {
+            return RSDStepType(rawValue: self.rawValue)
+        }
+    }
+    
+    enum QuestionType : String, Codable, CaseIterable {
         case simpleQuestion
         case multipleInputQuestion
         case choiceQuestion
@@ -103,14 +110,19 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
     /// Defaults to creating a `RSDSubtaskStep`.
     public static let subtask = StandardType.subtask.type
     
-    public static let simpleQuestion = StandardType.simpleQuestion.type
-    public static let multipleInputQuestion = StandardType.multipleInputQuestion.type
-    public static let choiceQuestion = StandardType.choiceQuestion.type
-    public static let stringChoiceQuestion = StandardType.stringChoiceQuestion.type
+    public static let simpleQuestion = QuestionType.simpleQuestion.type
+    public static let multipleInputQuestion = QuestionType.multipleInputQuestion.type
+    public static let choiceQuestion = QuestionType.choiceQuestion.type
+    public static let stringChoiceQuestion = QuestionType.stringChoiceQuestion.type
+    
+    @available(*, deprecated, message: "Replaced with the appropriate `QuestionType`")
+    public static let form: RSDStepType = "form"
     
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDStepType] {
-        return StandardType.allCases.map { $0.type }
+        var types = StandardType.allCases.map { $0.type }
+        types.append(contentsOf: QuestionType.allCases.map { $0.type })
+        return types
     }
 }
 
