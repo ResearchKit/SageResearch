@@ -66,7 +66,7 @@ public protocol AnswerType : Codable {
     
     /// Returns a `JsonElement` that is encoded for this answer type from the given value.
     ///
-    /// - paramenter value: The value to encode.
+    /// - parameter value: The value to encode.
     /// - returns: The JSON serializable object for this encodable.
     func encodeAnswer(from value: Any?) throws -> JsonElement
 }
