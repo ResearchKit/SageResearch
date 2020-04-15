@@ -31,10 +31,12 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
+
 /// `RSDImageThemeElement` extends the UI step to include an image. 
 ///
 /// - seealso: `RSDAnimatedImageThemeElement`
-public protocol RSDImageThemeElement : RSDResourceInfo {
+public protocol RSDImageThemeElement : ResourceInfo {
     
     /// A unique identifier that can be used to validate that the image shown in a reusable view
     /// is the same image as the one fetched.

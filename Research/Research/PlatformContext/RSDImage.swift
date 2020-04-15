@@ -39,6 +39,8 @@ import UIKit
 public typealias RSDImage = UIImage
 #endif
 
+import JsonModel
+
 extension RSDImage : RSDImageData {
     
     /// Returns `self.hash` as a string.
@@ -68,7 +70,7 @@ extension RSDImage : RSDImageThemeElement {
     /// MARK: Not used.
     
     public var placementType: RSDImagePlacementType? { return nil }
-    public var factoryBundle: RSDResourceBundle? { return nil }
+    public var factoryBundle: ResourceBundle? { return nil }
     public var bundleIdentifier: String? { return nil }
     public var packageName: String? { return nil }
 }

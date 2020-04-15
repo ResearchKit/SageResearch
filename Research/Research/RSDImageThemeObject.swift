@@ -48,7 +48,7 @@ public struct RSDFetchableImageThemeElementObject : RSDThemeResourceImageData, C
     public let rawFileExtension: String?
     
     /// Pointer to the factory bundle.
-    public var factoryBundle: RSDResourceBundle?
+    public var factoryBundle: ResourceBundle?
     
     /// The identifier of the bundle within which the resource is embedded on Apple platforms.
     public let bundleIdentifier: String?
@@ -66,7 +66,7 @@ public struct RSDFetchableImageThemeElementObject : RSDThemeResourceImageData, C
         return imageName
     }
     
-    public init(imageName: String, bundle: RSDResourceBundle? = nil, packageName: String? = nil, bundleIdentifier: String? = nil, imageSize: RSDSize? = nil, placementType: RSDImagePlacementType? = nil) {
+    public init(imageName: String, bundle: ResourceBundle? = nil, packageName: String? = nil, bundleIdentifier: String? = nil, imageSize: RSDSize? = nil, placementType: RSDImagePlacementType? = nil) {
         let splitFile = imageName.splitFilename()
         self.imageName = splitFile.resourceName
         self.rawFileExtension = splitFile.fileExtension
@@ -153,7 +153,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     public let imageSize: RSDSize?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?

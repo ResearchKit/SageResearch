@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStringLiteral {
     var stringValue: String { get }
@@ -107,17 +108,6 @@ open class RSDFactory {
                               resourceInfo: resourceTransformer)
     }
     
-    /// - deprecated: "Use `createPropertyListDecoder(resourceInfo:) instead."
-    @available(*, deprecated, message: "Use `createPropertyListDecoder(resourceInfo:) instead.")
-    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String?, taskIdentifier: String?, schemaInfo: RSDSchemaInfo?, bundle: Bundle?) throws -> RSDTask {
-        return try self.decodeTask(with: data,
-                                   resourceType: resourceType,
-                                   typeName: typeName,
-                                   taskIdentifier: taskIdentifier,
-                                   schemaInfo: schemaInfo,
-                                   resourceInfo: DeprecationResourceInfo(factoryBundle: bundle))
-    }
-    
     /// Decode an object with top-level data (json or plist) for a given `resourceType`,
     /// `typeName`, and `taskInfo`.
     ///
@@ -130,7 +120,7 @@ open class RSDFactory {
     ///     - resourceInfo:    The resource info for the source of the data.
     /// - returns: The decoded task.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: RSDResourceInfo? = nil) throws -> RSDTask {
+    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: ResourceInfo? = nil) throws -> RSDTask {
         let decoder = try createDecoder(for: resourceType, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo, resourceInfo: resourceInfo)
         return try decoder.factory.decodeTask(with: data, from: decoder)
     }
@@ -804,7 +794,7 @@ open class RSDFactory {
         }
     }
     
-    private func _decodeResource<T>(_ type: T.Type, from decoder: Decoder) throws -> T where T : RSDDecodableBundleInfo {
+    private func _decodeResource<T>(_ type: T.Type, from decoder: Decoder) throws -> T where T : DecodableBundleInfo {
         var resource = try T(from: decoder)
         resource.factoryBundle = decoder.bundle
         return resource
@@ -961,16 +951,10 @@ open class RSDFactory {
         = ("Infinity", "-Infinity", "NaN")
 
     // MARK: Decoder
-
-    /// - deprecated: Use `createJSONDecoder(resourceInfo:) instead.
-    @available(*, deprecated, message: "Use `createJSONDecoder(resourceInfo:) instead.")
-    open func createJSONDecoder(bundle: Bundle?) -> JSONDecoder {
-        return self.createJSONDecoder(resourceInfo: DeprecationResourceInfo(factoryBundle: bundle))
-    }
     
     /// Create a `JSONDecoder` with this factory assigned in the user info keys as the factory
     /// to use when decoding this object.
-    open func createJSONDecoder(resourceInfo: RSDResourceInfo? = nil) -> JSONDecoder {
+    open func createJSONDecoder(resourceInfo: ResourceInfo? = nil) -> JSONDecoder {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
             let container = try decoder.singleValueContainer()
@@ -988,30 +972,15 @@ open class RSDFactory {
         return decoder
     }
     
-    /// - deprecated: Use `createPropertyListDecoder(resourceInfo:) instead.
-    @available(*, deprecated, message: "Use `createPropertyListDecoder(resourceInfo:) instead.")
-    open func createPropertyListDecoder(bundle: Bundle?) -> PropertyListDecoder {
-        return self.createPropertyListDecoder(resourceInfo: DeprecationResourceInfo(factoryBundle: bundle))
-    }
-    
     /// Create a `PropertyListDecoder` with this factory assigned in the user info keys as the factory
     /// to use when decoding this object.
-    open func createPropertyListDecoder(resourceInfo: RSDResourceInfo? = nil) -> PropertyListDecoder {
+    open func createPropertyListDecoder(resourceInfo: ResourceInfo? = nil) -> PropertyListDecoder {
         let decoder = PropertyListDecoder()
         decoder.userInfo[.factory] = self
         decoder.userInfo[.bundle] = resourceInfo?.bundle
         decoder.userInfo[.packageName] = resourceInfo?.packageName
         decoder.userInfo[.codingInfo] = RSDCodingInfo()
         return decoder
-    }
-    
-    /// - deprecated: Use `createDecoder(for resourceType:, taskIdentifier:, schemaInfo:, resourceInfo:)` instead.
-    @available(*, deprecated, message: "Use `createDecoder(for resourceType:, taskIdentifier:, schemaInfo:, resourceInfo:)` instead")
-    open func createDecoder(for resourceType: RSDResourceType, taskIdentifier: String?, schemaInfo: RSDSchemaInfo?, bundle: Bundle?) throws -> RSDFactoryDecoder {
-        return try self.createDecoder(for: resourceType,
-                                      taskIdentifier: taskIdentifier,
-                                      schemaInfo: schemaInfo,
-                                      resourceInfo: DeprecationResourceInfo(factoryBundle: bundle))
     }
     
     /// Create the appropriate decoder for the given resource type. This method will return an
@@ -1025,7 +994,7 @@ open class RSDFactory {
     ///     - resourceInfo:    The resource info for this decoder.
     /// - returns: The decoder for the given type.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func createDecoder(for resourceType: RSDResourceType, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: RSDResourceInfo? = nil) throws -> RSDFactoryDecoder {
+    open func createDecoder(for resourceType: RSDResourceType, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: ResourceInfo? = nil) throws -> RSDFactoryDecoder {
         var decoder : RSDFactoryDecoder = try {
             if resourceType == .json {
                 return self.createJSONDecoder(resourceInfo: resourceInfo)
@@ -1218,8 +1187,8 @@ extension Decoder {
     }
     
     /// The default bundle to use for embedded resources.
-    public var bundle: RSDResourceBundle? {
-        return self.userInfo[.bundle] as? RSDResourceBundle
+    public var bundle: ResourceBundle? {
+        return self.userInfo[.bundle] as? ResourceBundle
     }
     
     /// The default package to use for embedded resources.
@@ -1277,14 +1246,8 @@ public class RSDCodingInfo {
     public var userInfo : [CodingUserInfoKey : Any] = [:]
 }
 
-internal struct DeprecationResourceInfo : RSDResourceInfo {
-    let factoryBundle: RSDResourceBundle?
-    var bundleIdentifier: String? { return nil }
-    var packageName: String? { return nil }
-}
-
-internal struct FactoryResourceInfo : RSDResourceInfo {
-    let factoryBundle: RSDResourceBundle?
+internal struct FactoryResourceInfo : ResourceInfo {
+    var factoryBundle: ResourceBundle?
     let packageName: String?
     var bundleIdentifier: String? { return nil }
     init(from decoder: Decoder) {

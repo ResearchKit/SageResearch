@@ -34,6 +34,7 @@
 import Foundation
 import Research
 import ResearchMotion
+import JsonModel
 
 /// Stub out a factory for this application. Any factory overrides that are used by the catalog
 /// can be declared here. This stub is intentional so that unit tests will all use this rather
@@ -49,7 +50,7 @@ class CatalogFactory : RSDFactory {
     
     // TODO: syoung 01/18/2019 Refactor the way factories work to allow registering different factories
     // for different tasks. For now, just shoehorn it in there.
-    override func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: RSDResourceInfo? = nil) throws -> RSDTask {
+    override func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: ResourceInfo? = nil) throws -> RSDTask {
         let decoder = try self.createDecoder(for: resourceType, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo, resourceInfo: resourceInfo)
         if let identifier = taskIdentifier, identifier == "motion" || identifier == "distance" {
             return try decoder.decode(RSDMotionTaskObject.self, from: data)

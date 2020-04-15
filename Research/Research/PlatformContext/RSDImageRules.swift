@@ -36,6 +36,7 @@ import AppKit
 #else
 import UIKit
 #endif
+import JsonModel
 
 open class RSDImageRules {
     
@@ -52,7 +53,7 @@ open class RSDImageRules {
     /// List of all the bundles to search for a given image. Only register your bundle if you need
     /// to make assets within that bundle available to tasks that are decoded from a *different*
     /// bundle from the image asset. If they are decoded from the same bundle, or from the main
-    /// bundle, then the `RSDResourceInfo` on the image data or theme will include the bundle.
+    /// bundle, then the `ResourceInfo` on the image data or theme will include the bundle.
     open private(set) var registeredBundles: [Bundle] = []
     
     /// Insert a bundle into `registeredBundles` at a given index. If the index is beyond the range
@@ -135,7 +136,7 @@ open class RSDImageRules {
     ///     - traitCollection: The trait collection for the presenting view.
     /// - returns: Image if found.
     open func largeImage(named resourceName: String,
-                         using resourceInfo: RSDResourceInfo? = nil,
+                         using resourceInfo: ResourceInfo? = nil,
                          compatibleWith traitCollection: UITraitCollection? = nil) -> RSDImage? {
         
         return _getFileImage(resourceName, resourceInfo, traitCollection) ??
@@ -155,7 +156,7 @@ open class RSDImageRules {
     ///     - traitCollection: The trait collection for the presenting view.
     /// - returns: Image if found.
     open func assetImage(named resourceName: String,
-                    using resourceInfo: RSDResourceInfo? = nil,
+                    using resourceInfo: ResourceInfo? = nil,
                     compatibleWith traitCollection: UITraitCollection? = nil) -> RSDImage? {
         
         if shouldPreferSystemImage {
@@ -184,7 +185,7 @@ open class RSDImageRules {
     
     /// Get an image from an asset catalog and then add default accessibility traits.
     private func _getAssetImage(_ resourceName: String,
-                                _ resourceInfo: RSDResourceInfo?,
+                                _ resourceInfo: ResourceInfo?,
                                 _ traitCollection: UITraitCollection?) -> RSDImage? {
         guard let image = self.searchBundlesForAsset(named: resourceName, using: resourceInfo, compatibleWith: traitCollection)
             else {
@@ -203,7 +204,7 @@ open class RSDImageRules {
     
     /// Get an image from a file and then add default accessibility traits.
     private func _getFileImage(_ resourceName: String,
-                                _ resourceInfo: RSDResourceInfo?,
+                                _ resourceInfo: ResourceInfo?,
                                 _ traitCollection: UITraitCollection?) -> RSDImage? {
         guard let image = self.searchBundlesForImageFile(named: resourceName, using: resourceInfo, compatibleWith: traitCollection)
             else {
@@ -222,7 +223,7 @@ open class RSDImageRules {
     
     /// Look in each bundle for an asset image, in priority order.
     private func searchBundlesForAsset(named resourceName: String,
-                                       using resourceInfo: RSDResourceInfo? = nil,
+                                       using resourceInfo: ResourceInfo? = nil,
                                        compatibleWith traitCollection: UITraitCollection? = nil) -> RSDImage? {
         
         // Exit early if found in either the resource info bundle or main bundle.
@@ -247,7 +248,7 @@ open class RSDImageRules {
     
     /// Look in each bundle for a file image, in priority order.
     private func searchBundlesForImageFile(named resourceName: String,
-                                           using resourceInfo: RSDResourceInfo? = nil,
+                                           using resourceInfo: ResourceInfo? = nil,
                                            compatibleWith traitCollection: UITraitCollection? = nil) -> RSDImage? {
         
         // Exit early if found in either the resource info bundle or main bundle.

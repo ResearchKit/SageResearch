@@ -35,7 +35,7 @@ import JsonModel
 
 /// `RSDEmbeddedResourceUIAction` is a convenience protocol for returning an image using an
 /// encodable strings for the name and bundle identifier.
-public protocol RSDEmbeddedResourceUIAction: RSDUIAction, RSDDecodableBundleInfo {
+public protocol RSDEmbeddedResourceUIAction: RSDUIAction, DecodableBundleInfo {
 }
 
 /// `RSDUIActionObject` is a concrete implementation of `RSDUIAction` that can be used to customize the
@@ -57,7 +57,7 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction {
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?
@@ -83,7 +83,7 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction {
     /// - parameters:
     ///     - iconName: The name of the image to display on the button.
     ///     - bundle: The resource bundle that contains the image.
-    public init(iconName: String, bundle: RSDResourceBundle?) {
+    public init(iconName: String, bundle: ResourceBundle?) {
         self.buttonTitle = nil
         self.iconName = iconName
         self.bundleIdentifier = bundle?.bundleIdentifier
@@ -112,7 +112,7 @@ public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavi
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?
@@ -152,7 +152,7 @@ public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDRemind
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?
@@ -203,7 +203,7 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?
@@ -268,7 +268,7 @@ public struct RSDVideoViewUIActionObject : RSDEmbeddedResourceUIAction, RSDVideo
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?

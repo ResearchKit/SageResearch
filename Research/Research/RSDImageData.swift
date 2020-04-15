@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 
 /// The image data protocol is used to define a placeholder for image data.
 public protocol RSDImageData {
@@ -65,7 +66,7 @@ extension RSDResourceImageData {
 /// This framework includes different decodables that implement both the `RSDResourceImageData`
 /// protocol and the `RSDImageThemeElement` protocol. This shared protocol provides for a
 /// consistent implementation for both by setting the `resourceName` to the same as the `imageName`.
-public protocol RSDThemeResourceImageData : RSDImageThemeElement, RSDResourceImageData, RSDDecodableBundleInfo {
+public protocol RSDThemeResourceImageData : RSDImageThemeElement, RSDResourceImageData, DecodableBundleInfo {
 }
 
 extension RSDThemeResourceImageData {

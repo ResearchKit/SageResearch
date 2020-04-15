@@ -49,7 +49,7 @@ public final class RSDResourceTransformerObject : Codable {
     public let bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?
@@ -79,7 +79,7 @@ public final class RSDResourceTransformerObject : Codable {
     /// - parameters:
     ///     - resourceName: The name of the resource.
     ///     - bundleIdentifier: The bundle identifier for the embedded resource.
-    public init(resourceName: String, bundle: RSDResourceBundle) {
+    public init(resourceName: String, bundle: ResourceBundle) {
         self.resourceName = resourceName
         self.bundleIdentifier = bundle.bundleIdentifier
         self.factoryBundle = bundle

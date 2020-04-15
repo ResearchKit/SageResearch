@@ -36,7 +36,7 @@ import JsonModel
 
 /// `RSDViewThemeElementObject` tells the UI where to find the view controller to use when instantiating
 /// the `RSDStepController`.
-public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundleInfo, Codable {
+public struct RSDViewThemeElementObject: RSDViewThemeElement, DecodableBundleInfo, Codable {
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case type, storyboardIdentifier, viewIdentifier, bundleIdentifier, packageName
     }
@@ -53,7 +53,7 @@ public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundle
     public let bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?

@@ -11,6 +11,8 @@ Do a search and replace on the following:
 1. RSDJSONNumber -> JsonNumber
 2. RSDJSONValue -> JsonValue
 3. RSDJSONSerializable -> JsonSerializable
+4. RSDResourceInfo -> ResourceInfo
+5. RSDDecodableBundleInfo -> DecodableBundleInfo
 
 Then you will need to import JsonModel for any code files that reference these protocols.
 
@@ -22,3 +24,7 @@ import JsonModel
 
 Since this was an internal set of protocols, no changes to frameworks built with Research.framework should
 require any updates. That said, this feature is now available for use in testing and documentation.
+
+## `RSDFactory` inherits from `SerializationFactory`
+
+

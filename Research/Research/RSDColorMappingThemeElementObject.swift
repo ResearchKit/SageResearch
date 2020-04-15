@@ -56,7 +56,7 @@ public struct RSDColorDataObject : Codable, RSDColorData {
 /// a given view as well as whether or not the foreground elements should use "light style".
 ///
 /// The mapping is handled using a dictionary of color placements to the color style for that placement.
-public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo, Encodable {
+public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement, DecodableBundleInfo, Encodable {
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case type, bundleIdentifier, packageName, placement, customColor
     }
@@ -74,7 +74,7 @@ public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement,
     public let bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package name.
     public var packageName: String?
@@ -198,7 +198,7 @@ extension RSDColorPlacementThemeElementObject : DocumentableStruct {
 /// a given view as well as whether or not the foreground elements should use "light style".
 ///
 /// The mapping is handled using a single style for the entire view.
-public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo, Encodable {
+public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, DecodableBundleInfo, Encodable {
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case type, bundleIdentifier, packageName, colorStyle, customColor
     }
@@ -210,7 +210,7 @@ public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RS
     public let bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package name.
     public var packageName: String?

@@ -32,26 +32,14 @@
 //
 
 import Foundation
-
-/// `RSDDecodableBundleInfo` is a convenience protocol for getting a bundle from a bundle identifier.
-public protocol RSDDecodableBundleInfo : Decodable, RSDResourceInfo {
-    
-    /// The bundle identifier. Decodable identifier that can be used to get the bundle.
-    var bundleIdentifier : String? { get }
-    
-    /// A pointer to the bundle set by the factory (if applicable).
-    var factoryBundle: RSDResourceBundle? { get set }
-    
-    /// The package name (if applicable)
-    var packageName: String? { get set }
-}
+import JsonModel
 
 
 /// `RSDResourceTransformer` is a protocol for getting either embedded resources or online resources.
 ///
 /// - seealso: `RSDStepResourceTransformer` and `RSDTaskResourceTransformer`
 ///
-public protocol RSDResourceTransformer: RSDDecodableBundleInfo {
+public protocol RSDResourceTransformer: DecodableBundleInfo {
     
     /// Either a fully qualified URL string or else a relative reference to either an embedded resource or
     /// a relative URL defined globally by overriding the `RSDResourceConfig` class methods.
@@ -99,7 +87,7 @@ extension RSDResourceTransformer {
     ///     - url: The returned URL for this resource.
     ///     - resourceType: The resource type.
     /// - throws: `RSDResourceTransformerError` if the file cannot be found.
-    public func resourceURL(ofType defaultExtension: String? = nil, bundle: RSDResourceBundle? = nil) throws -> (url: URL, resourceType: RSDResourceType) {
+    public func resourceURL(ofType defaultExtension: String? = nil, bundle: ResourceBundle? = nil) throws -> (url: URL, resourceType: RSDResourceType) {
         
         // get the resource name and extension
         let splitValue = resourceName.splitFilename(defaultExtension: defaultExtension)
@@ -177,7 +165,7 @@ extension RSDResourceTransformer {
     ///     - data: The returned Data for this resource.
     ///     - resourceType: The resource type.
     /// - throws: `RSDResourceTransformerError` if the file cannot be found.
-    private func _resourceData(ofType defaultExtension: RSDResourceType?, bundle: RSDResourceBundle?) throws -> (data: Data, resourceType: RSDResourceType) {
+    private func _resourceData(ofType defaultExtension: RSDResourceType?, bundle: ResourceBundle?) throws -> (data: Data, resourceType: RSDResourceType) {
         
         // get the url
         let (url, resourceType) = try resourceURL(ofType: defaultExtension?.rawValue, bundle: bundle)
