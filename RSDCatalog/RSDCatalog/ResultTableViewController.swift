@@ -80,7 +80,7 @@ class ResultTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ImageTableViewCell
         let result = results(in: indexPath.section)[indexPath.row]
-        if let answerResult = result as? RSDAnswerResult {
+        if let answerResult = result as? AnswerResult {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.answer.stringValue, for: indexPath) as! ImageTableViewCell
             cell.subtitleLabel?.text = answerResult.value != nil ? String(describing: answerResult.value!) : "nil"
         }

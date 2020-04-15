@@ -128,7 +128,7 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
             for key in nestedContainer.allKeys {
                 let objectDecoder = try nestedContainer.superDecoder(forKey: key)
                 let actionType = RSDUIActionType(rawValue: key.stringValue)
-                let action = try decoder.factory.decodeUIAction(from: objectDecoder, for: actionType)
+                let action = try decoder.factory.decodePolymorphicObject(RSDUIAction.self, from: objectDecoder)
                 actions[actionType] = action
             }
             self.actions = actions

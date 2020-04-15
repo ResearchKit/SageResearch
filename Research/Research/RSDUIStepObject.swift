@@ -2,7 +2,7 @@
 //  RSDUIStepObject.swift
 //  Research
 //
-//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -43,7 +43,7 @@ extension RSDStepType {
 /// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, RSDStandardPermissionsStep, RSDInstructionStep {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, RSDStandardPermissionsStep {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier
@@ -349,18 +349,12 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         
         if let text = try deprecatedContainer.decodeIfPresent(String.self, forKey: .text) {
             debugPrint("WARNING!!! `text` keyword on a UIStepObject decoding is deprecated and will be deleted in future versions.")
-            if let detail = try container.decodeIfPresent(String.self, forKey: .detail) {
-                self.subtitle = text
-                self.detail = detail
-            }
-            else {
-                self.detail = text
-            }
+            self.subtitle = text
         }
         else {
-            self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
             self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle) ?? self.subtitle
         }
+        self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
 
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
         self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
@@ -371,18 +365,18 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         
         if container.contains(.viewTheme) {
             let nestedDecoder = try container.superDecoder(forKey: .viewTheme)
-            self.viewTheme = try decoder.factory.decodeViewThemeElement(from: nestedDecoder)
+            self.viewTheme = try decoder.factory.decodePolymorphicObject(RSDViewThemeElement.self, from: nestedDecoder)
         }
         if container.contains(.colorMapping) {
             let nestedDecoder = try container.superDecoder(forKey: .colorMapping)
-            self.colorMapping = try decoder.factory.decodeColorMappingThemeElement(from: nestedDecoder)
+            self.colorMapping = try decoder.factory.decodePolymorphicObject(RSDColorMappingThemeElement.self, from: nestedDecoder)
         }
         else if deprecatedContainer.contains(.colorTheme) {
             throw DecodingError.dataCorruptedError(forKey: DeprecatedCodingKeys.colorTheme, in: deprecatedContainer, debugDescription: "Use of `colorTheme` JSON key is unavailable. Please convert your JSON files to use `colorMapping` instead.")
         }
         if container.contains(.image) {
             let nestedDecoder = try container.superDecoder(forKey: .image)
-            self.imageTheme = try decoder.factory.decodeImageThemeElement(from: nestedDecoder)
+            self.imageTheme = try decoder.factory.decodePolymorphicObject(RSDImageThemeElement.self, from: nestedDecoder)
         }
         
         if deviceType == nil {
@@ -511,7 +505,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
             ],
             "colorMapping"     : [  "type" : "singleColor",
                                     "customColor" : ["color" : "sky", "usesLightStyle" : true ]],
-            "viewTheme"      : [ "viewIdentifier": "ActiveInstruction",
+            "viewTheme"      : [ "type": "default",
+                                 "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps",
                                  "bundleIdentifier": "org.example.SharedResources" ],
             "beforeCohortRules" : [["requiredCohorts" : ["boo", "goo"],

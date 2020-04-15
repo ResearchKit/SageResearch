@@ -94,3 +94,33 @@ public struct KeyboardOptionsObject : KeyboardOptions, Codable {
                                                                    spellCheckingType: .no,
                                                                    keyboardType: .numbersAndPunctuation)
 }
+
+extension KeyboardOptionsObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case ._isSecureTextEntry:
+            return .init(defaultValue: .boolean(false))
+        case ._autocapitalizationType:
+            return .init(propertyType: .reference(RSDTextAutocapitalizationType.documentableType()))
+        case ._autocorrectionType:
+            return .init(propertyType: .reference(RSDTextAutocorrectionType.documentableType()))
+        case ._spellCheckingType:
+            return .init(propertyType: .reference(RSDTextSpellCheckingType.documentableType()))
+        case ._keyboardType:
+            return .init(propertyType: .reference(RSDKeyboardType.documentableType()))
+        }
+    }
+    
+    public static func examples() -> [KeyboardOptionsObject] {
+        [KeyboardOptionsObject(), .decimalEntryOptions]
+    }
+}

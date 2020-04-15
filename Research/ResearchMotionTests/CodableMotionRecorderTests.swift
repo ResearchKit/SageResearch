@@ -34,6 +34,7 @@
 import XCTest
 import Research
 @testable import ResearchMotion
+import JsonModel
 
 class CodableMotionRecorderTests: XCTestCase {
     

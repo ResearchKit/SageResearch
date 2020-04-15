@@ -227,7 +227,7 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if container.contains(.inputItem) {
             let nestedDecoder = try container.superDecoder(forKey: .inputItem)
-            self.inputItem = try factory.decodeInputItem(from: nestedDecoder)
+            self.inputItem = try factory.decodePolymorphicObject(InputItemBuilder.self, from: nestedDecoder)
         }
     }
     
@@ -289,7 +289,7 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
         let factory = decoder.factory
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let nestedContainer = try container.nestedUnkeyedContainer(forKey: .inputItems)
-        self.inputItems = try factory.decodeInputItems(from: nestedContainer)
+        self.inputItems = try factory.decodePolymorphicArray(InputItemBuilder.self, from: nestedContainer)
         self.sequenceSeparator = try container.decodeIfPresent(String.self, forKey: .sequenceSeparator)
         try super.init(from: decoder)
     }

@@ -36,7 +36,7 @@ import Foundation
 import JsonModel
 import UIKit
 
-public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDInstructionStep {
+public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDOptionalStep {
     
     public let identifier: String
     public var stepType: RSDStepType = .instruction

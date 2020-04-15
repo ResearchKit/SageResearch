@@ -2,7 +2,7 @@
 //  RSDDistanceRecorderConfiguration.swift
 //  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -52,9 +52,8 @@ import JsonModel
 /// ```
 @available(iOS 10.0, *)
 public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, Codable {
-    
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, motionStepIdentifier, startStepIdentifier, stopStepIdentifier, usesCSVEncoding
+        case identifier, asyncActionType = "type", motionStepIdentifier, startStepIdentifier, stopStepIdentifier, usesCSVEncoding
     }
     
     /// A short string that uniquely identifies the asynchronous action within the task. If started
@@ -62,7 +61,7 @@ public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, Codab
     public let identifier: String
     
     /// The standard permission type associated with this configuration.
-    public let type: RSDAsyncActionType
+    public private(set) var asyncActionType: RSDAsyncActionType = .distance
     
     /// Identifier for the step that records distance travelled. The recorder uses this step to record
     /// distance travelled while the other steps in the task are assumed to be standing still.
@@ -87,7 +86,6 @@ public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, Codab
     ///     - stopStepIdentifier: An identifier marking the step to stop the action.  Default = `nil`.
     public init(identifier: String, motionStepIdentifier: String? = nil, startStepIdentifier: String? = nil, stopStepIdentifier: String? = nil) {
         self.identifier = identifier
-        self.type = .distance
         self.motionStepIdentifier = motionStepIdentifier
         self.startStepIdentifier = startStepIdentifier
         self.stopStepIdentifier = stopStepIdentifier
@@ -113,6 +111,9 @@ public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, Codab
     }
 }
 
+extension RSDDistanceRecorderConfiguration : SerializableAsyncActionConfiguration {
+}
+
 extension RSDDistanceRecorderConfiguration : DocumentableStruct {
     public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
@@ -120,7 +121,7 @@ extension RSDDistanceRecorderConfiguration : DocumentableStruct {
     
     public static func isRequired(_ codingKey: CodingKey) -> Bool {
         guard let key = codingKey as? CodingKeys else { return false }
-        return key == .type || key == .identifier
+        return key == .asyncActionType || key == .identifier
     }
     
     public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
@@ -128,8 +129,8 @@ extension RSDDistanceRecorderConfiguration : DocumentableStruct {
             throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
         }
         switch key {
-        case .type:
-            return .init(constValue: RSDStandardPermissionType.location)
+        case .asyncActionType:
+            return .init(constValue: RSDAsyncActionType.distance)
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case .startStepIdentifier, .stopStepIdentifier, .motionStepIdentifier:

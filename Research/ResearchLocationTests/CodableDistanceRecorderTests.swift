@@ -34,6 +34,7 @@
 import XCTest
 import Research
 @testable import ResearchLocation
+import JsonModel
 
 class CodableDistanceRecorderTests: XCTestCase {
     
@@ -65,7 +66,7 @@ class CodableDistanceRecorderTests: XCTestCase {
             let object = try decoder.decode(RSDDistanceRecorderConfiguration.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
-            XCTAssertEqual(object.type, "distance")
+            XCTAssertEqual(object.asyncActionType, "distance")
             XCTAssertEqual(object.startStepIdentifier, "countdown")
             XCTAssertEqual(object.stopStepIdentifier, "rest")
             XCTAssertEqual(object.motionStepIdentifier, "run")

@@ -97,11 +97,11 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
         }
         
         let resultsContainer = try container.nestedUnkeyedContainer(forKey: .stepHistory)
-        self.stepHistory = try decoder.factory.decodeResults(from: resultsContainer)
+        self.stepHistory = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: resultsContainer)
         
         if container.contains(.asyncResults) {
             let asyncResultsContainer = try container.nestedUnkeyedContainer(forKey: .asyncResults)
-            self.asyncResults = try decoder.factory.decodeResults(from: asyncResultsContainer)
+            self.asyncResults = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: asyncResultsContainer)
         }
     }
     

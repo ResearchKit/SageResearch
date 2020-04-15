@@ -37,7 +37,7 @@ import JsonModel
 /// `RSDOverviewStepObject` extends the `RSDUIStepObject` to include information about an activity including
 /// what permissions are required by this task. Without these preconditions, the task cannot measure or
 /// collect the data needed for this task.
-open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
+open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep, Encodable {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case icons
@@ -85,6 +85,12 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.icons = try container.decodeIfPresent([RSDIconInfo].self, forKey: .icons) ?? self.icons
+    }
+    
+    open override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(self.icons, forKey: .icons)
     }
     
     // Overrides must be defined in the base implementation

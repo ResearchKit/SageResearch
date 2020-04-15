@@ -78,6 +78,7 @@ public struct RSDDocumentCreator {
         RSDNavigationUIActionObject.self,
         RSDResourceTransformerObject.self,
         RSDResultObject.self,
+        RSDTaskInfoStepObject.self,
         RSDTaskResultObject.self,
         RSDUIActionObject.self,
         RSDViewThemeElementObject.self,

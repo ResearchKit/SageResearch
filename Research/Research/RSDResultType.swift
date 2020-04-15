@@ -81,3 +81,28 @@ extension RSDResultType : DocumentableStringLiteral {
         return allStandardTypes().map{ $0.rawValue }
     }
 }
+
+public final class RSDResultSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    override init() {
+        self.examples = [
+            RSDResultObject.examples().first!,
+            AnswerResultObject.examples().first!,
+            RSDCollectionResultObject.examples().first!,
+            RSDErrorResultObject.examples().first!,
+            RSDFileResultObject.examples().first!,
+        ]
+    }
+    
+    public private(set) var examples: [RSDResult]
+    
+    public func add(_ example: RSDResult) {
+        if let idx = examples.firstIndex(where: { $0.typeName != example.typeName }) {
+            examples.remove(at: idx)
+        }
+        examples.append(example)
+    }
+}
+
+public extension Result {
+    var typeName: String { return self.type.rawValue }
+}

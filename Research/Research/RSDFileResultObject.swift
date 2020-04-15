@@ -99,13 +99,7 @@ extension RSDFileResultObject : DocumentableStruct {
     
     public static func isRequired(_ codingKey: CodingKey) -> Bool {
         guard let key = codingKey as? CodingKeys else { return false }
-        switch key {
-        case .type, .identifier, .startDate, .endDate:
-            return true
-        case .contentType, .relativePath, .startUptime:
-            return false
-        }
-        return true
+        return key == .identifier || key == .type
     }
     
     public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
@@ -117,7 +111,7 @@ extension RSDFileResultObject : DocumentableStruct {
             return .init(constValue: RSDResultType.file)
         case .identifier:
             return .init(propertyType: .primitive(.string))
-        case .startDate, .endDate:
+        case ._startDate, ._endDate:
             return .init(propertyType: .primitive(.string))
         case .contentType, .relativePath:
             return .init(propertyType: .primitive(.string))

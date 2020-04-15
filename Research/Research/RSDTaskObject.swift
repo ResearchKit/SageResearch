@@ -132,9 +132,9 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
             var decodedActions : [RSDAsyncActionConfiguration] = []
             while !nestedContainer.isAtEnd {
                 let actionDecoder = try nestedContainer.superDecoder()
-                if let action = try factory.decodeAsyncActionConfiguration(from: actionDecoder) {
-                    decodedActions.append(action)
-                }
+                let action = try factory.decodePolymorphicObject(RSDAsyncActionConfiguration.self,
+                                                                 from: actionDecoder)
+                decodedActions.append(action)
             }
             self.asyncActions = decodedActions
         } else {

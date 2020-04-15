@@ -38,7 +38,6 @@ import JsonModel
 /// case where an `RSDUIStep` has an action such as "start walking" or "stop walking"; the step may also implement
 /// the `RSDActiveUIStep` protocol to allow for spoken instruction.
 open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
-    
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case duration, commands, requiresBackgroundAudio, shouldEndOnInterrupt, spokenInstructions
     }
@@ -134,8 +133,6 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         }
         return self.spokenInstructions?[key]
     }
-    
-    // MARK: Coding (spoken instructions requires special handling and Codable auto-synthesis does not work with subclassing)
     
     /// Default type is `.active`.
     open override class func defaultType() -> RSDStepType {

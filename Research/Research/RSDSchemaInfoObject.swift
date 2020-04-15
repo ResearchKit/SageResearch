@@ -68,4 +68,27 @@ public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable, Hashable {
     }
 }
 
+extension RSDSchemaInfoObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { true }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .revision:
+            return .init(propertyType: .primitive(.integer))
+        }
+    }
+    
+    public static func examples() -> [RSDSchemaInfoObject] {
+        [RSDSchemaInfoObject(identifier: "foo", revision: 2)]
+    }
+}
 

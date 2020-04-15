@@ -106,7 +106,13 @@ extension RSDErrorResultObject : DocumentableStruct {
     }
     
     public static func isRequired(_ codingKey: CodingKey) -> Bool {
-        return true
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case ._startDate, ._endDate:
+            return false
+        default:
+            return true
+        }
     }
     
     public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
@@ -118,7 +124,7 @@ extension RSDErrorResultObject : DocumentableStruct {
             return .init(constValue: RSDResultType.error)
         case .identifier:
             return .init(propertyType: .primitive(.string))
-        case .startDate, .endDate:
+        case ._startDate, ._endDate:
             return .init(propertyType: .primitive(.string))
         case .errorDomain, .errorDescription:
             return .init(propertyType: .primitive(.string))

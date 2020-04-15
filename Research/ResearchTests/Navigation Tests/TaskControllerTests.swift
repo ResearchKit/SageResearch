@@ -551,7 +551,7 @@ class TaskControllerTests: XCTestCase {
         let step2 = RSDUIStepObject(identifier: "step2")
         
         let trackingRule = TestTrackingRule(skipTo: ["step1" : "step2"], next: [:], nextAfterNil: nil)
-        (RSDFactory.shared as! RSDFactory).trackingRules = [trackingRule]
+        RSDFactory.shared.trackingRules = [trackingRule]
         
         var taskResult: RSDTaskResult = RSDTaskResultObject(identifier: "test")
         let navigator = RSDConditionalStepNavigatorObject(with: [step1, step2])
@@ -559,7 +559,7 @@ class TaskControllerTests: XCTestCase {
         XCTAssertEqual(nextStep.step?.identifier, "step2")
         XCTAssertEqual(nextStep.direction, .forward)
         
-        (RSDFactory.shared as! RSDFactory).trackingRules = []
+        RSDFactory.shared.trackingRules = []
     }
     
     func testDataTrackingNavigation_ToCompletion() {
@@ -737,7 +737,7 @@ class TaskControllerTests: XCTestCase {
         // condition so that I can fix it. syoung 11/01/2019
         
         let trackingRule = TestTrackingRule(skipTo: ["step1" : "step2"], next: [:], nextAfterNil: nil)
-        (RSDFactory.shared as! RSDFactory).trackingRules = [trackingRule]
+        RSDFactory.shared.trackingRules = [trackingRule]
         let steps: [RSDStep] = TestStep.steps(from: ["step1", "step2", "step3", "step4"])
         let navigator = TestConditionalNavigator(steps: steps)
         
@@ -757,7 +757,7 @@ class TaskControllerTests: XCTestCase {
         XCTAssertEqual(stepHistory, ["step2"])
         
         // Reset the tracking rules
-        (RSDFactory.shared as! RSDFactory).trackingRules = []
+        RSDFactory.shared.trackingRules = []
     }
 }
 

@@ -50,7 +50,7 @@ class CodableStepObjectTests: XCTestCase {
     }
     
 
-    func testUIStepObject_Codable() {
+    func testInstructionStepObject_Codable() {
         
         let json = """
         {
@@ -86,7 +86,8 @@ class CodableStepObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDUIStepObject.self, from: json)
+            let wrapper = try decoder.decode(StepWrapper<RSDInstructionStepObject>.self, from: json)
+            let object = wrapper.step
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
@@ -151,7 +152,8 @@ class CodableStepObjectTests: XCTestCase {
             factory.deviceType = .watch
             let decoder = factory.createJSONDecoder()
             
-            let object = try decoder.decode(RSDUIStepObject.self, from: json)
+            let wrapper = try decoder.decode(StepWrapper<RSDInstructionStepObject>.self, from: json)
+            let object = wrapper.step
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
@@ -197,7 +199,8 @@ class CodableStepObjectTests: XCTestCase {
                                             "color": "sky",
                                             "usesLightStyle" : true}
                                 },
-            "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
+            "viewTheme"      : { "type": "default",
+                                 "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps" },
             "beforeCohortRules" : [{ "requiredCohorts" : ["goo"],
                                     "skipToIdentifier" : "blueGu",
@@ -210,7 +213,8 @@ class CodableStepObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDUIStepObject.self, from: json)
+            let wrapper = try decoder.decode(StepWrapper<RSDInstructionStepObject>.self, from: json)
+            let object = wrapper.step
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
@@ -331,7 +335,8 @@ class CodableStepObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDActiveUIStepObject.self, from: json)
+            let wrapper = try decoder.decode(StepWrapper<RSDActiveUIStepObject>.self, from: json)
+            let object = wrapper.step
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
@@ -366,7 +371,8 @@ class CodableStepObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDActiveUIStepObject.self, from: json)
+            let wrapper = try decoder.decode(StepWrapper<RSDActiveUIStepObject>.self, from: json)
+            let object = wrapper.step
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.duration, 0)
@@ -516,7 +522,7 @@ class CodableStepObjectTests: XCTestCase {
         let json = """
         {
             "identifier": "foo",
-            "type": "instruction",
+            "type": "overview",
             "title": "Hello World!",
             "subtitle": "Some text.",
             "detail": "This is a test.",
@@ -541,7 +547,8 @@ class CodableStepObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDOverviewStepObject.self, from: json)
+            let wrapper = try decoder.decode(StepWrapper<RSDOverviewStepObject>.self, from: json)
+            let object = wrapper.step
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
@@ -582,7 +589,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
-    func testResultSummaryStepObject_Codable() {
+    func testCompletionStepObject_Codable() {
         
         let json = """
         {
@@ -599,7 +606,41 @@ class CodableStepObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDResultSummaryStepObject.self, from: json)
+            let wrapper = try decoder.decode(StepWrapper<RSDCompletionStepObject>.self, from: json)
+            let object = wrapper.step
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.title, "Hello World!")
+            XCTAssertEqual(object.subtitle, "Some text.")
+            XCTAssertEqual(object.unitText, "foos")
+            XCTAssertEqual(object.resultIdentifier, "bar")
+            XCTAssertEqual(object.stepResultIdentifier, "goo")
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testResultSummaryStepObject_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "type": "feedback",
+            "title": "Hello World!",
+            "subtitle": "Some text.",
+            "unitText": "foos",
+            "resultIdentifier": "bar",
+            "stepResultIdentifier": "goo",
+            "formatter" : {"maximumDigits" : 3 }
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let wrapper = try decoder.decode(StepWrapper<RSDResultSummaryStepObject>.self, from: json)
+            let object = wrapper.step
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
@@ -637,7 +678,8 @@ class CodableStepObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDSectionStepObject.self, from: json)
+            let wrapper = try decoder.decode(StepWrapper<RSDSectionStepObject>.self, from: json)
+            let object = wrapper.step
             
             XCTAssertEqual(object.identifier, "foobar")
             XCTAssertEqual(object.stepType, "section")
@@ -662,6 +704,43 @@ class CodableStepObjectTests: XCTestCase {
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return
+        }
+    }
+    
+    func testStepTransform() {
+        let json = """
+        {
+            "identifier": "foobar",
+            "type": "transform",
+            "resourceTransformer" : { "resourceName": "FactoryTest_StepTransform.json"}
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        let resourceInfo = FactoryResourceInfo(factoryBundle: Bundle(for: BundleWrapper.self),
+                                               packageName: nil)
+        let decoder = RSDFactory.shared.createJSONDecoder(resourceInfo: resourceInfo)
+        
+        do {
+            
+            let wrapper = try decoder.decode(StepWrapper<SimpleQuestionStepObject>.self, from: json)
+            let object = wrapper.step
+            
+            XCTAssertEqual("foobar", object.identifier)
+
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    struct StepWrapper<Value : RSDStep> : Decodable {
+        let step : Value
+        init(from decoder: Decoder) throws {
+            let objStep = try decoder.factory.decodePolymorphicObject(RSDStep.self, from: decoder)
+            guard let step = objStep as? Value else {
+                let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to decode the expected step type. Decoded \(type(of: objStep))")
+                throw DecodingError.typeMismatch(Value.self, context)
+            }
+            self.step = step
         }
     }
 }

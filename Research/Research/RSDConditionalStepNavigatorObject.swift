@@ -141,11 +141,10 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
     /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let factory = decoder.factory
         
         // Decode the steps
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
-        self.steps = try factory.decodeSteps(from: stepsContainer)
+        self.steps = try decoder.factory.decodePolymorphicArray(RSDStep.self, from: stepsContainer)
         
         // Decode the markers
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)

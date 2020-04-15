@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F82A4A9F22960BF700BEBE3C"
-               BuildableName = "ResearchLocation.framework"
-               BlueprintName = "ResearchLocation"
+               BlueprintIdentifier = "F8BE123421370931000AAB1E"
+               BuildableName = "Research.framework"
+               BlueprintName = "Research (macOS)"
                ReferencedContainer = "container:Research.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,16 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F82A4AA722960BF700BEBE3C"
-               BuildableName = "ResearchLocationTests.xctest"
-               BlueprintName = "ResearchLocationTests"
-               ReferencedContainer = "container:Research.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -50,15 +40,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F82A4A9F22960BF700BEBE3C"
-            BuildableName = "ResearchLocation.framework"
-            BlueprintName = "ResearchLocation"
-            ReferencedContainer = "container:Research.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -69,9 +50,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F82A4A9F22960BF700BEBE3C"
-            BuildableName = "ResearchLocation.framework"
-            BlueprintName = "ResearchLocation"
+            BlueprintIdentifier = "F8BE123421370931000AAB1E"
+            BuildableName = "Research.framework"
+            BlueprintName = "Research (macOS)"
             ReferencedContainer = "container:Research.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

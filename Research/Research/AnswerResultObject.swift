@@ -75,7 +75,7 @@ public final class AnswerResultObject : AnswerResult, RSDNavigationResult, Codab
         self.skipToIdentifier = try container.decodeIfPresent(String.self, forKey: .skipToIdentifier)
         if container.contains(.jsonAnswerType) {
             let nestedDecoder = try container.superDecoder(forKey: .jsonAnswerType)
-            let jsonAnswerType = try decoder.factory.decodeAnswerType(from: nestedDecoder)
+            let jsonAnswerType = try decoder.factory.decodePolymorphicObject(AnswerType.self, from: nestedDecoder)
             if container.contains(.jsonValue) {
                 let jsonValueDecoder = try container.superDecoder(forKey: .jsonValue)
                 self.jsonValue = try jsonAnswerType.decodeValue(from: jsonValueDecoder)

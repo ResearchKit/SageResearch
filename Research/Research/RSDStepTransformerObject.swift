@@ -37,12 +37,12 @@ import JsonModel
 /// `RSDStepTransformerObject` is used in decoding a step with replacement properties for some or all of the steps in a
 /// section that is defined using a different resource. The factory will convert this step into an appropriate
 /// `RSDSectionStep` from the decoded object.
-public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
-    
+public struct RSDStepTransformerObject : RSDStepTransformer, RSDStep, Decodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, stepType = "type", resourceTransformer
     }
-    private var stepType: RSDStepType = .transform
+    
+    public private(set) var stepType: RSDStepType = .transform
     
     /// The transformed step.
     public let transformedStep: RSDStep!
@@ -89,6 +89,26 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
             self.transformedStep = stepDecoder.step
         }
     }
+    
+    private init() {
+        self.transformedStep = PlaceholderStep(identifier: RSDStepType.transform.rawValue)
+    }
+
+    internal static func serializableExample() -> RSDStepTransformerObject { .init() }
+    
+    // Wrapper for the transformed step.
+    
+    public var identifier: String {
+        transformedStep.identifier
+    }
+    
+    public func instantiateStepResult() -> RSDResult {
+        transformedStep.instantiateStepResult()
+    }
+    
+    public func validate() throws {
+        try transformedStep.validate()
+    }
 }
 
 fileprivate struct _ResourceInfo : ResourceInfo {
@@ -106,12 +126,15 @@ fileprivate struct _StepDecoder: Decodable {
     let step: RSDStep
     
     init(from decoder: Decoder) throws {
-        guard let step = try decoder.factory.decodeStep(from: decoder) else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to decode a step from the given decoder.")
-            throw DecodingError.dataCorrupted(context)
-        }
-        self.step = step
+        self.step = try decoder.factory.decodePolymorphicObject(RSDStep.self, from: decoder)
     }
+}
+
+fileprivate struct PlaceholderStep: RSDStep {
+    let identifier: String
+    let stepType: RSDStepType = "placeholder"
+    func instantiateStepResult() -> RSDResult { RSDResultObject(identifier: identifier) }
+    func validate() throws { }
 }
 
 extension RSDStepTransformerObject : DocumentableObject {

@@ -305,13 +305,13 @@ class CopyStepTests: XCTestCase {
     func testCopy_SectionStepObject() {
         let uiStep = RSDUIStepObject(identifier: "goo", type: "boo")
 
-        var step = RSDSectionStepObject(identifier: "foo", steps: [uiStep], type: "boo")
+        var step = RSDSectionStepObject(identifier: "foo", steps: [uiStep])
         step.progressMarkers = ["goo"]
         step.asyncActions = [RSDStandardAsyncActionConfiguration(identifier: "location", type: .distance, startStepIdentifier: nil, stopStepIdentifier: nil)]
 
         let copy = step.copy(with: "bar")
         XCTAssertEqual(copy.identifier, "bar")
-        XCTAssertEqual(copy.stepType, "boo")
+        XCTAssertEqual(copy.stepType, step.stepType)
         XCTAssertEqual(copy.steps.count, 1)
         XCTAssertEqual(copy.steps.first?.identifier, "goo")
         if let progressMarkers = copy.progressMarkers {
@@ -325,7 +325,7 @@ class CopyStepTests: XCTestCase {
     func testCopyDefaultDecodable_SectionStepObject() {
         let uiStep = RSDUIStepObject(identifier: "goo", type: "boo")
         
-        var step = RSDSectionStepObject(identifier: "foo", steps: [uiStep], type: "boo")
+        var step = RSDSectionStepObject(identifier: "foo", steps: [uiStep])
         step.progressMarkers = ["goo"]
         step.asyncActions = [RSDStandardAsyncActionConfiguration(identifier: "location", type: .distance, startStepIdentifier: nil, stopStepIdentifier: nil)]
         
@@ -340,7 +340,7 @@ class CopyStepTests: XCTestCase {
         }
         
         XCTAssertEqual(copy.identifier, "bar")
-        XCTAssertEqual(copy.stepType, "boo")
+        XCTAssertEqual(copy.stepType, step.stepType)
         XCTAssertEqual(copy.steps.count, 1)
         XCTAssertEqual(copy.steps.first?.identifier, "goo")
         if let progressMarkers = copy.progressMarkers {
@@ -443,7 +443,7 @@ class CopyStepTests: XCTestCase {
         taskInfo.title = "title"
         taskInfo.subtitle = "subtitle"
         taskInfo.detail = "detail"
-        taskInfo.schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 6)
+        taskInfo.schemaInfoObject = RSDSchemaInfoObject(identifier: "bar", revision: 6)
         let step = RSDTaskInfoStepObject(with: taskInfo)
 
         let copy = step.copy(with: "bar")

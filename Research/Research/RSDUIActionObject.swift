@@ -35,7 +35,79 @@ import JsonModel
 
 /// `RSDEmbeddedResourceUIAction` is a convenience protocol for returning an image using an
 /// encodable strings for the name and bundle identifier.
-public protocol RSDEmbeddedResourceUIAction: RSDUIAction, DecodableBundleInfo {
+public protocol RSDEmbeddedResourceUIAction: SerializableUIAction, DecodableBundleInfo {
+}
+
+/// The type of the ui action. This is used to decode a `RSDUIAction` using a `RSDFactory`. It can also be used
+/// to customize the UI.
+public struct RSDUIActionObjectType : TypeRepresentable, Codable, Hashable {
+    
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+    
+    /// Defaults to creating a `RSDUIActionObject`.
+    public static let defaultNavigation: RSDUIActionObjectType = "default"
+    
+    /// Defaults to creating a `RSDNavigationUIActionObject`.
+    public static let navigation: RSDUIActionObjectType = "navigation"
+    
+    /// Defaults to creating a `RSDReminderUIActionObject`.
+    public static let reminder: RSDUIActionObjectType = "reminder"
+    
+    /// Defaults to creating a `RSDWebViewUIActionObject`.
+    public static let webView: RSDUIActionObjectType = "webView"
+    
+    /// Defaults to creating a `RSDVideoViewUIActionObject`.
+    public static let videoView: RSDUIActionObjectType = "videoView"
+    
+    public static func allStandardTypes() -> [RSDUIActionObjectType] {
+        return [.defaultNavigation, .webView, .videoView, .navigation, .reminder]
+    }
+}
+
+extension RSDUIActionObjectType : ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+}
+
+extension RSDUIActionObjectType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
+        return allStandardTypes().map{ $0.rawValue }
+    }
+}
+
+public final class ButtonActionSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    override init() {
+        examples = [
+            RSDUIActionObject.examples().first!,
+            RSDNavigationUIActionObject.examples().first!,
+            RSDReminderUIActionObject.examples().first!,
+            RSDWebViewUIActionObject.examples().first!,
+            RSDVideoViewUIActionObject.examples().first!,
+        ]
+    }
+    
+    public private(set) var examples: [RSDUIAction]
+    
+    public func add(_ example: SerializableUIAction) {
+        if let idx = examples.firstIndex(where: {
+            ($0 as! SerializableUIAction).objectType != example.objectType }) {
+            examples.remove(at: idx)
+        }
+        examples.append(example)
+    }
+}
+
+public protocol SerializableUIAction : RSDUIAction, PolymorphicRepresentable, Encodable {
+    var objectType: RSDUIActionObjectType { get }
+}
+
+public extension SerializableUIAction {
+    var typeName: String { return objectType.rawValue }
 }
 
 /// `RSDUIActionObject` is a concrete implementation of `RSDUIAction` that can be used to customize the
@@ -362,6 +434,36 @@ extension RSDNavigationUIActionObject : DocumentableStruct {
 
     public static func examples() -> [RSDNavigationUIActionObject] {
         let titleAction = RSDNavigationUIActionObject(skipToIdentifier: "nextSection", buttonTitle: "Go, Dogs! Go")
+        return [titleAction]
+    }
+}
+
+extension RSDReminderUIActionObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .objectType || key == .reminderIdentifier
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .objectType:
+            return .init(constValue: RSDUIActionObjectType.navigation)
+        case ._buttonTitle, .iconName, .bundleIdentifier, .packageName:
+            return .init(propertyType: .primitive(.string))
+        case .reminderIdentifier:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+
+    public static func examples() -> [RSDReminderUIActionObject] {
+        let titleAction = RSDReminderUIActionObject(reminderIdentifier: "foo", buttonTitle: "Remind me later")
         return [titleAction]
     }
 }

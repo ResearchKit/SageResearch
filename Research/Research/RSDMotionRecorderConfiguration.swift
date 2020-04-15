@@ -2,7 +2,7 @@
 //  RSDMotionRecorderConfiguration.swift
 //  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -158,7 +158,7 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
     public let identifier: String
     
     /// The standard permission type associated with this configuration.
-    public let type: RSDStandardPermissionType
+    public private(set) var asyncActionType: RSDAsyncActionType = .motion
     
     /// An identifier marking the step to start the action. If `nil`, then the action will be started when
     /// the task is started.
@@ -212,7 +212,7 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
     public var usesCSVEncoding : Bool?
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, recorderTypes, startStepIdentifier, stopStepIdentifier, frequency, _requiresBackgroundAudio = "requiresBackgroundAudio", usesCSVEncoding, _shouldDeletePrevious = "shouldDeletePrevious"
+        case identifier, asyncActionType = "type", recorderTypes, startStepIdentifier, stopStepIdentifier, frequency, _requiresBackgroundAudio = "requiresBackgroundAudio", usesCSVEncoding, _shouldDeletePrevious = "shouldDeletePrevious"
     }
     
     /// Default initializer.
@@ -222,7 +222,6 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
     ///     - requiresBackgroundAudio: Whether or not the recorder requires background audio. Default = `false`.
     ///     - frequency: The sampling frequency of the motion sensors.
     public init(identifier: String, recorderTypes: Set<RSDMotionRecorderType>?, requiresBackgroundAudio: Bool = false, frequency: Double? = nil, shouldDeletePrevious: Bool? = nil) {
-        self.type = .motion
         self.identifier = identifier
         self.recorderTypes = recorderTypes
         self._requiresBackgroundAudio = requiresBackgroundAudio
@@ -235,8 +234,8 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
     }
 }
 
-
-// Documentation and Tests
+extension RSDMotionRecorderConfiguration : SerializableAsyncActionConfiguration {
+}
 
 extension RSDMotionRecorderType : DocumentableStringEnum {
 }
@@ -248,7 +247,7 @@ extension RSDMotionRecorderConfiguration : DocumentableStruct {
 
     public static func isRequired(_ codingKey: CodingKey) -> Bool {
         guard let key = codingKey as? CodingKeys else { return false }
-        return key == .identifier || key == .type
+        return key == .identifier || key == .asyncActionType
     }
     
     public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
@@ -256,8 +255,8 @@ extension RSDMotionRecorderConfiguration : DocumentableStruct {
             throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
         }
         switch key {
-        case .type:
-            return .init(constValue: RSDStandardPermissionType.motion)
+        case .asyncActionType:
+            return .init(constValue: RSDAsyncActionType.motion)
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case .recorderTypes:

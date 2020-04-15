@@ -93,67 +93,31 @@ public struct JsonChoiceObject : JsonChoice, Hashable {
     }
 }
 
-//extension RSDChoiceObject : DocumentableObject {
-//    
-//    public static func codingKeys() -> [CodingKey] {
-//        return CodingKeys.allCases
-//    }
-//    
-//    public static func isOpen() -> Bool {
-//        return false
-//    }
-//    
-//    public static func isRequired(_ codingKey: CodingKey) -> Bool {
-//        return false
-//    }
-//    
-//    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
-//        guard let key = codingKey as? CodingKeys else {
-//            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
-//        }
-//        switch key {
-//        case .detail, .text:
-//            return .init(propertyType: .primitive(.string))
-//        case .icon:
-//            return .init(propertyType: .reference(RSDResourceImageDataObject)
-//            
-//        }
-//    }
-//
-//    static func exampleDictionary() -> [String : JsonSerializable]? {
-//        if Value.self == String.self {
-//            return ["value": "a", "text": "one", "iconName": "iconOne", "detail": "The number one", "exclusive": true]
-//        } else if Value.self == Bool.self {
-//            return ["value": true, "text": "Yes"]
-//        } else if Value.self == Int.self {
-//            return ["value": 1, "text": "one", "iconName": "iconOne", "detail": "The number one", "exclusive": true]
-//        } else if Value.self == Double.self {
-//            return ["value": 1.2, "text": "one point two"]
-//        } else if Value.self == RSDFraction.self {
-//            return ["value": "1/2", "text": "one half"]
-//        } else if Value.self == Date.self {
-//            return ["value": Date().jsonObject(), "text": "now"]
-//        } else {
-//            return nil
-//        }
-//    }
-//    
-//    public static func jsonExamples() throws -> [[String : JsonSerializable]] {
-//        guard let dictionary = exampleDictionary() else { return [] }
-//        return [dictionary]
-//    }
-//}
-//
-//extension RSDChoiceObject : DocumentableStringLiteral {
-//    public static var regularExpression: NSRegularExpression? {
-//        nil
-//    }
-//
-//    public var stringValue: String {
-//        return self._value as? String ?? ""
-//    }
-//    
-//    public static func examples() -> [String] {
-//        return ["Blue Dogs"]
-//    }
-//}
+extension JsonChoiceObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .matchingValue:
+            return .init(propertyType: .any, propertyDescription: "The matching value is any json element, but all json elements within the collection of choices should have the same json type.")
+        case .text, .detail:
+            return .init(propertyType: .primitive(.string))
+        case ._isExclusive:
+            return .init(propertyType: .primitive(.boolean))
+        case .icon:
+            return .init(propertyType: .reference(RSDResourceImageDataObject.documentableType()))
+        }
+    }
+    
+    public static func examples() -> [JsonChoiceObject] {
+        return [JsonChoiceObject(matchingValue: .integer(1), text: "None of the above")]
+    }
+}
+

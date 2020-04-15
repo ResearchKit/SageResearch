@@ -47,7 +47,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
     public let identifier: String
     
     /// The type of the step.
-    public let stepType: RSDStepType
+    public private(set) var stepType: RSDStepType = .section
     
     /// A list of the steps used to define this subgrouping of steps.
     public let steps: [RSDStep]
@@ -58,15 +58,21 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
     /// A list of asynchronous actions to run on the task.
     public var asyncActions: [RSDAsyncActionConfiguration]?
     
+
+    @available(*, deprecated, message: "Kotlin serialzation requires a one-to-one mapping of 'type' to a class.")
+    public init(identifier: String, steps: [RSDStep], type: RSDStepType?) {
+        self.identifier = identifier
+        self.steps = steps
+        self.stepType = type ?? .section
+    }
+    
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the step.
     ///     - steps: The steps included in this section.
-    ///     - type: The type of the step. Default = `RSDStepType.section`
-    public init(identifier: String, steps: [RSDStep], type: RSDStepType? = nil) {
+    public init(identifier: String, steps: [RSDStep]) {
         self.identifier = identifier
         self.steps = steps
-        self.stepType = type ?? .section
     }
     
     /// Instantiate a step result that is appropriate for this step. The default for this struct is a `RSDTaskResultObject`.
@@ -84,6 +90,12 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
     /// - parameter identifier: The new identifier.
     public func copy(with identifier: String) -> RSDSectionStepObject {
         return try! copy(with: identifier, decoder: nil)
+    }
+    
+    private init(_ identifier: String, _ steps: [RSDStep], _ type: RSDStepType) {
+        self.identifier = identifier
+        self.steps = steps
+        self.stepType = type
     }
     
     /// Copy this step with replacement values from the given decoder (if any).
@@ -111,7 +123,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
         }
         
         // Copy self with replacement steps.
-        var copy = RSDSectionStepObject(identifier: identifier, steps: copySteps, type: self.stepType)
+        var copy = RSDSectionStepObject(identifier, copySteps, self.stepType)
         copy.progressMarkers = self.progressMarkers
         copy.asyncActions = copyAsyncActions
         return copy
@@ -155,7 +167,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.stepType = try container.decode(RSDStepType.self, forKey: .stepType)
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
-        self.steps = try decoder.factory.decodeSteps(from: stepsContainer)
+        self.steps = try decoder.factory.decodePolymorphicArray(RSDStep.self, from: stepsContainer)
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)
         self.asyncActions = try self.decodeAsyncActions(from: decoder, initialActions: nil)
     }
@@ -169,12 +181,12 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
         var decodedActions : [RSDAsyncActionConfiguration] = initialActions ?? []
         while !nestedContainer.isAtEnd {
             let actionDecoder = try nestedContainer.superDecoder()
-            if let action = try factory.decodeAsyncActionConfiguration(from: actionDecoder) {
-                if let idx = decodedActions.firstIndex(where: { $0.identifier == action.identifier}) {
-                    decodedActions.remove(at: idx)
-                }
-                decodedActions.append(action)
+            let action = try factory.decodePolymorphicObject(RSDAsyncActionConfiguration.self,
+                                                             from: actionDecoder)
+            if let idx = decodedActions.firstIndex(where: { $0.identifier == action.identifier}) {
+                decodedActions.remove(at: idx)
             }
+            decodedActions.append(action)
         }
         return decodedActions
     }

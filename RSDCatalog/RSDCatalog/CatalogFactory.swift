@@ -59,7 +59,6 @@ class CatalogFactory : RSDFactory {
             return try decodeTask(with: data, from: decoder)
         }
     }
-    
 }
 
 

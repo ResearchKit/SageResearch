@@ -41,7 +41,7 @@ public protocol RSDConditionalStepNavigator : RSDOrderedStepNavigator {
 extension RSDConditionalStepNavigator {
     
     public var trackingRules : [RSDTrackingRule] {
-        return (RSDFactory.shared as! RSDFactory).trackingRules
+        return RSDFactory.shared.trackingRules
     }
     
     public func navigationRule(for step: RSDStep) -> RSDNavigationRule? {

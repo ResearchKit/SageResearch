@@ -42,19 +42,29 @@ public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStr
 /// override this factory to add custom elements required to run their task modules.
 open class RSDFactory : SerializationFactory {
     
-    override open class var shared : SerializationFactory {
-        get {
-            if let factory = super.shared as? RSDFactory {
-                return factory
-            }
-            let factory = RSDFactory()
-            super.shared = factory
-            return factory
-        }
-        set {
-            guard let factory = newValue as? RSDFactory else { return }
-            super.shared = factory
-        }
+    public static var shared = RSDFactory.defaultFactory
+    
+    public let answerTypeSerializer = AnswerTypeSerializer()
+    public let asyncActionSerializer = AsyncActionConfigurationSerializer()
+    public let buttonActionSerializer = ButtonActionSerializer()
+    public let colorMappingSerializer = ColorMappingSerializer()
+    public let imageThemeSerializer = ImageThemeSerializer()
+    public let inputItemSerializer = InputItemSerializer()
+    public let resultSerializer = RSDResultSerializer()
+    public let stepSerializer = StepSerializer()
+    public let viewThemeSerializer = ViewThemeSerializer()
+    
+    public required init() {
+        super.init()
+        self.registerSerializer(answerTypeSerializer)
+        self.registerSerializer(asyncActionSerializer)
+        self.registerSerializer(buttonActionSerializer)
+        self.registerSerializer(colorMappingSerializer)
+        self.registerSerializer(imageThemeSerializer)
+        self.registerSerializer(inputItemSerializer)
+        self.registerSerializer(resultSerializer)
+        self.registerSerializer(stepSerializer)
+        self.registerSerializer(viewThemeSerializer)
     }
     
     /// The type of device to point use when decoding different text depending upon the target
@@ -73,6 +83,55 @@ open class RSDFactory : SerializationFactory {
     
     /// Optional shared tracking rules
     open var trackingRules: [RSDTrackingRule] = []
+    
+    // MARK: Deprecation handling
+    
+    open override func serializer<T>(for type: T.Type) -> GenericSerializer? {
+        if type == Result.self {
+            // syoung 04/16/2020 For now, the start/end date is required to match the RSDResult
+            // protocol. While this may change in the future to better support parity between
+            // Kotlin and iOS, for now, leave this as-is but allow for returning the `RSDResult`
+            // serializer in the place of the `Result`.
+            return resultSerializer
+        }
+        else {
+            return super.serializer(for: type)
+        }
+    }
+    
+    @available(*, deprecated, message: "Use of a default type is deprecated. Please convert your code to use the serializers with a 'type' key instead.")
+    open override func decodeDefaultObject<T>(_ type: T.Type, from decoder: Decoder) throws -> T {
+        if type == AnswerType.self {
+            return try decodeAnswerType(from: decoder) as! T
+        }
+        else if type == RSDAsyncActionConfiguration.self {
+            return try decodeAsyncActionConfiguration(from: decoder) as! T
+        }
+        else if type == RSDUIAction.self {
+            return try decodeUIAction(from: decoder, for: .custom("")) as! T
+        }
+        else if type == RSDColorMappingThemeElement.self {
+            return try decodeColorMappingThemeElement(from: decoder) as! T
+        }
+        else if type == RSDImageThemeElement.self {
+            return try decodeImageThemeElement(from: decoder) as! T
+        }
+        else if type == InputItemBuilder.self {
+            return try decodeInputItem(from: decoder) as! T
+        }
+        else if type == RSDResult.self || type == Result.self {
+            return try decodeResult(from: decoder) as! T
+        }
+        else if type == RSDStep.self {
+            return try decodeStep(from: decoder) as! T
+        }
+        else if type == RSDViewThemeElement.self {
+            return try decodeViewThemeElement(from: decoder) as! T
+        }
+        else {
+            return try super.decodeDefaultObject(type, from: decoder)
+        }
+    }
 
     // MARK: Class name factory
     
@@ -129,7 +188,6 @@ open class RSDFactory : SerializationFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: ResourceInfo? = nil) throws -> RSDTask {
         let decoder = try createDecoder(for: resourceType, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo, resourceInfo: resourceInfo)
-        let factory = (decoder.factory as? RSDFactory)
         return try decoder.factory.decodeTask(with: data, from: decoder)
     }
     
@@ -164,6 +222,7 @@ open class RSDFactory : SerializationFactory {
     /// - returns: The task info created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDTaskGroupObject`
+    @available(*, deprecated, message: "Use of a default type is deprecated. Please convert your decode `RSDTaskInfoObject` or the appropriate replacement directly.")
     open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfo {
         return try RSDTaskInfoObject(from: decoder)
     }
@@ -244,6 +303,39 @@ open class RSDFactory : SerializationFactory {
     
 
     // MARK: Step factory
+    
+    /// Override mapping the array to allow steps to add a pointer between the countdown step and
+    /// the active step. This is handled in Kotlin native serialization during unpacking.
+    open override func mapDecodedArray<RSDStep>(_ objects: [RSDStep]) throws -> [RSDStep] {
+        objects.enumerated().forEach { (index, step) in
+            if let countdown = step as? RSDCountdownUIStepObject,
+                index + 1 < objects.count,
+                let activeStep = objects[index + 1] as? RSDActiveUIStep {
+                // Special-case handling of a countdown step. Inspect the step to see if this is
+                // a countdown/active step pairing and if so, set the countdown step to include a
+                // pointer to the active step.
+                //
+                // WARNING: This is *not* a weak pointer b/c the `RSDActiveUIStep` protocol does not
+                // require that step to be a class (but it might be) so this will cause a retain
+                // loop if this special-case handling is ever modified to have a pointer from the
+                // countdown step to the active step. syoung 07/12/2019
+                //
+                countdown.activeStep = activeStep
+            }
+        }
+        return objects
+    }
+    
+    /// Override mapping the object to check if this is a step transformer, and transform the step
+    /// if needed. In Kotlin native, this is handled during unpacking of the assessment.
+    open override func mapDecodedObject<T>(_ type: T.Type, object: Any, codingPath: [CodingKey]) throws -> T {
+        if let step = (object as? RSDStepTransformer)?.transformedStep as? T {
+            return step
+        }
+        else {
+            return try super.mapDecodedObject(type, object: object, codingPath: codingPath)
+        }
+    }
 
     /// Convenience method for decoding a list of steps.
     ///
@@ -251,6 +343,7 @@ open class RSDFactory : SerializationFactory {
     /// - returns: An array of the steps.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDConditionalStepNavigatorObject`, `RSDSectionStepObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicArray` instead.")
     public func decodeSteps(from container: UnkeyedDecodingContainer) throws -> [RSDStep] {
         var steps : [RSDStep] = []
         var stepsContainer = container
@@ -290,6 +383,7 @@ open class RSDFactory : SerializationFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeStep(from decoder: Decoder) throws -> RSDStep? {
         guard let name = try typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath,
@@ -309,6 +403,7 @@ open class RSDFactory : SerializationFactory {
     ///     - decoder:     The decoder to use to instantiate the object.
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
         if let standardType = RSDStepType.StandardType(rawValue: type.rawValue) {
             return try decodeStandardStep(from: decoder, standardType: standardType)
@@ -321,9 +416,12 @@ open class RSDFactory : SerializationFactory {
         }
     }
     
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     func decodeStandardStep(from decoder: Decoder, standardType: RSDStepType.StandardType) throws -> RSDStep {
         switch (standardType) {
-        case .instruction, .active:
+        case .instruction:
+            return try RSDInstructionStepObject(from: decoder)
+        case .active:
             return try RSDActiveUIStepObject(from: decoder)
         case .countdown:
             return try RSDCountdownUIStepObject(from: decoder)
@@ -376,6 +474,7 @@ open class RSDFactory : SerializationFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step transform created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeStepTransformer(from decoder: Decoder) throws -> RSDStepTransformer {
         return try RSDStepTransformerObject(from: decoder)
     }
@@ -386,6 +485,7 @@ open class RSDFactory : SerializationFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step created from transforming this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeTransformableStep(from decoder: Decoder) throws -> RSDStep {
         let transform = try self.decodeStepTransformer(from: decoder)
         return transform.transformedStep
@@ -393,6 +493,7 @@ open class RSDFactory : SerializationFactory {
     
     // MARK: Answer type factory
     
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeAnswerType(from decoder: Decoder) throws -> AnswerType {
         guard let name = try typeName(from: decoder) else {
             return try decodeDeprecatedAnswerType(from: decoder)
@@ -496,17 +597,19 @@ open class RSDFactory : SerializationFactory {
     
     // MARK: InputItem
     
+    @available(*, deprecated, message: "Use `decodePolymorphicArray` instead.")
     public func decodeInputItems(from itemsContainer: UnkeyedDecodingContainer) throws -> [InputItemBuilder] {
         var container = itemsContainer
         var items = [InputItemBuilder]()
         while !container.isAtEnd {
             let nestedDecoder = try container.superDecoder()
-            let item = try self.decodeInputItem(from: nestedDecoder)
+            let item = try self.decodePolymorphicObject(InputItemBuilder.self, from: nestedDecoder)
             items.append(item)
         }
         return items
     }
     
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     public func decodeInputItem(from decoder: Decoder) throws -> InputItemBuilder {
         guard let name = try typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath,
@@ -690,12 +793,14 @@ open class RSDFactory : SerializationFactory {
     /// - returns: The number formatter created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDNumberRangeObject`
+    @available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
     open func decodeNumberFormatter(from decoder: Decoder) throws -> NumberFormatter {
         return try NumberFormatter(from: decoder)
     }
 
     
     // MARK: UI action factory
+
     
     /// Decode UI action from the given decoder.
     ///
@@ -706,6 +811,7 @@ open class RSDFactory : SerializationFactory {
     /// - returns: The UI action created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIActionHandlerObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
         guard let typeName = try self.typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding a UI action without a `type` key defining a value for the the class name.")
@@ -723,6 +829,7 @@ open class RSDFactory : SerializationFactory {
     ///     - objectType: The object type to which this action should be cast.
     /// - returns: The UI action created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeUIAction(from decoder:Decoder, with objectType: RSDUIActionObjectType) throws -> RSDUIAction {
         switch objectType {
         case .navigation:
@@ -748,6 +855,7 @@ open class RSDFactory : SerializationFactory {
     /// - returns: The UI color theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIStepObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeColorMappingThemeElement(from decoder:Decoder) throws -> RSDColorMappingThemeElement? {
         guard let typeName = try self.typeName(from: decoder)
             else {
@@ -773,6 +881,7 @@ open class RSDFactory : SerializationFactory {
     /// - returns: The UI view theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIStepObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeViewThemeElement(from decoder:Decoder) throws -> RSDViewThemeElement? {
         return try _decodeResource(RSDViewThemeElementObject.self, from: decoder)
     }
@@ -784,6 +893,7 @@ open class RSDFactory : SerializationFactory {
     /// - returns: The UI image theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIStepObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeImageThemeElement(from decoder:Decoder) throws -> RSDImageThemeElement? {
         guard let typeName = try self.typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding an image theme without a `type` key defining a value for the the class name.")
@@ -821,6 +931,7 @@ open class RSDFactory : SerializationFactory {
     /// - returns: The configuration (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDTaskObject`, `RSDSectionStepObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeAsyncActionConfiguration(from decoder:Decoder) throws -> RSDAsyncActionConfiguration? {
         guard let typeName = try typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding an async action without a `type` key defining a value for the the class name.")
@@ -842,6 +953,7 @@ open class RSDFactory : SerializationFactory {
     ///     - decoder:      The decoder to use to instantiate the object.
     /// - returns: The configuration (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeAsyncActionConfiguration(from decoder:Decoder, with typeName: String) throws -> RSDAsyncActionConfiguration? {
         
         // Look to see if there is a standard permission to map to this config.
@@ -865,6 +977,7 @@ open class RSDFactory : SerializationFactory {
     /// - returns: An array of the results.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDTaskResultObject`, `RSDCollectionResultObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicArray` instead.")
     public func decodeResults(from container: UnkeyedDecodingContainer) throws -> [RSDResult] {
         var results : [RSDResult] = []
         var mutableContainer = container
@@ -881,6 +994,7 @@ open class RSDFactory : SerializationFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The result (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeResult(from decoder: Decoder) throws -> RSDResult {
         guard let typeName = try typeName(from: decoder) else {
             return try RSDResultObject(from: decoder)
@@ -895,6 +1009,7 @@ open class RSDFactory : SerializationFactory {
     ///     - decoder:      The decoder to use to instantiate the object.
     /// - returns: The result (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeResult(from decoder: Decoder, with resultType: RSDResultType) throws -> RSDResult {
 
         switch resultType {
@@ -912,7 +1027,6 @@ open class RSDFactory : SerializationFactory {
             throw RSDValidationError.undefinedClassType("\(self) does not support `\(resultType)` as a decodable class type for a result.")
         }
     }
-
 
     // MARK: Decoder
     
@@ -967,7 +1081,7 @@ extension CodingUserInfoKey {
 extension FactoryDecoder {
     
     public var factory : RSDFactory {
-        (serializationFactory as? RSDFactory) ?? (RSDFactory.shared as! RSDFactory)
+        (serializationFactory as? RSDFactory) ?? RSDFactory.shared
     }
     
     /// The task identifier to use when decoding.
@@ -981,7 +1095,7 @@ extension FactoryDecoder {
 extension Decoder {
     
     public var factory : RSDFactory {
-        (serializationFactory as? RSDFactory) ?? (RSDFactory.shared as! RSDFactory)
+        (serializationFactory as? RSDFactory) ?? RSDFactory.shared
     }
     
     /// The task identifier to use when decoding.
@@ -1000,7 +1114,7 @@ extension Decoder {
 extension Encoder {
     
     public var factory : RSDFactory {
-        (serializationFactory as? RSDFactory) ?? (RSDFactory.shared as! RSDFactory)
+        (serializationFactory as? RSDFactory) ?? RSDFactory.shared
     }
     
     /// The task info to use when encoding.

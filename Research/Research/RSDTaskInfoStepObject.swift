@@ -2,7 +2,7 @@
 //  RSDTaskInfoStepObject.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -34,78 +34,11 @@
 import Foundation
 import JsonModel
 
-public struct RSDTaskInfoObject : RSDTaskInfo, Decodable {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, title, subtitle, detail, footnote, icon, _estimatedMinutes = "estimatedMinutes", _embeddedResource = "taskTransformer", _schemaInfoObject = "schemaInfo"
-    }
-    
-    /// A short string that uniquely identifies the task. The identifier is reproduced as the
-    /// identifier for the associated `RSDTaskResult`.
-    public let identifier: String
-    
-    /// The primary text to display for the task in a localized string.
-    public var title: String?
-    
-    /// The subtitle text to display for the task in a localized string.
-    public var subtitle: String?
-    
-    /// Additional detail text to display for the task. Generally, this would be displayed
-    /// while the task is being fetched.
-    public var detail: String?
-    
-    public var footnote: String?
-    
-    /// The estimated number of minutes that the task will take. If `0`, then this is ignored.
-    public var estimatedMinutes: Int {
-        get { return _estimatedMinutes ?? 0 }
-        set { _estimatedMinutes = newValue }
-    }
-    private var _estimatedMinutes: Int?
-    
-    /// The icon used to display this task reference in a list of tasks.
-    public var icon: RSDResourceImageDataObject?
-    
-    /// The icon associated with this task info.
-    public var imageData: RSDImageData? {
-        return self.icon
-    }
-
-    /// Optional schema info to pass with the task info for this task.
-    public var schemaInfo: RSDSchemaInfo? {
-        get { return _schemaInfoObject ?? _schemaInfo }
-        set { _schemaInfo = newValue }
-    }
-    private var _schemaInfoObject: RSDSchemaInfoObject?
-    private var _schemaInfo: RSDSchemaInfo? = nil
-    
-    /// The resource transformer.
-    public var resourceTransformer: RSDTaskTransformer? {
-        get { return _embeddedResource ?? _taskTransformer }
-        set { _taskTransformer = newValue }
-    }
-    private var _embeddedResource: RSDResourceTransformerObject?
-    private var _taskTransformer: RSDTaskTransformer? = nil
-    
-    public init(with identifier: String) {
-        self.identifier = identifier
-    }
-    
-    public func copy(with identifier: String) -> RSDTaskInfoObject {
-        var copy = RSDTaskInfoObject(with: identifier)
-        copy.title = self.title
-        copy.subtitle = self.subtitle
-        copy.detail = self.detail
-        copy.footnote = self.footnote
-        copy.estimatedMinutes = self.estimatedMinutes
-        copy.icon = self.icon
-        copy._taskTransformer = self.resourceTransformer
-        copy._schemaInfo = self.schemaInfo
-        return copy
-    }
-}
-
 /// `RSDTaskInfoStepObject` is a concrete implementation of the `RSDTaskInfoStep` protocol.
-public struct RSDTaskInfoStepObject : RSDTaskInfoStep {
+public struct RSDTaskInfoStepObject : RSDTaskInfoStep, Codable {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case stepType = "type"
+    }
 
     /// Returns the task info identifier.
     public var identifier: String {
@@ -116,20 +49,44 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep {
     public let taskInfo : RSDTaskInfo
 
     /// The type of the step.
-    public let stepType: RSDStepType
+    public private(set) var stepType: RSDStepType = .taskInfo
     
     /// Default initializer.
     /// - parameter identifier: A short string that uniquely identifies the step.
+    @available(*, deprecated, message: "Kotlin serialization requires a one-to-one mapping of the 'type' keyword.")
     public init(with taskInfo: RSDTaskInfo, stepType: RSDStepType = .taskInfo) {
         self.taskInfo = taskInfo
         self.stepType = stepType
     }
     
+    public init(with taskInfo: RSDTaskInfoObject) {
+        self.taskInfo = taskInfo
+    }
+    
+    public init(from decoder: Decoder) throws {
+        self.taskInfo = try RSDTaskInfoObject(from: decoder)
+    }
+    
+    private init(_ taskInfo: RSDTaskInfo, _ stepType: RSDStepType) {
+        self.taskInfo = taskInfo
+        self.stepType = stepType
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        guard let encodable = self.taskInfo as? Encodable else {
+            let context = EncodingError.Context(codingPath: encoder.codingPath,
+                                                debugDescription: "\(self.taskInfo) does not conform to the Encodable protocol")
+            throw EncodingError.invalidValue(self.taskInfo, context)
+        }
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.stepType, forKey: .stepType)
+        try encodable.encode(to: encoder)
+    }
+    
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.
     /// - parameter identifier: The new identifier.
     public func copy(with identifier: String) -> RSDTaskInfoStepObject {
-        let taskInfo = self.taskInfo.copy(with: identifier)
-        return RSDTaskInfoStepObject(with: taskInfo, stepType: stepType)
+        RSDTaskInfoStepObject(self.taskInfo.copy(with: identifier), stepType)
     }
     
     /// Instantiate a step result that is appropriate for this step.
@@ -143,27 +100,30 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep {
     }
 }
 
-extension RSDTaskInfoObject : Equatable {
-    public static func ==(lhs: RSDTaskInfoObject, rhs: RSDTaskInfoObject) -> Bool {
-        return lhs.identifier == rhs.identifier &&
-            lhs.title == rhs.title &&
-            lhs.subtitle == rhs.subtitle &&
-            lhs.detail == rhs.detail &&
-            lhs.estimatedMinutes == rhs.estimatedMinutes &&
-            lhs.icon?.imageIdentifier == rhs.icon?.imageIdentifier
-    }
-}
+extension RSDTaskInfoStepObject : DocumentableStruct {
 
-/// `RSDTaskInfoStepObject` is extended to implement the `RSDTaskGroup` protocol where the only item in the
-/// task group is this object.
-extension RSDTaskInfoObject : RSDTaskGroup {
+    public static func codingKeys() -> [CodingKey] {
+        var codingKeys = RSDTaskInfoObject.codingKeys()
+        codingKeys.append(contentsOf: CodingKeys.allCases)
+        return codingKeys
+    }
     
-    /// Returns `self` as the only item in the list.
-    public var tasks: [RSDTaskInfo] {
-        return [self]
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        RSDTaskInfoObject.isRequired(codingKey) || (codingKey is CodingKeys)
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try RSDTaskInfoObject.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .stepType:
+            return .init(constValue: RSDStepType.taskInfo)
+        }
+    }
+    
+    public static func examples() -> [RSDTaskInfoStepObject] {
+        [RSDTaskInfoStepObject(with: RSDTaskInfoObject.examples().first!)]
     }
 }
 
-// TODO: syoung 04/14/2020 This task is not Kotlin-serializable. Refactor to a serializable type.
-//extension RSDTaskInfoObject : DocumentableObject {
-//}

@@ -799,7 +799,7 @@ class QuestionTableDataSourceTests: XCTestCase {
     struct QuestionWrapper : Decodable {
         let questionStep : QuestionStep
         init(from decoder: Decoder) throws {
-            let step = try decoder.factory.decodeStep(from: decoder)
+            let step = try decoder.factory.decodePolymorphicObject(RSDStep.self, from: decoder)
             guard let qStep = step as? QuestionStep else {
                 let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to decode a QuestionStep")
                 throw DecodingError.typeMismatch(QuestionStep.self, context)

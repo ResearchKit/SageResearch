@@ -93,6 +93,32 @@ public struct RegExValidator : TextInputValidator, Codable {
     }
 }
 
+extension RegExValidator : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { true }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .pattern:
+            return .init(propertyType: .primitive(.string), propertyDescription: "The string value must be a valid a regex pattern.")
+        case .invalidMessage:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [RegExValidator] {
+        let pattern = try! NSRegularExpression(pattern: "^[0-9]*$", options: [])
+        return [RegExValidator(pattern: pattern, invalidMessage: "Only entering numbers is allowed.")]
+    }
+}
+
+
 /// `Codable` string enum for the number formatter.
 public enum NumberFormatStyle : String, Codable, CaseIterable {
     case none, decimal, currency, percent, scientific, spellOut, ordinal
@@ -107,7 +133,7 @@ public enum NumberFormatStyle : String, Codable, CaseIterable {
     }
 }
 
-extension NumberFormatStyle : StringEnumSet {
+extension NumberFormatStyle : StringEnumSet, DocumentableStringEnum {
 }
 
 public protocol NumberValidator : TextInputValidator {
@@ -232,6 +258,44 @@ public struct IntegerFormatOptions : Codable, NumberValidator {
     }
 }
 
+extension IntegerFormatOptions : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case ._numberStyle:
+            return .init(propertyType: .reference(NumberFormatStyle.documentableType()))
+        case ._usesGroupingSeparator:
+            return .init(propertyType: .primitive(.boolean))
+        case .minimumValue, .maximumValue, .stepInterval:
+            return .init(propertyType: .primitive(.integer))
+        case .minInvalidMessage, .maxInvalidMessage, .invalidMessage:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [IntegerFormatOptions] {
+        let exA = IntegerFormatOptions()
+        var exB = IntegerFormatOptions()
+        exB._numberStyle = .currency
+        exB._usesGroupingSeparator = false
+        exB.invalidMessage = "This number is not valid"
+        exB.maximumValue = 200
+        exB.minimumValue = 0
+        exB.stepInterval = 5
+        exB.minInvalidMessage = "Minimum value is zero"
+        exB.maxInvalidMessage = "Maximum value is $200"
+        return [exA, exB]
+    }
+}
+
 public struct YearFormatOptions : Codable, NumberValidator {
     public typealias Value = Int
     
@@ -266,6 +330,39 @@ public struct YearFormatOptions : Codable, NumberValidator {
     
     public func convertToValue(from number: NSNumber) -> Int {
         number.intValue
+    }
+}
+
+extension YearFormatOptions : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .allowFuture, .allowPast:
+            return .init(propertyType: .primitive(.boolean))
+        case .maximumYear, .minimumYear:
+            return .init(propertyType: .primitive(.integer))
+        case .minInvalidMessage, .maxInvalidMessage, .invalidMessage:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [YearFormatOptions] {
+        let exA = YearFormatOptions()
+        var exB = YearFormatOptions()
+        exB.allowPast = false
+        exB.maximumYear = 2030
+        var exC = YearFormatOptions()
+        exC.allowFuture = false
+        exC.minimumYear = 1900
+        return [exA, exB, exC]
     }
 }
 
@@ -317,6 +414,47 @@ public struct DoubleFormatOptions : Codable, NumberValidator {
     
     public func convertToValue(from number: NSNumber) -> Double {
         number.doubleValue
+    }
+}
+
+extension DoubleFormatOptions : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case ._numberStyle:
+            return .init(propertyType: .reference(NumberFormatStyle.documentableType()))
+        case ._usesGroupingSeparator:
+            return .init(propertyType: .primitive(.boolean))
+        case ._maximumFractionDigits:
+            return .init(propertyType: .primitive(.integer))
+        case .minimumValue, .maximumValue, .stepInterval:
+            return .init(propertyType: .primitive(.number))
+        case .minInvalidMessage, .maxInvalidMessage, .invalidMessage:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [DoubleFormatOptions] {
+        let exA = DoubleFormatOptions()
+        var exB = DoubleFormatOptions()
+        exB._maximumFractionDigits = 2
+        exB._numberStyle = .currency
+        exB._usesGroupingSeparator = false
+        exB.invalidMessage = "This number is not valid"
+        exB.maximumValue = 200.0
+        exB.minimumValue = 0.0
+        exB.stepInterval = 0.01
+        exB.minInvalidMessage = "Minimum value is zero"
+        exB.maxInvalidMessage = "Maximum value is $200"
+        return [exA, exB]
     }
 }
 
@@ -466,19 +604,3 @@ extension MeasurementTextInputValidator {
     }
 }
 
-
-
-//extension RSDTextFieldOptionsObject : DocumentableStruct {
-//
-//    static func codingKeys() -> [CodingKey] {
-//        return CodingKeys.allCases
-//    }
-//
-//    static func examples() -> [Encodable] {
-//        let exampleA = RSDTextFieldOptionsObject(keyboardType: .asciiCapable, autocapitalizationType: .allCharacters, isSecureTextEntry: true, maximumLength: 16, spellCheckingType: .no, autocorrectionType: .no)
-//        var exampleB = RSDTextFieldOptionsObject(keyboardType: .numberPad)
-//        exampleB.textValidator = try! RSDRegExValidatorObject(regExPattern: "^[0-9]*$")
-//        exampleB.invalidMessage = "This input field only allows entering numbers."
-//        return [exampleA, exampleB]
-//    }
-//}

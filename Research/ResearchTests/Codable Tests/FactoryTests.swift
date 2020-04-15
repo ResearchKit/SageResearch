@@ -122,7 +122,6 @@ class FactoryTests: XCTestCase {
             XCTAssertNil(err)
         }
     }
-
     
     // MARK: Helper methods
     
@@ -143,4 +142,10 @@ class FactoryTests: XCTestCase {
         }
     }
     
+}
+
+struct FactoryResourceInfo : ResourceInfo {
+    let factoryBundle: ResourceBundle?
+    let packageName: String?
+    var bundleIdentifier: String? { return nil }
 }

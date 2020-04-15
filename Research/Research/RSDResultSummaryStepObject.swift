@@ -83,7 +83,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
     
     /// Default type is `.completion`.
     open override class func defaultType() -> RSDStepType {
-        return .completion
+        return .feedback
     }
     
     /// Override to set the properties of the subclass.
@@ -137,5 +137,15 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
         ]
         
         return [jsonA]
+    }
+}
+
+/// Kotlin serialization requires a one-to-one mapping of the "type" key to a class.
+/// Since on iOS the `completion` step has the same functionality as the `feedback` step, but a
+/// subtly different meaning in terms of the UI, these need to have different values for `stepType`
+/// so that the call to save results happens with the appropriate timing.
+public final class RSDCompletionStepObject : RSDResultSummaryStepObject {
+    public override class func defaultType() -> RSDStepType {
+        return .completion
     }
 }

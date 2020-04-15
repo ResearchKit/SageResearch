@@ -618,7 +618,7 @@ extension RSDTaskViewModel {
         }
     
         var navigation = task.stepNavigator.step(after: previousStep, with: &self.taskResult)
-        while let instruction = navigation.step as? RSDInstructionStep,
+        while let instruction = navigation.step as? RSDOptionalStep,
             instruction.fullInstructionsOnly,
             (shouldShowAbbreviatedInstructions ?? false) {
             navigation = task.stepNavigator.step(after: navigation.step, with: &self.taskResult)

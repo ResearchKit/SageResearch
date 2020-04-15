@@ -86,7 +86,7 @@ public struct RSDCollectionResultObject : RSDCollectionResult, RSDNavigationResu
         self.type = try container.decode(RSDResultType.self, forKey: .type)
         
         let resultsContainer = try container.nestedUnkeyedContainer(forKey: .inputResults)
-        self.inputResults = try decoder.factory.decodeResults(from: resultsContainer)
+        self.inputResults = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: resultsContainer)
     }
     
     /// Encode the result to the given encoder.

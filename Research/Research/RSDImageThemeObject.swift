@@ -34,7 +34,66 @@
 
 import JsonModel
 
-public struct RSDFetchableImageThemeElementObject : RSDThemeResourceImageData, Codable {
+/// The type of the image theme. This is used to decode a `RSDImageThemeElement` using a `RSDFactory`. It can also be used
+/// to customize the UI.
+public struct RSDImageThemeElementType : RSDFactoryTypeRepresentable, Codable, Equatable, Hashable {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+    
+    /// Defaults to creating a `RSDFetchableImageThemeElementObject`.
+    public static let fetchable: RSDImageThemeElementType = "fetchable"
+    
+    /// Defaults to creating a `RSDAnimatedImageThemeElementObject`.
+    public static let animated: RSDImageThemeElementType = "animated"
+    
+    public static func allStandardTypes() -> [RSDImageThemeElementType] {
+        return [.fetchable, .animated]
+    }
+}
+
+extension RSDImageThemeElementType : ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+}
+
+extension RSDImageThemeElementType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
+        return allStandardTypes().map{ $0.rawValue }
+    }
+}
+
+public final class ImageThemeSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    override init() {
+        examples = [
+            RSDFetchableImageThemeElementObject.examples().first!,
+            RSDAnimatedImageThemeElementObject.examples().first!,
+        ]
+    }
+    
+    public private(set) var examples: [RSDImageThemeElement]
+    
+    public func add(_ example: SerializableImageTheme) {
+        if let idx = examples.firstIndex(where: {
+            ($0 as! PolymorphicRepresentable).typeName != example.typeName }) {
+            examples.remove(at: idx)
+        }
+        examples.append(example)
+    }
+}
+
+public protocol SerializableImageTheme : RSDImageThemeElement, PolymorphicRepresentable, Encodable {
+    var imageThemeType: RSDImageThemeElementType { get }
+}
+
+public extension SerializableImageTheme {
+    var typeName: String { return imageThemeType.rawValue }
+}
+
+public struct RSDFetchableImageThemeElementObject : RSDThemeResourceImageData, SerializableImageTheme {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case imageThemeType = "type", imageName, bundleIdentifier, packageName, imageSize = "size", placementType, rawFileExtension = "fileExtension"
     }
@@ -126,7 +185,7 @@ extension RSDFetchableImageThemeElementObject : DocumentableStruct {
 }
 
 /// `RSDAnimatedImageThemeElementObject` is a `Codable` concrete implementation of `RSDAnimatedImageThemeElement`.
-public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement, RSDThemeResourceImageData, Codable {
+public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement, RSDThemeResourceImageData, SerializableImageTheme {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case imageThemeType = "type", imageNames, animationDuration, animationRepeatCount, bundleIdentifier, packageName, placementType, imageSize = "size", rawFileExtension = "fileExtension"

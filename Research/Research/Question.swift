@@ -38,7 +38,10 @@ import JsonModel
 
 
 /// The protocol for the answer type of a question.
-public protocol AnswerType : Codable {
+public protocol AnswerType : PolymorphicRepresentable, Encodable {
+    var objectType: AnswerTypeType { get }
+    static var defaultType: AnswerTypeType { get }
+    
     var baseType: JsonType { get }
     
     /// Decode the JsonElement for this AnswerType from the given decoder.
@@ -60,6 +63,10 @@ public protocol AnswerType : Codable {
     /// - parameter value: The value to encode.
     /// - returns: The JSON serializable object for this encodable.
     func encodeAnswer(from value: Any?) throws -> JsonElement
+}
+
+public extension AnswerType {
+    var typeName: String { objectType.rawValue }
 }
 
 public protocol Question : ContentNode {
