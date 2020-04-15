@@ -84,7 +84,7 @@ class FactoryTests: XCTestCase {
         
         let taskIdentifier = "foo"
         let schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 3)
-        let resourceTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: BundleWrapper.bundleIdentifier!, classType: nil)
+        let resourceTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: BundleWrapper.bundleIdentifier!)
         
         let expect = expectation(description: "Fetch Task \(taskIdentifier)")
         resourceTransformer.fetchTask(with: taskIdentifier, schemaInfo: schemaInfo) { (task, err)  in

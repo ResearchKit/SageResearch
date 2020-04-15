@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 ///
 /// `RSDAnswerResultType` is a `Codable` struct that can be used to describe how to encode and decode an `RSDAnswerResult`.
@@ -68,7 +69,7 @@ public struct RSDAnswerResultType : Codable, Hashable, Equatable {
     /// The base type of the answer result. This is used to indicate what the type is of the
     /// value being stored. The value stored in the `RSDAnswerResult` should be convertable
     /// to one of these base types.
-    public enum BaseType : String, Codable, RSDStringEnumSet {
+    public enum BaseType : String, Codable, StringEnumSet {
         
         /// Bool
         case boolean
@@ -88,7 +89,7 @@ public struct RSDAnswerResultType : Codable, Hashable, Equatable {
     
     /// The sequence type of the answer result. This is used to represent a multiple-choice
     /// answer array or a key/value dictionary.
-    public enum SequenceType : String, Codable, RSDStringEnumSet {
+    public enum SequenceType : String, Codable, StringEnumSet {
         
         /// Array
         case array

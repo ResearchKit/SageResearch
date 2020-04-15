@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The type of the async action configuration. This is used to decode async action configurations
 /// using an instance of `RSDFactory`.
@@ -61,8 +62,8 @@ extension RSDAsyncActionType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDAsyncActionType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
+extension RSDAsyncActionType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return allBaseTypes().map{ $0.rawValue }
     }
 }

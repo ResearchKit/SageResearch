@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 open class RSDResultSummaryStepViewModel: RSDStepViewModel {
     
@@ -67,7 +68,7 @@ open class RSDResultSummaryStepViewModel: RSDStepViewModel {
                 return Localization.localizedAndJoin(strings)
             }
         }
-        else if let num = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber() {
+        else if let num = (answer as? NSNumber) ?? (answer as? JsonNumber)?.jsonNumber() {
             return self.numberFormatter.string(from: num)
         }
         else {

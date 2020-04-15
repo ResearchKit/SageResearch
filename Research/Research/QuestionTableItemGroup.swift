@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 open class QuestionTableItemGroup : RSDTableItemGroup {
     
@@ -56,7 +57,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
                 guard let jsonValue = initialValue, jsonValue != .null else { return .null }
                 if case .object(let dictionary) = jsonValue {
                     let identifier = inputItem.identifier ?? question.identifier
-                    return (dictionary[identifier] as? RSDJSONValue).map { JsonElement($0) }
+                    return (dictionary[identifier] as? JsonValue).map { JsonElement($0) }
                 }
                 else {
                     return jsonValue
@@ -131,7 +132,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
     }
     
     open func jsonElement(for answer: Any?, at index: Int) -> JsonElement {
-        (answer as? JsonElement) ?? JsonElement(answer as? RSDJSONValue)
+        (answer as? JsonElement) ?? JsonElement(answer as? JsonValue)
     }
     
     public final func updateAnswer() throws {
@@ -152,7 +153,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
             return selectableItems.first(where: { $0.selected })?.currentAnswer ?? .null
         }
         else {
-            let dictionary = selectableItems.reduce(into: [String : RSDJSONSerializable]()) { (hashtable, item) in
+            let dictionary = selectableItems.reduce(into: [String : JsonSerializable]()) { (hashtable, item) in
                 guard let answer = item.currentAnswer, answer != .null else { return }
                 hashtable[item.inputItem.identifier ?? item.identifier] = answer.jsonObject()
             }

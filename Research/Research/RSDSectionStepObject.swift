@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDSectionStepObject` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
 /// step that includes an instruction step, countdown step, and activity step.
@@ -189,14 +190,45 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
     }
 }
 
-extension RSDSectionStepObject : RSDDocumentableDecodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDSectionStepObject : DocumentableObject {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
     
-    static func examples() -> [[String : RSDJSONValue]] {
-        let jsonA: [String : RSDJSONValue] = [
+    public static func isOpen() -> Bool {
+        return false
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case .identifier, .steps, .stepType:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .stepType:
+            return .init(constValue: RSDStepType.section)
+        case .steps:
+            return .init(propertyType: .interfaceArray("\(RSDStep.self)"))
+        case .progressMarkers:
+            return .init(propertyType: .primitiveArray(.string))
+        case .asyncActions:
+            return .init(propertyType: .interfaceArray("\(RSDAsyncActionConfiguration.self)"))
+        }
+    }
+    
+    public static func jsonExamples() throws -> [[String : JsonSerializable]] {
+        let jsonA: [String : JsonSerializable] = [
                 "identifier": "foobar",
                 "type": "section",
                 "steps": [

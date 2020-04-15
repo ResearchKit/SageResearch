@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The type of the ui action. This is used to decode a `RSDUIAction` using a `RSDFactory`. It can also be used
 /// to customize the UI.
@@ -69,8 +70,8 @@ extension RSDUIActionObjectType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDUIActionObjectType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
+extension RSDUIActionObjectType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }
 }

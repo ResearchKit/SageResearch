@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 public final class AnswerResultObject : AnswerResult, RSDNavigationResult, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
@@ -116,13 +117,40 @@ extension AnswerResultObject : RSDAnswerResult {
     }
 }
 
-extension AnswerResultObject : RSDDocumentableCodableObject {
+extension AnswerResultObject : DocumentableStruct {
     
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
     }
     
-    static func answerResultExamples() -> [AnswerResultObject] {
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .type || key == .identifier
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .type:
+            return .init(constValue: RSDResultType.answer)
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .startDate, .endDate:
+            return .init(propertyType: .primitive(.string))
+        case .skipToIdentifier:
+            return .init(propertyType: .primitive(.string))
+        case .jsonAnswerType:
+            return .init(propertyType: .interface("\(AnswerType.self)"))
+        case .jsonValue:
+            return .init(propertyType: .any)
+        case .questionText:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+
+    public static func examples() -> [AnswerResultObject] {
         let typeAndValue = AnswerTypeExamples.examplesWithValues()
         let date = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         return typeAndValue.enumerated().map { (index, object) -> AnswerResultObject in
@@ -131,10 +159,6 @@ extension AnswerResultObject : RSDDocumentableCodableObject {
             result.endDate = date
             return result
         }
-    }
-    
-    static func examples() -> [Encodable] {
-        return answerResultExamples()
     }
 }
 

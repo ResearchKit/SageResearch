@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDDurationPickerDataSourceObject` is a concrete implementation of a `RSDMultipleComponentChoiceOptions`
 /// that can be used to select a duration using duration units for each component of the duration.
@@ -136,7 +137,7 @@ public struct RSDDurationPickerDataSourceObject : RSDMultipleComponentPickerData
         if let duration = answer as? Measurement<UnitDuration> {
             return duration
         }
-        else if let num = (answer as? RSDJSONNumber)?.jsonNumber() {
+        else if let num = (answer as? JsonNumber)?.jsonNumber() {
             return Measurement<UnitDuration>(value: num.doubleValue, unit: baseUnit)
         }
         else {

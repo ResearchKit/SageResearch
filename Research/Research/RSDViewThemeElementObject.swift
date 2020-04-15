@@ -32,14 +32,15 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDViewThemeElementObject` tells the UI where to find the view controller to use when instantiating
 /// the `RSDStepController`.
 public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundleInfo, Codable {
-    
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case storyboardIdentifier, viewIdentifier, bundleIdentifier, packageName
+        case type, storyboardIdentifier, viewIdentifier, bundleIdentifier, packageName
     }
+    private var type: String? = "default"   // Required for Kotlin compatiblility
     
     /// The storyboard view controller identifier or the nib name for this view controller.
     public let viewIdentifier: String
@@ -71,19 +72,26 @@ public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundle
     }
 }
 
-extension RSDViewThemeElementObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDViewThemeElementObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
     
-    static func viewThemeExamples() -> [RSDViewThemeElementObject] {
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .viewIdentifier || key == .type
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let _ = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        return .init(propertyType: .primitive(.string))
+    }
+    
+    public static func examples() -> [RSDViewThemeElementObject] {
         let viewThemeA = RSDViewThemeElementObject(viewIdentifier: "FooStepNibIdentifier", bundleIdentifier: "org.example.SharedResources")
         let viewThemeB = RSDViewThemeElementObject(viewIdentifier: "FooStepViewIdentifier", bundleIdentifier: nil, storyboardIdentifier: "FooBarStoryboard")
         return [viewThemeA, viewThemeB]
-    }
-    
-    static func examples() -> [Encodable] {
-        return viewThemeExamples()
     }
 }

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 extension String {
     
@@ -136,8 +137,8 @@ extension RSDResourceImageDataObject : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDResourceImageDataObject : RSDDocumentableStringLiteral {
-    static func examples() -> [String] {
+extension RSDResourceImageDataObject : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return ["happyFaceIcon"]
     }
 }

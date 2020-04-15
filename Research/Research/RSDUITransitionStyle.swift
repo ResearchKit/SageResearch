@@ -34,6 +34,7 @@
 import Foundation
 
 /// The type of transition style to use for displaying a UI component.
+@available(*, deprecated)
 public struct RSDTransitionStyle : RawRepresentable, Codable, Hashable {
     
     public let rawValue: String
@@ -49,14 +50,9 @@ public struct RSDTransitionStyle : RawRepresentable, Codable, Hashable {
     }
 }
 
+@available(*, deprecated)
 extension RSDTransitionStyle : ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
-    }
-}
-
-extension RSDTransitionStyle : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
-        return allStandardTypes().map{ $0.rawValue }
     }
 }

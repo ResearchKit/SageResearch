@@ -38,11 +38,9 @@ import Foundation
 /// piece of data entry, information, or activity in a larger task.
 ///
 /// Implementations included in this SDK include:
-/// 1. `RSDGenericStep` is used by `RSDFactory` to create a step that does not include a recognized
-///     subtype.
-/// 2. `RSDSectionStep` is used to define a logical subgroup of steps.
-/// 3. `RSDUIStep` is used to define a display step.
-/// 4. `RSDTaskInfoStep` is used to combine tasks into a single flow. For example, if the researcher wishes
+/// 1. `RSDSectionStep` is used to define a logical subgroup of steps.
+/// 2. `RSDUIStep` is used to define a display step.
+/// 3. `RSDTaskInfoStep` is used to combine tasks into a single flow. For example, if the researcher wishes
 ///     to ask for survey responses before an activity.
 ///
 /// A step can be a question, an active test, or a simple instruction. An `RSDStep` subclass is usually
@@ -79,13 +77,4 @@ public protocol RSDCopyStep : RSDStep, RSDCopyWithIdentifier {
     ///     - identifier: The new identifier.
     ///     - decoder: A decoder that can be used to decode properties on this step.
     func copy(with identifier: String, decoder: Decoder?) throws -> Self
-}
-
-/// `RSDGenericStep` is a step with key/value pairs decoded from a dictionary. This is the default step
-/// returned by `RSDFactory` for an unrecoginized type.
-@available(*, deprecated, message: "Generic step is no longer supported and will be deleted in a future version")
-public protocol RSDGenericStep : RSDStep {
-    
-    /// The decoded dictionary.
-    var userInfo: [String : Any] { get }
 }

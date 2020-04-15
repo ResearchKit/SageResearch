@@ -32,10 +32,11 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The named category or style for a given color. The use of this enum allows for coding the
 /// "style" of a given view element without setting the hexcode or name for the color to use.
-public enum RSDColorStyle : String, Codable, CaseIterable {
+public enum RSDColorStyle : String, Codable, CaseIterable, StringEnumSet {
     
     /// This style *explicitly* defines the color as WHITE and should display as white whether or
     /// not the app is in dark mode.
@@ -74,4 +75,7 @@ public enum RSDColorStyle : String, Codable, CaseIterable {
     /// shows someone running outside would have a "sky blue" background color that is defined
     /// independently of the branding colors used by an app.
     case custom
+}
+
+extension RSDColorStyle : DocumentableStringEnum {
 }

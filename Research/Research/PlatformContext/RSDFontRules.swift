@@ -234,13 +234,9 @@ open class RSDFontRules  {
         switch textType {
         case .xLargeHeader:
             #if os(iOS)
-            if #available(iOSApplicationExtension 11.0, *) {
-                return .largeTitle
-            } else {
-                return .title1
-            }
+            return .largeTitle
             #else
-                return .title1
+            return .title1
             #endif
             
         case .largeHeader:

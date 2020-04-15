@@ -604,7 +604,7 @@ extension CMMagnetometerData : RSDVectorData {
 // Documentation and Tests
 
 // TODO: syoung 09/27/2019 Look into whether or not there is a simple way to use the Documentable protocols in other frameworks.
-extension RSDMotionRecord { //}: RSDDocumentableCodableObject {
+extension RSDMotionRecord { //}: DocumentableStruct {
     
     public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases

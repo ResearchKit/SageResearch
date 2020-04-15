@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
 public struct RSDTaskGroupObject : RSDTaskGroup, Decodable {
@@ -119,14 +120,41 @@ public struct RSDTaskGroupObject : RSDTaskGroup, Decodable {
     }
 }
 
-extension RSDTaskGroupObject : RSDDocumentableDecodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDTaskGroupObject : DocumentableObject {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
     
-    static func examples() -> [[String : RSDJSONValue]] {
-        let json: [String : RSDJSONValue] = [
+    public static func isOpen() -> Bool { false }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case .identifier, .tasks:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .title, .detail:
+            return .init(propertyType: .primitive(.string))
+        case .icon:
+            return .init(propertyType: .reference(RSDResourceImageDataObject.documentableType()))
+        case .tasks:
+            return .init(propertyType: .interfaceArray("\(RSDTaskInfo.self)"))
+        }
+    }
+    
+    public static func jsonExamples() throws -> [[String : JsonSerializable]] {
+        let json: [String : JsonSerializable] = [
                     "identifier": "foobar",
                     "title": "Foobarific",
                     "detail": "This is a task group containing foo and bar",

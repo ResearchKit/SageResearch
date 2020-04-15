@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 extension RSDFraction : ExpressibleByStringLiteral {
     
@@ -126,16 +127,16 @@ extension RSDFraction : Encodable {
     }
 }
 
-extension RSDFraction : RSDJSONNumber {
+extension RSDFraction : JsonNumber {
 
     public func jsonNumber() -> NSNumber? {
         return Decimal(self.doubleValue) as NSNumber
     }
 }
 
-extension RSDFraction : RSDJSONValue {
+extension RSDFraction : JsonValue {
     
-    public func jsonObject() -> RSDJSONSerializable {
+    public func jsonObject() -> JsonSerializable {
         return self.jsonNumber() ?? NSNull()
     }
 }

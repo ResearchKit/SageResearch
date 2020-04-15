@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// An `RSDScoringResult` is an archivable result that can also save a json data scoring object for display
 /// in a user's history or to influence future results.
@@ -39,5 +40,5 @@ public protocol RSDScoringResult : RSDResult, RSDArchivable {
     
     /// Return a JSON type object. Elements may be any one of the JSON types
     /// (NSNull, NSNumber, String, Array, [String : Any]).
-    func dataScore() throws -> RSDJSONSerializable?
+    func dataScore() throws -> JsonSerializable?
 }

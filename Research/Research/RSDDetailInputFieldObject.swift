@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 @available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField {
@@ -130,61 +131,5 @@ open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField 
         else {
             return nil
         }
-    }
-    
-    // MARK: Overrides must be defined in the base implementation
-    
-    override class func codingKeys() -> [CodingKey] {
-        var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = CodingKeys.allCases
-        keys.append(contentsOf: thisKeys)
-        return keys
-    }
-    
-    override class func examples() -> [[String : RSDJSONValue]] {
-        let jsonA: [String : RSDJSONValue] = [
-            "identifier": "step3",
-            "type": "detail",
-            "title": "Step 3",
-            "text": "Some text.",
-            "inputFields": [
-                [
-                    "identifier": "foo",
-                    "type": "date",
-                    "uiHint": "picker",
-                    "prompt": "Foo",
-                    "range" : [ "minimumDate" : "2017-02-20",
-                                "maximumDate" : "2017-03-20",
-                                "codingFormat" : "yyyy-MM-dd" ]
-                ],
-                [
-                    "identifier": "bar",
-                    "type": "integer",
-                    "prompt": "Bar"
-                ],
-                [
-                    "identifier": "goo",
-                    "type": "multipleChoice",
-                    "choices" : ["never", "sometimes", "often", "always"]
-                ]
-            ]
-        ]
-        
-        let jsonB: [String : RSDJSONValue] = [
-            "identifier": "step3",
-            "type": "detail",
-            "title": "Step 3",
-            "prompt": "Select choice",
-            "promptDetail": "more information",
-            "placeholder": "(Enter details)",
-            "uiHint": "disclosureArrow",
-            "transitionStyle": "horizontal",
-            "inputFields": [[
-                "type": "multipleChoice",
-                "choices" : ["never", "sometimes", "often", "always"]
-                ]]
-        ]
-        
-        return [jsonA, jsonB]
     }
 }

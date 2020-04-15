@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
 /// the UI.
@@ -132,8 +133,8 @@ extension RSDStepType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDStepType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
+extension RSDStepType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }
 }

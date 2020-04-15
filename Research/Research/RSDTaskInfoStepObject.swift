@@ -32,9 +32,9 @@
 //
 
 import Foundation
+import JsonModel
 
 public struct RSDTaskInfoObject : RSDTaskInfo, Decodable {
-    
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, title, subtitle, detail, footnote, icon, _estimatedMinutes = "estimatedMinutes", _embeddedResource = "taskTransformer", _schemaInfoObject = "schemaInfo"
     }
@@ -104,7 +104,6 @@ public struct RSDTaskInfoObject : RSDTaskInfo, Decodable {
     }
 }
 
-
 /// `RSDTaskInfoStepObject` is a concrete implementation of the `RSDTaskInfoStep` protocol.
 public struct RSDTaskInfoStepObject : RSDTaskInfoStep {
 
@@ -155,7 +154,6 @@ extension RSDTaskInfoObject : Equatable {
     }
 }
 
-
 /// `RSDTaskInfoStepObject` is extended to implement the `RSDTaskGroup` protocol where the only item in the
 /// task group is this object.
 extension RSDTaskInfoObject : RSDTaskGroup {
@@ -166,26 +164,6 @@ extension RSDTaskInfoObject : RSDTaskGroup {
     }
 }
 
-extension RSDTaskInfoObject : RSDDocumentableDecodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func examples() -> [[String : RSDJSONValue]] {
-        let json: [String : RSDJSONValue] = [
-            "identifier": "foo",
-            "schemaIdentifier": "foo.1.2",
-            "schemaRevision": 2,
-            "title": "Hello Foo!",
-            "subtitle": "This is a subtitle",
-            "detail": "This is a test of foo.",
-            "copyright": "This is a copyright string for foo.",
-            "estimatedMinutes": 5,
-            "icon": "fooIcon",
-            "taskTransformer" : [ "resourceName": "TaskFoo",
-                                  "bundleIdentifier": "org.example.SharedResources" ]
-            ]
-        return [json]
-    }
-}
+// TODO: syoung 04/14/2020 This task is not Kotlin-serializable. Refactor to a serializable type.
+//extension RSDTaskInfoObject : DocumentableObject {
+//}

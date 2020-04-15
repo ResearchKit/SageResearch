@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 // TODO: syoung 04/06/2020 Deprecate the existing `RSDResult` in favor of the newer result protocols.
 // The Kotlin results do not *require* the startDate/endDate and other properties on all results.

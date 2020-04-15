@@ -57,8 +57,8 @@ extension RSDResourceImageData {
     }
     
     /// The Android resource type for an image is always "drawable".
-    public var resourceType: RSDResourceNameType? {
-        return .drawable
+    public var resourceType: String? {
+        return "drawable"
     }
 }
 

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDStepTransformerObject` is used in decoding a step with replacement properties for some or all of the steps in a
 /// section that is defined using a different resource. The factory will convert this step into an appropriate
@@ -39,8 +40,9 @@ import Foundation
 public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, resourceTransformer
+        case identifier, stepType = "type", resourceTransformer
     }
+    private var stepType: RSDStepType = .transform
     
     /// The transformed step.
     public let transformedStep: RSDStep!
@@ -56,13 +58,7 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
     ///            {
     ///             "identifier"         : "heartRate.before",
     ///             "type"               : "transform",
-    ///             "steps"   : [{   "identifier"   : "instruction",
-    ///                                         "title"        : "This is a replacement title for the instruction.",
-    ///                                         "detail"         : "This is some replacement text." },
-    ///                                     {   "identifier"   : "feedback",
-    ///                                         "detail"         : "Your pre run heart rate is" }
-    ///                                     ],
-    ///            "resourceTransformer"    : { "resourceName": "HeartrateStep.json"}
+    ///             "resourceTransformer"    : { "resourceName": "HeartrateStep.json"}
     ///            }
     ///         """.data(using: .utf8)! // our data in native (JSON) format
     ///     ```
@@ -108,14 +104,33 @@ fileprivate struct _StepDecoder: Decodable {
     }
 }
 
-extension RSDStepTransformerObject : RSDDocumentableDecodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
+extension RSDStepTransformerObject : DocumentableObject {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
     }
     
-    static func examples() -> [[String : RSDJSONValue]] {
-        // TODO: Add some resource examples. syoung 04/11/2018
-        return []
+    public static func isOpen() -> Bool { false }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { true }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .stepType:
+            return .init(constValue: RSDStepType.transform)
+        case .resourceTransformer:
+            return .init(propertyType: .reference(RSDResourceTransformerObject.documentableType()))
+        }
+    }
+    
+    public static func jsonExamples() throws -> [[String : JsonSerializable]] {
+        [[ "identifier" : "heartRate.before",
+          "type" : "transform",
+          "resourceTransformer" : ["resourceName" : "HeartrateStep.json"]
+        ]]
     }
 }

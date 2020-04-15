@@ -32,6 +32,7 @@
 //
 
 import XCTest
+import JsonModel
 @testable import Research
 
 class AnswerResultTypeJSONTests: XCTestCase {
@@ -218,7 +219,7 @@ class AnswerResultTypeJSONTests: XCTestCase {
 //        do {
 //            let expectedObject = [RSDFraction(floatLiteral: 0.25), RSDFraction(floatLiteral: 0.5), RSDFraction(floatLiteral: 0.75)]
 //            let expectedJson = [0.25, 0.5, 0.75]
-//            let inputJson: RSDJSONSerializable = [0.25, 0.5, 0.75]
+//            let inputJson: JsonSerializable = [0.25, 0.5, 0.75]
 //
 //            let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: .array, formDataType: .collection(.multipleChoice, .fraction))
 //            let objectValue = try answerType.jsonDecode(from: inputJson)

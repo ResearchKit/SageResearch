@@ -32,6 +32,9 @@
 //
 
 import Foundation
+import JsonModel
+
+// TODO: syoung 04/14/2020 Add Documentable conformance for Question, InputItem, etc.
 
 // TODO: syoung 04/06/2020 Implement ComboBoxQuestionObject supported in Kotlin frameworks
 
@@ -134,7 +137,7 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
         }
     }
     
-    override class func codingKeys() -> [CodingKey] {
+    override open class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
@@ -179,7 +182,7 @@ open class AbstractSkipQuestionStep : AbstractQuestionStep {
         }
     }
     
-    override class func codingKeys() -> [CodingKey] {
+    override open class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
@@ -250,7 +253,7 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
         }
     }
     
-    override class func codingKeys() -> [CodingKey] {
+    override public class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
@@ -324,7 +327,7 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
         }
     }
     
-    override class func codingKeys() -> [CodingKey] {
+    override public class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
@@ -424,7 +427,7 @@ open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, Ques
         try encodeJsonChoices(to: container.nestedUnkeyedContainer(forKey: .jsonChoices))
     }
     
-    override class func codingKeys() -> [CodingKey] {
+    override open class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)

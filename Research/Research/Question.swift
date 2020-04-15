@@ -32,19 +32,10 @@
 //
 
 import Foundation
+import JsonModel
 
 // TODO: syoung 04/02/2020 Add documentation for the Kotlin interfaces.
 
-
-/// An enum listing the json-types for serialization.
-public enum JsonType : String, Codable, CaseIterable {
-    case string, number, integer, boolean, null, array, object
-    
-    var isPrimitive: Bool {
-        let primitiveTypes: [JsonType] = [.string, .number, .integer, .boolean, .null]
-        return primitiveTypes.contains(self)
-    }
-}
 
 /// The protocol for the answer type of a question.
 public protocol AnswerType : Codable {

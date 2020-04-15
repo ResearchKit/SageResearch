@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDChoiceInputFieldObject` is a concrete implementation of `RSDChoiceInputField` that subclasses
 /// `RSDInputFieldObject` to include a list of choices for a multiple choice or single choice input field. It
@@ -122,7 +123,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
         }
         
         let choices: [JsonChoiceObject] = self.choices.map { choice in
-            let jsonValue: JsonElement? = (choice.answerValue as? RSDJSONValue).map { JsonElement($0) }
+            let jsonValue: JsonElement? = (choice.answerValue as? JsonValue).map { JsonElement($0) }
             return JsonChoiceObject(matchingValue: jsonValue,
                              text: choice.text,
                              detail: choice.detail,
@@ -328,141 +329,5 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
         } else if let obj = self.defaultAnswer as? RSDFraction {
             try container.encode(obj, forKey: .defaultAnswer)
         } 
-    }
-    
-    // Overrides must be defined in the base implementation
-    
-    override class func codingKeys() -> [CodingKey] {
-        var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = CodingKeys.allCases
-        keys.append(contentsOf: thisKeys)
-        return keys
-    }
-    
-    static func exampleDictionary() -> [String : RSDJSONValue]? {
-        if Value.self == String.self {
-            return [
-                "identifier": "step3",
-                "prompt": "Step 3",
-                "type": "multipleChoice",
-                "defaultAnswer": "alpha",
-                "choices" : ["alpha", "beta", "charlie", "delta"]
-            ]
-        }
-        else if Value.self == Bool.self {
-            return [
-                "identifier": "heightLimit",
-                "prompt": "Are you tall?",
-                "type": "singleChoice.boolean",
-                "defaultAnswer": true,
-                "choices" : [[  "value" : true,
-                                "text" : "Yes"],
-                             [  "value" : false,
-                                "text" : "No"],
-                             [  "text" : "I don't know",
-                                "exclusive" : true ]],
-            ]
-        }
-        else if Value.self == Int.self {
-            return [
-                "identifier": "happiness",
-                "prompt": "How happy are you?",
-                "type": "singleChoice.integer",
-                "defaultAnswer": 1,
-                "choices": [[
-                    "text": "delighted",
-                    "detail": "Nothing could be better!",
-                    "value": 1,
-                    "icon": "moodScale1"
-                    ],
-                            [
-                                "text": "good",
-                                "detail": "Life is good.",
-                                "value": 2,
-                                "icon": "moodScale2"
-                    ],
-                            [
-                                "text": "so-so",
-                                "detail": "Things are okay, I guess.",
-                                "value": 3,
-                                "icon": "moodScale3"
-                    ],
-                            [
-                                "text": "sad",
-                                "detail": "I'm feeling a bit down.",
-                                "value": 4,
-                                "icon": "moodScale4"
-                    ],
-                            [
-                                "text": "miserable",
-                                "detail": "I cry into my pillow every night.",
-                                "value": 5,
-                                "icon": "moodScale5"
-                    ]]
-            ]
-        }
-        else if Value.self == Double.self {
-            return [
-                "identifier": "foo",
-                "prompt": "Choose a number",
-                "type": "singleChoice.decimal",
-                "uiHint": "picker",
-                "defaultAnswer": 1.2,
-                "choices" : [[  "value" : 0,
-                                "text" : "0"],
-                             [  "value" : 1.2,
-                                "text" : "1.2"],
-                             [  "value" : 3.1425,
-                                "text" : "pi",
-                                "detail" : "Is the magic number" ],
-                             [  "text" : "None of the above",
-                                "exclusive" : true ]],
-            ]
-        }
-        else if Value.self == RSDFraction.self {
-            return [
-                "identifier": "happiness",
-                "prompt": "How happy are you?",
-                "type": "singleChoice.fraction",
-                "defaultAnswer": "3/5",
-                "choices": [[
-                    "text": "delighted",
-                    "detail": "Nothing could be better!",
-                    "value": "1/5",
-                    "icon": "moodScale1"
-                    ],
-                            [
-                                "text": "good",
-                                "detail": "Life is good.",
-                                "value": "2/5",
-                                "icon": "moodScale2"
-                    ],
-                            [
-                                "text": "so-so",
-                                "detail": "Things are okay, I guess.",
-                                "value": "3/5",
-                                "icon": "moodScale3"
-                    ],
-                            [
-                                "text": "sad",
-                                "detail": "I'm feeling a bit down.",
-                                "value": "4/5",
-                                "icon": "moodScale4"
-                    ],
-                            [
-                                "text": "miserable",
-                                "detail": "I cry into my pillow every night.",
-                                "value": "5/5",
-                                "icon": "moodScale5"
-                    ]
-                ]
-            ]
-        }
-        return nil
-    }
-    
-    override class func examples() -> [[String : RSDJSONValue]] {
-        guard let dictionary = exampleDictionary() else { return [] }
-        return [dictionary]
     }
 }

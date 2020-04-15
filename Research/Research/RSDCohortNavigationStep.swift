@@ -55,7 +55,7 @@ public protocol RSDCohortAssignmentStep : RSDStep {
 }
 
 /// List of the rules to apply when navigating based on the currently applied cohorts.
-public enum RSDCohortRuleOperator : String, Codable {
+public enum RSDCohortRuleOperator : String, Codable, CaseIterable {
     /// Require all the cohorts to match.
     case all
     /// Require any of the cohorts to match.

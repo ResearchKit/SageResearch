@@ -32,6 +32,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
+
 public struct RSDFetchableImageThemeElementObject : RSDThemeResourceImageData, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case imageThemeType = "type", imageName, bundleIdentifier, packageName, imageSize = "size", placementType, rawFileExtension = "fileExtension"
@@ -64,18 +66,64 @@ public struct RSDFetchableImageThemeElementObject : RSDThemeResourceImageData, C
         return imageName
     }
     
-    public init(imageName: String, bundle: RSDResourceBundle? = nil, packageName: String? = nil, bundleIdentifier: String? = nil) {
+    public init(imageName: String, bundle: RSDResourceBundle? = nil, packageName: String? = nil, bundleIdentifier: String? = nil, imageSize: RSDSize? = nil, placementType: RSDImagePlacementType? = nil) {
         let splitFile = imageName.splitFilename()
         self.imageName = splitFile.resourceName
         self.rawFileExtension = splitFile.fileExtension
         self.factoryBundle = bundle
         self.bundleIdentifier = bundleIdentifier
         self.packageName = packageName
-        self.imageSize = nil
-        self.placementType = nil
+        self.imageSize = imageSize
+        self.placementType = placementType
     }
 }
 
+extension RSDFetchableImageThemeElementObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        return CodingKeys.allCases
+    }
+
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case .imageThemeType, .imageName:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .imageThemeType:
+            return .init(constValue: RSDImageThemeElementType.animated)
+        case .imageName:
+            return .init(propertyType: .primitive(.string))
+        case .bundleIdentifier, .packageName:
+            return .init(propertyType: .primitive(.string))
+        case .placementType:
+            return .init(propertyType: .reference(RSDImagePlacementType.documentableType()))
+        case .imageSize:
+            return .init(propertyType: .reference(RSDSize.documentableType()))
+        case .rawFileExtension:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [RSDFetchableImageThemeElementObject] {
+        let imageA = RSDFetchableImageThemeElementObject(imageName: "blueDog")
+        let imageB = RSDFetchableImageThemeElementObject(imageName: "redCat.jpeg",
+                                                         bundle: nil,
+                                                         packageName: "org.example.sharedresources",
+                                                         bundleIdentifier: "org.example.SharedResources",
+                                                         imageSize: RSDSize(width: 20.0, height: 30.0),
+                                                         placementType: .iconBefore)
+        return [imageA, imageB]
+    }
+}
 
 /// `RSDAnimatedImageThemeElementObject` is a `Codable` concrete implementation of `RSDAnimatedImageThemeElement`.
 public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement, RSDThemeResourceImageData, Codable {
@@ -142,19 +190,48 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     }
 }
 
-extension RSDAnimatedImageThemeElementObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDAnimatedImageThemeElementObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
+
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case .imageThemeType, .imageNames, .animationDuration:
+            return true
+        default:
+            return false
+        }
+    }
     
-    static func imageThemeExamples() -> [RSDAnimatedImageThemeElementObject] {
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .imageThemeType:
+            return .init(constValue: RSDImageThemeElementType.animated)
+        case .imageNames:
+            return .init(propertyType: .primitiveArray(.string))
+        case .animationDuration:
+            return .init(propertyType: .primitive(.number))
+        case .animationRepeatCount:
+            return .init(propertyType: .primitive(.integer))
+        case .bundleIdentifier, .packageName:
+            return .init(propertyType: .primitive(.string))
+        case .placementType:
+            return .init(propertyType: .reference(RSDImagePlacementType.documentableType()))
+        case .imageSize:
+            return .init(propertyType: .reference(RSDSize.documentableType()))
+        case .rawFileExtension:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [RSDAnimatedImageThemeElementObject] {
         let imageA = RSDAnimatedImageThemeElementObject(imageNames: ["blueDog1", "blueDog2", "blueDog3"], animationDuration: 2)
         let imageB = RSDAnimatedImageThemeElementObject(imageNames: ["redCat1", "redCat2", "redCat3"], animationDuration: 2, bundleIdentifier: "org.example.SharedResources", placementType: .topBackground, size: RSDSize(width: 100, height: 120))
         return [imageA, imageB]
-    }
-    
-    static func examples() -> [Encodable] {
-        return imageThemeExamples()
     }
 }

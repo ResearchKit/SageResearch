@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 public struct PassThruValidator : TextInputValidator {
     public func answerText(for answer: Any?) -> String? {
@@ -93,7 +94,7 @@ public struct RegExValidator : TextInputValidator, Codable {
 }
 
 /// `Codable` string enum for the number formatter.
-public enum NumberFormatStyle : String, Codable, CaseIterable, RSDStringEnumSet {
+public enum NumberFormatStyle : String, Codable, CaseIterable {
     case none, decimal, currency, percent, scientific, spellOut, ordinal
     
     public func formatterStyle() -> NumberFormatter.Style {
@@ -106,11 +107,11 @@ public enum NumberFormatStyle : String, Codable, CaseIterable, RSDStringEnumSet 
     }
 }
 
-extension NumberFormatStyle : RSDDocumentableStringEnum {
+extension NumberFormatStyle : StringEnumSet {
 }
 
 public protocol NumberValidator : TextInputValidator {
-    associatedtype Value : RSDJSONNumber
+    associatedtype Value : JsonNumber
     
     var numberStyle: NumberFormatStyle! { get }
     var usesGroupingSeparator: Bool! { get }
@@ -143,7 +144,7 @@ public extension NumberValidator {
     }
     
     func answerText(for answer: Any?) -> String? {
-        guard let num = (answer as? RSDJSONNumber)?.jsonNumber() else { return nil }
+        guard let num = (answer as? JsonNumber)?.jsonNumber() else { return nil }
         return self.formatter.string(from: num)
     }
     
@@ -152,7 +153,7 @@ public extension NumberValidator {
         if let str = answer as? String {
             return try validateInput(text: str)
         }
-        else if let num = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber() {
+        else if let num = (answer as? NSNumber) ?? (answer as? JsonNumber)?.jsonNumber() {
             return try validateNumber(num)
         }
         else {
@@ -464,3 +465,20 @@ extension MeasurementTextInputValidator {
         return answer
     }
 }
+
+
+
+//extension RSDTextFieldOptionsObject : DocumentableStruct {
+//
+//    static func codingKeys() -> [CodingKey] {
+//        return CodingKeys.allCases
+//    }
+//
+//    static func examples() -> [Encodable] {
+//        let exampleA = RSDTextFieldOptionsObject(keyboardType: .asciiCapable, autocapitalizationType: .allCharacters, isSecureTextEntry: true, maximumLength: 16, spellCheckingType: .no, autocorrectionType: .no)
+//        var exampleB = RSDTextFieldOptionsObject(keyboardType: .numberPad)
+//        exampleB.textValidator = try! RSDRegExValidatorObject(regExPattern: "^[0-9]*$")
+//        exampleB.invalidMessage = "This input field only allows entering numbers."
+//        return [exampleA, exampleB]
+//    }
+//}

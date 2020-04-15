@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDActiveUIStepCommand` is an `OptionSet` for certain commonly used commands that are used at the
 /// beginning and end of an active step.
@@ -141,9 +142,6 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
 
     /// The default commands for a step.
     public static let defaultCommands: RSDActiveUIStepCommand = []
-}
-
-extension RSDActiveUIStepCommand : RSDDocumentableOptionSet {
     
     static func allCodingKeys() -> [String] {
         // Register the commands included in the base struct to add them to the mapping
@@ -153,5 +151,11 @@ extension RSDActiveUIStepCommand : RSDDocumentableOptionSet {
                                          .shouldDisableIdleTimer,
                                          .speakWarningOnPause]
         return self.stringMapping.map{ $0.key }
+    }
+}
+
+extension RSDActiveUIStepCommand : DocumentableStringOptionSet {
+    public static func examples() -> [String] {
+        allCodingKeys()
     }
 }

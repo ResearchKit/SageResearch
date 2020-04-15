@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDMotionRecorderType` is used to enumerate the sensors and calculated measurements
 /// that can be recorded by the `RSDMotionRecorder`.
@@ -50,7 +51,7 @@ import Foundation
 /// schema allows for a single table to be used to store the data which can then be filtered
 /// by type to perform calculations and DSP on the input sources.
 ///
-public enum RSDMotionRecorderType : String, Codable, RSDStringEnumSet {
+public enum RSDMotionRecorderType : String, Codable, StringEnumSet {
     
     /// Raw accelerometer reading. `CMAccelerometerData` accelerometer.
     /// - seealso: https://developer.apple.com/documentation/coremotion/getting_raw_accelerometer_events
@@ -237,17 +238,44 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
 
 // Documentation and Tests
 
-extension RSDMotionRecorderType : RSDDocumentableStringEnum {
+extension RSDMotionRecorderType : DocumentableStringEnum {
 }
 
-extension RSDMotionRecorderConfiguration : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDMotionRecorderConfiguration : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
+
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .identifier || key == .type
+    }
     
-    static func examples() -> [Encodable] {
-        
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .type:
+            return .init(constValue: RSDStandardPermissionType.motion)
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .recorderTypes:
+            return .init(propertyType: .referenceArray(RSDMotionRecorderType.documentableType()))
+        case .startStepIdentifier, .stopStepIdentifier:
+            return .init(propertyType: .primitive(.string))
+        case .frequency:
+            return .init(propertyType: .primitive(.number))
+        case ._requiresBackgroundAudio:
+            return .init(defaultValue: .boolean(false))
+        case .usesCSVEncoding:
+            return .init(propertyType: .primitive(.boolean))
+        case ._shouldDeletePrevious:
+            return .init(defaultValue: .boolean(true))
+        }
+    }
+
+    public static func examples() -> [RSDMotionRecorderConfiguration] {
         var example = RSDMotionRecorderConfiguration(identifier: "motion", recorderTypes: [.accelerometer, .gyro], requiresBackgroundAudio: true, frequency: 50)
         example.startStepIdentifier = "start"
         example.stopStepIdentifier = "stop"

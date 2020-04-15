@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The `RSDUIActionType` enum describes standard navigation actions that are common to a
 /// given UI step. It is extendable using the custom field.
@@ -41,7 +42,7 @@ public enum RSDUIActionType {
     case navigation(Navigation)
     
     /// Standard navigation elements that are common to most steps.
-    public enum Navigation : String {
+    public enum Navigation : String, CaseIterable {
         
         /// Navigate to the next step.
         case goForward
@@ -118,5 +119,11 @@ extension RSDUIActionType : CodingKey {
     
     public init?(intValue: Int) {
         return nil
+    }
+}
+
+extension RSDUIActionType : DocumentableStringEnum {
+    public static func allValues() -> [String] {
+        Navigation.allCases.map { $0.rawValue }
     }
 }

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDDeviceType` describes various devices. It can be used by a task to vend different steps or async
 /// actions based upon what is supported by a given device type.
@@ -66,8 +67,8 @@ public struct RSDDeviceType : RSDFactoryTypeRepresentable, Codable, Hashable {
     }
 }
 
-extension RSDDeviceType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
+extension RSDDeviceType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return allStandardKeys().map { $0.rawValue }
     }
 }

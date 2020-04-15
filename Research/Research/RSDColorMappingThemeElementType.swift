@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The type of the color mapping theme element. This is used to decode a `RSDColorMappingThemeElement` using
 /// a `RSDFactory`. It can also be used to customize the UI.
@@ -59,8 +60,8 @@ extension RSDColorMappingThemeElementType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDColorMappingThemeElementType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
-        return allStandardTypes().map{ $0.rawValue }
+extension RSDColorMappingThemeElementType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
+        allStandardTypes().map{ $0.rawValue }
     }
 }

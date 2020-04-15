@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 extension RSDStepType {
     fileprivate static let nullStepType: RSDStepType = "null"
@@ -59,8 +60,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         case image
         case beforeCohortRules
         case afterCohortRules
-        
-        //@available(*, unavailable)
+    }
+    
+    private enum DeprecatedCodingKeys: String, CodingKey {
         case colorTheme
         case text
     }
@@ -341,10 +343,11 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     /// pass to replace any values that should be decoded for a specific device type.
     open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let deprecatedContainer = try decoder.container(keyedBy: DeprecatedCodingKeys.self)
         
         self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? self.title
         
-        if let text = try container.decodeIfPresent(String.self, forKey: .text) {
+        if let text = try deprecatedContainer.decodeIfPresent(String.self, forKey: .text) {
             debugPrint("WARNING!!! `text` keyword on a UIStepObject decoding is deprecated and will be deleted in future versions.")
             if let detail = try container.decodeIfPresent(String.self, forKey: .detail) {
                 self.subtitle = text
@@ -374,8 +377,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
             let nestedDecoder = try container.superDecoder(forKey: .colorMapping)
             self.colorMapping = try decoder.factory.decodeColorMappingThemeElement(from: nestedDecoder)
         }
-        else if container.contains(.colorTheme) {
-            throw DecodingError.dataCorruptedError(forKey: CodingKeys.colorTheme, in: container, debugDescription: "Use of `colorTheme` JSON key is unavailable. Please convert your JSON files to use `colorMapping` instead.")
+        else if deprecatedContainer.contains(.colorTheme) {
+            throw DecodingError.dataCorruptedError(forKey: DeprecatedCodingKeys.colorTheme, in: deprecatedContainer, debugDescription: "Use of `colorTheme` JSON key is unavailable. Please convert your JSON files to use `colorMapping` instead.")
         }
         if container.contains(.image) {
             let nestedDecoder = try container.superDecoder(forKey: .image)
@@ -441,15 +444,49 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
 
     // Overrides must be defined in the base implementation
     
-    override class func codingKeys() -> [CodingKey] {
+    override open class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
     }
     
-    class func examples() -> [[String : RSDJSONValue]] {
-        let jsonA: [String : RSDJSONValue] = [
+    override open class func isRequired(_ codingKey: CodingKey) -> Bool {
+        if super.isRequired(codingKey) { return true }
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .identifier || key == .stepType
+    }
+    
+    override open class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .stepType:
+            return .init(constValue: self.defaultType())
+        case .title,.subtitle,.detail,.footnote:
+            return .init(propertyType: .primitive(.string))
+        case .fullInstructionsOnly:
+            return .init(propertyType: .primitive(.boolean))
+        case .nextStepIdentifier:
+            return .init(propertyType: .primitive(.string))
+        case .permissions:
+            return .init(propertyType: .referenceArray(RSDStandardPermission.documentableType()))
+        case .viewTheme:
+            return .init(propertyType: .interface("\(RSDViewThemeElement.self)"))
+        case .colorMapping:
+            return .init(propertyType: .interface("\(RSDColorMappingThemeElement.self)"))
+        case .image:
+            return .init(propertyType: .interface("\(RSDImageThemeElement.self)"))
+        case .beforeCohortRules, .afterCohortRules:
+            return .init(propertyType: .referenceArray(RSDCohortNavigationRuleObject.documentableType()))
+        }
+    }
+    
+    open class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        let jsonA: [String : JsonSerializable] = [
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
@@ -488,7 +525,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         ]
         
         // Example JSON for a step with an `RSDFetchableImageThemeElement`.
-        let jsonB: [String : RSDJSONValue] = [
+        let jsonB: [String : JsonSerializable] = [
             "identifier"   : "goOutside",
             "type"         : "instruction",
             "title"        : "Go outside",
@@ -502,6 +539,5 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     }
 }
 
-extension RSDUIStepObject : RSDDocumentableDecodableObject {
+extension RSDUIStepObject : DocumentableObject {
 }
-

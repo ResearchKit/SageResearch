@@ -34,6 +34,7 @@
 import Foundation
 
 /// `RSDNumberRangeObject` extends the properties of an `RSDInputField` for a `decimal` or `integer` data type.
+@available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
 public struct RSDNumberRangeObject : RSDNumberRange, RSDRangeWithFormatter, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
@@ -168,22 +169,5 @@ public struct RSDNumberRangeObject : RSDNumberRange, RSDRangeWithFormatter, Coda
             }
             try encodable.encode(to: nestedEncoder)
         }
-    }
-}
-
-extension RSDNumberRangeObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func numberRangeExamples() -> [RSDNumberRangeObject] {
-        let exampleA = RSDNumberRangeObject(minimumDouble: 1.23, maximumDouble: 567.89, stepInterval: 0.01, unit: "m", formatter: NumberFormatter.defaultNumberFormatter(with: 2))
-        let exampleB = RSDNumberRangeObject(minimumInt: -5, maximumInt: 10)
-        return [exampleA, exampleB]
-    }
-    
-    static func examples() -> [Encodable] {
-        return numberRangeExamples()
     }
 }

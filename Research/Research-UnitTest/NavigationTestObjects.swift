@@ -32,7 +32,8 @@
 //
 
 import Foundation
-import Research
+@testable import Research
+import JsonModel
 import UIKit
 
 public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDInstructionStep {
@@ -479,9 +480,9 @@ public class TestDataStoreManager : NSObject, RSDDataStorageManager {
 public struct TestData : RSDTaskData {
     public let identifier: String
     public let timestampDate: Date?
-    public let json: RSDJSONSerializable
+    public let json: JsonSerializable
     
-    public init(identifier: String, timestampDate: Date?, json: RSDJSONSerializable) {
+    public init(identifier: String, timestampDate: Date?, json: JsonSerializable) {
         self.identifier = identifier
         self.timestampDate = timestampDate
         self.json = json

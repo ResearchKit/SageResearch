@@ -327,19 +327,20 @@ extension NSCalendar.Unit {
     }
 }
 
-extension RSDDurationRangeObject : RSDDocumentableCodableObject {
-
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-
-    static func rangeExamples() -> [RSDDurationRangeObject] {
-        return [RSDDurationRangeObject()]
-    }
-
-    static func examples() -> [Encodable] {
-        return rangeExamples()
-    }
-}
+// TODO: syoung 04/14/2020 Implement support for duration questions.
+//extension RSDDurationRangeObject : DocumentableStruct {
+//
+//    static func codingKeys() -> [CodingKey] {
+//        return CodingKeys.allCases
+//    }
+//
+//    static func rangeExamples() -> [RSDDurationRangeObject] {
+//        return [RSDDurationRangeObject()]
+//    }
+//
+//    static func examples() -> [Encodable] {
+//        return rangeExamples()
+//    }
+//}
 
 

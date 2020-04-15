@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 import Foundation
+import JsonModel
 
 /// `RSDResultType` is an extendable string enum used by `RSDFactory` to create the appropriate
 /// result type.
@@ -75,8 +76,8 @@ extension RSDResultType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDResultType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
+extension RSDResultType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }
 }

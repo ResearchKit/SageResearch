@@ -55,11 +55,6 @@ public protocol RSDResourceInfo {
     var packageName: String? { get }
 }
 
-/// The android-type of the resource.
-public enum RSDResourceNameType : String, Codable, CaseIterable {
-    case drawable, color, font
-}
-
 /// The resource data info describes additional information for a *specific* file.
 public protocol RSDResourceDataInfo : RSDResourceInfo {
     
@@ -77,7 +72,7 @@ public protocol RSDResourceDataInfo : RSDResourceInfo {
     /// - note: This is different from the Apple bundle structure where you would use either the
     /// raw file extension or the initializer with the resource name and bundle to construct the
     /// object.
-    var resourceType: RSDResourceNameType? { get }
+    var resourceType: String? { get }
 }
 
 extension RSDResourceDataInfo {

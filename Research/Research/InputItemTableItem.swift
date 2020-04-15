@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 public protocol InputItemState : class {
     var identifier: String { get }

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The `RSDFormUIHint` enum is a key word that can be used to describe the preferred UI for a form input field.
 /// This is intended as a "hint" that the designers and developers can use to indicate the preferred input style
@@ -146,8 +147,8 @@ extension RSDFormUIHint : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDFormUIHint : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
-        return allStandardHints.map{ $0.rawValue }
+extension RSDFormUIHint : DocumentableStringLiteral {
+    public static func examples() -> [String] {
+        allStandardHints.map { $0.rawValue }
     }
 }

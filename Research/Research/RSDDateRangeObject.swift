@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDDateRangeObject` is a concrete implementation of a `RSDDateRange` that defines the range of values appropriate
 /// for a `date` data type.
@@ -39,6 +40,9 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case minDate = "minimumValue", maxDate = "maximumValue", allowFuture, allowPast, minuteInterval, codingFormat, defaultDate
+    }
+    
+    private enum DeprecatedCodingKeys : String, CodingKey, CaseIterable {
         case minimumDate, maximumDate
     }
     
@@ -135,6 +139,7 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let deprecatedContainer = try decoder.container(keyedBy: DeprecatedCodingKeys.self)
         
         // If there is an encoding format, then the date should be decoded/encoded using a string of that format.
         var minDate: Date?
@@ -142,14 +147,14 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
         var defaultDate: Date?
         let dateCoder = try container.decodeIfPresent(RSDDateCoderObject.self, forKey: .codingFormat)
         if dateCoder != nil {
-            if let dateStr = try container.decodeIfPresent(String.self, forKey: .minimumDate) {
+            if let dateStr = try deprecatedContainer.decodeIfPresent(String.self, forKey: .minimumDate) {
                 print("WARNING!!! 'minimumDate' is a deprecated key. Use 'minimumValue' instead.")
                 minDate = dateCoder!.date(from: dateStr)
             }
             else if let dateStr = try container.decodeIfPresent(String.self, forKey: .minDate) {
                 minDate = dateCoder!.date(from: dateStr)
             }
-            if let dateStr = try container.decodeIfPresent(String.self, forKey: .maximumDate) {
+            if let dateStr = try deprecatedContainer.decodeIfPresent(String.self, forKey: .maximumDate) {
                 print("WARNING!!! 'maximumDate' is a deprecated key. Use 'maximumValue' instead.")
                 maxDate = dateCoder!.date(from: dateStr)
             }
@@ -161,14 +166,14 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
             }
         }
         else {
-            if let min = try container.decodeIfPresent(Date.self, forKey: .minimumDate) {
+            if let min = try deprecatedContainer.decodeIfPresent(Date.self, forKey: .minimumDate) {
                 print("WARNING!!! 'minimumDate' is a deprecated key. Use 'minimumValue' instead.")
                 minDate = min
             }
             else {
                 minDate = try container.decodeIfPresent(Date.self, forKey: .minDate)
             }
-            if let max = try container.decodeIfPresent(Date.self, forKey: .maximumDate) {
+            if let max = try deprecatedContainer.decodeIfPresent(Date.self, forKey: .maximumDate) {
                 print("WARNING!!! 'maximumDate' is a deprecated key. Use 'maximumValue' instead.")
                 maxDate = max
             }
@@ -212,12 +217,30 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     }
 }
 
-extension RSDDateRangeObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
+extension RSDDateRangeObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
     }
-    static func dateRangeExamples() -> [RSDDateRangeObject] {
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .minDate, .maxDate, .defaultDate:
+            return .init(propertyType: .primitive(.string), propertyDescription: "The '\(key.stringValue)' key must be a time, date, or timestamp formatted using the 'codingFormat' defined for this range.")
+        case .allowFuture, .allowPast:
+            return .init(propertyType: .primitive(.boolean))
+        case .minuteInterval:
+            return .init(propertyType: .primitive(.integer))
+        case .codingFormat:
+            return .init(propertyType: .primitive(.string), propertyDescription: "The iso8601 format for the date-time components used by this range.")
+        }
+    }
+    
+    public static func examples() -> [RSDDateRangeObject] {
         let minDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T00:00:00.000-07:00")!
         let maxDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-17T00:00:00.000-07:00")!
         let exampleA = RSDDateRangeObject(minimumDate: minDate, maximumDate: maxDate, allowFuture: nil, allowPast: false, minuteInterval: nil, dateCoder: RSDDateCoderObject(rawValue: "yyyy-MM-dd"))
@@ -225,10 +248,6 @@ extension RSDDateRangeObject : RSDDocumentableCodableObject {
         let exampleC = RSDDateRangeObject(minimumDate: nil, maximumDate: nil, allowFuture: false, allowPast: nil, minuteInterval: nil, dateCoder: nil)
         let exampleD = RSDDateRangeObject(minimumDate: nil, maximumDate: nil, allowFuture: nil, allowPast: nil, minuteInterval: 15, dateCoder: RSDDateCoderObject(rawValue: "HH:mm"))
         return [exampleA, exampleB, exampleC, exampleD]
-    }
-    
-    static func examples() -> [Encodable] {
-        return dateRangeExamples()
     }
 }
 

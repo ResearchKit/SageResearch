@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDCollectionResultObject` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
@@ -117,22 +118,44 @@ public struct RSDCollectionResultObject : RSDCollectionResult, RSDNavigationResu
     }
 }
 
-extension RSDCollectionResultObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDCollectionResultObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
     
-    static func exampleResult() -> RSDCollectionResultObject {
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case .type, .identifier, .startDate, .endDate, .inputResults:
+            return true
+        case .skipToIdentifier:
+            return false
+        }
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .type:
+            return .init(constValue: RSDResultType.collection)
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .startDate, .endDate:
+            return .init(propertyType: .primitive(.string))
+        case .skipToIdentifier:
+            return .init(propertyType: .primitive(.string))
+        case .inputResults:
+            return .init(propertyType: .interfaceArray("\(RSDResult.self)"))
+        }
+    }
+    
+    public static func examples() -> [RSDCollectionResultObject] {
         var result = RSDCollectionResultObject(identifier: "formStep")
         result.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         result.endDate = result.startDate.addingTimeInterval(5 * 60)
-        result.inputResults = AnswerResultObject.answerResultExamples()
-        return result
-    }
-    
-    static func examples() -> [Encodable] {
-        let result = exampleResult()
+        result.inputResults = AnswerResultObject.examples()
         return [result]
     }
 }

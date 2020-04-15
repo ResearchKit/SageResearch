@@ -149,3 +149,4 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
         }
     }
 }
+

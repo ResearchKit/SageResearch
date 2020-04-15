@@ -32,13 +32,14 @@
 //
 
 import Foundation
+import JsonModel
 
 public protocol RSDScoreBuilder {
     
     /// Build the scoring data from a task result.
     ///
     /// - parameter taskResult: The task result to parse for score values.
-    func getScoringData(from taskResult: RSDTaskResult) -> RSDJSONSerializable?
+    func getScoringData(from taskResult: RSDTaskResult) -> JsonSerializable?
 }
 
 /// Default implementation for building a task scoring.
@@ -47,7 +48,7 @@ public struct RSDDefaultScoreBuilder : RSDScoreBuilder {
     }
     
     /// Recursively build the scoring data.
-    public func getScoringData(from taskResult: RSDTaskResult) -> RSDJSONSerializable? {
+    public func getScoringData(from taskResult: RSDTaskResult) -> JsonSerializable? {
         let builder = RecursiveScoreBuilder()
         return builder.getScoringData(from: taskResult)
     }
@@ -58,7 +59,7 @@ internal struct RecursiveScoreBuilder : RSDScoreBuilder {
     /// Build the scoring data from a task result by recursively looking for results that conform to either
     /// `RSDScoringResult` or `RSDAnswerResult`.
     /// - parameter taskResult: The task result to parse for score values.
-    func getScoringData(from taskResult: RSDTaskResult) -> RSDJSONSerializable? {
+    func getScoringData(from taskResult: RSDTaskResult) -> JsonSerializable? {
         do {
             return try _recursiveGetScoringData(from: taskResult)
         }
@@ -68,7 +69,7 @@ internal struct RecursiveScoreBuilder : RSDScoreBuilder {
         }
     }
 
-    private func _recursiveGetScoringData(from taskResult: RSDTaskResult) throws -> RSDJSONSerializable? {
+    private func _recursiveGetScoringData(from taskResult: RSDTaskResult) throws -> JsonSerializable? {
         var dataResults: [RSDResult] = taskResult.stepHistory
         if let asyncResults = taskResult.asyncResults {
             dataResults.append(contentsOf: asyncResults)
@@ -76,7 +77,7 @@ internal struct RecursiveScoreBuilder : RSDScoreBuilder {
         return try _recursiveGetScoringData(from: dataResults)
     }
     
-    private func _scoringData(_ result: RSDResult) throws -> RSDJSONSerializable? {
+    private func _scoringData(_ result: RSDResult) throws -> JsonSerializable? {
         if let scoringResult = result as? RSDScoringResult,
             let scoringData = try scoringResult.dataScore() {
             return scoringData
@@ -99,9 +100,9 @@ internal struct RecursiveScoreBuilder : RSDScoreBuilder {
         }
     }
     
-    private func _recursiveGetScoringData(from results: [RSDResult]) throws -> RSDJSONSerializable? {
+    private func _recursiveGetScoringData(from results: [RSDResult]) throws -> JsonSerializable? {
 
-        let dictionary = try results.reduce(into: [String : RSDJSONSerializable]()) { (hashtable, result) in
+        let dictionary = try results.reduce(into: [String : JsonSerializable]()) { (hashtable, result) in
             guard let data = try _scoringData(result) else { return }
             hashtable[result.identifier] = data
         }

@@ -32,7 +32,7 @@
 //
 
 import Foundation
-
+import JsonModel
 
 
 /// `RSDIdentifier` is intended to allow a developer to define constants for the identifiers
@@ -101,8 +101,8 @@ extension RSDIdentifier : Equatable {
     }
 }
 
-extension RSDIdentifier : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
+extension RSDIdentifier : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return allGlobalIdentifiers().map{ $0.rawValue }
     }
 }

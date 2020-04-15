@@ -32,22 +32,19 @@
 //
 
 import Foundation
+import JsonModel
 
 public struct RSDSubtaskStepObject : RSDSubtaskStep, Decodable {
-    
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case stepType = "type", task
     }
+    public private(set) var stepType: RSDStepType = .subtask
     
     /// The task that backs this step.
     public let task: RSDTask
     
-    /// The step type.
-    public let stepType: RSDStepType
-    
-    public init(task: RSDTask, stepType: RSDStepType = .subtask) {
+    public init(task: RSDTask) {
         self.task = task
-        self.stepType = stepType
     }
     
     public init(from decoder: Decoder) throws {
@@ -55,5 +52,31 @@ public struct RSDSubtaskStepObject : RSDSubtaskStep, Decodable {
         self.stepType = try container.decodeIfPresent(RSDStepType.self, forKey: .stepType) ?? .subtask
         let nestedDecoder = try container.superDecoder(forKey: .task)
         self.task = try decoder.factory.decodeTask(from: nestedDecoder)
+    }
+}
+
+extension RSDSubtaskStepObject : DocumentableObject {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isOpen() -> Bool { false }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { true }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .stepType:
+            return .init(constValue: RSDStepType.subtask)
+        case .task:
+            return .init(propertyType: .interface("\(RSDTask.self)"))
+        }
+    }
+    
+    public static func jsonExamples() throws -> [[String : JsonSerializable]] {
+        [] // TODO: syoung 04/14/2020 Add example. RSDTaskObject does not conform to serialization strategy supported by Kotlin.
     }
 }

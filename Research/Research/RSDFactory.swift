@@ -101,7 +101,7 @@ open class RSDFactory {
         let (data, type) = try resourceTransformer.resourceData()
         return try decodeTask(with: data,
                               resourceType: type,
-                              typeName: resourceTransformer.classType,
+                              typeName: nil, //resourceTransformer.classType, TODO: syoung 04/14/2020 Refactor task decoding to a serialization strategy supported by Kotlin.
                               taskIdentifier: taskIdentifier,
                               schemaInfo: schemaInfo,
                               resourceInfo: resourceTransformer)

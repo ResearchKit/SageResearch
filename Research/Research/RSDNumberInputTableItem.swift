@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// An table item for entering a number value.
 @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
@@ -129,7 +130,7 @@ public final class RSDNumberInputTableItem : RSDTextInputTableItem {
             return nil
         }
     
-        if let number = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber(), let range = numberRange {
+        if let number = (answer as? NSNumber) ?? (answer as? JsonNumber)?.jsonNumber(), let range = numberRange {
             let decimal = number.decimalValue
             if let min = range.minimumValue, decimal < min {
                 let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, debugDescription: "Value entered is outside allowed range.")

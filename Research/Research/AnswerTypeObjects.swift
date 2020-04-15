@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 public struct AnswerTypeType : RSDFactoryTypeRepresentable, Codable, Hashable {
     public let rawValue: String
@@ -259,7 +260,7 @@ public struct AnswerTypeInteger : RSDBaseAnswerType, Codable, Hashable {
         if let jsonElement = value as? JsonElement, case .integer(_) = jsonElement {
             return jsonElement
         }
-        else if let num = (value as? NSNumber) ?? (value as? RSDJSONNumber)?.jsonNumber() {
+        else if let num = (value as? NSNumber) ?? (value as? JsonNumber)?.jsonNumber() {
             return .integer(num.intValue)
         }
         else {
@@ -308,7 +309,7 @@ extension RSDNumberAnswerType {
         if let jsonElement = value as? JsonElement, case .number(_) = jsonElement {
             return jsonElement
         }
-        else if let num = (value as? RSDJSONNumber) ?? (value as? NSNumber)?.doubleValue {
+        else if let num = (value as? JsonNumber) ?? (value as? NSNumber)?.doubleValue {
             return .number(num)
         }
         else {
@@ -354,7 +355,7 @@ public struct AnswerTypeArray : AnswerType, Codable, Hashable {
         if case .string(let stringValue) = obj,
             let separator = sequenceSeparator {
             let stringArray = stringValue.components(separatedBy: separator)
-            let arr: [RSDJSONSerializable] = try stringArray.map {
+            let arr: [JsonSerializable] = try stringArray.map {
                 switch self.baseType {
                 case .integer:
                     return ($0 as NSString).integerValue
@@ -405,7 +406,7 @@ public struct AnswerTypeArray : AnswerType, Codable, Hashable {
             return .string(str)
         }
         else {
-            return .array(arr)
+            return .array(arr.jsonArray())
         }
     }
 }
@@ -558,6 +559,35 @@ extension AnswerTypeDateTime : AnswerTypeDocumentable {
 extension AnswerTypeMeasurement : AnswerTypeDocumentable {
     static func exampleTypeAndValues() -> [(AnswerType, JsonElement)] {
         [(AnswerTypeMeasurement(unit: "cm"), .number(4.2))]
+    }
+}
+
+extension JsonElement {
+    var answerType: AnswerType {
+        switch self {
+        case .null:
+            return AnswerTypeNull()
+        case .boolean(_):
+            return AnswerTypeBoolean()
+        case .string(_):
+            return AnswerTypeString()
+        case .integer(_):
+            return AnswerTypeInteger()
+        case .number(_):
+            return AnswerTypeNumber()
+        case .array(let arr):
+            if arr is [Int] {
+                return AnswerTypeArray(baseType: .integer)
+            } else if arr is [NSNumber] || arr is [JsonNumber] {
+                return AnswerTypeArray(baseType: .number)
+            } else if arr is [String] {
+                return AnswerTypeArray(baseType: .string)
+            } else {
+                return AnswerTypeArray(baseType: .object)
+            }
+        case .object(_):
+            return AnswerTypeObject()
+        }
     }
 }
 

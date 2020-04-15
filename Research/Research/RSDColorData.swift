@@ -66,7 +66,7 @@ extension RSDResourceColorData {
     }
     
     /// The Android resource type for a color is always "color".
-    public var resourceType: RSDResourceNameType? {
-        return .color
+    public var resourceType: String? {
+        return "color"
     }
 }

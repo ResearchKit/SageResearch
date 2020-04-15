@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// A weekly schedule item is a lightweight codable struct that can be used to store and track events
 /// that happen at regularily scheduled intervals. This schedule assumes a ISO8601 7-day calendar.
@@ -40,7 +41,7 @@ import Foundation
 /// ```
 ///    let json = """
 ///            {
-///                "daysOfWeek": [1, 3, 5],
+///                "daysOfWeek": ["Sunday", "Tuesday", "Thursday"],
 ///                "timeOfDay": "08:00"
 ///            }
 ///            """.data(using: .utf8)! // our data in native (JSON) format
@@ -247,21 +248,33 @@ public class RSDWeeklyScheduleFormatter : Formatter {
     }
 }
 
-extension RSDWeeklyScheduleObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
+extension RSDWeeklyScheduleObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
     }
     
-    static func _examples() -> [RSDWeeklyScheduleObject] {
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .daysOfWeek
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .daysOfWeek:
+            return .init(propertyType: .referenceArray(RSDWeekday.documentableType()))
+        case .timeOfDayString:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [RSDWeeklyScheduleObject] {
         let exampleA = RSDWeeklyScheduleObject()
         var exampleB = RSDWeeklyScheduleObject()
         exampleB.daysOfWeek = [.monday, .friday]
         exampleB.timeOfDayString = "08:20"
         return [exampleA, exampleB]
-    }
-    
-    static func examples() -> [Encodable] {
-        return _examples()
     }
 }

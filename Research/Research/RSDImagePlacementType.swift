@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// A hint as to where the UI should place an image.
 public struct RSDImagePlacementType : RawRepresentable, Codable, Hashable, Equatable {
@@ -85,8 +86,8 @@ extension RSDImagePlacementType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDImagePlacementType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
+extension RSDImagePlacementType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }
 }

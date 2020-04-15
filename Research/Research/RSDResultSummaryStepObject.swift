@@ -32,11 +32,12 @@
 //
 
 import Foundation
+import JsonModel
 
 /// A result summary step is used to display a result that is calculated or measured earlier in the task.
 open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummaryStep, RSDNavigationSkipRule {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case unitText, resultIdentifier, stepResultIdentifier, resultTitle, formatter
+        case unitText, resultIdentifier, stepResultIdentifier, resultTitle
     }
     
     /// Text to display as the title above the result.
@@ -110,15 +111,22 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
     
     // Overrides must be defined in the base implementation
     
-    override class func codingKeys() -> [CodingKey] {
+    override open class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
     }
     
-    override class func examples() -> [[String : RSDJSONValue]] {
-        let jsonA: [String : RSDJSONValue] = [
+    override open class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let _ = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        return .init(propertyType: .primitive(.string))
+    }
+    
+    override open class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        let jsonA: [String : JsonSerializable] = [
             "identifier": "foo",
             "type": "completion",
             "title": "Hello World!",

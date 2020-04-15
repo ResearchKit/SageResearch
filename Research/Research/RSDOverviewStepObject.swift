@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDOverviewStepObject` extends the `RSDUIStepObject` to include information about an activity including
 /// what permissions are required by this task. Without these preconditions, the task cannot measure or
@@ -88,15 +89,25 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
     
     // Overrides must be defined in the base implementation
     
-    override class func codingKeys() -> [CodingKey] {
+    override open class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
     }
     
-    override class func examples() -> [[String : RSDJSONValue]] {
-        let jsonA: [String : RSDJSONValue] = [
+    override open class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .icons:
+            return .init(propertyType: .referenceArray(RSDIconInfo.documentableType()))
+        }
+    }
+    
+    override open class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        let jsonA: [String : JsonSerializable] = [
             "identifier": "foo",
             "type": "active",
             "title": "Hello World!",

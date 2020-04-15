@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The type of the image theme. This is used to decode a `RSDImageThemeElement` using a `RSDFactory`. It can also be used
 /// to customize the UI.
@@ -59,8 +60,8 @@ extension RSDImageThemeElementType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDImageThemeElementType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
+extension RSDImageThemeElementType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }
 }

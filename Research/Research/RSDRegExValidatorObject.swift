@@ -87,10 +87,3 @@ extension RSDRegExValidatorObject : Decodable {
 extension RSDRegExValidatorObject : Encodable {
 }
 
-@available(*, deprecated, message: "Use `KeyboardOptions` and `TextInputValidator` instead.")
-extension RSDRegExValidatorObject : RSDDocumentableStringLiteral {
-    static func examples() -> [String] {
-        return ["^[0-9]*$"]
-    }
-}
-

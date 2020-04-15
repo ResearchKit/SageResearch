@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 
 /// `RSDComparable` can be used to compare a stored result to a matching value.
@@ -183,7 +184,7 @@ extension RSDComparable {
                     return "\(answerValue)" as NSString
                 }
             default:
-                return (answerValue as? NSNumber) ?? (answerValue as? RSDJSONNumber)?.jsonNumber()
+                return (answerValue as? NSNumber) ?? (answerValue as? JsonNumber)?.jsonNumber()
             }
         }
     }
