@@ -55,7 +55,7 @@ public final class RSDResourceTransformerObject : Codable {
     public var packageName: String?
     
     /// The factory to use in decoding this object.
-    public var factory: RSDFactory = RSDFactory.shared
+    public var factory: RSDFactory = RSDFactory.shared as! RSDFactory
     
     /// The raw file extension for the resource.
     public var rawFileExtension: String?

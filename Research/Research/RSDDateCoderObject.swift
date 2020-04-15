@@ -114,7 +114,7 @@ public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
         self.calendar = calendar
     }
     
-    fileprivate static func getProperties(format: String, factory: RSDFactory = RSDFactory.shared) -> (inputFormatter: DateFormatter, resultFormatter: DateFormatter, Set<Calendar.Component>, Calendar)? {
+    fileprivate static func getProperties(format: String, factory: SerializationFactory = RSDFactory.shared) -> (inputFormatter: DateFormatter, resultFormatter: DateFormatter, Set<Calendar.Component>, Calendar)? {
         let calendar = Calendar.iso8601
         let components = calendarComponents(from: format)
         guard components.count > 0 else {

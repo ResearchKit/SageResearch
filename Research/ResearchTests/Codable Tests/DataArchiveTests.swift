@@ -33,6 +33,7 @@
 
 import XCTest
 @testable import Research
+import JsonModel
 
 class DataArchiveTests: XCTestCase {
     

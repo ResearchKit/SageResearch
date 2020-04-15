@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The task state object is a base class implementation that can upload and archive results, return
 /// the encoded result, and manage file cleanup.
@@ -111,7 +112,7 @@ open class RSDTaskState : NSObject {
     /// where it cannot encode an object without a Type for the object.
     /// - parameter encoder: The factory top-level encoder.
     /// - returns: The encoded result.
-    public func encodeResult(to encoder: RSDFactoryEncoder) throws -> Data {
+    public func encodeResult(to encoder: FactoryEncoder) throws -> Data {
         return try self.taskResult.rsd_encodeObject(to: encoder)
     }
     

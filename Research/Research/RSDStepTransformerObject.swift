@@ -75,7 +75,7 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
         let resourceDecoder = try decoder.factory.createDecoder(for: resourceType,
                                                                 taskIdentifier: decoder.taskIdentifier,
                                                                 schemaInfo: decoder.schemaInfo,
-                                                                resourceInfo: FactoryResourceInfo(from: decoder))
+                                                                resourceInfo: _ResourceInfo(from: decoder))
         let stepDecoder = try resourceDecoder.decode(_StepDecoder.self, from: data)
         
         // copy to transformer
@@ -88,6 +88,16 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
         else {
             self.transformedStep = stepDecoder.step
         }
+    }
+}
+
+fileprivate struct _ResourceInfo : ResourceInfo {
+    let factoryBundle: ResourceBundle?
+    let packageName: String?
+    var bundleIdentifier: String? { return nil }
+    init(from decoder: Decoder) {
+        self.factoryBundle = decoder.bundle
+        self.packageName = decoder.packageName
     }
 }
 

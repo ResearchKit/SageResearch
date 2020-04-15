@@ -33,6 +33,7 @@
 
 import XCTest
 @testable import Research
+import JsonModel
 
 struct TestRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     let uptime: TimeInterval

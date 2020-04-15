@@ -40,11 +40,22 @@ public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStr
 
 /// `RSDFactory` handles customization of decoding the elements of a task. Applications should
 /// override this factory to add custom elements required to run their task modules.
-open class RSDFactory {
+open class RSDFactory : SerializationFactory {
     
-    /// Singleton for the shared factory. If a factory is not passed in when creating tasks
-    /// then this will be used.
-    public static var shared = RSDFactory()
+    override open class var shared : SerializationFactory {
+        get {
+            if let factory = super.shared as? RSDFactory {
+                return factory
+            }
+            let factory = RSDFactory()
+            super.shared = factory
+            return factory
+        }
+        set {
+            guard let factory = newValue as? RSDFactory else { return }
+            super.shared = factory
+        }
+    }
     
     /// The type of device to point use when decoding different text depending upon the target
     /// device.
@@ -59,10 +70,6 @@ open class RSDFactory {
         return .computer
         #endif
     }()
-    
-    // Initializer
-    public init() {
-    }
     
     /// Optional shared tracking rules
     open var trackingRules: [RSDTrackingRule] = []
@@ -122,6 +129,7 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: ResourceInfo? = nil) throws -> RSDTask {
         let decoder = try createDecoder(for: resourceType, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo, resourceInfo: resourceInfo)
+        let factory = (decoder.factory as? RSDFactory)
         return try decoder.factory.decodeTask(with: data, from: decoder)
     }
     
@@ -132,7 +140,7 @@ open class RSDFactory {
     ///     - decoder: The decoder to use to instantiate the object.
     /// - returns: The decoded task.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeTask(with data: Data, from decoder: RSDFactoryDecoder) throws -> RSDTask {
+    open func decodeTask(with data: Data, from decoder: FactoryDecoder) throws -> RSDTask {
         let task = try decoder.decode(RSDTaskObject.self, from: data)
         try task.validate()
         return task
@@ -904,87 +912,12 @@ open class RSDFactory {
             throw RSDValidationError.undefinedClassType("\(self) does not support `\(resultType)` as a decodable class type for a result.")
         }
     }
-    
-    
-    // MARK: Date Result Format
-    
-    /// Get the date result formatter to use for the given calendar components.
-    ///
-    /// | Returned Formatter | Description                                                         |
-    /// |--------------------|:-------------------------------------------------------------------:|
-    /// |`dateOnlyFormatter` | If only date components (year, month, day) are included.            |
-    /// |`timeOnlyFormatter` | If only time components (hour, minute, second) are included.        |
-    /// |`timestampFormatter`| If both date and time components are included.                      |
-    ///
-    /// - parameter calendarComponents: The calendar components to include.
-    /// - returns: The appropriate date formatter.
-    open func dateResultFormatter(from calendarComponents: Set<Calendar.Component>) -> DateFormatter {
-        let hasDateComponents = calendarComponents.intersection([.year, .month, .day]).count > 0
-        let hasTimeComponents = calendarComponents.intersection([.hour, .minute, .second]).count > 0
-        if hasDateComponents && hasTimeComponents {
-            return timestampFormatter
-        } else if hasTimeComponents {
-            return timeOnlyFormatter
-        } else {
-            return dateOnlyFormatter
-        }
-    }
-    
-    /// `DateFormatter` to use for coding date-only strings. Default = `ISO8601DateOnlyFormatter`.
-    open var dateOnlyFormatter: DateFormatter {
-        return ISO8601DateOnlyFormatter
-    }
-    
-    /// `DateFormatter` to use for coding time-only strings. Default = `ISO8601TimeOnlyFormatter`.
-    open var timeOnlyFormatter: DateFormatter {
-        return ISO8601TimeOnlyFormatter
-    }
-    
-    /// `DateFormatter` to use for coding timestamp strings that include both date and time components.
-    /// Default = `ISO8601TimestampFormatter`.
-    open var timestampFormatter: DateFormatter {
-        return ISO8601TimestampFormatter
-    }
-    
-    /// The default coding strategy to use for non-conforming elements.
-    open var nonConformingCodingStrategy: (positiveInfinity: String, negativeInfinity: String, nan: String)
-        = ("Infinity", "-Infinity", "NaN")
+
 
     // MARK: Decoder
     
-    /// Create a `JSONDecoder` with this factory assigned in the user info keys as the factory
-    /// to use when decoding this object.
-    open func createJSONDecoder(resourceInfo: ResourceInfo? = nil) -> JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
-            let container = try decoder.singleValueContainer()
-            let string = try container.decode(String.self)
-            return try self.decodeDate(from: string, formatter: nil, codingPath: decoder.codingPath)
-        })
-        decoder.userInfo[.factory] = self
-        decoder.userInfo[.bundle] = resourceInfo?.bundle
-        decoder.userInfo[.packageName] = resourceInfo?.packageName
-        decoder.userInfo[.codingInfo] = RSDCodingInfo()
-        decoder.nonConformingFloatDecodingStrategy = .convertFromString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
-                                                                        negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
-                                                                        nan: nonConformingCodingStrategy.nan)
-        decoder.dataDecodingStrategy = .base64
-        return decoder
-    }
-    
-    /// Create a `PropertyListDecoder` with this factory assigned in the user info keys as the factory
-    /// to use when decoding this object.
-    open func createPropertyListDecoder(resourceInfo: ResourceInfo? = nil) -> PropertyListDecoder {
-        let decoder = PropertyListDecoder()
-        decoder.userInfo[.factory] = self
-        decoder.userInfo[.bundle] = resourceInfo?.bundle
-        decoder.userInfo[.packageName] = resourceInfo?.packageName
-        decoder.userInfo[.codingInfo] = RSDCodingInfo()
-        return decoder
-    }
-    
     /// Create the appropriate decoder for the given resource type. This method will return an
-    /// decoder that conforms to the `RSDFactoryDecoder` protocol. The decoder will assign the
+    /// decoder that conforms to the `FactoryDecoder` protocol. The decoder will assign the
     /// user info coding keys as appropriate.
     ///
     /// - parameters:
@@ -994,8 +927,8 @@ open class RSDFactory {
     ///     - resourceInfo:    The resource info for this decoder.
     /// - returns: The decoder for the given type.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func createDecoder(for resourceType: RSDResourceType, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: ResourceInfo? = nil) throws -> RSDFactoryDecoder {
-        var decoder : RSDFactoryDecoder = try {
+    open func createDecoder(for resourceType: RSDResourceType, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: ResourceInfo? = nil) throws -> FactoryDecoder {
+        var decoder : FactoryDecoder = try {
             if resourceType == .json {
                 return self.createJSONDecoder(resourceInfo: resourceInfo)
             }
@@ -1016,112 +949,11 @@ open class RSDFactory {
         }
         return decoder
     }
-    
-    /// Decode a date from a string. This method is used during object decoding and is defined
-    /// as `open` so that subclass factories can define their own formatters.
-    ///
-    /// This method uses drop-through to first check the `formatter` (if provided). If the date
-    /// cannot be decoded using the expected *encoding* formatter, then the string will be inspected
-    /// to see if it matches any of the expected formats for date and time, time only, or date only.
-    ///
-    /// - parameters:
-    ///     - string:       The string to use in decoding the date.
-    ///     - formatter:    A formatter to use.
-    /// - returns: The date created from this string.
-    open func decodeDate(from string: String, formatter: DateFormatter? = nil) -> Date? {
-        if let dateFormatter = formatter, let date = dateFormatter.date(from: string) {
-            return date
-        } else if let date = timestampFormatter.date(from: string) {
-            return date
-        } else if let date = dateOnlyFormatter.date(from: string) {
-            return date
-        } else if let date = timeOnlyFormatter.date(from: string) {
-            return date
-        } else if let date = _oldTimeOnlyFormatter.date(from: string) {
-            return date
-        } else if let date = _androidTimestampFormatter.date(from: string) {
-            return date
-        } else {
-            return ISO8601DateFormatter().date(from: string)
-        }
-    }
-    
-    /// syoung 11/06/2019 Discovered that this format does not match the format being used on Bridge.
-    private lazy var _oldTimeOnlyFormatter: DateFormatter = {
-        var formatter = ISO8601TimeOnlyFormatter
-        formatter.dateFormat = "HH:mm:ss"
-        return formatter
-    }()
-    
-    /// syoung 11/06/2019 Older Android devices do not support the timestamp formatter that we are
-    /// using on iOS. Therefore, check the formatter for dates decoded from Android.
-    private lazy var _androidTimestampFormatter: DateFormatter = {
-        var formatter = ISO8601TimeOnlyFormatter
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        return formatter
-    }()
-    
-    internal func decodeDate(from string: String, formatter: DateFormatter?, codingPath: [CodingKey]) throws -> Date {
-        guard let date = decodeDate(from: string, formatter: formatter) else {
-            let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Could not decode \(string) into a date.")
-            throw DecodingError.typeMismatch(Date.self, context)
-        }
-        return date
-    }
-    
-    // MARK: Encoder
-    
-    /// Create a `JSONEncoder` with this factory assigned in the user info keys as the factory
-    /// to use when encoding objects.
-    open func createJSONEncoder() -> JSONEncoder {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted]
-        encoder.dateEncodingStrategy = .custom({ (date, encoder) in
-            let string = self.encodeString(from: date, codingPath: encoder.codingPath)
-            var container = encoder.singleValueContainer()
-            try container.encode(string)
-        })
-        encoder.outputFormatting = .prettyPrinted
-        encoder.userInfo[.factory] = self
-        encoder.userInfo[.codingInfo] = RSDCodingInfo()
-        encoder.nonConformingFloatEncodingStrategy = .convertToString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
-                                                                        negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
-                                                                        nan: nonConformingCodingStrategy.nan)
-        encoder.dataEncodingStrategy = .custom({ (data, encoder) in
-            let string = self.encodeString(from: data, codingPath: encoder.codingPath)
-            var container = encoder.singleValueContainer()
-            try container.encode(string)
-        })
-        return encoder
-    }
-    
-    /// Create a `PropertyListEncoder` with this factory assigned in the user info keys as the factory
-    /// to use when encoding objects.
-    open func createPropertyListEncoder() -> PropertyListEncoder {
-        let encoder = PropertyListEncoder()
-        encoder.userInfo[.factory] = self
-        encoder.userInfo[.codingInfo] = RSDCodingInfo()
-        return encoder
-    }
-    
-    /// Overridable method for encoding a date to a string. By default, this method uses the `timestampFormatter`
-    /// as the date formatter.
-    open func encodeString(from date: Date, codingPath: [CodingKey]) -> String {
-        return timestampFormatter.string(from: date)
-    }
-    
-    /// Overridable method for encoding data to a string. By default, this method uses base64 encoding.
-    open func encodeString(from data: Data, codingPath: [CodingKey]) -> String {
-        return data.base64EncodedString()
-    }
 }
 
 /// Extension of CodingUserInfoKey to add keys used by the Codable objects in this framework.
 extension CodingUserInfoKey {
-    
-    /// The key for the factory to use when coding.
-    public static let factory = CodingUserInfoKey(rawValue: "RSDFactory.factory")!
-    
+        
     /// The key for the task identifier to use when coding.
     public static let taskIdentifier = CodingUserInfoKey(rawValue: "RSDFactory.taskIdentifier")!
     
@@ -1130,35 +962,12 @@ extension CodingUserInfoKey {
     
     /// The key for the task data source to use when coding.
     public static let taskDataSource = CodingUserInfoKey(rawValue: "RSDFactory.taskDataSource")!
-    
-    /// The key for pointing to a specific bundle for the decoded resources.
-    public static let bundle = CodingUserInfoKey(rawValue: "RSDFactory.bundle")!
-    
-    /// The key for pointing to a specific bundle for the decoded resources.
-    public static let packageName = CodingUserInfoKey(rawValue: "RSDFactory.packageName")!
-    
-    /// The key for pointing to mutable coding info.
-    public static let codingInfo = CodingUserInfoKey(rawValue: "RSDFactory.codingInfo")!
 }
 
-/// `JSONDecoder` and `PropertyListDecoder` do not share a common protocol so extend them to be
-/// able to create the appropriate decoder and set the userInfo keys as needed.
-public protocol RSDFactoryDecoder {
-    func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable
-    var userInfo: [CodingUserInfoKey : Any] { get set }
-}
-
-extension JSONDecoder : RSDFactoryDecoder {
-}
-
-extension PropertyListDecoder : RSDFactoryDecoder {
-}
-
-extension RSDFactoryDecoder {
+extension FactoryDecoder {
     
-    /// The factory to use when decoding.
-    public var factory: RSDFactory {
-        return self.userInfo[.factory] as? RSDFactory ?? RSDFactory.shared
+    public var factory : RSDFactory {
+        (serializationFactory as? RSDFactory) ?? (RSDFactory.shared as! RSDFactory)
     }
     
     /// The task identifier to use when decoding.
@@ -1171,9 +980,8 @@ extension RSDFactoryDecoder {
 /// in this framework.
 extension Decoder {
     
-    /// The factory to use when decoding.
-    public var factory: RSDFactory {
-        return self.userInfo[.factory] as? RSDFactory ?? RSDFactory.shared
+    public var factory : RSDFactory {
+        (serializationFactory as? RSDFactory) ?? (RSDFactory.shared as! RSDFactory)
     }
     
     /// The task identifier to use when decoding.
@@ -1185,43 +993,14 @@ extension Decoder {
     public var schemaInfo: RSDSchemaInfo? {
         return self.userInfo[.schemaInfo] as? RSDSchemaInfo
     }
-    
-    /// The default bundle to use for embedded resources.
-    public var bundle: ResourceBundle? {
-        return self.userInfo[.bundle] as? ResourceBundle
-    }
-    
-    /// The default package to use for embedded resources.
-    public var packageName: String? {
-        return self.userInfo[.packageName] as? String
-    }
-    
-    /// The coding info object to use when decoding.
-    public var codingInfo: RSDCodingInfo? {
-        return self.userInfo[.codingInfo] as? RSDCodingInfo
-    }
-}
-
-/// `JSONEncoder` and `PropertyListEncoder` do not share a common protocol so extend them to be able
-/// to create the appropriate decoder and set the userInfo keys as needed.
-public protocol RSDFactoryEncoder {
-    func encode<T>(_ value: T) throws -> Data where T : Encodable
-    var userInfo: [CodingUserInfoKey : Any] { get set }
-}
-
-extension JSONEncoder : RSDFactoryEncoder {
-}
-
-extension PropertyListEncoder : RSDFactoryEncoder {
 }
 
 /// Extension of Encoder to return the factory objects used by the Codable objects
 /// in this framework.
 extension Encoder {
     
-    /// The factory to use when encoding.
-    public var factory: RSDFactory {
-        return self.userInfo[.factory] as? RSDFactory ?? RSDFactory.shared
+    public var factory : RSDFactory {
+        (serializationFactory as? RSDFactory) ?? (RSDFactory.shared as! RSDFactory)
     }
     
     /// The task info to use when encoding.
@@ -1232,26 +1011,5 @@ extension Encoder {
     /// The schema info to use when encoding.
     public var schemaInfo: RSDSchemaInfo? {
         return self.userInfo[.schemaInfo] as? RSDSchemaInfo
-    }
-    
-    /// The coding info object to use when encoding.
-    public var codingInfo: RSDCodingInfo? {
-        return self.userInfo[.codingInfo] as? RSDCodingInfo
-    }
-}
-
-/// `RSDCodingInfo` is used as a pointer to a mutable class that can be used to assign any info that must be
-/// mutated during the Decoding of an object.
-public class RSDCodingInfo {
-    public var userInfo : [CodingUserInfoKey : Any] = [:]
-}
-
-internal struct FactoryResourceInfo : ResourceInfo {
-    var factoryBundle: ResourceBundle?
-    let packageName: String?
-    var bundleIdentifier: String? { return nil }
-    init(from decoder: Decoder) {
-        self.factoryBundle = decoder.bundle
-        self.packageName = decoder.packageName
     }
 }

@@ -34,4 +34,9 @@ require any updates. That said, this feature is now available for use in testing
 
 ## `RSDFactory` inherits from `SerializationFactory`
 
+### Search and Replace
+
+1. RSDFactoryDecoder -> FactoryDecoder
+2. RSDFactoryEncoder -> FactoryEncoder
+
 
