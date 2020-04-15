@@ -176,7 +176,7 @@ extension RSDTaskResultObject : DocumentableStruct {
         result.schemaInfo = RSDSchemaInfoObject(identifier: "example schema", revision: 3)
         
         var introStepResult = RSDResultObject(identifier: "introduction")
-        introStepResult.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        introStepResult.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         introStepResult.endDate = introStepResult.startDate.addingTimeInterval(20)
         var collectionResult = RSDCollectionResultObject.examples().first!
         collectionResult.startDate = introStepResult.endDate

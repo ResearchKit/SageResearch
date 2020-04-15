@@ -20,6 +20,13 @@ Then you will need to import JsonModel for any code files that reference these p
 import JsonModel
 ```
 
+### Replace ISO8601 formatters
+
+1. rsd_ISO8601TimestampFormatter -> ISO8601TimestampFormatter
+2. rsd_ISO8601DateOnlyFormatter -> ISO8601DateOnlyFormatter
+3. rsd_ISO8601TimeOnlyFormatter -> ISO8601TimeOnlyFormatter
+
+
 ### Replace the Documentable protocols
 
 Since this was an internal set of protocols, no changes to frameworks built with Research.framework should

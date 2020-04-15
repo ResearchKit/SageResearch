@@ -101,7 +101,7 @@ extension RSDResultObject : DocumentableStruct {
     
     public static func examples() -> [RSDResultObject] {
         var result = RSDResultObject(identifier: "step1")
-        result.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        result.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         result.endDate = result.startDate.addingTimeInterval(5 * 60)
         return [result]
     }

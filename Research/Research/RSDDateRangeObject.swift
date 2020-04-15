@@ -241,8 +241,8 @@ extension RSDDateRangeObject : DocumentableStruct {
     }
     
     public static func examples() -> [RSDDateRangeObject] {
-        let minDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T00:00:00.000-07:00")!
-        let maxDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-17T00:00:00.000-07:00")!
+        let minDate = ISO8601TimestampFormatter.date(from: "2017-10-16T00:00:00.000-07:00")!
+        let maxDate = ISO8601TimestampFormatter.date(from: "2017-10-17T00:00:00.000-07:00")!
         let exampleA = RSDDateRangeObject(minimumDate: minDate, maximumDate: maxDate, allowFuture: nil, allowPast: false, minuteInterval: nil, dateCoder: RSDDateCoderObject(rawValue: "yyyy-MM-dd"))
         let exampleB = RSDDateRangeObject(minimumDate: nil, maximumDate: nil, allowFuture: nil, allowPast: false, minuteInterval: nil, dateCoder: nil)
         let exampleC = RSDDateRangeObject(minimumDate: nil, maximumDate: nil, allowFuture: false, allowPast: nil, minuteInterval: nil, dateCoder: nil)

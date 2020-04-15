@@ -930,20 +930,20 @@ open class RSDFactory {
         }
     }
     
-    /// `DateFormatter` to use for coding date-only strings. Default = `rsd_ISO8601DateOnlyFormatter`.
+    /// `DateFormatter` to use for coding date-only strings. Default = `ISO8601DateOnlyFormatter`.
     open var dateOnlyFormatter: DateFormatter {
-        return rsd_ISO8601DateOnlyFormatter
+        return ISO8601DateOnlyFormatter
     }
     
-    /// `DateFormatter` to use for coding time-only strings. Default = `rsd_ISO8601TimeOnlyFormatter`.
+    /// `DateFormatter` to use for coding time-only strings. Default = `ISO8601TimeOnlyFormatter`.
     open var timeOnlyFormatter: DateFormatter {
-        return rsd_ISO8601TimeOnlyFormatter
+        return ISO8601TimeOnlyFormatter
     }
     
     /// `DateFormatter` to use for coding timestamp strings that include both date and time components.
-    /// Default = `rsd_ISO8601TimestampFormatter`.
+    /// Default = `ISO8601TimestampFormatter`.
     open var timestampFormatter: DateFormatter {
-        return rsd_ISO8601TimestampFormatter
+        return ISO8601TimestampFormatter
     }
     
     /// The default coding strategy to use for non-conforming elements.
@@ -1048,7 +1048,7 @@ open class RSDFactory {
     
     /// syoung 11/06/2019 Discovered that this format does not match the format being used on Bridge.
     private lazy var _oldTimeOnlyFormatter: DateFormatter = {
-        var formatter = rsd_ISO8601TimeOnlyFormatter
+        var formatter = ISO8601TimeOnlyFormatter
         formatter.dateFormat = "HH:mm:ss"
         return formatter
     }()
@@ -1056,7 +1056,7 @@ open class RSDFactory {
     /// syoung 11/06/2019 Older Android devices do not support the timestamp formatter that we are
     /// using on iOS. Therefore, check the formatter for dates decoded from Android.
     private lazy var _androidTimestampFormatter: DateFormatter = {
-        var formatter = rsd_ISO8601TimeOnlyFormatter
+        var formatter = ISO8601TimeOnlyFormatter
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         return formatter
     }()

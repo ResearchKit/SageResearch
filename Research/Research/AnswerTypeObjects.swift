@@ -420,7 +420,7 @@ public struct AnswerTypeDateTime : RSDBaseAnswerType, Codable, Hashable {
     public private(set) var type: AnswerTypeType = .dateTime
     
     public var codingFormat: String {
-        _codingFormat ?? rsd_ISO8601TimestampFormatter.dateFormat
+        _codingFormat ?? ISO8601TimestampFormatter.dateFormat
     }
     private let _codingFormat: String?
     

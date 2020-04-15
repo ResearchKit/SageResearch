@@ -152,7 +152,7 @@ extension AnswerResultObject : DocumentableStruct {
 
     public static func examples() -> [AnswerResultObject] {
         let typeAndValue = AnswerTypeExamples.examplesWithValues()
-        let date = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        let date = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         return typeAndValue.enumerated().map { (index, object) -> AnswerResultObject in
             let result = AnswerResultObject(identifier: "question\(index+1)", answerType: object.0, value: object.1)
             result.startDate = date

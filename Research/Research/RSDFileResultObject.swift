@@ -128,7 +128,7 @@ extension RSDFileResultObject : DocumentableStruct {
     
     public static func examples() -> [RSDFileResultObject] {
         var fileResult = RSDFileResultObject(identifier: "fileResult")
-        fileResult.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        fileResult.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         fileResult.endDate = fileResult.startDate.addingTimeInterval(5 * 60)
         fileResult.startUptime = 1234.567
         fileResult.relativePath = "temp.json"
