@@ -35,6 +35,9 @@ import Foundation
 
 /// `RSDErrorResult` is a result that holds information about an error.
 public struct RSDErrorResultObject : RSDErrorResult, Codable {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case identifier, type, _startDate = "startDate", _endDate = "endDate", errorDescription, errorDomain, errorCode
+    }
     
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
@@ -43,10 +46,18 @@ public struct RSDErrorResultObject : RSDErrorResult, Codable {
     public let type: RSDResultType
     
     /// The start date timestamp for the result.
-    public var startDate: Date
+    public var startDate: Date {
+        get { _startDate ?? Date() }
+        set { _startDate = newValue }
+    }
+    private var _startDate: Date?
     
     /// The end date timestamp for the result.
-    public var endDate: Date
+    public var endDate: Date {
+        get { _endDate ?? Date() }
+        set { _endDate = newValue }
+    }
+    private var _endDate: Date?
     
     /// A description associated with an `NSError`.
     public let errorDescription: String
@@ -57,10 +68,6 @@ public struct RSDErrorResultObject : RSDErrorResult, Codable {
     /// The error code associated with an `NSError`.
     public let errorCode: Int
     
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, startDate, endDate, errorDescription, errorDomain, errorCode
-    }
-    
     /// Initialize using a description, domain, and code.
     /// - parameters:
     ///     - identifier: The identifier for the result.
@@ -70,8 +77,8 @@ public struct RSDErrorResultObject : RSDErrorResult, Codable {
     public init(identifier: String, description: String, domain: String, code: Int) {
         self.identifier = identifier
         self.type = .error
-        self.startDate = Date()
-        self.endDate = Date()
+        self._startDate = Date()
+        self._endDate = Date()
         self.errorDescription = description
         self.errorDomain = domain
         self.errorCode = code
@@ -84,8 +91,8 @@ public struct RSDErrorResultObject : RSDErrorResult, Codable {
     public init(identifier: String, error: Error) {
         self.identifier = identifier
         self.type = .error
-        self.startDate = Date()
-        self.endDate = Date()
+        self._startDate = Date()
+        self._endDate = Date()
         self.errorDescription = (error as NSError).localizedDescription
         self.errorDomain = (error as NSError).domain
         self.errorCode = (error as NSError).code
