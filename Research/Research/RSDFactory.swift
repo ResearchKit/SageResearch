@@ -623,22 +623,6 @@ open class RSDFactory {
         }
     }
     
-    open func decodeSurveyRules(from rulesContainer: UnkeyedDecodingContainer) throws -> [RSDSurveyRule] {
-        var container = rulesContainer
-        var surveyRules = [RSDSurveyRule]()
-        while !container.isAtEnd {
-            let nestedDecoder = try container.superDecoder()
-            let surveyRule = try self.decodeSurveyRule(from: nestedDecoder)
-            surveyRules.append(surveyRule)
-        }
-        return surveyRules
-    }
-    
-    open func decodeSurveyRule(from decoder: Decoder) throws -> RSDSurveyRule {
-        return try JsonSurveyRuleObject(from: decoder)
-    }
-    
-    
     // MARK: Range factory
     
     /// Overridable  function for decoding the range from the decoder. The default implementation will
