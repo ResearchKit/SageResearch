@@ -85,7 +85,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
         super.init(beginningRowIndex: beginningRowIndex, items: items)
     }
     
-    func toggleSelection(at index: Int) throws -> (isSelected: Bool, reloadSection: Bool) {
+    open func toggleSelection(at index: Int) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard let selectableItems = self.items as? [InputItemState] else {
             throw RSDValidationError.invalidType("Could not cast \(items) to [InputItemState]")
         }
@@ -134,7 +134,7 @@ open class QuestionTableItemGroup : RSDTableItemGroup {
         (answer as? JsonElement) ?? JsonElement(answer as? RSDJSONValue)
     }
     
-    private func updateAnswer() throws {
+    public final func updateAnswer() throws {
         answerResult.jsonValue = try buildAnswer()
     }
     

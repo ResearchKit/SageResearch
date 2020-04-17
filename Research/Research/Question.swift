@@ -84,7 +84,8 @@ public protocol QuestionStep : Question, RSDUIStep {
 
 public extension QuestionStep {
     func instantiateAnswerResult() -> AnswerResult {
-        instantiateStepResult() as! AnswerResult
+        instantiateStepResult() as? AnswerResult ??
+            AnswerResultObject(identifier: self.identifier, answerType: self.answerType)
     }
 }
 
