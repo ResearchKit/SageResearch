@@ -39,7 +39,7 @@ import Foundation
 
 /// A `Result` is any data result that should be included with an `Assessment`. The base level
 /// interface only has an `identifier` and does not include any other properties.
-public protocol Result : Encodable, NSCopying {
+public protocol Result : Encodable {
 
     /// The identifier for the result.
     var identifier: String { get }

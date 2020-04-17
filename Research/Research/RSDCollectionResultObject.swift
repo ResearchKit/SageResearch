@@ -80,8 +80,8 @@ public struct RSDCollectionResultObject : RSDCollectionResult, RSDNavigationResu
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.skipToIdentifier = try container.decodeIfPresent(String.self, forKey: .skipToIdentifier)
-        self.startDate = try container.decode(Date.self, forKey: .startDate)
-        self.endDate = try container.decode(Date.self, forKey: .endDate)
+        self.startDate = try container.decodeIfPresent(Date.self, forKey: .startDate) ?? Date()
+        self.endDate = try container.decodeIfPresent(Date.self, forKey: .endDate) ?? Date()
         self.type = try container.decode(RSDResultType.self, forKey: .type)
         
         let resultsContainer = try container.nestedUnkeyedContainer(forKey: .inputResults)

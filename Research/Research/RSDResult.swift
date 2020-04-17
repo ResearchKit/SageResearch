@@ -43,7 +43,7 @@ import Foundation
 /// conformance to `Decodable`. This allows using class objects that cannot be extended to conform to the
 /// `Decodable` protocol, such as `ORKResult` classes.
 ///
-public protocol RSDResult : Encodable {
+public protocol RSDResult : Result {
     
     /// The identifier associated with the task, step, or asynchronous action.
     var identifier: String { get }

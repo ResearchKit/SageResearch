@@ -43,10 +43,18 @@ public struct RSDFileResultObject : RSDFileResult, Codable {
     public let type: RSDResultType
     
     /// The start date timestamp for the result.
-    public var startDate: Date = Date()
+    public var startDate: Date {
+        get { _startDate ?? Date() }
+        set { _startDate = newValue }
+    }
+    private var _startDate: Date?
     
     /// The end date timestamp for the result.
-    public var endDate: Date = Date()
+    public var endDate: Date {
+        get { _endDate ?? Date() }
+        set { _endDate = newValue }
+    }
+    private var _endDate: Date?
     
     /// The system clock uptime when the recorder was started (if applicable).
     public var startUptime: TimeInterval?
@@ -69,7 +77,7 @@ public struct RSDFileResultObject : RSDFileResult, Codable {
     public var contentType: String?
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, startDate, endDate, startUptime, relativePath, contentType
+        case identifier, type, _startDate = "startDate", _endDate = "endDate", startUptime, relativePath, contentType
     }
     
     /// Default initializer for this object.

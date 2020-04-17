@@ -41,7 +41,11 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
     }
     
     public var surveyRules: [RSDSurveyRule] = []
-    public var isOptional: Bool = true
+    open var isOptional: Bool {
+        get { _isOptional ?? true }
+        set { _isOptional = newValue }
+    }
+    private var _isOptional: Bool?
 
     /// Identifier to skip to if all input fields have nil answers.
     open var skipToIfNil: String? {
@@ -84,18 +88,40 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
     open override func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.isOptional = try container.decodeIfPresent(Bool.self, forKey: .isOptional) ?? self.isOptional
-        // Decode the survey rules from the factory.
+        self._isOptional = try container.decodeIfPresent(Bool.self, forKey: .isOptional) ?? self._isOptional
+        // Decode the survey rules. Kotlin serialization does not allow for using a polymophic
+        // decoding without a "type" key on each element, so this is a work-around.
         if container.contains(.surveyRules) {
-            let nestedContainer = try container.nestedUnkeyedContainer(forKey: .surveyRules)
-            self.surveyRules = try decoder.factory.decodeSurveyRules(from: nestedContainer)
+            var nestedContainer = try container.nestedUnkeyedContainer(forKey: .surveyRules)
+            var surveyRules = [RSDSurveyRule]()
+            while !nestedContainer.isAtEnd {
+                let nestedDecoder = try nestedContainer.superDecoder()
+                let surveyRule = try self.decodeSurveyRule(from: nestedDecoder)
+                surveyRules.append(surveyRule)
+            }
+            self.surveyRules = surveyRules
         }
+    }
+    
+    open func decodeSurveyRule(from decoder: Decoder) throws -> RSDSurveyRule {
+        try JsonSurveyRuleObject(from: decoder)
+    }
+    
+    /// Override to set the properties of the subclass.
+    override open func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
+        guard let subclassCopy = copy as? AbstractQuestionStep else {
+            assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
+            return
+        }
+        subclassCopy.surveyRules = self.surveyRules
+        subclassCopy._isOptional = self._isOptional
     }
     
     override open func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.isOptional, forKey: .isOptional)
+        try container.encodeIfPresent(self._isOptional, forKey: .isOptional)
         if self.surveyRules.count > 0 {
             var nestedContainer = container.nestedUnkeyedContainer(forKey: .surveyRules)
             guard let encodables = self.surveyRules as? [Encodable] else {
@@ -127,6 +153,16 @@ open class AbstractSkipQuestionStep : AbstractQuestionStep {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.skipCheckbox = try container.decodeIfPresent(SkipCheckboxInputItemObject.self, forKey: .skipCheckbox)
+    }
+    
+    /// Override to set the properties of the subclass.
+    override open func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
+        guard let subclassCopy = copy as? AbstractSkipQuestionStep else {
+            assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
+            return
+        }
+        subclassCopy.skipCheckbox = self.skipCheckbox
     }
 
     public override func encode(to encoder: Encoder) throws {
@@ -190,6 +226,16 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
             let nestedDecoder = try container.superDecoder(forKey: .inputItem)
             self.inputItem = try factory.decodeInputItem(from: nestedDecoder)
         }
+    }
+    
+    /// Override to set the properties of the subclass.
+    override public func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
+        guard let subclassCopy = copy as? SimpleQuestionStepObject else {
+            assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
+            return
+        }
+        subclassCopy.inputItem = self.inputItem
     }
 
     public override func encode(to encoder: Encoder) throws {
@@ -354,6 +400,19 @@ open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, Ques
             }
         }
         self.jsonChoices = choices
+    }
+    
+    /// Override to set the properties of the subclass.
+    override open func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
+        guard let subclassCopy = copy as? ChoiceQuestionStepObject else {
+            assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
+            return
+        }
+        subclassCopy.jsonChoices = self.jsonChoices
+        subclassCopy.baseType = self.baseType
+        subclassCopy.inputUIHint = self.inputUIHint
+        subclassCopy.isSingleAnswer = self.isSingleAnswer
     }
     
     open override func encode(to encoder: Encoder) throws {
