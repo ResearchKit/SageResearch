@@ -97,7 +97,10 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     
     /// Should this step be displayed if and only if the flag has been set for displaying the full
     /// instructions?
-    open var fullInstructionsOnly: Bool { _fullInstructionsOnly ?? false }
+    open var fullInstructionsOnly: Bool {
+        get { _fullInstructionsOnly ?? false }
+        set { _fullInstructionsOnly = newValue }
+    }
     private var _fullInstructionsOnly: Bool?
     
     /// The view info used to create a custom step.
