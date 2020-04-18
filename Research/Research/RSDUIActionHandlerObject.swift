@@ -163,7 +163,7 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
     
     open class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
         guard let key = codingKey as? CodingKeys else {
-            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not handled by subclass.")
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not handled by \(self).")
         }
         switch key {
         case .actions:

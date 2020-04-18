@@ -1067,6 +1067,7 @@
 		FF9557CC23060F4B00B8D60B /* RSDAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */; };
 		FF9C264B243FA48B00241202 /* QuestionTableDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C264A243FA48B00241202 /* QuestionTableDataSourceTests.swift */; };
 		FFA0717F2356B66400EA371F /* DateTableItemGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */; };
+		FFA94E4C244A8A2D00A706F2 /* JsonDocumentableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E4B244A8A2D00A706F2 /* JsonDocumentableTests.swift */; };
 		FFABCB9422D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9522D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9622D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
@@ -1601,6 +1602,7 @@
 		FF9C264A243FA48B00241202 /* QuestionTableDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTableDataSourceTests.swift; sourceTree = "<group>"; };
 		FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDViewThemeElementObject.swift; sourceTree = "<group>"; };
 		FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableItemGroupTests.swift; sourceTree = "<group>"; };
+		FFA94E4B244A8A2D00A706F2 /* JsonDocumentableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDocumentableTests.swift; sourceTree = "<group>"; };
 		FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskControllerTests.swift; sourceTree = "<group>"; };
 		FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownUIStepObject.swift; sourceTree = "<group>"; };
 		FFAEE7D2243C007300F18BCB /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
@@ -2482,6 +2484,7 @@
 				F8C7D40A2092876B007490BC /* CodableTrackedDataTests.swift */,
 				F8C7D39C20915E67007490BC /* CodableUIActionObjectTests.swift */,
 				F8D074B0204FBD0D006CDABB /* DataArchiveTests.swift */,
+				FFA94E4B244A8A2D00A706F2 /* JsonDocumentableTests.swift */,
 				FF87CD851F8413F700084426 /* FactoryTests.swift */,
 				FFDFF5C41FC38150009713E8 /* ExampleDecodableTests.swift */,
 				F82115FE2231D39A00EA0D9F /* RecursiveScoreBuilderTests.swift */,
@@ -4011,6 +4014,7 @@
 				F8C7D39D20915E67007490BC /* CodableUIActionObjectTests.swift in Sources */,
 				FF287A2223A36F7300677D62 /* ColorRulesTests.swift in Sources */,
 				F83E44032249E8EF00E13207 /* ArrayExtensionTests.swift in Sources */,
+				FFA94E4C244A8A2D00A706F2 /* JsonDocumentableTests.swift in Sources */,
 				FFF20D002329A59700F501C3 /* AnswerResultTypeJSONTests.swift in Sources */,
 				FFEA2F812437DACF008695D6 /* CodableInputItemTests.swift in Sources */,
 				F858D14B201BA67B00132325 /* MeasurementDurationTests.swift in Sources */,
