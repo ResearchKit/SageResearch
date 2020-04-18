@@ -1551,7 +1551,7 @@
 		FF5C4C1C1F8C872500F311BA /* RSDTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskController.swift; sourceTree = "<group>"; };
 		FF5C4C1E1F8C874300F311BA /* RSDStepController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepController.swift; sourceTree = "<group>"; };
 		FF5C4C311F8C9DC100F311BA /* RSDResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultObject.swift; sourceTree = "<group>"; };
-		FF61FA3023A447F5006B36C5 /* MigrationNotes-v3.0.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MigrationNotes-v3.0.md"; sourceTree = "<group>"; };
+		FF61FA3023A447F5006B36C5 /* MigrationNotes_v3.0.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MigrationNotes_v3.0.md; sourceTree = "<group>"; };
 		FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSDResourceImageDataObject+Platform.swift"; sourceTree = "<group>"; };
 		FF63E8221FBABF560060DD98 /* RSDSurveyRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSurveyRule.swift; sourceTree = "<group>"; };
 		FF63E8391FBAD54D0060DD98 /* RSDSurveyNavigationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSurveyNavigationStep.swift; sourceTree = "<group>"; };
@@ -1654,7 +1654,7 @@
 		FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDExceptionHandler.m; sourceTree = "<group>"; };
 		FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPostalCodeTableItem.swift; sourceTree = "<group>"; };
 		FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerResultTypeJSONTests.swift; sourceTree = "<group>"; };
-		FFF433FD2446428B00C5F466 /* MigrationNotes-v3.2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MigrationNotes-v3.2.md"; sourceTree = "<group>"; };
+		FFF433FD2446428B00C5F466 /* MigrationNotes_v3.2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MigrationNotes_v3.2.md; sourceTree = "<group>"; };
 		FFF43407244645D300C5F466 /* KeyboardOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardOptionsObject.swift; sourceTree = "<group>"; };
 		FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImageVendor.swift; sourceTree = "<group>"; };
 		FFF53EAA1FBF9495004211D2 /* RSDStringLiteralOptionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStringLiteralOptionSet.swift; sourceTree = "<group>"; };
@@ -2529,9 +2529,9 @@
 			isa = PBXGroup;
 			children = (
 				F814DD1E227509D3004579EF /* README.md */,
-				FF61FA3023A447F5006B36C5 /* MigrationNotes-v3.0.md */,
+				FF61FA3023A447F5006B36C5 /* MigrationNotes_v3.0.md */,
 				FFE0BD452445436100B941BC /* MigrationNotes_v3.1.md */,
-				FFF433FD2446428B00C5F466 /* MigrationNotes-v3.2.md */,
+				FFF433FD2446428B00C5F466 /* MigrationNotes_v3.2.md */,
 				FF72B2331F6859D3004C6F15 /* Research */,
 				FF72B23E1F6859D3004C6F15 /* ResearchTests */,
 				F875575720807E2300235078 /* Research-UnitTest */,
