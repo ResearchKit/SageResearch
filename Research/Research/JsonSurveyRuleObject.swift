@@ -68,3 +68,32 @@ public struct JsonSurveyRuleObject : RSDComparableSurveyRule, Codable, Hashable 
         self.matchingValue = matchingValue
     }
 }
+
+extension JsonSurveyRuleObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .skipToIdentifier:
+            return .init(propertyType: .primitive(.string))
+        case .matchingValue:
+            return .init(propertyType: .any)
+        case .ruleOperator:
+            return .init(propertyType: .reference(RSDSurveyRuleOperator.documentableType()))
+        case .cohort:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [JsonSurveyRuleObject] {
+        [JsonSurveyRuleObject(skipToIdentifier: "foo", matchingValue: .boolean(true)),
+         JsonSurveyRuleObject(skipToIdentifier: nil, matchingValue: .number(5.0), ruleOperator: .equal, cohort: "baloo")]
+    }
+}

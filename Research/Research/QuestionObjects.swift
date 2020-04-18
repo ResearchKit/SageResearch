@@ -34,8 +34,6 @@
 import Foundation
 import JsonModel
 
-// TODO: syoung 04/14/2020 Add Documentable conformance for Question, InputItem, etc.
-
 // TODO: syoung 04/06/2020 Implement ComboBoxQuestionObject supported in Kotlin frameworks
 
 open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCohortAssignmentStep {
@@ -143,6 +141,18 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
         keys.append(contentsOf: thisKeys)
         return keys
     }
+    
+    override public class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .surveyRules:
+            return .init(propertyType: .referenceArray(JsonSurveyRuleObject.documentableType()))
+        case .isOptional:
+            return .init(propertyType: .primitive(.boolean))
+        }
+    }
 }
 
 open class AbstractSkipQuestionStep : AbstractQuestionStep {
@@ -187,6 +197,16 @@ open class AbstractSkipQuestionStep : AbstractQuestionStep {
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
+    }
+    
+    override public class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .skipCheckbox:
+            return .init(propertyType: .reference(SkipCheckboxInputItemObject.documentableType()))
+        }
     }
 }
 
@@ -258,6 +278,35 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
+    }
+    
+    public override class func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else {
+            return super.isRequired(codingKey)
+        }
+        return key == .inputItem
+    }
+    
+    override public class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .inputItem:
+            return .init(propertyType: .interface("\(InputItem.self)"))
+        }
+    }
+    
+    override public class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        [[
+            "identifier": "foo",
+            "type": "simpleQuestion",
+            "title": "Hello World!",
+            "optional": false,
+            "inputItem": ["type" : "year"],
+            "skipCheckbox": ["type":"skipCheckbox","fieldLabel":"No answer"],
+            "surveyRules": [[ "matchingAnswer": 1900 ]]
+        ]]
     }
 }
 
@@ -333,6 +382,37 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
         keys.append(contentsOf: thisKeys)
         return keys
     }
+    
+    public override class func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else {
+            return super.isRequired(codingKey)
+        }
+        return key == .inputItems
+    }
+    
+    override public class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .inputItems:
+            return .init(propertyType: .interfaceArray("\(InputItemBuilder.self)"))
+        case .sequenceSeparator:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    override public class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        [[
+            "identifier": "foo",
+            "type": "multipleInputQuestion",
+            "title": "Hello World!",
+            "optional": false,
+            "inputItems":[["type" : "year", "identifier": "year"],
+                          ["type": "string", "identifier": "name"]],
+            "skipCheckbox":["type":"skipCheckbox","fieldLabel":"No answer"],
+        ]]
+    }
 }
 
 /// This is declared as an open class to allow for serialization of custom `jsonChoices` with a
@@ -346,6 +426,7 @@ open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, Ques
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case jsonChoices = "choices", baseType, isSingleAnswer = "singleChoice", inputUIHint = "uiHint"
     }
+    public static var jsonChoicesCodingKey : CodingKey { CodingKeys.jsonChoices }
     
     open private(set) var jsonChoices: [JsonChoice]
     open private(set) var baseType: JsonType = .string
@@ -434,7 +515,49 @@ open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, Ques
         return keys
     }
     
+    public override class func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else {
+            return super.isRequired(codingKey)
+        }
+        return key == .jsonChoices
+    }
+    
     // Override these methods to implement a *different* JsonChoice with a custom choice question.
+    
+    override open class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .jsonChoices:
+            return .init(propertyType: .referenceArray(JsonChoiceObject.documentableType()))
+        case .baseType:
+            return .init(propertyType: .reference(JsonType.documentableType()))
+        case .isSingleAnswer:
+            return .init(propertyType: .primitive(.boolean))
+        case .inputUIHint:
+            return .init(propertyType: .reference(RSDFormUIHint.documentableType()))
+        }
+    }
+    
+    override open class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        [[
+            "identifier": "foo",
+            "type": "choiceQuestion",
+            "title": "Hello World!",
+            "optional": false,
+            "singleChoice": false,
+            "baseType": "integer",
+            "uiHint": "checkmark",
+            "choices":[
+                ["text":"choice 1","icon":"choice1","value":1],
+                ["text":"choice 2","value":2],
+                ["text":"choice 3","value":3],
+                ["text":"none of the above","exclusive":true]
+            ],
+            "surveyRules": [[ "matchingAnswer": 0]]
+        ]]
+    }
     
     open override class func defaultType() -> RSDStepType {
         .choiceQuestion
@@ -477,5 +600,24 @@ public final class StringChoiceQuestionStepObject : ChoiceQuestionStepObject {
         try jsonChoices.forEach {
             try nestedContainer.encode($0.text)
         }
+    }
+    
+    override public class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard codingKey.stringValue == jsonChoicesCodingKey.stringValue else {
+            return try super.documentProperty(for: codingKey)
+        }
+        return .init(propertyType: .primitiveArray(.string))
+    }
+    
+    override public class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        [[
+            "identifier": "foo",
+            "type": "stringChoiceQuestion",
+            "title": "Hello World!",
+            "optional": false,
+            "singleChoice": false,
+            "uiHint": "checkmark",
+            "choices":["choice 1","choice 2","choice 3"]
+        ]]
     }
 }

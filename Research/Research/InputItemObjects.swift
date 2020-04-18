@@ -565,6 +565,9 @@ public class DateTimeInputItemObject : AbstractInputItemObject, SerializableInpu
     }
 }
 
+extension DateTimeInputItemObject : DocumentableObject {
+}
+
 public final class DateInputItemObject : DateTimeInputItemObject {
     override public class func defaultType() -> InputItemType {
         return .date
@@ -751,6 +754,7 @@ public final class StringChoicePickerInputItemObject : ChoicePickerInputItemObje
 
 // MARK: SkipCheckboxInputItem
 
+
 public struct SkipCheckboxInputItemObject : SkipCheckboxInputItem, Codable, Hashable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case classType = "type", fieldLabel, matchingValue = "value"
@@ -769,6 +773,35 @@ public struct SkipCheckboxInputItemObject : SkipCheckboxInputItem, Codable, Hash
     public init(fieldLabel: String, matchingValue: JsonElement? = nil) {
         self.fieldLabel = fieldLabel
         self.matchingValue = matchingValue
+    }
+}
+
+extension SkipCheckboxInputItemObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .fieldLabel || key == .classType
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .classType:
+            return .init(constValue: InputItemType(rawValue: "skipCheckbox"), propertyDescription: "Kotlin serialization requires a 'type' field for any polymorphic class.")
+        case .fieldLabel:
+            return .init(propertyType: .primitive(.string))
+        case .matchingValue:
+            return .init(propertyType: .any)
+        }
+    }
+    
+    public static func examples() -> [SkipCheckboxInputItemObject] {
+        [SkipCheckboxInputItemObject(fieldLabel: "Perfer not to answer", matchingValue: .integer(-1))]
     }
 }
 
