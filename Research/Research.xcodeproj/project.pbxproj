@@ -5576,7 +5576,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Sage-Bionetworks/JsonModel-Swift.git";
 			requirement = {
-				branch = "beta-2";
+				branch = master;
 				kind = branch;
 			};
 		};
