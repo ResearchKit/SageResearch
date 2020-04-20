@@ -1,5 +1,6 @@
 {
     "identifier": "foo",
+    "type": "assessment",
     "steps": [{
               "identifier": "step1",
               "type": "instruction",

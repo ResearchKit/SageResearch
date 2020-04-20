@@ -36,6 +36,7 @@ import JsonModel
 
 /// `RSDTaskObject` is the interface for running a task. It includes information about how to calculate progress,
 /// validation, and the order of display for the steps.
+@available(*, deprecated, message: "Inherit from `RSDAssessmentTaskObject` instead.")
 open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Decodable {
 
     private enum CodingKeys : String, CodingKey, CaseIterable {

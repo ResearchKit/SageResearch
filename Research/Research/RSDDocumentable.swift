@@ -88,6 +88,7 @@ public struct RSDDocumentCreator {
         ]
     
     let allDecodableObjects: [DocumentableObject.Type] = [
+        AssessmentTaskObject.self,
         RSDUIStepObject.self,
         RSDActiveUIStepObject.self,
         RSDOverviewStepObject.self,

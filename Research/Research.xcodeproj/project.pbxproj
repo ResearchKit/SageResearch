@@ -1068,6 +1068,11 @@
 		FF9C264B243FA48B00241202 /* QuestionTableDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C264A243FA48B00241202 /* QuestionTableDataSourceTests.swift */; };
 		FFA0717F2356B66400EA371F /* DateTableItemGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */; };
 		FFA94E4C244A8A2D00A706F2 /* JsonDocumentableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E4B244A8A2D00A706F2 /* JsonDocumentableTests.swift */; };
+		FFA94E4E244E083100A706F2 /* AssessmentTaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */; };
+		FFA94E4F244E083100A706F2 /* AssessmentTaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */; };
+		FFA94E50244E083100A706F2 /* AssessmentTaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */; };
+		FFA94E51244E083100A706F2 /* AssessmentTaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */; };
+		FFA94E57244E312000A706F2 /* CopyTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E52244E2F4300A706F2 /* CopyTaskTests.swift */; };
 		FFABCB9422D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9522D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9622D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
@@ -1603,6 +1608,9 @@
 		FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDViewThemeElementObject.swift; sourceTree = "<group>"; };
 		FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableItemGroupTests.swift; sourceTree = "<group>"; };
 		FFA94E4B244A8A2D00A706F2 /* JsonDocumentableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDocumentableTests.swift; sourceTree = "<group>"; };
+		FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssessmentTaskObject.swift; sourceTree = "<group>"; };
+		FFA94E52244E2F4300A706F2 /* CopyTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTaskTests.swift; sourceTree = "<group>"; };
+		FFA94E58244E35DB00A706F2 /* MigrationNotes_v3.3.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MigrationNotes_v3.3.md; sourceTree = "<group>"; };
 		FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskControllerTests.swift; sourceTree = "<group>"; };
 		FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownUIStepObject.swift; sourceTree = "<group>"; };
 		FFAEE7D2243C007300F18BCB /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
@@ -2113,6 +2121,7 @@
 				F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */,
 				F8FCE05E203F46EC00616CE8 /* ScheduleTests.swift */,
 				F89BEA2F202B9550007BD2DD /* CopyStepTests.swift */,
+				FFA94E52244E2F4300A706F2 /* CopyTaskTests.swift */,
 				F853828D214C447100C3B774 /* StepViewModelTests.swift */,
 				F837223C22322F6F00C9A2EA /* FrequencyTests.swift */,
 				F83E44062249F5FA00E13207 /* ResultTests.swift */,
@@ -2535,6 +2544,7 @@
 				FF61FA3023A447F5006B36C5 /* MigrationNotes_v3.0.md */,
 				FFE0BD452445436100B941BC /* MigrationNotes_v3.1.md */,
 				FFF433FD2446428B00C5F466 /* MigrationNotes_v3.2.md */,
+				FFA94E58244E35DB00A706F2 /* MigrationNotes_v3.3.md */,
 				FF72B2331F6859D3004C6F15 /* Research */,
 				FF72B23E1F6859D3004C6F15 /* ResearchTests */,
 				F875575720807E2300235078 /* Research-UnitTest */,
@@ -2688,8 +2698,8 @@
 			children = (
 				FF74A7CC1F7CC7750064A634 /* RSDSchemaInfoObject.swift */,
 				FF74A7E61F7DAB600064A634 /* RSDTaskGroupObject.swift */,
-				FF177D7A1F82E19600C2D4D7 /* RSDTaskObject.swift */,
 				FF81E0B4244A4FF90081644B /* RSDTaskInfoObject.swift */,
+				FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */,
 			);
 			name = Task;
 			sourceTree = "<group>";
@@ -2772,6 +2782,7 @@
 		FFEA2F752436BE07008695D6 /* Deprecated */ = {
 			isa = PBXGroup;
 			children = (
+				FF177D7A1F82E19600C2D4D7 /* RSDTaskObject.swift */,
 				FF2872571FCCA99E00809A84 /* RSDRegExValidatorObject.swift */,
 				FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */,
 				FFB6A4AA1F85941F00E37752 /* RSDInputFieldObject.swift */,
@@ -3519,6 +3530,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8BE12EF21371B5B000AAB1E /* RSDWeeklyScheduleObject.swift in Sources */,
+				FFA94E51244E083100A706F2 /* AssessmentTaskObject.swift in Sources */,
 				F8BE1278213719E3000AAB1E /* RSDSurveyRuleOperator.swift in Sources */,
 				F8F367E8215B404A00A49F89 /* RSDTaskState.swift in Sources */,
 				F8BE131221371F8C000AAB1E /* RSDFormStepDataSourceObject.swift in Sources */,
@@ -3765,6 +3777,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8C7D395209155A9007490BC /* RSDUIActionType.swift in Sources */,
+				FFA94E4E244E083100A706F2 /* AssessmentTaskObject.swift in Sources */,
 				F8112E61222F600A005BCC93 /* RSDTrackingTask.swift in Sources */,
 				FF8B54EE1FCE6D15006B6937 /* RSDExceptionHandler.m in Sources */,
 				FF8B540E1FCE6C97006B6937 /* RSDTaskResultObject.swift in Sources */,
@@ -4049,6 +4062,7 @@
 				FF633D8B1FCE7A7300CF2267 /* TaskControllerTests.swift in Sources */,
 				F829F0DF1FF887C3001B0680 /* UnitConversionTests.swift in Sources */,
 				F82115FF2231D39A00EA0D9F /* RecursiveScoreBuilderTests.swift in Sources */,
+				FFA94E57244E312000A706F2 /* CopyTaskTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4057,6 +4071,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8C0A8D520FC127900EC758A /* RSDDetailInputFieldObject.swift in Sources */,
+				FFA94E4F244E083100A706F2 /* AssessmentTaskObject.swift in Sources */,
 				F8864AED2164406700DF57CF /* RSDResultSummaryStepViewModel.swift in Sources */,
 				FF8B54E71FCE6D14006B6937 /* RSDExceptionHandler.m in Sources */,
 				F8BE111E21360158000AAB1E /* RSDStepTransformer.swift in Sources */,
@@ -4303,6 +4318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8BE11042135F87D000AAB1E /* RSDCopyTask.swift in Sources */,
+				FFA94E50244E083100A706F2 /* AssessmentTaskObject.swift in Sources */,
 				F8864ACA2163EDFD00DF57CF /* RSDSubtaskStepObject.swift in Sources */,
 				FF8B54E01FCE6D14006B6937 /* RSDExceptionHandler.m in Sources */,
 				F8BE10FC2135F172000AAB1E /* RSDTaskInfo.swift in Sources */,

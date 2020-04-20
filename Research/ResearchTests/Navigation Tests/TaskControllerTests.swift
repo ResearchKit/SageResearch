@@ -770,7 +770,7 @@ class TestTracker : RSDTrackingTask {
     func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
         let scoreBuilder = RecursiveScoreBuilder()
         guard let score = scoreBuilder.getScoringData(from: taskResult) else { return nil }
-        return RSDTaskObject.TaskData(identifier: taskResult.identifier, timestampDate: taskResult.endDate, json: score)
+        return AssessmentTaskObject.TaskData(identifier: taskResult.identifier, timestampDate: taskResult.endDate, json: score)
     }
     
     func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {

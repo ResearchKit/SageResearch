@@ -782,8 +782,7 @@ class QuestionTableDataSourceTests: XCTestCase {
         do {
             let wrapper = try decoder.decode(QuestionWrapper.self, from: json)
             let step = wrapper.questionStep
-            let navigator = RSDConditionalStepNavigatorObject(with: [step])
-            let task = RSDTaskObject(identifier: "test", stepNavigator: navigator)
+            let task = AssessmentTaskObject(identifier: "test", steps: [step])
             let taskViewModel = RSDTaskViewModel(task: task)
             if let result = initialResult {
                 taskViewModel.append(previousResult: result)

@@ -41,7 +41,7 @@ class StepViewModelTests: XCTestCase {
     var sectionA: RSDTaskStepNode!
     var stepXModel: RSDStepViewModel!
     var stepX: RSDActiveUIStepObject!
-    var task: RSDTaskObject!
+    var task: AssessmentTaskObject!
     
     override func setUp() {
         super.setUp()
@@ -147,7 +147,7 @@ class StepViewModelTests: XCTestCase {
         let stepC = RSDUIStepObject(identifier: "stepC")
         let step3 = RSDSectionStepObject(identifier: "step3", steps: [stepA, stepB, stepC])
         let step4 = RSDUIStepObject(identifier: "step4")
-        task = RSDTaskObject(identifier: "task", stepNavigator: RSDConditionalStepNavigatorObject(with: [step1, step2, step3, step4]))
+        task = AssessmentTaskObject(identifier: "task", steps: [step1, step2, step3, step4])
         
         top = RSDTaskViewModel(task: task)
         section3 = RSDTaskStepNode(sectionStep: step3, parentPath: top)
