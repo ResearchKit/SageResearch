@@ -94,7 +94,8 @@ platform :ios do
     scheme = options[:scheme]
     xcodebuild(
       scheme: "#{scheme}",
-      workspace: ENV["WORKSPACE"]
+      workspace: ENV["WORKSPACE"],
+      xcargs: "-showBuildSettings -UseModernBuildSystem=YES -resolvePackageDependencies"
     )
   end
 
@@ -112,6 +113,7 @@ platform :ios do
       export_method: "#{export_method}",
       destination: "generic/platform=iOS",
       disable_xcpretty: false,
+      xcargs: "-showBuildSettings -UseModernBuildSystem=YES -resolvePackageDependencies"
     )
   end
 
