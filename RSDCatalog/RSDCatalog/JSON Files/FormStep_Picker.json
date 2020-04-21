@@ -1,5 +1,6 @@
 {
     "identifier": "picker",
+    "type": "assessment",
     "actions": {
         "cancel": {
             "type": "default",

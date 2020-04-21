@@ -1,9 +1,8 @@
 {
     "identifier"        : "distance",
-    "schemaInfo": {
-        "identifier": "Distance Recorder",
-        "revision": 1
-    },
+    "type": "motionTask",
+    "resultIdentifier": "Distance Recorder",
+    "versionString": "1",
     "actions"           : { "cancel": { "type": "default", "iconName": "closeActivity" }},
     "shouldHideActions" : ["goBackward", "skip"],
     "steps"             : [
