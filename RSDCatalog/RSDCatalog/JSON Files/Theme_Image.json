@@ -1,5 +1,6 @@
 {
     "identifier": "imageThemes",
+    "type": "assessment",
     "steps": [
     {
         "identifier": "introduction",

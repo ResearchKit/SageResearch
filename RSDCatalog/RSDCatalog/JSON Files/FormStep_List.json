@@ -1,5 +1,6 @@
 {
     "identifier": "list",
+    "type": "assessment",
     "actions": {
         "cancel": {
             "type": "default",

@@ -1,5 +1,6 @@
 {
     "identifier": "colorThemes",
+    "type": "assessment",
     "steps": [
     {
         "identifier": "introduction",

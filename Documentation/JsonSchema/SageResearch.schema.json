@@ -1,0 +1,4628 @@
+{
+  "$id" : "http:\/\/sagebionetworks.org\/jsonSchema\/SageResearch.json",
+  "definitions" : {
+    "AnswerType" : {
+      "title" : "AnswerType",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#AnswerType"
+    },
+    "RSDTaskType" : {
+      "examples" : [
+        "assessment"
+      ],
+      "title" : "RSDTaskType",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDTaskType"
+    },
+    "RSDCohortRuleOperator" : {
+      "title" : "RSDCohortRuleOperator",
+      "enum" : [
+        "all",
+        "any"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDCohortRuleOperator"
+    },
+    "YearFormatOptions" : {
+      "examples" : [
+        {
+
+        },
+        {
+          "maximumYear" : 2030,
+          "allowPast" : false
+        },
+        {
+          "allowFuture" : false,
+          "minimumYear" : 1900
+        }
+      ],
+      "title" : "YearFormatOptions",
+      "$id" : "#YearFormatOptions",
+      "additionalProperties" : false,
+      "properties" : {
+        "maxInvalidMessage" : {
+          "type" : "string"
+        },
+        "maximumYear" : {
+          "type" : "integer"
+        },
+        "allowFuture" : {
+          "type" : "boolean"
+        },
+        "allowPast" : {
+          "type" : "boolean"
+        },
+        "minInvalidMessage" : {
+          "type" : "string"
+        },
+        "invalidMessage" : {
+          "type" : "string"
+        },
+        "minimumYear" : {
+          "type" : "integer"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "AssessmentTaskObject" : {
+      "title" : "AssessmentTaskObject",
+      "$id" : "#AssessmentTaskObject",
+      "examples" : [
+        {
+          "type" : "assessment",
+          "steps" : [
+            {
+              "title" : "Step 1",
+              "type" : "instruction",
+              "identifier" : "step1"
+            },
+            {
+              "type" : "instruction",
+              "title" : "Step 2",
+              "identifier" : "step2"
+            }
+          ],
+          "identifier" : "foo"
+        },
+        {
+          "usesTrackedData" : true,
+          "progressMarkers" : [
+
+          ],
+          "steps" : [
+            {
+              "type" : "instruction",
+              "title" : "Step 1",
+              "identifier" : "step1"
+            },
+            {
+              "title" : "Step 2",
+              "type" : "instruction",
+              "identifier" : "step2"
+            }
+          ],
+          "identifier" : "baloo",
+          "versionString" : "2.2.22",
+          "resultIdentifier" : "ragu",
+          "estimatedMinutes" : 3,
+          "type" : "assessment"
+        }
+      ],
+      "properties" : {
+        "type" : {
+          "const" : "assessment",
+          "$ref" : "#RSDTaskType"
+        },
+        "usesTrackedData" : {
+          "type" : "boolean"
+        },
+        "progressMarkers" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "steps" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStep"
+          }
+        },
+        "estimatedMinutes" : {
+          "type" : "integer"
+        },
+        "asyncActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDAsyncActionConfiguration"
+          }
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "versionString" : {
+          "type" : "string"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "resultIdentifier" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDTask"
+        }
+      ],
+      "required" : [
+        "type",
+        "identifier",
+        "steps"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDViewThemeElement" : {
+      "title" : "RSDViewThemeElement",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#RSDViewThemeElement"
+    },
+    "RSDActiveUIStepObject" : {
+      "title" : "RSDActiveUIStepObject",
+      "$id" : "#RSDActiveUIStepObject",
+      "examples" : [
+        {
+          "detail" : "Some text.",
+          "commands" : [
+            "playSoundOnStart",
+            "vibrateOnFinish"
+          ],
+          "requiresBackgroundAudio" : true,
+          "title" : "Hello World!",
+          "duration" : 30,
+          "identifier" : "foo",
+          "type" : "active",
+          "spokenInstructions" : {
+            "10" : "Keep going",
+            "start" : "Start moving",
+            "end" : "Stop moving",
+            "halfway" : "Halfway there"
+          }
+        }
+      ],
+      "properties" : {
+        "beforeCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "viewTheme" : {
+          "$ref" : "#RSDViewThemeElement"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "image" : {
+          "$ref" : "#RSDImageThemeElement"
+        },
+        "commands" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDActiveUIStepCommand"
+          }
+        },
+        "shouldEndOnInterrupt" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "duration" : {
+          "type" : "number",
+          "default" : 0
+        },
+        "fullInstructionsOnly" : {
+          "type" : "boolean"
+        },
+        "requiresBackgroundAudio" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "type" : {
+          "const" : "active",
+          "$ref" : "#RSDStepType"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "colorMapping" : {
+          "$ref" : "#RSDColorMappingThemeElement"
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStandardPermission"
+          }
+        },
+        "afterCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "detail" : {
+          "type" : "string"
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "nextStepIdentifier" : {
+          "type" : "string"
+        },
+        "spokenInstructions" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "footnote" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDUIAction" : {
+      "title" : "RSDUIAction",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#RSDUIAction"
+    },
+    "CheckboxInputItemObject" : {
+      "examples" : [
+        {
+          "type" : "checkbox",
+          "fieldLabel" : "Check the box"
+        }
+      ],
+      "title" : "CheckboxInputItemObject",
+      "$id" : "#CheckboxInputItemObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "detail" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "checkbox",
+          "$ref" : "#InputItemType"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type",
+        "fieldLabel"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDCohortNavigationRuleObject" : {
+      "examples" : [
+        {
+          "requiredCohorts" : [
+            "foo",
+            "goo"
+          ]
+        },
+        {
+          "operator" : "any",
+          "skipToIdentifier" : "magoo",
+          "requiredCohorts" : [
+            "moo",
+            "blue"
+          ]
+        }
+      ],
+      "title" : "RSDCohortNavigationRuleObject",
+      "$id" : "#RSDCohortNavigationRuleObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "requiredCohorts" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "skipToIdentifier" : {
+          "type" : "string"
+        },
+        "operator" : {
+          "$ref" : "#RSDCohortRuleOperator"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+        "requiredCohorts"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDColorStyle" : {
+      "title" : "RSDColorStyle",
+      "enum" : [
+        "white",
+        "black",
+        "background",
+        "primary",
+        "secondary",
+        "accent",
+        "successGreen",
+        "errorRed",
+        "custom"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDColorStyle"
+    },
+    "InputItemType" : {
+      "examples" : [
+        "checkbox",
+        "choicePicker",
+        "date",
+        "date-time",
+        "decimal",
+        "height",
+        "integer",
+        "string",
+        "stringChoicePicker",
+        "time",
+        "weight",
+        "year"
+      ],
+      "title" : "InputItemType",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#InputItemType"
+    },
+    "AnswerTypeNumber" : {
+      "examples" : [
+        {
+          "type" : "number"
+        }
+      ],
+      "title" : "AnswerTypeNumber",
+      "$id" : "#AnswerTypeNumber",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "number",
+          "$ref" : "#AnswerTypeType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#AnswerType"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDStandardPermissionType" : {
+      "title" : "RSDStandardPermissionType",
+      "enum" : [
+        "camera",
+        "locationWhenInUse",
+        "location",
+        "microphone",
+        "motion",
+        "photoLibrary"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDStandardPermissionType"
+    },
+    "MultipleInputQuestionStepObject" : {
+      "title" : "MultipleInputQuestionStepObject",
+      "$id" : "#MultipleInputQuestionStepObject",
+      "examples" : [
+        {
+          "skipCheckbox" : {
+            "type" : "skipCheckbox",
+            "fieldLabel" : "No answer"
+          },
+          "inputItems" : [
+            {
+              "type" : "year",
+              "identifier" : "year"
+            },
+            {
+              "type" : "string",
+              "identifier" : "name"
+            }
+          ],
+          "title" : "Hello World!",
+          "type" : "multipleInputQuestion",
+          "identifier" : "foo",
+          "optional" : false
+        }
+      ],
+      "properties" : {
+        "beforeCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "viewTheme" : {
+          "$ref" : "#RSDViewThemeElement"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "image" : {
+          "$ref" : "#RSDImageThemeElement"
+        },
+        "fullInstructionsOnly" : {
+          "type" : "boolean"
+        },
+        "skipCheckbox" : {
+          "$ref" : "#SkipCheckboxInputItemObject"
+        },
+        "sequenceSeparator" : {
+          "type" : "string"
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "type" : {
+          "const" : "multipleInputQuestion",
+          "$ref" : "#RSDStepType"
+        },
+        "surveyRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#JsonSurveyRuleObject"
+          }
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "inputItems" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#InputItemBuilder"
+          }
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStandardPermission"
+          }
+        },
+        "colorMapping" : {
+          "$ref" : "#RSDColorMappingThemeElement"
+        },
+        "afterCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "detail" : {
+          "type" : "string"
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "nextStepIdentifier" : {
+          "type" : "string"
+        },
+        "footnote" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type",
+        "inputItems"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDMotionRecorderConfiguration" : {
+      "examples" : [
+        {
+          "startStepIdentifier" : "start",
+          "frequency" : 50,
+          "recorderTypes" : [
+            "accelerometer",
+            "gyro"
+          ],
+          "requiresBackgroundAudio" : true,
+          "identifier" : "motion",
+          "type" : "motion",
+          "stopStepIdentifier" : "stop"
+        }
+      ],
+      "title" : "RSDMotionRecorderConfiguration",
+      "$id" : "#RSDMotionRecorderConfiguration",
+      "additionalProperties" : false,
+      "properties" : {
+        "startStepIdentifier" : {
+          "type" : "string"
+        },
+        "requiresBackgroundAudio" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "recorderTypes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDMotionRecorderType"
+          }
+        },
+        "shouldDeletePrevious" : {
+          "type" : "boolean",
+          "default" : true
+        },
+        "frequency" : {
+          "type" : "number"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "motion",
+          "$ref" : "#RSDAsyncActionType"
+        },
+        "stopStepIdentifier" : {
+          "type" : "string"
+        },
+        "usesCSVEncoding" : {
+          "type" : "boolean"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDAsyncActionConfiguration"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDColorDataObject" : {
+      "examples" : [
+        {
+          "color" : "sky",
+          "usesLightStyle" : false
+        }
+      ],
+      "title" : "RSDColorDataObject",
+      "$id" : "#RSDColorDataObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "usesLightStyle" : {
+          "type" : "boolean"
+        },
+        "color" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+        "color",
+        "usesLightStyle"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "AnswerTypeBoolean" : {
+      "examples" : [
+        {
+          "type" : "boolean"
+        }
+      ],
+      "title" : "AnswerTypeBoolean",
+      "$id" : "#AnswerTypeBoolean",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "boolean",
+          "$ref" : "#AnswerTypeType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#AnswerType"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDErrorResultObject" : {
+      "examples" : [
+        {
+          "errorDescription" : "example error",
+          "endDate" : "2020-04-21T10:34:45.691-07:00",
+          "startDate" : "2020-04-21T10:34:45.691-07:00",
+          "errorDomain" : "ExampleDomain",
+          "identifier" : "errorResult",
+          "type" : "error",
+          "errorCode" : 1
+        }
+      ],
+      "title" : "RSDErrorResultObject",
+      "$id" : "#RSDErrorResultObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "errorDescription" : {
+          "type" : "string"
+        },
+        "endDate" : {
+          "type" : "string"
+        },
+        "startDate" : {
+          "type" : "string"
+        },
+        "errorDomain" : {
+          "type" : "string"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "error",
+          "$ref" : "#RSDResultType"
+        },
+        "errorCode" : {
+          "type" : "integer"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDResult"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type",
+        "errorDescription",
+        "errorDomain",
+        "errorCode"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDResultSummaryStepObject" : {
+      "title" : "RSDResultSummaryStepObject",
+      "$id" : "#RSDResultSummaryStepObject",
+      "examples" : [
+        {
+          "detail" : "Some text.",
+          "unitText" : "lala",
+          "title" : "Hello World!",
+          "identifier" : "foo",
+          "resultIdentifier" : "boo",
+          "type" : "completion",
+          "resultTitle" : "This is a title"
+        }
+      ],
+      "properties" : {
+        "nextStepIdentifier" : {
+          "type" : "string"
+        },
+        "stepResultIdentifier" : {
+          "type" : "string"
+        },
+        "viewTheme" : {
+          "$ref" : "#RSDViewThemeElement"
+        },
+        "unitText" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "beforeCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "image" : {
+          "$ref" : "#RSDImageThemeElement"
+        },
+        "commands" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDActiveUIStepCommand"
+          }
+        },
+        "duration" : {
+          "type" : "number",
+          "default" : 0
+        },
+        "shouldEndOnInterrupt" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "fullInstructionsOnly" : {
+          "type" : "boolean"
+        },
+        "requiresBackgroundAudio" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "type" : {
+          "const" : "feedback",
+          "$ref" : "#RSDStepType"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "colorMapping" : {
+          "$ref" : "#RSDColorMappingThemeElement"
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStandardPermission"
+          }
+        },
+        "afterCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "detail" : {
+          "type" : "string"
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "resultIdentifier" : {
+          "type" : "string"
+        },
+        "resultTitle" : {
+          "type" : "string"
+        },
+        "spokenInstructions" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "footnote" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDReminderUIActionObject" : {
+      "examples" : [
+        {
+          "type" : "reminder",
+          "reminderIdentifier" : "foo",
+          "buttonTitle" : "Remind me later"
+        }
+      ],
+      "title" : "RSDReminderUIActionObject",
+      "$id" : "#RSDReminderUIActionObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "packageName" : {
+          "type" : "string"
+        },
+        "buttonTitle" : {
+          "type" : "string"
+        },
+        "reminderIdentifier" : {
+          "type" : "string"
+        },
+        "iconName" : {
+          "type" : "string"
+        },
+        "bundleIdentifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "navigation",
+          "$ref" : "#RSDUIActionObjectType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDUIAction"
+        }
+      ],
+      "required" : [
+        "type",
+        "reminderIdentifier"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDTextSpellCheckingType" : {
+      "title" : "RSDTextSpellCheckingType",
+      "enum" : [
+        "default",
+        "no",
+        "yes"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDTextSpellCheckingType"
+    },
+    "SimpleQuestionStepObject" : {
+      "title" : "SimpleQuestionStepObject",
+      "$id" : "#SimpleQuestionStepObject",
+      "examples" : [
+        {
+          "optional" : false,
+          "surveyRules" : [
+            {
+              "matchingAnswer" : 1900
+            }
+          ],
+          "title" : "Hello World!",
+          "skipCheckbox" : {
+            "type" : "skipCheckbox",
+            "fieldLabel" : "No answer"
+          },
+          "identifier" : "foo",
+          "type" : "simpleQuestion",
+          "inputItem" : {
+            "type" : "year"
+          }
+        }
+      ],
+      "properties" : {
+        "beforeCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "viewTheme" : {
+          "$ref" : "#RSDViewThemeElement"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "image" : {
+          "$ref" : "#RSDImageThemeElement"
+        },
+        "fullInstructionsOnly" : {
+          "type" : "boolean"
+        },
+        "skipCheckbox" : {
+          "$ref" : "#SkipCheckboxInputItemObject"
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "type" : {
+          "const" : "simpleQuestion",
+          "$ref" : "#RSDStepType"
+        },
+        "surveyRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#JsonSurveyRuleObject"
+          }
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "colorMapping" : {
+          "$ref" : "#RSDColorMappingThemeElement"
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStandardPermission"
+          }
+        },
+        "afterCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "detail" : {
+          "type" : "string"
+        },
+        "inputItem" : {
+          "$ref" : "#InputItem"
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "nextStepIdentifier" : {
+          "type" : "string"
+        },
+        "footnote" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type",
+        "inputItem"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "SkipCheckboxInputItemObject" : {
+      "examples" : [
+        {
+          "type" : "skipCheckbox",
+          "value" : -1,
+          "fieldLabel" : "Perfer not to answer"
+        }
+      ],
+      "title" : "SkipCheckboxInputItemObject",
+      "$id" : "#SkipCheckboxInputItemObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "skipCheckbox",
+          "description" : "Kotlin serialization requires a 'type' field for any polymorphic class.",
+          "$ref" : "#InputItemType"
+        },
+        "value" : {
+
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+        "type",
+        "fieldLabel"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDFileResultObject" : {
+      "examples" : [
+        {
+          "startUptime" : 1234.567,
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "endDate" : "2017-10-16T22:33:09.000-07:00",
+          "type" : "file",
+          "identifier" : "fileResult",
+          "relativePath" : "temp.json"
+        }
+      ],
+      "title" : "RSDFileResultObject",
+      "$id" : "#RSDFileResultObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "endDate" : {
+          "type" : "string"
+        },
+        "startDate" : {
+          "type" : "string"
+        },
+        "contentType" : {
+          "type" : "string"
+        },
+        "startUptime" : {
+          "type" : "number"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "file",
+          "$ref" : "#RSDResultType"
+        },
+        "relativePath" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDResult"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "IntegerFormatOptions" : {
+      "examples" : [
+        {
+
+        },
+        {
+          "usesGroupingSeparator" : false,
+          "maxInvalidMessage" : "Maximum value is $200",
+          "numberStyle" : "currency",
+          "minimumValue" : 0,
+          "invalidMessage" : "This number is not valid",
+          "minInvalidMessage" : "Minimum value is zero",
+          "stepInterval" : 5,
+          "maximumValue" : 200
+        }
+      ],
+      "title" : "IntegerFormatOptions",
+      "$id" : "#IntegerFormatOptions",
+      "additionalProperties" : false,
+      "properties" : {
+        "usesGroupingSeparator" : {
+          "type" : "boolean"
+        },
+        "maxInvalidMessage" : {
+          "type" : "string"
+        },
+        "numberStyle" : {
+          "$ref" : "#NumberFormatStyle"
+        },
+        "minimumValue" : {
+          "type" : "integer"
+        },
+        "invalidMessage" : {
+          "type" : "string"
+        },
+        "minInvalidMessage" : {
+          "type" : "string"
+        },
+        "stepInterval" : {
+          "type" : "integer"
+        },
+        "maximumValue" : {
+          "type" : "integer"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDStepTransformerObject" : {
+      "examples" : [
+        {
+          "type" : "transform",
+          "identifier" : "heartRate.before",
+          "resourceTransformer" : {
+            "resourceName" : "HeartrateStep.json"
+          }
+        }
+      ],
+      "title" : "RSDStepTransformerObject",
+      "$id" : "#RSDStepTransformerObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "resourceTransformer" : {
+          "$ref" : "#RSDResourceTransformerObject"
+        },
+        "type" : {
+          "const" : "transform",
+          "$ref" : "#RSDStepType"
+        },
+        "identifier" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type",
+        "resourceTransformer"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "JsonType" : {
+      "title" : "JsonType",
+      "enum" : [
+        "string",
+        "number",
+        "integer",
+        "boolean",
+        "null",
+        "array",
+        "object"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#JsonType"
+    },
+    "HeightInputItemBuilderObject" : {
+      "examples" : [
+        {
+          "type" : "height"
+        }
+      ],
+      "title" : "HeightInputItemBuilderObject",
+      "$id" : "#HeightInputItemBuilderObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "placeholder" : {
+          "type" : "string"
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "measurementRange" : {
+          "$ref" : "#HumanMeasurementRange"
+        },
+        "type" : {
+          "const" : "height",
+          "$ref" : "#InputItemType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "AnswerTypeObject" : {
+      "examples" : [
+        {
+          "type" : "object"
+        }
+      ],
+      "title" : "AnswerTypeObject",
+      "$id" : "#AnswerTypeObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "object",
+          "$ref" : "#AnswerTypeType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#AnswerType"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDAnimatedImageThemeElementObject" : {
+      "examples" : [
+        {
+          "animationRepeatCount" : 0,
+          "animationDuration" : 2,
+          "type" : "animated",
+          "imageNames" : [
+            "blueDog1",
+            "blueDog2",
+            "blueDog3"
+          ]
+        },
+        {
+          "imageNames" : [
+            "redCat1",
+            "redCat2",
+            "redCat3"
+          ],
+          "animationDuration" : 2,
+          "size" : {
+            "width" : 100,
+            "height" : 120
+          },
+          "bundleIdentifier" : "org.example.SharedResources",
+          "type" : "animated",
+          "placementType" : "topBackground",
+          "animationRepeatCount" : 0
+        }
+      ],
+      "title" : "RSDAnimatedImageThemeElementObject",
+      "$id" : "#RSDAnimatedImageThemeElementObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "fileExtension" : {
+          "type" : "string"
+        },
+        "imageNames" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "animationDuration" : {
+          "type" : "number"
+        },
+        "bundleIdentifier" : {
+          "type" : "string"
+        },
+        "size" : {
+          "$ref" : "#RSDSize"
+        },
+        "type" : {
+          "const" : "animated",
+          "$ref" : "#RSDImageThemeElementType"
+        },
+        "packageName" : {
+          "type" : "string"
+        },
+        "placementType" : {
+          "$ref" : "#RSDImagePlacementType"
+        },
+        "animationRepeatCount" : {
+          "type" : "integer"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDImageThemeElement"
+        }
+      ],
+      "required" : [
+        "type",
+        "imageNames",
+        "animationDuration"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "AnswerTypeType" : {
+      "examples" : [
+        "array",
+        "boolean",
+        "date-time",
+        "integer",
+        "measurement",
+        "null",
+        "number",
+        "object"
+      ],
+      "title" : "AnswerTypeType",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#AnswerTypeType"
+    },
+    "RSDStepType" : {
+      "examples" : [
+        "active",
+        "completion",
+        "countdown",
+        "feedback",
+        "instruction",
+        "overview",
+        "section",
+        "transform",
+        "taskInfo",
+        "subtask",
+        "simpleQuestion",
+        "multipleInputQuestion",
+        "choiceQuestion",
+        "stringChoiceQuestion"
+      ],
+      "title" : "RSDStepType",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDStepType"
+    },
+    "HumanMeasurementRange" : {
+      "title" : "HumanMeasurementRange",
+      "enum" : [
+        "adult",
+        "child",
+        "infant"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#HumanMeasurementRange"
+    },
+    "ChoicePickerInputItemObject" : {
+      "title" : "ChoicePickerInputItemObject",
+      "$id" : "#ChoicePickerInputItemObject",
+      "examples" : [
+        {
+          "identifier" : "foo",
+          "placeholder" : "Blue, no! Red!",
+          "type" : "choicePicker",
+          "choices" : [
+            {
+              "value" : 0,
+              "text" : "never"
+            },
+            {
+              "value" : 1,
+              "text" : "sometimes"
+            },
+            {
+              "value" : 2,
+              "text" : "often"
+            },
+            {
+              "value" : 3,
+              "text" : "always"
+            }
+          ],
+          "fieldLabel" : "Favorite color"
+        }
+      ],
+      "properties" : {
+        "placeholder" : {
+          "type" : "string"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "choices" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#JsonChoiceObject"
+          }
+        },
+        "type" : {
+          "const" : "choicePicker",
+          "$ref" : "#InputItemType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDIconInfo" : {
+      "examples" : [
+        {
+          "subtitle" : "ba",
+          "title" : "Foo",
+          "icon" : "foo"
+        }
+      ],
+      "title" : "RSDIconInfo",
+      "$id" : "#RSDIconInfo",
+      "additionalProperties" : false,
+      "properties" : {
+        "subtitle" : {
+          "type" : "string"
+        },
+        "icon" : {
+          "$ref" : "#RSDResourceImageDataObject"
+        },
+        "title" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+        "title"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "StringChoicePickerInputItemObject" : {
+      "examples" : [
+        {
+          "fieldLabel" : "Favorite color",
+          "placeholder" : "Blue, no! Red!",
+          "type" : "stringChoicePicker",
+          "identifier" : "foo",
+          "choices" : [
+            "never",
+            "sometimes",
+            "often",
+            "always"
+          ]
+        }
+      ],
+      "title" : "StringChoicePickerInputItemObject",
+      "$id" : "#StringChoicePickerInputItemObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "optional" : {
+          "type" : "boolean"
+        },
+        "placeholder" : {
+          "type" : "string"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "choices" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#JsonChoiceObject"
+          }
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "stringChoicePicker",
+          "$ref" : "#InputItemType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "AnswerTypeDateTime" : {
+      "examples" : [
+        {
+          "type" : "date-time",
+          "codingFormat" : "yyyy-MM"
+        },
+        {
+          "type" : "date-time",
+          "codingFormat" : "HH:mm"
+        },
+        {
+          "type" : "date-time"
+        }
+      ],
+      "title" : "AnswerTypeDateTime",
+      "$id" : "#AnswerTypeDateTime",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "date-time",
+          "$ref" : "#AnswerTypeType"
+        },
+        "codingFormat" : {
+          "type" : "string",
+          "description" : "The iso8601 format for the date-time components used by this answer type."
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#AnswerType"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDActiveUIStepCommand" : {
+      "title" : "RSDActiveUIStepCommand",
+      "items" : {
+        "examples" : [
+          "continueOnFinish",
+          "playSoundOnFinish",
+          "playSoundOnStart",
+          "vibrateOnFinish",
+          "transitionAutomatically",
+          "startTimerAutomatically",
+          "speakWarningOnPause",
+          "vibrateOnStart",
+          "shouldDisableIdleTimer",
+          "playSound",
+          "vibrate"
+        ],
+        "jsonType" : "string"
+      },
+      "type" : "array",
+      "description" : "",
+      "$id" : "#RSDActiveUIStepCommand"
+    },
+    "RSDStandardPermission" : {
+      "examples" : [
+        {
+          "permissionType" : "motion"
+        },
+        {
+          "reason" : "Because we want to take a picture.",
+          "deniedMessage" : "You didn't give permission",
+          "optional" : true,
+          "title" : "Permission to use the camera",
+          "permissionType" : "camera",
+          "restrictedMessage" : "Your camera access is restricted",
+          "requestIfNeeded" : false
+        }
+      ],
+      "title" : "RSDStandardPermission",
+      "$id" : "#RSDStandardPermission",
+      "additionalProperties" : false,
+      "properties" : {
+        "reason" : {
+          "type" : "string"
+        },
+        "deniedMessage" : {
+          "type" : "string"
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "permissionType" : {
+          "$ref" : "#RSDStandardPermissionType"
+        },
+        "restrictedMessage" : {
+          "type" : "string"
+        },
+        "requestIfNeeded" : {
+          "type" : "boolean"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+        "permissionType"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "StringChoiceQuestionStepObject" : {
+      "title" : "StringChoiceQuestionStepObject",
+      "$id" : "#StringChoiceQuestionStepObject",
+      "examples" : [
+        {
+          "uiHint" : "checkmark",
+          "singleChoice" : false,
+          "optional" : false,
+          "title" : "Hello World!",
+          "choices" : [
+            "choice 1",
+            "choice 2",
+            "choice 3"
+          ],
+          "identifier" : "foo",
+          "type" : "stringChoiceQuestion"
+        }
+      ],
+      "properties" : {
+        "beforeCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "viewTheme" : {
+          "$ref" : "#RSDViewThemeElement"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "image" : {
+          "$ref" : "#RSDImageThemeElement"
+        },
+        "fullInstructionsOnly" : {
+          "type" : "boolean"
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "baseType" : {
+          "$ref" : "#JsonType"
+        },
+        "type" : {
+          "const" : "stringChoiceQuestion",
+          "$ref" : "#RSDStepType"
+        },
+        "surveyRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#JsonSurveyRuleObject"
+          }
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "colorMapping" : {
+          "$ref" : "#RSDColorMappingThemeElement"
+        },
+        "singleChoice" : {
+          "type" : "boolean"
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStandardPermission"
+          }
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "afterCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "detail" : {
+          "type" : "string"
+        },
+        "choices" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "nextStepIdentifier" : {
+          "type" : "string"
+        },
+        "footnote" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type",
+        "choices"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDSurveyRuleOperator" : {
+      "title" : "RSDSurveyRuleOperator",
+      "enum" : [
+        "de",
+        "eq",
+        "ne",
+        "lt",
+        "gt",
+        "le",
+        "ge",
+        "ot",
+        "always"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDSurveyRuleOperator"
+    },
+    "RSDSize" : {
+      "examples" : [
+        {
+          "width" : 10,
+          "height" : 20
+        }
+      ],
+      "title" : "RSDSize",
+      "$id" : "#RSDSize",
+      "additionalProperties" : false,
+      "properties" : {
+        "width" : {
+          "type" : "number"
+        },
+        "height" : {
+          "type" : "number"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+        "width",
+        "height"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDDateRangeObject" : {
+      "examples" : [
+        {
+          "codingFormat" : "yyyy-MM-dd",
+          "allowPast" : false,
+          "maximumValue" : "2017-10-17",
+          "minimumValue" : "2017-10-16"
+        },
+        {
+          "allowPast" : false
+        },
+        {
+          "allowFuture" : false
+        },
+        {
+          "minuteInterval" : 15,
+          "codingFormat" : "HH:mm"
+        }
+      ],
+      "title" : "RSDDateRangeObject",
+      "$id" : "#RSDDateRangeObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "minimumValue" : {
+          "type" : "string",
+          "description" : "The 'minimumValue' key must be a time, date, or timestamp formatted using the 'codingFormat' defined for this range."
+        },
+        "minuteInterval" : {
+          "type" : "integer"
+        },
+        "allowFuture" : {
+          "type" : "boolean"
+        },
+        "allowPast" : {
+          "type" : "boolean"
+        },
+        "codingFormat" : {
+          "type" : "string",
+          "description" : "The iso8601 format for the date-time components used by this range."
+        },
+        "defaultDate" : {
+          "type" : "string",
+          "description" : "The 'defaultDate' key must be a time, date, or timestamp formatted using the 'codingFormat' defined for this range."
+        },
+        "maximumValue" : {
+          "type" : "string",
+          "description" : "The 'maximumValue' key must be a time, date, or timestamp formatted using the 'codingFormat' defined for this range."
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDImagePlacementType" : {
+      "examples" : [
+        "iconBefore",
+        "iconAfter",
+        "fullsizeBackground",
+        "topBackground",
+        "topMarginBackground"
+      ],
+      "title" : "RSDImagePlacementType",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDImagePlacementType"
+    },
+    "DoubleFormatOptions" : {
+      "examples" : [
+        {
+
+        },
+        {
+          "maximumValue" : 200,
+          "usesGroupingSeparator" : false,
+          "numberStyle" : "currency",
+          "maxInvalidMessage" : "Maximum value is $200",
+          "minimumValue" : 0,
+          "invalidMessage" : "This number is not valid",
+          "minInvalidMessage" : "Minimum value is zero",
+          "stepInterval" : 0.01,
+          "maximumFractionDigits" : 2
+        }
+      ],
+      "title" : "DoubleFormatOptions",
+      "$id" : "#DoubleFormatOptions",
+      "additionalProperties" : false,
+      "properties" : {
+        "usesGroupingSeparator" : {
+          "type" : "boolean"
+        },
+        "maxInvalidMessage" : {
+          "type" : "string"
+        },
+        "numberStyle" : {
+          "$ref" : "#NumberFormatStyle"
+        },
+        "minimumValue" : {
+          "type" : "number"
+        },
+        "maximumFractionDigits" : {
+          "type" : "integer"
+        },
+        "invalidMessage" : {
+          "type" : "string"
+        },
+        "minInvalidMessage" : {
+          "type" : "string"
+        },
+        "stepInterval" : {
+          "type" : "number"
+        },
+        "maximumValue" : {
+          "type" : "number"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDSchemaInfoObject" : {
+      "examples" : [
+        {
+          "revision" : 2,
+          "identifier" : "foo"
+        }
+      ],
+      "title" : "RSDSchemaInfoObject",
+      "$id" : "#RSDSchemaInfoObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "revision" : {
+          "type" : "integer"
+        },
+        "identifier" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+        "identifier",
+        "revision"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "InputItem" : {
+      "title" : "InputItem",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#InputItem"
+    },
+    "RSDAsyncActionConfiguration" : {
+      "title" : "RSDAsyncActionConfiguration",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#RSDAsyncActionConfiguration"
+    },
+    "RSDSectionStepObject" : {
+      "examples" : [
+        {
+          "type" : "section",
+          "steps" : [
+            {
+              "type" : "instruction",
+              "title" : "Step 1",
+              "identifier" : "step1"
+            },
+            {
+              "title" : "Step 2",
+              "type" : "instruction",
+              "identifier" : "step2"
+            }
+          ],
+          "identifier" : "foobar"
+        }
+      ],
+      "title" : "RSDSectionStepObject",
+      "$id" : "#RSDSectionStepObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "asyncActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDAsyncActionConfiguration"
+          }
+        },
+        "steps" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStep"
+          }
+        },
+        "type" : {
+          "const" : "section",
+          "$ref" : "#RSDStepType"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "progressMarkers" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type",
+        "steps"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDColorMappingThemeElementType" : {
+      "examples" : [
+        "placementMapping",
+        "singleColor"
+      ],
+      "title" : "RSDColorMappingThemeElementType",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDColorMappingThemeElementType"
+    },
+    "RSDNavigationUIActionObject" : {
+      "examples" : [
+        {
+          "type" : "navigation",
+          "skipToIdentifier" : "nextSection",
+          "buttonTitle" : "Go, Dogs! Go"
+        }
+      ],
+      "title" : "RSDNavigationUIActionObject",
+      "$id" : "#RSDNavigationUIActionObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "packageName" : {
+          "type" : "string"
+        },
+        "buttonTitle" : {
+          "type" : "string"
+        },
+        "iconName" : {
+          "type" : "string"
+        },
+        "skipToIdentifier" : {
+          "type" : "string"
+        },
+        "bundleIdentifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "navigation",
+          "$ref" : "#RSDUIActionObjectType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDUIAction"
+        }
+      ],
+      "required" : [
+        "type",
+        "skipToIdentifier"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDColorMappingThemeElement" : {
+      "title" : "RSDColorMappingThemeElement",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#RSDColorMappingThemeElement"
+    },
+    "RSDCountdownUIStepObject" : {
+      "title" : "RSDCountdownUIStepObject",
+      "$id" : "#RSDCountdownUIStepObject",
+      "examples" : [
+        {
+          "commands" : [
+            "playSoundOnStart",
+            "vibrateOnFinish"
+          ],
+          "requiresBackgroundAudio" : true,
+          "detail" : "Some text.",
+          "title" : "Hello World!",
+          "identifier" : "foo",
+          "duration" : 30,
+          "type" : "active",
+          "spokenInstructions" : {
+            "10" : "Keep going",
+            "halfway" : "Halfway there",
+            "end" : "Stop moving",
+            "start" : "Start moving"
+          }
+        }
+      ],
+      "properties" : {
+        "beforeCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "viewTheme" : {
+          "$ref" : "#RSDViewThemeElement"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "image" : {
+          "$ref" : "#RSDImageThemeElement"
+        },
+        "commands" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDActiveUIStepCommand"
+          }
+        },
+        "shouldEndOnInterrupt" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "duration" : {
+          "type" : "number",
+          "default" : 0
+        },
+        "fullInstructionsOnly" : {
+          "type" : "boolean"
+        },
+        "requiresBackgroundAudio" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "type" : {
+          "const" : "countdown",
+          "$ref" : "#RSDStepType"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "colorMapping" : {
+          "$ref" : "#RSDColorMappingThemeElement"
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStandardPermission"
+          }
+        },
+        "afterCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "detail" : {
+          "type" : "string"
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "nextStepIdentifier" : {
+          "type" : "string"
+        },
+        "spokenInstructions" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "footnote" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "AnswerTypeArray" : {
+      "examples" : [
+        {
+          "type" : "array",
+          "baseType" : "number"
+        },
+        {
+          "type" : "array",
+          "baseType" : "integer"
+        },
+        {
+          "type" : "array",
+          "baseType" : "string"
+        }
+      ],
+      "title" : "AnswerTypeArray",
+      "$id" : "#AnswerTypeArray",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "array",
+          "$ref" : "#AnswerTypeType"
+        },
+        "sequenceSeparator" : {
+          "type" : "string"
+        },
+        "baseType" : {
+          "$ref" : "#JsonType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#AnswerType"
+        }
+      ],
+      "required" : [
+        "type",
+        "baseType"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "StringTextInputItemObject" : {
+      "examples" : [
+        {
+          "type" : "string"
+        },
+        {
+          "regExValidator" : {
+            "pattern" : "^[0-9]*$",
+            "invalidMessage" : "Only entering numbers is allowed."
+          },
+          "placeholder" : "Enter a value",
+          "keyboardOptions" : {
+
+          },
+          "type" : "string",
+          "identifier" : "field1",
+          "fieldLabel" : "How much?"
+        }
+      ],
+      "title" : "StringTextInputItemObject",
+      "$id" : "#StringTextInputItemObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "placeholder" : {
+          "type" : "string"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "keyboardOptions" : {
+          "$ref" : "#KeyboardOptionsObject"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "string",
+          "$ref" : "#InputItemType"
+        },
+        "regExValidator" : {
+          "$ref" : "#RegExValidator"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "AnswerTypeString" : {
+      "examples" : [
+        {
+          "type" : "string"
+        }
+      ],
+      "title" : "AnswerTypeString",
+      "$id" : "#AnswerTypeString",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "string",
+          "$ref" : "#AnswerTypeType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#AnswerType"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "AnswerTypeMeasurement" : {
+      "examples" : [
+        {
+          "type" : "measurement",
+          "unit" : "cm"
+        }
+      ],
+      "title" : "AnswerTypeMeasurement",
+      "$id" : "#AnswerTypeMeasurement",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "measurement",
+          "$ref" : "#AnswerTypeType"
+        },
+        "unit" : {
+          "type" : "string",
+          "description" : "The unit of measurement into which the value is converted for storage."
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#AnswerType"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "DoubleTextInputItemObject" : {
+      "examples" : [
+        {
+          "type" : "decimal"
+        },
+        {
+          "formatOptions" : {
+
+          },
+          "placeholder" : "Enter a value",
+          "type" : "decimal",
+          "identifier" : "field1",
+          "fieldLabel" : "How much?"
+        }
+      ],
+      "title" : "DoubleTextInputItemObject",
+      "$id" : "#DoubleTextInputItemObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "placeholder" : {
+          "type" : "string"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "formatOptions" : {
+          "$ref" : "#DoubleFormatOptions"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "decimal",
+          "$ref" : "#InputItemType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDOverviewStepObject" : {
+      "title" : "RSDOverviewStepObject",
+      "$id" : "#RSDOverviewStepObject",
+      "examples" : [
+        {
+          "detail" : "Some text.",
+          "permissions" : [
+            {
+              "permissionType" : "location"
+            }
+          ],
+          "title" : "Hello World!",
+          "identifier" : "foo",
+          "icons" : [
+            {
+              "title" : "A SMOOTH SURFACE",
+              "icon" : "Foo1"
+            }
+          ],
+          "type" : "active"
+        }
+      ],
+      "properties" : {
+        "detail" : {
+          "type" : "string"
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "viewTheme" : {
+          "$ref" : "#RSDViewThemeElement"
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "icons" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDIconInfo"
+          }
+        },
+        "afterCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStandardPermission"
+          }
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "overview",
+          "$ref" : "#RSDStepType"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "fullInstructionsOnly" : {
+          "type" : "boolean"
+        },
+        "footnote" : {
+          "type" : "string"
+        },
+        "image" : {
+          "$ref" : "#RSDImageThemeElement"
+        },
+        "nextStepIdentifier" : {
+          "type" : "string"
+        },
+        "beforeCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "colorMapping" : {
+          "$ref" : "#RSDColorMappingThemeElement"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDVideoViewUIActionObject" : {
+      "examples" : [
+        {
+          "type" : "videoView",
+          "url" : "About_Dogs.mp4",
+          "buttonTitle" : "Go, Dogs! Go"
+        },
+        {
+          "iconName" : "iconInfo",
+          "type" : "videoView",
+          "bundleIdentifier" : "org.example.SharedResources",
+          "url" : "About_Dogs.mp4"
+        }
+      ],
+      "title" : "RSDVideoViewUIActionObject",
+      "$id" : "#RSDVideoViewUIActionObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "default",
+          "$ref" : "#RSDUIActionObjectType"
+        },
+        "buttonTitle" : {
+          "type" : "string"
+        },
+        "iconName" : {
+          "type" : "string"
+        },
+        "url" : {
+          "type" : "string",
+          "format" : "uri"
+        },
+        "bundleIdentifier" : {
+          "type" : "string"
+        },
+        "packageName" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDUIAction"
+        }
+      ],
+      "required" : [
+        "type",
+        "url"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDFetchableImageThemeElementObject" : {
+      "examples" : [
+        {
+          "type" : "fetchable",
+          "imageName" : "blueDog"
+        },
+        {
+          "fileExtension" : "jpeg",
+          "size" : {
+            "width" : 20,
+            "height" : 30
+          },
+          "bundleIdentifier" : "org.example.SharedResources",
+          "type" : "fetchable",
+          "imageName" : "redCat",
+          "placementType" : "iconBefore",
+          "packageName" : "org.example.sharedresources"
+        }
+      ],
+      "title" : "RSDFetchableImageThemeElementObject",
+      "$id" : "#RSDFetchableImageThemeElementObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "fileExtension" : {
+          "type" : "string"
+        },
+        "size" : {
+          "$ref" : "#RSDSize"
+        },
+        "bundleIdentifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "animated",
+          "$ref" : "#RSDImageThemeElementType"
+        },
+        "packageName" : {
+          "type" : "string"
+        },
+        "imageName" : {
+          "type" : "string"
+        },
+        "placementType" : {
+          "$ref" : "#RSDImagePlacementType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDImageThemeElement"
+        }
+      ],
+      "required" : [
+        "type",
+        "imageName"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "DateTimeInputItemObject" : {
+      "title" : "DateTimeInputItemObject",
+      "$id" : "#DateTimeInputItemObject",
+      "examples" : [
+        {
+          "type" : "date-time",
+          "identifier" : "foo"
+        }
+      ],
+      "properties" : {
+        "optional" : {
+          "type" : "boolean"
+        },
+        "placeholder" : {
+          "type" : "string"
+        },
+        "formatOptions" : {
+          "$ref" : "#RSDDateRangeObject"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "date-time",
+          "$ref" : "#InputItemType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDUIActionObjectType" : {
+      "examples" : [
+        "default",
+        "webView",
+        "videoView",
+        "navigation",
+        "reminder"
+      ],
+      "title" : "RSDUIActionObjectType",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDUIActionObjectType"
+    },
+    "InputItemBuilder" : {
+      "title" : "InputItemBuilder",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#InputItemBuilder"
+    },
+    "RSDCollectionResultObject" : {
+      "examples" : [
+        {
+          "inputResults" : [
+            {
+              "identifier" : "question1",
+              "value" : true,
+              "endDate" : "2017-10-16T22:28:09.000-07:00",
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "type" : "answer",
+              "answerType" : {
+                "type" : "boolean"
+              }
+            },
+            {
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "value" : 42,
+              "endDate" : "2017-10-16T22:28:09.000-07:00",
+              "identifier" : "question2",
+              "type" : "answer",
+              "answerType" : {
+                "type" : "integer"
+              }
+            },
+            {
+              "identifier" : "question3",
+              "value" : 3.1400000000000001,
+              "endDate" : "2017-10-16T22:28:09.000-07:00",
+              "type" : "answer",
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "answerType" : {
+                "type" : "number"
+              }
+            },
+            {
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "value" : {
+                "foo" : "ba"
+              },
+              "endDate" : "2017-10-16T22:28:09.000-07:00",
+              "type" : "answer",
+              "identifier" : "question4",
+              "answerType" : {
+                "type" : "object"
+              }
+            },
+            {
+              "answerType" : {
+                "type" : "string"
+              },
+              "value" : "foo",
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "type" : "answer",
+              "identifier" : "question5",
+              "endDate" : "2017-10-16T22:28:09.000-07:00"
+            },
+            {
+              "identifier" : "question6",
+              "value" : [
+                3.2000000000000002,
+                5.0999999999999996
+              ],
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "type" : "answer",
+              "endDate" : "2017-10-16T22:28:09.000-07:00",
+              "answerType" : {
+                "type" : "array",
+                "baseType" : "number"
+              }
+            },
+            {
+              "type" : "answer",
+              "value" : [
+                1,
+                5
+              ],
+              "endDate" : "2017-10-16T22:28:09.000-07:00",
+              "identifier" : "question7",
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "answerType" : {
+                "type" : "array",
+                "baseType" : "integer"
+              }
+            },
+            {
+              "type" : "answer",
+              "value" : [
+                "foo",
+                "ba",
+                "lalala"
+              ],
+              "endDate" : "2017-10-16T22:28:09.000-07:00",
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "identifier" : "question8",
+              "answerType" : {
+                "type" : "array",
+                "baseType" : "string"
+              }
+            },
+            {
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "value" : "2020-04",
+              "endDate" : "2017-10-16T22:28:09.000-07:00",
+              "type" : "answer",
+              "identifier" : "question9",
+              "answerType" : {
+                "type" : "date-time",
+                "codingFormat" : "yyyy-MM"
+              }
+            },
+            {
+              "identifier" : "question10",
+              "value" : "08:30",
+              "endDate" : "2017-10-16T22:28:09.000-07:00",
+              "type" : "answer",
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "answerType" : {
+                "type" : "date-time",
+                "codingFormat" : "HH:mm"
+              }
+            },
+            {
+              "answerType" : {
+                "type" : "date-time"
+              },
+              "value" : "2017-10-16T22:28:09.000-07:00",
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "type" : "answer",
+              "identifier" : "question11",
+              "endDate" : "2017-10-16T22:28:09.000-07:00"
+            },
+            {
+              "endDate" : "2017-10-16T22:28:09.000-07:00",
+              "value" : 170.19999999999999,
+              "startDate" : "2017-10-16T22:28:09.000-07:00",
+              "identifier" : "question12",
+              "type" : "answer",
+              "answerType" : {
+                "type" : "measurement",
+                "unit" : "cm"
+              }
+            }
+          ],
+          "endDate" : "2017-10-16T22:33:09.000-07:00",
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "identifier" : "formStep",
+          "type" : "collection"
+        }
+      ],
+      "title" : "RSDCollectionResultObject",
+      "$id" : "#RSDCollectionResultObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "collection",
+          "$ref" : "#RSDResultType"
+        },
+        "inputResults" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDResult"
+          }
+        },
+        "endDate" : {
+          "type" : "string"
+        },
+        "skipToIdentifier" : {
+          "type" : "string"
+        },
+        "startDate" : {
+          "type" : "string"
+        },
+        "identifier" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDResult"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type",
+        "startDate",
+        "endDate",
+        "inputResults"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDSingleColorThemeElementObject" : {
+      "examples" : [
+        {
+          "customColor" : {
+            "color" : "sky",
+            "usesLightStyle" : false
+          },
+          "packageName" : "org.sagebase.foo",
+          "type" : "singleColor",
+          "bundleIdentifier" : "FooModule"
+        },
+        {
+          "colorStyle" : "successGreen",
+          "type" : "singleColor"
+        }
+      ],
+      "title" : "RSDSingleColorThemeElementObject",
+      "$id" : "#RSDSingleColorThemeElementObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "customColor" : {
+          "$ref" : "#RSDColorDataObject"
+        },
+        "packageName" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "singleColor",
+          "$ref" : "#RSDColorMappingThemeElementType"
+        },
+        "bundleIdentifier" : {
+          "type" : "string"
+        },
+        "colorStyle" : {
+          "$ref" : "#RSDColorStyle"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDColorMappingThemeElement"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "TimeInputItemObject" : {
+      "examples" : [
+        {
+          "type" : "time",
+          "identifier" : "foo",
+          "formatOptions" : {
+            "allowFuture" : false,
+            "codingFormat" : "HH:mm",
+            "minimumValue" : "06:00"
+          }
+        }
+      ],
+      "title" : "TimeInputItemObject",
+      "$id" : "#TimeInputItemObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "placeholder" : {
+          "type" : "string"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "formatOptions" : {
+          "$ref" : "#RSDDateRangeObject"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "time",
+          "$ref" : "#InputItemType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDImageThemeElementType" : {
+      "examples" : [
+        "fetchable",
+        "animated"
+      ],
+      "title" : "RSDImageThemeElementType",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDImageThemeElementType"
+    },
+    "AnswerTypeInteger" : {
+      "examples" : [
+        {
+          "type" : "integer"
+        }
+      ],
+      "title" : "AnswerTypeInteger",
+      "$id" : "#AnswerTypeInteger",
+      "additionalProperties" : false,
+      "properties" : {
+        "type" : {
+          "const" : "integer",
+          "$ref" : "#AnswerTypeType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#AnswerType"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "DateInputItemObject" : {
+      "examples" : [
+        {
+          "identifier" : "foo",
+          "type" : "date",
+          "formatOptions" : {
+            "allowFuture" : false,
+            "codingFormat" : "yyyy-MM",
+            "minimumValue" : "1900-01"
+          }
+        }
+      ],
+      "title" : "DateInputItemObject",
+      "$id" : "#DateInputItemObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "placeholder" : {
+          "type" : "string"
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "formatOptions" : {
+          "$ref" : "#RSDDateRangeObject"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "date",
+          "$ref" : "#InputItemType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "YearTextInputItemObject" : {
+      "examples" : [
+        {
+          "type" : "year"
+        },
+        {
+          "formatOptions" : {
+
+          },
+          "placeholder" : "Enter a value",
+          "identifier" : "field1",
+          "type" : "year",
+          "fieldLabel" : "How much?"
+        }
+      ],
+      "title" : "YearTextInputItemObject",
+      "$id" : "#YearTextInputItemObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "placeholder" : {
+          "type" : "string"
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "formatOptions" : {
+          "$ref" : "#YearFormatOptions"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "year",
+          "$ref" : "#InputItemType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDImageThemeElement" : {
+      "title" : "RSDImageThemeElement",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#RSDImageThemeElement"
+    },
+    "KeyboardOptionsObject" : {
+      "examples" : [
+        {
+
+        },
+        {
+          "keyboardType" : "decimalPad",
+          "isSecureTextEntry" : false,
+          "autocapitalizationType" : "none",
+          "spellCheckingType" : "no",
+          "autocorrectionType" : "no"
+        }
+      ],
+      "title" : "KeyboardOptionsObject",
+      "$id" : "#KeyboardOptionsObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "keyboardType" : {
+          "$ref" : "#RSDKeyboardType"
+        },
+        "isSecureTextEntry" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "autocapitalizationType" : {
+          "$ref" : "#RSDTextAutocapitalizationType"
+        },
+        "spellCheckingType" : {
+          "$ref" : "#RSDTextSpellCheckingType"
+        },
+        "autocorrectionType" : {
+          "$ref" : "#RSDTextAutocorrectionType"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDDistanceRecorderConfiguration" : {
+      "examples" : [
+        {
+          "startStepIdentifier" : "countdown",
+          "stopStepIdentifier" : "rest",
+          "identifier" : "distance",
+          "motionStepIdentifier" : "run",
+          "type" : "distance"
+        }
+      ],
+      "title" : "RSDDistanceRecorderConfiguration",
+      "$id" : "#RSDDistanceRecorderConfiguration",
+      "additionalProperties" : false,
+      "properties" : {
+        "identifier" : {
+          "type" : "string"
+        },
+        "startStepIdentifier" : {
+          "type" : "string"
+        },
+        "stopStepIdentifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "distance",
+          "$ref" : "#RSDAsyncActionType"
+        },
+        "usesCSVEncoding" : {
+          "type" : "boolean"
+        },
+        "motionStepIdentifier" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDAsyncActionConfiguration"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDResourceImageDataObject" : {
+      "examples" : [
+        "happyFaceIcon"
+      ],
+      "title" : "RSDResourceImageDataObject",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDResourceImageDataObject"
+    },
+    "RSDUIActionObject" : {
+      "examples" : [
+        {
+          "type" : "default",
+          "buttonTitle" : "Go, Dogs! Go"
+        },
+        {
+          "type" : "default",
+          "bundleIdentifier" : "org.example.SharedResources",
+          "iconName" : "closeX"
+        }
+      ],
+      "title" : "RSDUIActionObject",
+      "$id" : "#RSDUIActionObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "buttonTitle" : {
+          "type" : "string"
+        },
+        "iconName" : {
+          "type" : "string"
+        },
+        "packageName" : {
+          "type" : "string"
+        },
+        "bundleIdentifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "default",
+          "$ref" : "#RSDUIActionObjectType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDUIAction"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "IntegerTextInputItemObject" : {
+      "examples" : [
+        {
+          "type" : "integer"
+        },
+        {
+          "formatOptions" : {
+
+          },
+          "placeholder" : "Enter a value",
+          "type" : "integer",
+          "identifier" : "field1",
+          "fieldLabel" : "How much?"
+        }
+      ],
+      "title" : "IntegerTextInputItemObject",
+      "$id" : "#IntegerTextInputItemObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "placeholder" : {
+          "type" : "string"
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "formatOptions" : {
+          "$ref" : "#IntegerFormatOptions"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "keyboardOptions" : {
+          "$ref" : "#KeyboardOptionsObject"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "integer",
+          "$ref" : "#InputItemType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDViewThemeElementObject" : {
+      "examples" : [
+        {
+          "type" : "default",
+          "bundleIdentifier" : "org.example.SharedResources",
+          "viewIdentifier" : "FooStepNibIdentifier"
+        },
+        {
+          "type" : "default",
+          "storyboardIdentifier" : "FooBarStoryboard",
+          "viewIdentifier" : "FooStepViewIdentifier"
+        }
+      ],
+      "title" : "RSDViewThemeElementObject",
+      "$id" : "#RSDViewThemeElementObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "viewIdentifier" : {
+          "type" : "string"
+        },
+        "packageName" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "storyboardIdentifier" : {
+          "type" : "string"
+        },
+        "bundleIdentifier" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDViewThemeElement"
+        }
+      ],
+      "required" : [
+        "type",
+        "viewIdentifier"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDAsyncActionType" : {
+      "examples" : [
+        "motion",
+        "distance"
+      ],
+      "title" : "RSDAsyncActionType",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDAsyncActionType"
+    },
+    "RSDFormUIHint" : {
+      "examples" : [
+        "slider",
+        "multipleLine",
+        "picker",
+        "button",
+        "checkbox",
+        "popover",
+        "textfield",
+        "link",
+        "toggle",
+        "radioButton",
+        "checkmark",
+        "section",
+        "combobox",
+        "disclosureArrow",
+        "list"
+      ],
+      "title" : "RSDFormUIHint",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDFormUIHint"
+    },
+    "AnswerResultObject" : {
+      "examples" : [
+        {
+          "type" : "answer",
+          "value" : true,
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "identifier" : "question1",
+          "answerType" : {
+            "type" : "boolean"
+          }
+        },
+        {
+          "type" : "answer",
+          "value" : 42,
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "identifier" : "question2",
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "answerType" : {
+            "type" : "integer"
+          }
+        },
+        {
+          "type" : "answer",
+          "value" : 3.1400000000000001,
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "identifier" : "question3",
+          "answerType" : {
+            "type" : "number"
+          }
+        },
+        {
+          "identifier" : "question4",
+          "value" : {
+            "foo" : "ba"
+          },
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "type" : "answer",
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "answerType" : {
+            "type" : "object"
+          }
+        },
+        {
+          "identifier" : "question5",
+          "value" : "foo",
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "type" : "answer",
+          "answerType" : {
+            "type" : "string"
+          }
+        },
+        {
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "value" : [
+            3.2000000000000002,
+            5.0999999999999996
+          ],
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "identifier" : "question6",
+          "type" : "answer",
+          "answerType" : {
+            "type" : "array",
+            "baseType" : "number"
+          }
+        },
+        {
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "value" : [
+            1,
+            5
+          ],
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "identifier" : "question7",
+          "type" : "answer",
+          "answerType" : {
+            "type" : "array",
+            "baseType" : "integer"
+          }
+        },
+        {
+          "answerType" : {
+            "type" : "array",
+            "baseType" : "string"
+          },
+          "value" : [
+            "foo",
+            "ba",
+            "lalala"
+          ],
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "type" : "answer",
+          "identifier" : "question8"
+        },
+        {
+          "identifier" : "question9",
+          "value" : "2020-04",
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "type" : "answer",
+          "answerType" : {
+            "type" : "date-time",
+            "codingFormat" : "yyyy-MM"
+          }
+        },
+        {
+          "answerType" : {
+            "type" : "date-time",
+            "codingFormat" : "HH:mm"
+          },
+          "value" : "08:30",
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "type" : "answer",
+          "identifier" : "question10",
+          "endDate" : "2017-10-16T22:28:09.000-07:00"
+        },
+        {
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "value" : "2017-10-16T22:28:09.000-07:00",
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "type" : "answer",
+          "identifier" : "question11",
+          "answerType" : {
+            "type" : "date-time"
+          }
+        },
+        {
+          "type" : "answer",
+          "value" : 170.19999999999999,
+          "endDate" : "2017-10-16T22:28:09.000-07:00",
+          "identifier" : "question12",
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "answerType" : {
+            "type" : "measurement",
+            "unit" : "cm"
+          }
+        }
+      ],
+      "title" : "AnswerResultObject",
+      "$id" : "#AnswerResultObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "endDate" : {
+          "type" : "string"
+        },
+        "startDate" : {
+          "type" : "string"
+        },
+        "skipToIdentifier" : {
+          "type" : "string"
+        },
+        "answerType" : {
+          "$ref" : "#AnswerType"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "questionText" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "answer",
+          "$ref" : "#RSDResultType"
+        },
+        "value" : {
+
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDResult"
+        }
+      ],
+      "required" : [
+        "type",
+        "identifier"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RegExValidator" : {
+      "examples" : [
+        {
+          "pattern" : "^[0-9]*$",
+          "invalidMessage" : "Only entering numbers is allowed."
+        }
+      ],
+      "title" : "RegExValidator",
+      "$id" : "#RegExValidator",
+      "additionalProperties" : false,
+      "properties" : {
+        "pattern" : {
+          "type" : "string",
+          "description" : "The string value must be a valid a regex pattern."
+        },
+        "invalidMessage" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+        "pattern",
+        "invalidMessage"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDTextAutocapitalizationType" : {
+      "title" : "RSDTextAutocapitalizationType",
+      "enum" : [
+        "none",
+        "words",
+        "sentences",
+        "allCharacters"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDTextAutocapitalizationType"
+    },
+    "ChoiceQuestionStepObject" : {
+      "title" : "ChoiceQuestionStepObject",
+      "$id" : "#ChoiceQuestionStepObject",
+      "examples" : [
+        {
+          "uiHint" : "checkmark",
+          "singleChoice" : false,
+          "optional" : false,
+          "surveyRules" : [
+            {
+              "matchingAnswer" : 0
+            }
+          ],
+          "title" : "Hello World!",
+          "identifier" : "foo",
+          "baseType" : "integer",
+          "choices" : [
+            {
+              "value" : 1,
+              "icon" : "choice1",
+              "text" : "choice 1"
+            },
+            {
+              "value" : 2,
+              "text" : "choice 2"
+            },
+            {
+              "value" : 3,
+              "text" : "choice 3"
+            },
+            {
+              "text" : "none of the above",
+              "exclusive" : true
+            }
+          ],
+          "type" : "choiceQuestion"
+        }
+      ],
+      "properties" : {
+        "beforeCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "viewTheme" : {
+          "$ref" : "#RSDViewThemeElement"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "image" : {
+          "$ref" : "#RSDImageThemeElement"
+        },
+        "fullInstructionsOnly" : {
+          "type" : "boolean"
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "type" : {
+          "const" : "choiceQuestion",
+          "$ref" : "#RSDStepType"
+        },
+        "baseType" : {
+          "$ref" : "#JsonType"
+        },
+        "surveyRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#JsonSurveyRuleObject"
+          }
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "colorMapping" : {
+          "$ref" : "#RSDColorMappingThemeElement"
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStandardPermission"
+          }
+        },
+        "singleChoice" : {
+          "type" : "boolean"
+        },
+        "afterCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "detail" : {
+          "type" : "string"
+        },
+        "choices" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#JsonChoiceObject"
+          }
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "nextStepIdentifier" : {
+          "type" : "string"
+        },
+        "footnote" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type",
+        "choices"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDStep" : {
+      "title" : "RSDStep",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#RSDStep"
+    },
+    "RSDColorPlacementThemeElementObject" : {
+      "examples" : [
+        {
+          "customColor" : {
+            "usesLightStyle" : false,
+            "color" : "sky"
+          },
+          "placement" : {
+            "header" : "primary",
+            "footer" : "white",
+            "body" : "white"
+          },
+          "packageName" : "org.sagebase.foo",
+          "type" : "placementMapping",
+          "bundleIdentifier" : "FooModule"
+        }
+      ],
+      "title" : "RSDColorPlacementThemeElementObject",
+      "$id" : "#RSDColorPlacementThemeElementObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "customColor" : {
+          "$ref" : "#RSDColorDataObject"
+        },
+        "placement" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "$ref" : "#RSDColorStyle"
+          }
+        },
+        "packageName" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "placementMapping",
+          "$ref" : "#RSDColorMappingThemeElementType"
+        },
+        "bundleIdentifier" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDColorMappingThemeElement"
+        }
+      ],
+      "required" : [
+        "type",
+        "placement"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDKeyboardType" : {
+      "title" : "RSDKeyboardType",
+      "enum" : [
+        "default",
+        "asciiCapable",
+        "numbersAndPunctuation",
+        "URL",
+        "numberPad",
+        "phonePad",
+        "namePhonePad",
+        "emailAddress",
+        "decimalPad",
+        "twitter",
+        "webSearch",
+        "asciiCapableNumberPad"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDKeyboardType"
+    },
+    "RSDResultType" : {
+      "examples" : [
+        "base",
+        "answer",
+        "collection",
+        "task",
+        "file",
+        "error",
+        "navigation"
+      ],
+      "title" : "RSDResultType",
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDResultType"
+    },
+    "RSDTextAutocorrectionType" : {
+      "title" : "RSDTextAutocorrectionType",
+      "enum" : [
+        "default",
+        "no",
+        "yes"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDTextAutocorrectionType"
+    },
+    "RSDInstructionStepObject" : {
+      "title" : "RSDInstructionStepObject",
+      "$id" : "#RSDInstructionStepObject",
+      "examples" : [
+        {
+          "fullInstructionsOnly" : true,
+          "title" : "Hello World!",
+          "detail" : "Some text.",
+          "type" : "instruction",
+          "spokenInstructions" : {
+            "start" : "Take your phone out of your pocket to review the instructions.",
+            "end" : "Put your phone back in your pocket."
+          },
+          "identifier" : "foo"
+        }
+      ],
+      "properties" : {
+        "detail" : {
+          "type" : "string"
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "viewTheme" : {
+          "$ref" : "#RSDViewThemeElement"
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "afterCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStandardPermission"
+          }
+        },
+        "spokenInstructions" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "type" : {
+          "const" : "instruction",
+          "$ref" : "#RSDStepType"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "fullInstructionsOnly" : {
+          "type" : "boolean"
+        },
+        "image" : {
+          "$ref" : "#RSDImageThemeElement"
+        },
+        "footnote" : {
+          "type" : "string"
+        },
+        "nextStepIdentifier" : {
+          "type" : "string"
+        },
+        "beforeCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "colorMapping" : {
+          "$ref" : "#RSDColorMappingThemeElement"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "JsonChoiceObject" : {
+      "examples" : [
+        {
+          "value" : 1,
+          "text" : "None of the above"
+        }
+      ],
+      "title" : "JsonChoiceObject",
+      "$id" : "#JsonChoiceObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "value" : {
+
+        },
+        "detail" : {
+          "type" : "string"
+        },
+        "icon" : {
+          "$ref" : "#RSDResourceImageDataObject"
+        },
+        "text" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDTaskInfoStepObject" : {
+      "examples" : [
+        {
+          "type" : "taskInfo",
+          "identifier" : "foo"
+        }
+      ],
+      "title" : "RSDTaskInfoStepObject",
+      "$id" : "#RSDTaskInfoStepObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "detail" : {
+          "type" : "string"
+        },
+        "schemaInfo" : {
+          "$ref" : "#RSDSchemaInfoObject"
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "taskTransformer" : {
+          "$ref" : "#RSDResourceTransformerObject"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "footnote" : {
+          "type" : "string"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "taskInfo",
+          "$ref" : "#RSDStepType"
+        },
+        "estimatedMinutes" : {
+          "type" : "integer"
+        },
+        "icon" : {
+          "$ref" : "#RSDResourceImageDataObject"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "WeightInputItemBuilderObject" : {
+      "examples" : [
+        {
+          "type" : "weight"
+        }
+      ],
+      "title" : "WeightInputItemBuilderObject",
+      "$id" : "#WeightInputItemBuilderObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "uiHint" : {
+          "$ref" : "#RSDFormUIHint"
+        },
+        "placeholder" : {
+          "type" : "string"
+        },
+        "optional" : {
+          "type" : "boolean"
+        },
+        "fieldLabel" : {
+          "type" : "string"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "measurementRange" : {
+          "$ref" : "#HumanMeasurementRange"
+        },
+        "type" : {
+          "const" : "weight",
+          "$ref" : "#InputItemType"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#InputItemBuilder"
+        }
+      ],
+      "required" : [
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "NumberFormatStyle" : {
+      "title" : "NumberFormatStyle",
+      "enum" : [
+        "none",
+        "decimal",
+        "currency",
+        "percent",
+        "scientific",
+        "spellOut",
+        "ordinal"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#NumberFormatStyle"
+    },
+    "RSDResourceTransformerObject" : {
+      "examples" : [
+        {
+          "bundleIdentifier" : "org.sagebase.ResearchTests",
+          "resourceName" : "FactoryTest_TaskFoo"
+        },
+        {
+          "resourceName" : "TaskBar"
+        }
+      ],
+      "title" : "RSDResourceTransformerObject",
+      "$id" : "#RSDResourceTransformerObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "resourceName" : {
+          "type" : "string",
+          "description" : "Either a fully qualified URL string or else a relative reference to an embedded resource."
+        },
+        "rawFileExtension" : {
+          "type" : "string",
+          "description" : "The raw file extension of the resource."
+        },
+        "packageName" : {
+          "type" : "string",
+          "description" : "The package name for the embedded resource."
+        },
+        "bundleIdentifier" : {
+          "type" : "string",
+          "description" : "The bundle identifier for the embedded resource."
+        },
+        "resourceType" : {
+          "type" : "string",
+          "description" : "The Android resource type of the resource."
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+        "resourceName"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDCompletionStepObject" : {
+      "title" : "RSDCompletionStepObject",
+      "$id" : "#RSDCompletionStepObject",
+      "examples" : [
+        {
+          "detail" : "Some text.",
+          "unitText" : "lala",
+          "title" : "Hello World!",
+          "identifier" : "foo",
+          "resultIdentifier" : "boo",
+          "type" : "completion",
+          "resultTitle" : "This is a title"
+        }
+      ],
+      "properties" : {
+        "nextStepIdentifier" : {
+          "type" : "string"
+        },
+        "stepResultIdentifier" : {
+          "type" : "string"
+        },
+        "viewTheme" : {
+          "$ref" : "#RSDViewThemeElement"
+        },
+        "unitText" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "beforeCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "image" : {
+          "$ref" : "#RSDImageThemeElement"
+        },
+        "commands" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDActiveUIStepCommand"
+          }
+        },
+        "duration" : {
+          "type" : "number",
+          "default" : 0
+        },
+        "shouldEndOnInterrupt" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "fullInstructionsOnly" : {
+          "type" : "boolean"
+        },
+        "requiresBackgroundAudio" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "shouldHideActions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIActionType"
+          }
+        },
+        "type" : {
+          "const" : "completion",
+          "$ref" : "#RSDStepType"
+        },
+        "identifier" : {
+          "type" : "string"
+        },
+        "colorMapping" : {
+          "$ref" : "#RSDColorMappingThemeElement"
+        },
+        "subtitle" : {
+          "type" : "string"
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDStandardPermission"
+          }
+        },
+        "afterCohortRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDCohortNavigationRuleObject"
+          }
+        },
+        "detail" : {
+          "type" : "string"
+        },
+        "actions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#RSDUIAction"
+          }
+        },
+        "resultIdentifier" : {
+          "type" : "string"
+        },
+        "resultTitle" : {
+          "type" : "string"
+        },
+        "spokenInstructions" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "footnote" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDStep"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "JsonSurveyRuleObject" : {
+      "examples" : [
+        {
+          "skipToIdentifier" : "foo",
+          "matchingAnswer" : true
+        },
+        {
+          "cohort" : "baloo",
+          "ruleOperator" : "eq",
+          "matchingAnswer" : 5
+        }
+      ],
+      "title" : "JsonSurveyRuleObject",
+      "$id" : "#JsonSurveyRuleObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "matchingAnswer" : {
+
+        },
+        "skipToIdentifier" : {
+          "type" : "string"
+        },
+        "cohort" : {
+          "type" : "string"
+        },
+        "ruleOperator" : {
+          "$ref" : "#RSDSurveyRuleOperator"
+        }
+      },
+      "allOf" : [
+
+      ],
+      "required" : [
+
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDUIActionType" : {
+      "title" : "RSDUIActionType",
+      "enum" : [
+        "goForward",
+        "goBackward",
+        "skip",
+        "cancel",
+        "learnMore",
+        "reviewInstructions"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDUIActionType"
+    },
+    "RSDResultObject" : {
+      "examples" : [
+        {
+          "endDate" : "2017-10-16T22:33:09.000-07:00",
+          "type" : "base",
+          "startDate" : "2017-10-16T22:28:09.000-07:00",
+          "identifier" : "step1"
+        }
+      ],
+      "title" : "RSDResultObject",
+      "$id" : "#RSDResultObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "identifier" : {
+          "type" : "string"
+        },
+        "endDate" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "file",
+          "$ref" : "#RSDResultType"
+        },
+        "skipToIdentifier" : {
+          "type" : "string"
+        },
+        "startDate" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDResult"
+        }
+      ],
+      "required" : [
+        "identifier",
+        "type",
+        "startDate",
+        "endDate"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDMotionRecorderType" : {
+      "title" : "RSDMotionRecorderType",
+      "enum" : [
+        "accelerometer",
+        "gyro",
+        "magnetometer",
+        "attitude",
+        "gravity",
+        "magneticField",
+        "rotationRate",
+        "userAcceleration"
+      ],
+      "type" : "string",
+      "description" : "",
+      "$id" : "#RSDMotionRecorderType"
+    },
+    "RSDResult" : {
+      "title" : "RSDResult",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#RSDResult"
+    },
+    "RSDWebViewUIActionObject" : {
+      "examples" : [
+        {
+          "buttonTitle" : "Go, Dogs! Go",
+          "title" : "Go, Dogs! Go",
+          "usesBackButton" : true,
+          "url" : "About_Dogs.html",
+          "type" : "webView"
+        },
+        {
+          "iconName" : "iconInfo",
+          "url" : "About_Dogs.html",
+          "bundleIdentifier" : "org.example.SharedResources",
+          "type" : "webView"
+        }
+      ],
+      "title" : "RSDWebViewUIActionObject",
+      "$id" : "#RSDWebViewUIActionObject",
+      "additionalProperties" : false,
+      "properties" : {
+        "closeButtonTitle" : {
+          "type" : "string"
+        },
+        "usesBackButton" : {
+          "type" : "boolean"
+        },
+        "iconName" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "bundleIdentifier" : {
+          "type" : "string"
+        },
+        "type" : {
+          "const" : "default",
+          "$ref" : "#RSDUIActionObjectType"
+        },
+        "packageName" : {
+          "type" : "string"
+        },
+        "buttonTitle" : {
+          "type" : "string"
+        },
+        "url" : {
+          "type" : "string",
+          "format" : "uri"
+        }
+      },
+      "allOf" : [
+        {
+          "$ref" : "#RSDUIAction"
+        }
+      ],
+      "required" : [
+        "type",
+        "url"
+      ],
+      "type" : "object",
+      "description" : ""
+    },
+    "RSDTask" : {
+      "title" : "RSDTask",
+      "type" : "object",
+      "description" : "",
+      "$id" : "#RSDTask"
+    }
+  },
+  "title" : "SageResearch",
+  "type" : "object",
+  "description" : "",
+  "$schema" : "http:\/\/json-schema.org\/draft-07\/schema#"
+}

@@ -1,8 +1,8 @@
 //
-//  RSDMotionTaskObject.swift
-//  ResearchMotion
+//  ViewController.swift
+//  JsonSchemaBuilder
 //
-//  Copyright © 2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,31 +31,22 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import Cocoa
 
-extension RSDTaskType {
-    public static let motionTask: RSDTaskType = "motionTask"
-}
+class ViewController: NSViewController {
 
-/// This background task is a work around for a running task that uses the motion sensors with the screen locked.
-/// If using GPS or a streaming audio file, using this object is not required to keep the task active in the
-/// background.
-open class RSDMotionTaskObject: AssessmentTaskObject, RSDBackgroundTask {
-    open override class func defaultType() -> RSDTaskType {
-        .motionTask
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
     }
-    
-    /// By default, a motion task that runs in the background should *not* continue if the task is interupted
-    /// by a phone call.
-    open var shouldEndOnInterrupt: Bool = true
-    
-    /// By default, if a motion task is intended to run in the background, then it will return a pointer to
-    /// an instance of `RSDMotionAudioSessionController`.
-    open var audioSessionController: RSDAudioSessionController? {
-        if _audioSessionController == nil {
-            _audioSessionController = RSDMotionAudioSessionController()
+
+    override var representedObject: Any? {
+        didSet {
+        // Update the view, if already loaded.
         }
-        return _audioSessionController
     }
-    private var _audioSessionController: RSDAudioSessionController?
+
+
 }
+

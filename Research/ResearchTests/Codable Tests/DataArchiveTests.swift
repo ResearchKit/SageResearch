@@ -219,8 +219,7 @@ class DataArchiveTests: XCTestCase {
     // Helper method
     
     func buildTaskViewModel(identifier: String) -> RSDTaskViewModel {
-        let navigator = RSDConditionalStepNavigatorObject(with: [])
-        let task = RSDTaskObject(identifier: identifier, stepNavigator: navigator)
+        let task = AssessmentTaskObject(identifier: identifier, steps: [])
         return RSDTaskViewModel(task: task)
     }
     

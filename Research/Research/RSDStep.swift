@@ -78,3 +78,11 @@ public protocol RSDCopyStep : RSDStep, RSDCopyWithIdentifier {
     ///     - decoder: A decoder that can be used to decode properties on this step.
     func copy(with identifier: String, decoder: Decoder?) throws -> Self
 }
+
+extension Array where Element == RSDStep {
+    public func deepCopy() -> [RSDStep] {
+        self.map { (step) -> RSDStep in
+            (step as? RSDCopyStep)?.copy(with: step.identifier) ?? step
+        }
+    }
+}

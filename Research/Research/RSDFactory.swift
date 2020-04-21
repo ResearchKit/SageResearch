@@ -52,6 +52,7 @@ open class RSDFactory : SerializationFactory {
     public let inputItemSerializer = InputItemSerializer()
     public let resultSerializer = RSDResultSerializer()
     public let stepSerializer = StepSerializer()
+    public let taskSerializer = TaskSerializer()
     public let viewThemeSerializer = ViewThemeSerializer()
     
     public required init() {
@@ -64,6 +65,7 @@ open class RSDFactory : SerializationFactory {
         self.registerSerializer(inputItemSerializer)
         self.registerSerializer(resultSerializer)
         self.registerSerializer(stepSerializer)
+        self.registerSerializer(taskSerializer)
         self.registerSerializer(viewThemeSerializer)
     }
     
@@ -124,6 +126,9 @@ open class RSDFactory : SerializationFactory {
         }
         else if type == RSDStep.self {
             return try decodeStep(from: decoder) as! T
+        }
+        else if type == RSDTask.self {
+            return try decodeTask(from: decoder) as! T
         }
         else if type == RSDViewThemeElement.self {
             return try decodeViewThemeElement(from: decoder) as! T
@@ -199,9 +204,17 @@ open class RSDFactory : SerializationFactory {
     /// - returns: The decoded task.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeTask(with data: Data, from decoder: FactoryDecoder) throws -> RSDTask {
-        let task = try decoder.decode(RSDTaskObject.self, from: data)
+        let wrapper = try decoder.decode(TaskWrapper.self, from: data)
+        let task = wrapper.task
         try task.validate()
         return task
+    }
+    
+    private struct TaskWrapper : Decodable {
+        let task: RSDTask
+        init(from decoder: Decoder) throws {
+            self.task = try decoder.factory.decodePolymorphicObject(RSDTask.self, from: decoder)
+        }
     }
     
     /// Decode a task from the decoder.
@@ -209,6 +222,7 @@ open class RSDFactory : SerializationFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The decoded task.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeTask(from decoder: Decoder) throws -> RSDTask {
         return try RSDTaskObject(from: decoder)
     }
@@ -281,6 +295,7 @@ open class RSDFactory : SerializationFactory {
     /// - returns: The step navigator created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDTaskObject`
+    @available(*, deprecated, message: "See `RSDAssessmentTaskObject` for example decoding. Decode the task and use lazy init to decode the navigator.")
     open func decodeStepNavigator(from decoder: Decoder) throws -> RSDStepNavigator {
         guard let name = try typeName(from: decoder) else {
             return try RSDConditionalStepNavigatorObject(from: decoder)
@@ -297,6 +312,7 @@ open class RSDFactory : SerializationFactory {
     ///     - type: The `RSDStepNavigatorType` to instantiate.
     /// - returns: The step navigator created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "See `RSDAssessmentTaskObject` for example decoding. Decode the task and use lazy init to decode the navigator.")
     open func decodeStepNavigator(from decoder: Decoder, with type: RSDStepNavigatorType) throws -> RSDStepNavigator {
         return try RSDConditionalStepNavigatorObject(from: decoder)
     }
@@ -1062,6 +1078,20 @@ open class RSDFactory : SerializationFactory {
             decoder.userInfo[.schemaInfo] = schemaInfo
         }
         return decoder
+    }
+    
+    // MARK: Encoding polymophic objects
+    
+    open func encode(_ list: [Any], to nestedContainer: UnkeyedEncodingContainer) throws {
+        var container = nestedContainer
+        try list.forEach {
+            guard let encodable = $0 as? Encodable else {
+                let context = EncodingError.Context(codingPath: nestedContainer.codingPath, debugDescription: "Object does not conform to the encodable protocol.")
+                throw EncodingError.invalidValue($0, context)
+            }
+            let nestedEncoder = container.superEncoder()
+            try encodable.encode(to: nestedEncoder)
+        }
     }
 }
 
