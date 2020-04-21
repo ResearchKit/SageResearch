@@ -33,10 +33,17 @@
 
 import Foundation
 
+extension RSDTaskType {
+    public static let motionTask: RSDTaskType = "motionTask"
+}
+
 /// This background task is a work around for a running task that uses the motion sensors with the screen locked.
 /// If using GPS or a streaming audio file, using this object is not required to keep the task active in the
 /// background.
-open class RSDMotionTaskObject: RSDTaskObject, RSDBackgroundTask {
+open class RSDMotionTaskObject: AssessmentTaskObject, RSDBackgroundTask {
+    open override class func defaultType() -> RSDTaskType {
+        .motionTask
+    }
     
     /// By default, a motion task that runs in the background should *not* continue if the task is interupted
     /// by a phone call.
