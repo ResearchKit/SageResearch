@@ -62,7 +62,7 @@ public final class InputItemSerializer : AbstractPolymorphicSerializer, Polymorp
     
     public func add(_ example: SerializableInputItemBuilder) {
         if let idx = examples.firstIndex(where: {
-            ($0 as! PolymorphicRepresentable).typeName != example.typeName }) {
+            ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
             examples.remove(at: idx)
         }
         examples.append(example)

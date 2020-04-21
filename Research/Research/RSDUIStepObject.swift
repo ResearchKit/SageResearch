@@ -43,7 +43,7 @@ extension RSDStepType {
 /// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, RSDStandardPermissionsStep {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, RSDStandardPermissionsStep, RSDOptionalStep {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier

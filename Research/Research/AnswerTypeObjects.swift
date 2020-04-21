@@ -51,7 +51,7 @@ public final class AnswerTypeSerializer : AbstractPolymorphicSerializer, Polymor
     public private(set) var examples: [AnswerType]
     
     public func add(_ example: AnswerType) {
-        if let idx = examples.firstIndex(where: { $0.typeName != example.typeName }) {
+        if let idx = examples.firstIndex(where: { $0.typeName == example.typeName }) {
             examples.remove(at: idx)
         }
         examples.append(example)

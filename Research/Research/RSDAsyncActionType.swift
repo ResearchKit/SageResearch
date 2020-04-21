@@ -47,7 +47,7 @@ public final class AsyncActionConfigurationSerializer : AbstractPolymorphicSeria
     
     public func add(_ example: SerializableAsyncActionConfiguration) {
         if let idx = examples.firstIndex(where: {
-            ($0 as! PolymorphicRepresentable).typeName != example.typeName }) {
+            ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
             examples.remove(at: idx)
         }
         examples.append(example)

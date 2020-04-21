@@ -96,7 +96,7 @@ public final class RSDResultSerializer : AbstractPolymorphicSerializer, Polymorp
     public private(set) var examples: [RSDResult]
     
     public func add(_ example: RSDResult) {
-        if let idx = examples.firstIndex(where: { $0.typeName != example.typeName }) {
+        if let idx = examples.firstIndex(where: { $0.typeName == example.typeName }) {
             examples.remove(at: idx)
         }
         examples.append(example)

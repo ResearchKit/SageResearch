@@ -78,7 +78,7 @@ public final class ImageThemeSerializer : AbstractPolymorphicSerializer, Polymor
     
     public func add(_ example: SerializableImageTheme) {
         if let idx = examples.firstIndex(where: {
-            ($0 as! PolymorphicRepresentable).typeName != example.typeName }) {
+            ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
             examples.remove(at: idx)
         }
         examples.append(example)
