@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDFormDataType` is used to describe the data type for a form input. This is different from the
 /// `RSDAnswerResultType` which is a struct that can be used to encode and decode the input field
@@ -453,13 +454,6 @@ extension RSDFormDataType : ExpressibleByStringLiteral {
 
     public init(stringLiteral value: String) {
         self.init(rawValue: value)!
-    }
-}
-
-@available(*, deprecated, message: "Use `AnswerType` instead")
-extension RSDFormDataType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
-        return allStandardTypes().map{ $0.rawValue }
     }
 }
 

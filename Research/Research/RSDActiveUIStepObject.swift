@@ -32,12 +32,12 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDActiveUIStepObject` extends the `RSDUIStepObject` to include a duration and commands. This is used for the
 /// case where an `RSDUIStep` has an action such as "start walking" or "stop walking"; the step may also implement
 /// the `RSDActiveUIStep` protocol to allow for spoken instruction.
 open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
-    
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case duration, commands, requiresBackgroundAudio, shouldEndOnInterrupt, spokenInstructions
     }
@@ -134,8 +134,6 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         return self.spokenInstructions?[key]
     }
     
-    // MARK: Coding (spoken instructions requires special handling and Codable auto-synthesis does not work with subclassing)
-    
     /// Default type is `.active`.
     open override class func defaultType() -> RSDStepType {
         return .active
@@ -231,15 +229,31 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     
     // Overrides must be defined in the base implementation
     
-    override class func codingKeys() -> [CodingKey] {
+    override open class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
     }
 
-    override class func examples() -> [[String : RSDJSONValue]] {
-        let jsonA: [String : RSDJSONValue] = [
+    override open class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .duration:
+            return .init(defaultValue: .number(0.0))
+        case .commands:
+            return .init(propertyType: .referenceArray(RSDActiveUIStepCommand.documentableType()))
+        case .requiresBackgroundAudio, .shouldEndOnInterrupt:
+            return .init(defaultValue: .boolean(false))
+        case .spokenInstructions:
+            return .init(propertyType: .primitiveDictionary(.string))
+        }
+    }
+    
+    override open class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        let jsonA: [String : JsonSerializable] = [
             "identifier": "foo",
             "type": "active",
             "title": "Hello World!",

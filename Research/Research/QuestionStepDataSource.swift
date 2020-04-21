@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource {
 
@@ -50,7 +51,7 @@ public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource
             guard let dataManager = taskVM.dataManager,
                 (dataManager.shouldUsePreviousAnswers?(for: taskVM.identifier) ?? false),
                 let dictionary = taskVM.previousTaskData?.json as? [String : Any],
-                let value = dictionary[step.identifier] as? RSDJSONValue
+                let value = dictionary[step.identifier] as? JsonValue
                 else {
                     return nil
             }

@@ -31,8 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-
 import Foundation
+import JsonModel
 
 // TODO: syoung 04/02/2020 Add documentation for the Kotlin interfaces.
 

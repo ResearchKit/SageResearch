@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// A simple struct that can be used to implement the `RSDNumberPickerDataSource` protocol.
 public struct RSDNumberPickerDataSourceObject : RSDNumberPickerDataSource {
@@ -67,7 +68,7 @@ extension RSDNumberPickerDataSource {
         let number: Decimal
         if let decimal = selectedAnswer as? Decimal {
             number = decimal
-        } else if let num = (selectedAnswer as? NSNumber) ?? (selectedAnswer as? RSDJSONNumber)?.jsonNumber() {
+        } else if let num = (selectedAnswer as? NSNumber) ?? (selectedAnswer as? JsonNumber)?.jsonNumber() {
             number = Decimal(num.doubleValue)
         } else {
             return nil

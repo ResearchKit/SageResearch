@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDMultipleComponentInputFieldObject` extends the properties of `RSDInputFieldObject` with information
 /// required to create a multiple component input field.
@@ -173,24 +174,6 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
         } else if let obj = self.defaultAnswer as? RSDFraction {
             try container.encode(obj, forKey: .defaultAnswer)
         }
-    }
-    
-    // Overrides must be defined in the base implementation
-    
-    override class func codingKeys() -> [CodingKey] {
-        var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = CodingKeys.allCases
-        keys.append(contentsOf: thisKeys)
-        return keys
-    }
-    
-    override class func examples() -> [[String : RSDJSONValue]] {
-        let json: [String : RSDJSONValue] = [
-            "identifier": "foo",
-            "type": "multipleComponent",
-            "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat"]]
-        ]
-        return [json]
     }
 }
 

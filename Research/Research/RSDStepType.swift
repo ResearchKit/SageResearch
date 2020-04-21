@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
 /// the UI.
@@ -132,8 +133,71 @@ extension RSDStepType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDStepType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
+extension RSDStepType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }
+}
+
+public final class StepSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    override init() {
+        let uiExamples: [SerializableStep] = [
+            RSDActiveUIStepObject.serializationExample(),
+            RSDCountdownUIStepObject.serializationExample(),
+            RSDCompletionStepObject.serializationExample(),
+            RSDInstructionStepObject.serializationExample(),
+            RSDResultSummaryStepObject.serializationExample(),
+            RSDOverviewStepObject.serializationExample(),
+        ]
+        let questionExamples: [SerializableStep] = [
+            ChoiceQuestionStepObject.serializationExample(),
+            MultipleInputQuestionStepObject.serializationExample(),
+            SimpleQuestionStepObject.serializationExample(),
+            StringChoiceQuestionStepObject.serializationExample(),
+        ]
+        let nodeExamples: [SerializableStep] = [
+            RSDSectionStepObject.serializationExample(),
+            RSDTaskInfoStepObject.serializationExample(),
+            RSDStepTransformerObject.serializableExample(),
+        ]
+        self.examples = [uiExamples, questionExamples, nodeExamples].flatMap { $0 }
+    }
+    
+    public private(set) var examples: [RSDStep]
+    
+    public func add(_ example: SerializableStep) {
+        if let idx = examples.firstIndex(where: {
+            ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
+            examples.remove(at: idx)
+        }
+        examples.append(example)
+    }
+}
+
+public protocol SerializableStep : RSDStep, PolymorphicRepresentable {
+}
+
+public extension SerializableStep {
+    var typeName: String { return stepType.rawValue }
+}
+
+extension RSDUIStepObject : SerializableStep {
+    fileprivate static func serializationExample() -> Self {
+        self.init(identifier: self.defaultType().rawValue)
+    }
+}
+
+extension RSDTaskInfoStepObject : SerializableStep {
+    fileprivate static func serializationExample() -> RSDTaskInfoStepObject {
+        self.examples().first!
+    }
+}
+
+extension RSDSectionStepObject : SerializableStep {
+    fileprivate static func serializationExample() -> RSDSectionStepObject {
+        RSDSectionStepObject(identifier: RSDStepType.section.rawValue, steps: [])
+    }
+}
+
+extension RSDStepTransformerObject : SerializableStep {
 }

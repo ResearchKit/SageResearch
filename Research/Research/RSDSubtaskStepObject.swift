@@ -32,22 +32,20 @@
 //
 
 import Foundation
+import JsonModel
 
+@available(*, deprecated, message: "Could not find any examples that use this decoding. Deprecating rather than maintaining. syoung 04/17/2020")
 public struct RSDSubtaskStepObject : RSDSubtaskStep, Decodable {
-    
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case stepType = "type", task
     }
+    public private(set) var stepType: RSDStepType = .subtask
     
     /// The task that backs this step.
     public let task: RSDTask
     
-    /// The step type.
-    public let stepType: RSDStepType
-    
-    public init(task: RSDTask, stepType: RSDStepType = .subtask) {
+    public init(task: RSDTask) {
         self.task = task
-        self.stepType = stepType
     }
     
     public init(from decoder: Decoder) throws {

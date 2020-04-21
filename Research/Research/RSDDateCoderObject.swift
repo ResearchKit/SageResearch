@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDDateCoderObject` provides a concrete implementation of a `RSDDateCoder`. The date coder is used by
 /// the `RSDDateRangeObject` to encode and decode the `minDate` and `maxDate` properties as well as to get
@@ -113,7 +114,7 @@ public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
         self.calendar = calendar
     }
     
-    fileprivate static func getProperties(format: String, factory: RSDFactory = RSDFactory.shared) -> (inputFormatter: DateFormatter, resultFormatter: DateFormatter, Set<Calendar.Component>, Calendar)? {
+    fileprivate static func getProperties(format: String, factory: SerializationFactory = RSDFactory.shared) -> (inputFormatter: DateFormatter, resultFormatter: DateFormatter, Set<Calendar.Component>, Calendar)? {
         let calendar = Calendar.iso8601
         let components = calendarComponents(from: format)
         guard components.count > 0 else {
@@ -183,8 +184,13 @@ extension Calendar {
 extension RSDDateCoderObject : Equatable {
 }
 
-extension RSDDateCoderObject : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
-        return ["yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", "yyyy-MM", "yyyy-MM-dd", "--MM-dd", "MM-dd", "HH:mm:ss", "HH:mm"]
+extension RSDDateCoderObject : DocumentableStringLiteral {
+    public static func examples() -> [String] {
+        return ["yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ",
+                "yyyy-MM",
+                "yyyy-MM-dd",
+                "MM-dd",
+                "HH:mm:ss",
+                "HH:mm"]
     }
 }

@@ -2,7 +2,7 @@
 //  RSDUIStepObject.swift
 //  Research
 //
-//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 extension RSDStepType {
     fileprivate static let nullStepType: RSDStepType = "null"
@@ -42,7 +43,7 @@ extension RSDStepType {
 /// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, RSDStandardPermissionsStep, RSDInstructionStep {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, RSDStandardPermissionsStep, RSDOptionalStep {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier
@@ -59,8 +60,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         case image
         case beforeCohortRules
         case afterCohortRules
-        
-        //@available(*, unavailable)
+    }
+    
+    private enum DeprecatedCodingKeys: String, CodingKey {
         case colorTheme
         case text
     }
@@ -341,23 +343,18 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     /// pass to replace any values that should be decoded for a specific device type.
     open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let deprecatedContainer = try decoder.container(keyedBy: DeprecatedCodingKeys.self)
         
         self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? self.title
         
-        if let text = try container.decodeIfPresent(String.self, forKey: .text) {
+        if let text = try deprecatedContainer.decodeIfPresent(String.self, forKey: .text) {
             debugPrint("WARNING!!! `text` keyword on a UIStepObject decoding is deprecated and will be deleted in future versions.")
-            if let detail = try container.decodeIfPresent(String.self, forKey: .detail) {
-                self.subtitle = text
-                self.detail = detail
-            }
-            else {
-                self.detail = text
-            }
+            self.subtitle = text
         }
         else {
-            self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
             self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle) ?? self.subtitle
         }
+        self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
 
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
         self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
@@ -368,18 +365,18 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         
         if container.contains(.viewTheme) {
             let nestedDecoder = try container.superDecoder(forKey: .viewTheme)
-            self.viewTheme = try decoder.factory.decodeViewThemeElement(from: nestedDecoder)
+            self.viewTheme = try decoder.factory.decodePolymorphicObject(RSDViewThemeElement.self, from: nestedDecoder)
         }
         if container.contains(.colorMapping) {
             let nestedDecoder = try container.superDecoder(forKey: .colorMapping)
-            self.colorMapping = try decoder.factory.decodeColorMappingThemeElement(from: nestedDecoder)
+            self.colorMapping = try decoder.factory.decodePolymorphicObject(RSDColorMappingThemeElement.self, from: nestedDecoder)
         }
-        else if container.contains(.colorTheme) {
-            throw DecodingError.dataCorruptedError(forKey: CodingKeys.colorTheme, in: container, debugDescription: "Use of `colorTheme` JSON key is unavailable. Please convert your JSON files to use `colorMapping` instead.")
+        else if deprecatedContainer.contains(.colorTheme) {
+            throw DecodingError.dataCorruptedError(forKey: DeprecatedCodingKeys.colorTheme, in: deprecatedContainer, debugDescription: "Use of `colorTheme` JSON key is unavailable. Please convert your JSON files to use `colorMapping` instead.")
         }
         if container.contains(.image) {
             let nestedDecoder = try container.superDecoder(forKey: .image)
-            self.imageTheme = try decoder.factory.decodeImageThemeElement(from: nestedDecoder)
+            self.imageTheme = try decoder.factory.decodePolymorphicObject(RSDImageThemeElement.self, from: nestedDecoder)
         }
         
         if deviceType == nil {
@@ -441,15 +438,49 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
 
     // Overrides must be defined in the base implementation
     
-    override class func codingKeys() -> [CodingKey] {
+    override open class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
     }
     
-    class func examples() -> [[String : RSDJSONValue]] {
-        let jsonA: [String : RSDJSONValue] = [
+    override open class func isRequired(_ codingKey: CodingKey) -> Bool {
+        if super.isRequired(codingKey) { return true }
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .identifier || key == .stepType
+    }
+    
+    override open class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .stepType:
+            return .init(constValue: self.defaultType())
+        case .title,.subtitle,.detail,.footnote:
+            return .init(propertyType: .primitive(.string))
+        case .fullInstructionsOnly:
+            return .init(propertyType: .primitive(.boolean))
+        case .nextStepIdentifier:
+            return .init(propertyType: .primitive(.string))
+        case .permissions:
+            return .init(propertyType: .referenceArray(RSDStandardPermission.documentableType()))
+        case .viewTheme:
+            return .init(propertyType: .interface("\(RSDViewThemeElement.self)"))
+        case .colorMapping:
+            return .init(propertyType: .interface("\(RSDColorMappingThemeElement.self)"))
+        case .image:
+            return .init(propertyType: .interface("\(RSDImageThemeElement.self)"))
+        case .beforeCohortRules, .afterCohortRules:
+            return .init(propertyType: .referenceArray(RSDCohortNavigationRuleObject.documentableType()))
+        }
+    }
+    
+    open class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        let jsonA: [String : JsonSerializable] = [
             "identifier": "foo",
             "type": "instruction",
             "title": "Hello World!",
@@ -474,7 +505,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
             ],
             "colorMapping"     : [  "type" : "singleColor",
                                     "customColor" : ["color" : "sky", "usesLightStyle" : true ]],
-            "viewTheme"      : [ "viewIdentifier": "ActiveInstruction",
+            "viewTheme"      : [ "type": "default",
+                                 "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps",
                                  "bundleIdentifier": "org.example.SharedResources" ],
             "beforeCohortRules" : [["requiredCohorts" : ["boo", "goo"],
@@ -488,7 +520,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         ]
         
         // Example JSON for a step with an `RSDFetchableImageThemeElement`.
-        let jsonB: [String : RSDJSONValue] = [
+        let jsonB: [String : JsonSerializable] = [
             "identifier"   : "goOutside",
             "type"         : "instruction",
             "title"        : "Go outside",
@@ -502,6 +534,5 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     }
 }
 
-extension RSDUIStepObject : RSDDocumentableDecodableObject {
+extension RSDUIStepObject : DocumentableObject {
 }
-

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDAnswerResultObject` is a concrete implementation of a result that can be described using a single value.
 @available(*, deprecated, message: "Use `AnswerResultObject` instead")

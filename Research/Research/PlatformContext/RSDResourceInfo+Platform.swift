@@ -1,5 +1,5 @@
 //
-//  RSDResourceInfo+Platform.swift
+//  ResourceInfo+Platform.swift
 //  Research
 //
 //  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
@@ -32,11 +32,9 @@
 //
 
 import Foundation
+import JsonModel
 
-extension Bundle : RSDResourceBundle {
-}
-
-extension RSDResourceInfo {
+extension ResourceInfo {
     
     /// The bundle returned for the given `bundleIdentifier` or `factoryBundle` if `nil`.
     public var bundle: Bundle? {

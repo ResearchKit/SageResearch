@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDFileResultObject` is a concrete implementation of a result that holds a pointer to a file url.
 public struct RSDFileResultObject : RSDFileResult, Codable {
@@ -91,23 +92,40 @@ public struct RSDFileResultObject : RSDFileResult, Codable {
     }
 }
 
-extension RSDFileResultObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDFileResultObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
     
-    static func exampleResult() -> RSDFileResultObject {
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .identifier || key == .type
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .type:
+            return .init(constValue: RSDResultType.file)
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case ._startDate, ._endDate:
+            return .init(propertyType: .primitive(.string))
+        case .contentType, .relativePath:
+            return .init(propertyType: .primitive(.string))
+        case .startUptime:
+            return .init(propertyType: .primitive(.number))
+        }
+    }
+    
+    public static func examples() -> [RSDFileResultObject] {
         var fileResult = RSDFileResultObject(identifier: "fileResult")
-        fileResult.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        fileResult.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         fileResult.endDate = fileResult.startDate.addingTimeInterval(5 * 60)
         fileResult.startUptime = 1234.567
         fileResult.relativePath = "temp.json"
-        return fileResult
-    }
-    
-    static func examples() -> [Encodable] {
-        let fileResult = exampleResult()
         return [fileResult]
     }
 }

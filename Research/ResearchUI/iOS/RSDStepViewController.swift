@@ -76,6 +76,11 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         return step as? RSDDesignableUIStep
     }
     
+    /// Convenience property for casting the step to a `RSDSpokenInstructionStep`.
+    public var spokenInstructionStep: RSDSpokenInstructionStep? {
+        return step as? RSDSpokenInstructionStep
+    }
+    
     /// Convenience property for casting the step to a `RSDActiveUIStep`.
     public var activeStep: RSDActiveUIStep? {
         return step as? RSDActiveUIStep
@@ -993,7 +998,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     /// Returns the spoken instruction for a given time point. Default calls the active step spoken instruction.
     open func spokenInstruction(at duration: TimeInterval) -> String? {
-        return self.activeStep?.spokenInstruction(at: duration)
+        return self.spokenInstructionStep?.spokenInstruction(at: duration)
     }
     
     /// Start the timer.

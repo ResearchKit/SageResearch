@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 extension CodingUserInfoKey {
     
@@ -306,56 +307,5 @@ open class RSDFormUIStepObject : RSDUIStepObject, ConvertableFormStep, RSDSurvey
     
     open override func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
         return RSDFormStepDataSourceObject(step: self, parent: parent, supportedHints: supportedHints)
-    }
-    
-    // Overrides must be defined in the base implementation
-    
-    override class func codingKeys() -> [CodingKey] {
-        var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = CodingKeys.allCases
-        keys.append(contentsOf: thisKeys)
-        return keys
-    }
-    
-    override class func examples() -> [[String : RSDJSONValue]] {
-        let jsonA: [String : RSDJSONValue] = [
-             "identifier": "step3",
-             "type": "form",
-             "title": "Step 3",
-             "text": "Some text.",
-             "inputFields": [
-                             [
-                             "identifier": "foo",
-                             "type": "date",
-                             "uiHint": "picker",
-                             "prompt": "Foo",
-                             "range" : [ "minimumDate" : "2017-02-20",
-                                         "maximumDate" : "2017-03-20",
-                                         "codingFormat" : "yyyy-MM-dd" ]
-                             ],
-                             [
-                             "identifier": "bar",
-                             "type": "integer",
-                             "prompt": "Bar"
-                             ],
-                             [
-                             "identifier": "goo",
-                             "type": "multipleChoice",
-                             "choices" : ["never", "sometimes", "often", "always"]
-                             ]
-                            ]
-             ]
-        
-        let jsonB: [String : RSDJSONValue] = [
-             "identifier": "step3",
-             "type": "form",
-             "title": "Step 3",
-             "inputFields": [[
-                "type": "multipleChoice",
-                "choices" : ["never", "sometimes", "often", "always"]
-                ]]
-             ]
-        
-        return [jsonA, jsonB]
     }
 }

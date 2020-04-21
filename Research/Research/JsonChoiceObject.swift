@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 public protocol JsonComparable : RSDComparable {
     var matchingValue: JsonElement? { get }
@@ -91,3 +92,32 @@ public struct JsonChoiceObject : JsonChoice, Hashable {
         self.icon = nil
     }
 }
+
+extension JsonChoiceObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { false }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .matchingValue:
+            return .init(propertyType: .any, propertyDescription: "The matching value is any json element, but all json elements within the collection of choices should have the same json type.")
+        case .text, .detail:
+            return .init(propertyType: .primitive(.string))
+        case ._isExclusive:
+            return .init(propertyType: .primitive(.boolean))
+        case .icon:
+            return .init(propertyType: .reference(RSDResourceImageDataObject.documentableType()))
+        }
+    }
+    
+    public static func examples() -> [JsonChoiceObject] {
+        return [JsonChoiceObject(matchingValue: .integer(1), text: "None of the above")]
+    }
+}
+

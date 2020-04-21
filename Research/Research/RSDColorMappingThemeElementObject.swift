@@ -32,6 +32,66 @@
 //
 
 import Foundation
+import JsonModel
+
+/// The type of the color mapping theme element. This is used to decode a `RSDColorMappingThemeElement` using
+/// a `RSDFactory`. It can also be used to customize the UI.
+public struct RSDColorMappingThemeElementType : TypeRepresentable, Codable, Equatable, Hashable {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+    
+    /// Defaults to creating a `RSDColorPlacementThemeElementObject`.
+    public static let placementMapping: RSDColorMappingThemeElementType = "placementMapping"
+    
+    /// Defaults to creating a `RSDSingleColorThemeElementObject`.
+    public static let singleColor: RSDColorMappingThemeElementType = "singleColor"
+    
+    public static func allStandardTypes() -> [RSDColorMappingThemeElementType] {
+        return [.placementMapping, .singleColor]
+    }
+}
+
+extension RSDColorMappingThemeElementType : ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+}
+
+extension RSDColorMappingThemeElementType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
+        allStandardTypes().map{ $0.rawValue }
+    }
+}
+
+public final class ColorMappingSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    override init() {
+        examples = [
+            RSDColorPlacementThemeElementObject.examples().first!,
+            RSDSingleColorThemeElementObject.examples().first!,
+        ]
+    }
+    
+    public private(set) var examples: [RSDColorMappingThemeElement]
+    
+    public func add(_ example: SerializableColorMapping) {
+        if let idx = examples.firstIndex(where: {
+            ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
+            examples.remove(at: idx)
+        }
+        examples.append(example)
+    }
+}
+
+public protocol SerializableColorMapping : RSDColorMappingThemeElement, PolymorphicRepresentable, Encodable {
+    var type: RSDColorMappingThemeElementType { get }
+}
+
+public extension SerializableColorMapping {
+    var typeName: String { return type.rawValue }
+}
 
 /// A color data object is a lightweight codable implementation for storing custom color data.
 public struct RSDColorDataObject : Codable, RSDColorData {
@@ -55,7 +115,7 @@ public struct RSDColorDataObject : Codable, RSDColorData {
 /// a given view as well as whether or not the foreground elements should use "light style".
 ///
 /// The mapping is handled using a dictionary of color placements to the color style for that placement.
-public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo, Encodable {
+public struct RSDColorPlacementThemeElementObject : SerializableColorMapping, DecodableBundleInfo {
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case type, bundleIdentifier, packageName, placement, customColor
     }
@@ -73,7 +133,7 @@ public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement,
     public let bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package name.
     public var packageName: String?
@@ -118,29 +178,78 @@ public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement,
     }
 }
 
-extension RSDColorPlacementThemeElementObject : RSDDocumentableDecodableObject {
+extension RSDColorDataObject : DocumentableStruct {
+    
+    public static func codingKeys() -> [CodingKey] {
+        return self.CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        return true
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .colorIdentifier:
+            return .init(propertyType: .primitive(.string))
+        case .usesLightStyle:
+            return .init(propertyType: .primitive(.boolean))
+        }
+    }
+    
+    public static func examples() -> [RSDColorDataObject] {
+        return [RSDColorDataObject(colorIdentifier: "sky", usesLightStyle: false)]
+    }
+}
 
-    static func codingKeys() -> [CodingKey] {
+extension RSDColorPlacementThemeElementObject : DocumentableStruct {
+
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
 
-    static func colorThemeExamples() -> [[String : RSDJSONValue]] {
-        let exA: [String : RSDJSONValue] = [
-            "type" : "placementMapping",
-            "bundleIdentifier" : "FooModule",
-            "packageName" : "org.sagebase.foo",
-            "customColor" : [ "color" : "sky", "usesLightStyle" : false],
-            "placement" : [
-                "header" : "primary",
-                "body" : "white",
-                "footer" : "white"
-            ]
-        ]
-        return [exA]
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case .type, .placement:
+            return true
+        default:
+            return false
+        }
     }
-
-    static func examples() -> [[String : RSDJSONValue]] {
-        return colorThemeExamples()
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .type:
+            return .init(constValue: RSDColorMappingThemeElementType.placementMapping)
+        case .placement:
+            return .init(propertyType: .referenceDictionary(RSDColorStyle.documentableType()))
+        case .bundleIdentifier:
+            return .init(propertyType: .primitive(.string))
+        case .packageName:
+            return .init(propertyType: .primitive(.string))
+        case .customColor:
+            return .init(propertyType: .reference(RSDColorDataObject.documentableType()))
+        }
+    }
+    
+    public static func examples() -> [RSDColorPlacementThemeElementObject] {
+        let exA = RSDColorPlacementThemeElementObject(placement: [
+                                                                    "header" : .primary,
+                                                                    "body" : .white,
+                                                                    "footer" : .white
+                                                                ],
+                                                      customColorName: "sky",
+                                                      usesLightStyle: false,
+                                                      bundleIdentifier: "FooModule",
+                                                      packageName: "org.sagebase.foo")
+        return [exA]
     }
 }
 
@@ -148,7 +257,7 @@ extension RSDColorPlacementThemeElementObject : RSDDocumentableDecodableObject {
 /// a given view as well as whether or not the foreground elements should use "light style".
 ///
 /// The mapping is handled using a single style for the entire view.
-public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo, Encodable {
+public struct RSDSingleColorThemeElementObject : SerializableColorMapping, DecodableBundleInfo {
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case type, bundleIdentifier, packageName, colorStyle, customColor
     }
@@ -160,7 +269,7 @@ public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RS
     public let bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package name.
     public var packageName: String?
@@ -206,27 +315,41 @@ public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RS
     }
 }
 
-extension RSDSingleColorThemeElementObject : RSDDocumentableDecodableObject {
+extension RSDSingleColorThemeElementObject : DocumentableStruct {
     
-    static func codingKeys() -> [CodingKey] {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
-    
-    static func colorThemeExamples() -> [[String : RSDJSONValue]] {
-        let exA: [String : RSDJSONValue] = [
-            "type" : "singleColor",
-            "bundleIdentifier" : "FooModule",
-            "packageName" : "org.sagebase.foo",
-            "customColor" : [ "color" : "sky", "usesLightStyle" : false]
-        ]
-        let exB: [String : RSDJSONValue] = [
-            "type" : "singleColor",
-            "colorStyle" : "successGreen"
-        ]
-        return [exA, exB]
+
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .type
     }
     
-    static func examples() -> [[String : RSDJSONValue]] {
-        return colorThemeExamples()
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .type:
+            return .init(constValue: RSDColorMappingThemeElementType.singleColor)
+        case .colorStyle:
+            return .init(propertyType: .reference(RSDColorStyle.documentableType()))
+        case .bundleIdentifier:
+            return .init(propertyType: .primitive(.string))
+        case .packageName:
+            return .init(propertyType: .primitive(.string))
+        case .customColor:
+            return .init(propertyType: .reference(RSDColorDataObject.documentableType()))
+        }
+    }
+    
+    public static func examples() -> [RSDSingleColorThemeElementObject] {
+        return [RSDSingleColorThemeElementObject(colorStyle: nil,
+                                                 customColorName: "sky",
+                                                 usesLightStyle: false,
+                                                 bundleIdentifier: "FooModule",
+                                                 packageName: "org.sagebase.foo"),
+                RSDSingleColorThemeElementObject(colorStyle: .successGreen)]
     }
 }

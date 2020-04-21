@@ -34,6 +34,7 @@
 import XCTest
 import Research
 @testable import ResearchMotion
+import JsonModel
 
 class CodableMotionRecorderTests: XCTestCase {
     
@@ -41,7 +42,7 @@ class CodableMotionRecorderTests: XCTestCase {
         super.setUp()
 
         // Use a statically defined timezone.
-        rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
+        ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
     
     override func tearDown() {

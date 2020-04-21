@@ -32,11 +32,12 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
-public struct RSDTaskGroupObject : RSDTaskGroup, Decodable {
+public struct RSDTaskGroupObject : RSDTaskGroup, Codable {
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case identifier, title, detail, icon, tasks
+        case identifier, title, detail, icon, _tasks = "tasks"
     }
 
     /// A short string that uniquely identifies the task group.
@@ -49,84 +50,58 @@ public struct RSDTaskGroupObject : RSDTaskGroup, Decodable {
     public var detail: String?
     
     /// The optional `RSDImageData` with the pointer to the image.
-    public var imageData: RSDImageData?
+    public var imageData: RSDImageData? { return icon }
+    private var icon: RSDResourceImageDataObject?
     
     /// A list of the task references included in this group.
-    public let tasks: [RSDTaskInfo]
+    public var tasks: [RSDTaskInfo] { _tasks }
+    private var _tasks: [RSDTaskInfoObject]
     
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the task group.
     ///     - tasks: A list of the task references included in this group.
-    public init(with identifier: String, tasks: [RSDTaskInfo]) {
+    public init(with identifier: String, tasks: [RSDTaskInfoObject]) {
         self.identifier = identifier
-        self.tasks = tasks
-    }
-    
-    /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
-    /// with the decoder to decode the `tasks`.
-    ///
-    /// - example:
-    ///
-    ///     ```
-    ///        let json = """
-    ///                {
-    ///                    "identifier": "foobar",
-    ///                    "title": "Foobarific",
-    ///                    "detail": "This is a task group containing foo and bar",
-    ///                    "icon": "foobarIcon",
-    ///                    "tasks" : [{
-    ///                               "identifier": "foo",
-    ///                               "schemaRevision" : 2,
-    ///                               "title": "Hello Foo!",
-    ///                               "detail": "This is a test of foo.",
-    ///                               "copyright": "This is a copyright string for foo.",
-    ///                               "estimatedMinutes": 5,
-    ///                               "icon": "fooIcon",
-    ///                               "taskTransformer" : { "resourceName": "TaskFoo",
-    ///                                                     "bundleIdentifier": "org.example.SharedResources" }
-    ///                               },
-    ///                               {
-    ///                               "identifier": "bar",
-    ///                               "schemaRevision" : 4,
-    ///                               "title": "Hello Bar!",
-    ///                               "detail": "This is a test of bar.",
-    ///                               "estimatedMinutes": 7,
-    ///                               "icon": "barIcon"
-    ///                               }]
-    ///                }
-    ///            """.data(using: .utf8)! // our data in native (JSON) format
-    ///     ```
-    ///
-    /// - parameter decoder: The decoder to use to decode this instance.
-    /// - throws: `DecodingError`
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.title = try container.decodeIfPresent(String.self, forKey: .title)
-        self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
-        self.imageData = try container.decodeIfPresent(RSDResourceImageDataObject.self, forKey: .icon)
-        
-        let factory = decoder.factory
-        var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .tasks)
-        var decodedTasks : [RSDTaskInfo] = []
-        while !nestedContainer.isAtEnd {
-            let taskDecoder = try nestedContainer.superDecoder()
-            let task = try factory.decodeTaskInfo(from: taskDecoder)
-            decodedTasks.append(task)
-        }
-        self.tasks = decodedTasks
+        self._tasks = tasks
     }
 }
 
-extension RSDTaskGroupObject : RSDDocumentableDecodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDTaskGroupObject : DocumentableObject {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
     
-    static func examples() -> [[String : RSDJSONValue]] {
-        let json: [String : RSDJSONValue] = [
+    public static func isOpen() -> Bool { false }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case .identifier, ._tasks:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .title, .detail:
+            return .init(propertyType: .primitive(.string))
+        case .icon:
+            return .init(propertyType: .reference(RSDResourceImageDataObject.documentableType()))
+        case ._tasks:
+            return .init(propertyType: .referenceArray(RSDTaskInfoObject.documentableType()))
+        }
+    }
+    
+    public static func jsonExamples() throws -> [[String : JsonSerializable]] {
+        let json: [String : JsonSerializable] = [
                     "identifier": "foobar",
                     "title": "Foobarific",
                     "detail": "This is a task group containing foo and bar",

@@ -33,6 +33,7 @@
 
 import XCTest
 @testable import Research
+import JsonModel
 
 class FactoryTests: XCTestCase {
     
@@ -40,7 +41,7 @@ class FactoryTests: XCTestCase {
         super.setUp()
                 
         // Use a statically defined timezone.
-        rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
+        ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
     
     override func tearDown() {
@@ -84,7 +85,7 @@ class FactoryTests: XCTestCase {
         
         let taskIdentifier = "foo"
         let schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 3)
-        let resourceTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: BundleWrapper.bundleIdentifier!, classType: nil)
+        let resourceTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: BundleWrapper.bundleIdentifier!)
         
         let expect = expectation(description: "Fetch Task \(taskIdentifier)")
         resourceTransformer.fetchTask(with: taskIdentifier, schemaInfo: schemaInfo) { (task, err)  in
@@ -121,7 +122,6 @@ class FactoryTests: XCTestCase {
             XCTAssertNil(err)
         }
     }
-
     
     // MARK: Helper methods
     
@@ -142,4 +142,10 @@ class FactoryTests: XCTestCase {
         }
     }
     
+}
+
+struct FactoryResourceInfo : ResourceInfo {
+    let factoryBundle: ResourceBundle?
+    let packageName: String?
+    var bundleIdentifier: String? { return nil }
 }

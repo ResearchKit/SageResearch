@@ -33,6 +33,7 @@
 
 import XCTest
 @testable import Research
+import JsonModel
 
 @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
 class CodableInputFieldObjectTests: XCTestCase {
@@ -41,7 +42,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         super.setUp()
         
         // Use a statically defined timezone.
-        rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
+        ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
     
     override func tearDown() {

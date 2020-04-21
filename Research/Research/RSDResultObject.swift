@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDResultObject` is a concrete implementation of the base result associated with a task, step, or asynchronous action.
 public struct RSDResultObject : RSDNavigationResult, Codable {
@@ -67,15 +68,40 @@ public struct RSDResultObject : RSDNavigationResult, Codable {
     }
 }
 
-extension RSDResultObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDResultObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
     
-    static func examples() -> [Encodable] {
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case .type, .identifier, .startDate, .endDate:
+            return true
+        case .skipToIdentifier:
+            return false
+        }
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .type:
+            return .init(constValue: RSDResultType.file)
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .startDate, .endDate:
+            return .init(propertyType: .primitive(.string))
+        case .skipToIdentifier:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [RSDResultObject] {
         var result = RSDResultObject(identifier: "step1")
-        result.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        result.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         result.endDate = result.startDate.addingTimeInterval(5 * 60)
         return [result]
     }

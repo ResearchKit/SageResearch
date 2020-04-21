@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDTaskObject` is the interface for running a task. It includes information about how to calculate progress,
 /// validation, and the order of display for the steps.
@@ -131,9 +132,9 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
             var decodedActions : [RSDAsyncActionConfiguration] = []
             while !nestedContainer.isAtEnd {
                 let actionDecoder = try nestedContainer.superDecoder()
-                if let action = try factory.decodeAsyncActionConfiguration(from: actionDecoder) {
-                    decodedActions.append(action)
-                }
+                let action = try factory.decodePolymorphicObject(RSDAsyncActionConfiguration.self,
+                                                                 from: actionDecoder)
+                decodedActions.append(action)
             }
             self.asyncActions = decodedActions
         } else {
@@ -255,7 +256,7 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     struct TaskData : RSDTaskData {
         let identifier: String
         let timestampDate: Date?
-        let json: RSDJSONSerializable
+        let json: JsonSerializable
     }
 
     
@@ -284,15 +285,15 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     
     // Overrides must be defined in the base implementation
     
-    override class func codingKeys() -> [CodingKey] {
+    override public class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
         let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
     }
     
-    class func examples() -> [[String : RSDJSONValue]] {
-        let json: [String : RSDJSONValue] = [
+    class func examples() -> [[String : JsonValue]] {
+        let json: [String : JsonValue] = [
                 "identifier": "foo",
                 "schemaInfo": [ "identifier": "foo.1.2", "revision": 2 ],
                 "steps": [
@@ -313,5 +314,6 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     }
 }
 
-extension RSDTaskObject : RSDDocumentableDecodableObject {
-}
+// TODO: syoung 04/14/2020 This task is not Kotlin-serializable. Refactor to a serializable type.
+//extension RSDTaskObject : DocumentableObject {
+//}

@@ -32,32 +32,17 @@
 //
 
 import Foundation
-
-/// `RSDStringEnumSet` is a protocol for defining the set of all string values included in an enum.
-public protocol RSDStringEnumSet : Hashable, RawRepresentable, CaseIterable where RawValue == String {
-}
-
-/// `RSDIntEnumSet` is a protocol for defining the set of all int values included in an enum.
-@available(*, deprecated, message: "Kotlin does not support Int enums. Implement `RSDDocumentableStringEnum` instead.")
-public protocol RSDIntEnumSet : Hashable, RawRepresentable, CaseIterable where RawValue == Int {
-}
+import JsonModel
 
 public struct RSDDocumentCreator {
     
-    let allStringEnums: [RSDDocumentableStringEnum.Type] = {
+    let allStringEnums: [DocumentableStringEnum.Type] = {
         
-        var allEnums: [RSDDocumentableStringEnum.Type] = [
-        RSDAsyncActionType.self,
+        var allEnums: [DocumentableStringEnum.Type] = [
         RSDCohortRuleOperator.self,
-        RSDDateCoderObject.self,
-        RSDDeviceType.self,
-        RSDFormUIHint.self,
-        RSDIdentifier.self,
         RSDKeyboardType.self,
         RSDMotionRecorderType.self,
-        RSDResultType.self,
         RSDStandardPermissionType.self,
-        RSDStepType.self,
         RSDSurveyRuleOperator.self,
         RSDTextAutocapitalizationType.self,
         RSDTextAutocorrectionType.self,
@@ -68,158 +53,66 @@ public struct RSDDocumentCreator {
         return allEnums
     }()
     
-    let allOptionSets: [RSDDocumentableOptionSet.Type] = [
+    let allOptionSets: [DocumentableStringOptionSet.Type] = [
         RSDActiveUIStepCommand.self,
         ]
     
-    let allStringLiterals: [RSDDocumentableStringLiteral.Type] = [
-        RSDChoiceObject<String>.self,
+    let allStringLiterals: [DocumentableStringLiteral.Type] = [
+        RSDAsyncActionType.self,
+        RSDDateCoderObject.self,
+        RSDDeviceType.self,
+        RSDFormUIHint.self,
+        RSDIdentifier.self,
+        RSDResultType.self,
+        RSDStepType.self,
         ]
 
-    let allCodableObjects: [RSDDocumentableCodableObject.Type] = {
-        var allCodableObjects: [RSDDocumentableCodableObject.Type] = [
-            RSDAnimatedImageThemeElementObject.self,
-            RSDCohortNavigationRuleObject.self,
-            RSDCollectionResultObject.self,
-            RSDDateRangeObject.self,
-            RSDDurationRangeObject.self,
-            RSDFileResultObject.self,
-            RSDNavigationUIActionObject.self,
-            RSDNumberRangeObject.self,
-            RSDResourceTransformerObject.self,
-            RSDResultObject.self,
-            RSDStandardAsyncActionConfiguration.self,
-            RSDTaskResultObject.self,
-            RSDUIActionObject.self,
-            RSDViewThemeElementObject.self,
-            RSDWebViewUIActionObject.self,
-            RSDVideoViewUIActionObject.self,
-            RSDWeeklyScheduleObject.self,
-            ]
-        
-        return allCodableObjects
-    }()
+    let allCodableObjects: [DocumentableObject.Type] = [
+        RSDAnimatedImageThemeElementObject.self,
+        RSDCohortNavigationRuleObject.self,
+        RSDCollectionResultObject.self,
+        RSDDateRangeObject.self,
+        RSDDistanceRecorderConfiguration.self,
+        RSDFileResultObject.self,
+        RSDMotionRecorderConfiguration.self,
+        RSDNavigationUIActionObject.self,
+        RSDResourceTransformerObject.self,
+        RSDResultObject.self,
+        RSDTaskInfoStepObject.self,
+        RSDTaskResultObject.self,
+        RSDUIActionObject.self,
+        RSDViewThemeElementObject.self,
+        RSDWebViewUIActionObject.self,
+        RSDVideoViewUIActionObject.self,
+        RSDWeeklyScheduleObject.self,
+        ]
     
-    let allDecodableObjects: [RSDDocumentableDecodableObject.Type] = [
-        RSDChoiceObject<Bool>.self,
-        RSDChoiceObject<Date>.self,
-        RSDChoiceObject<Double>.self,
-        RSDChoiceObject<Int>.self,
-        RSDChoiceObject<RSDFraction>.self,
-        RSDChoiceObject<String>.self,
-        RSDComparableSurveyRuleObject<Bool>.self,
-        RSDComparableSurveyRuleObject<String>.self,
-        RSDComparableSurveyRuleObject<Date>.self,
-        RSDComparableSurveyRuleObject<Double>.self,
-        RSDComparableSurveyRuleObject<Int>.self,
-        RSDComparableSurveyRuleObject<RSDFraction>.self,
+    let allDecodableObjects: [DocumentableObject.Type] = [
         RSDUIStepObject.self,
         RSDActiveUIStepObject.self,
         RSDOverviewStepObject.self,
         RSDResultSummaryStepObject.self,
         RSDSectionStepObject.self,
-        RSDStepTransformerObject.self,
+        //RSDStepTransformerObject.self, // syoung 04/14/2020 Cannot test the step transformer as a generic.
         RSDColorPlacementThemeElementObject.self,
         RSDSingleColorThemeElementObject.self,
-        RSDSchemaInfoObject.self,
         RSDConditionalStepNavigatorObject.self,
         RSDTaskGroupObject.self,
-        RSDTaskInfoObject.self,
-        RSDTaskObject.self,
+        ChoiceQuestionStepObject.self,
+        MultipleInputQuestionStepObject.self,
+        SimpleQuestionStepObject.self,
+        StringChoiceQuestionStepObject.self,
+        DoubleTextInputItemObject.self,
+        IntegerTextInputItemObject.self,
+        StringTextInputItemObject.self,
+        YearTextInputItemObject.self,
+        DateTimeInputItemObject.self,
+        DateInputItemObject.self,
+        TimeInputItemObject.self,
+        StringChoicePickerInputItemObject.self,
+        ChoicePickerInputItemObject.self,
+        CheckboxInputItemObject.self,
+        HeightInputItemBuilderObject.self,
+        WeightInputItemBuilderObject.self,
         ]
-}
-
-/// This is an internal protocol (accessible by test but not externally) that can be used to set up
-/// testing of `Decodable` objects used by this framework.
-protocol RSDDocumentable {
-}
-
-/// This is an internal protocol (accessible by test but not externally) that can be used to set up
-/// testing of `Codable` enum objects used by this framework.
-protocol RSDDocumentableStringEnum : RSDDocumentable, Codable {
-    
-    /// Not all of the enums have a `rawValue` of a `String` but they should all be codable using a string value.
-    var stringValue: String { get }
-
-    /// All the coding keys supported by this framework for defining this enum using a JSON dictionary.
-    static func allCodingKeys() -> [String]
-}
-
-/// Any enum set can represent its coding keys by mapping the raw value to a string.
-extension RSDStringEnumSet {
-    static func allCodingKeys() -> [String] {
-        return self.allCases.map{ $0.rawValue }
-    }
-}
-
-/// This is an internal protocol (accessible by test but not externally) that can be used to set up
-/// testing of `Codable` enum objects used by this framework.
-@available(*, deprecated, message: "Kotlin does not support Int enums. Implement `RSDDocumentableStringEnum` instead.")
-protocol RSDDocumentableIntEnum : RSDDocumentable, Codable {
-    
-    /// The int Value for the enum.
-    var intValue: Int { get }
-    
-    /// All the coding keys supported by this framework for defining this enum using a JSON dictionary.
-    static func allCodingKeys() -> [Int]
-}
-
-/// Any enum set can represent its coding keys by mapping the raw value to a string.
-@available(*, deprecated, message: "Kotlin does not support Int enums. Implement `RSDDocumentableStringEnum` instead.")
-extension RSDIntEnumSet {
-    
-    var intValue: Int {
-        return rawValue
-    }
-    
-    static func allCodingKeys() -> [Int] {
-        return self.allCases.map{ $0.rawValue }
-    }
-}
-
-/// This is an internal protocol (accessible by test but not externally) that can be used to set up
-/// testing of `Codable` option set objects that are decoded from a list of strings.
-/// - seealso: `RSDStringLiteralOptionSet`
-protocol RSDDocumentableOptionSet : RSDDocumentable, Codable {
-    
-    /// All the coding keys supported by this framework for defining this option set using a JSON dictionary.
-    static func allCodingKeys() -> [String]
-}
-
-/// This is an internal protocol (accessible by test but not externally) that can be used to set up
-/// testing of `Codable` objects that are encoded and decoded using any string.
-/// - seealso: `ExpressibleByStringLiteral`
-protocol RSDDocumentableStringLiteral : RSDDocumentable, Codable {
-    
-    /// Not all of the string literals have a `rawValue` of a `String` but they should all be codable using a string value.
-    var stringValue: String { get }
-    
-    /// An array of encodable objects to use as the set of examples for decoding this object.
-    static func examples() -> [String]
-}
-
-extension RawRepresentable where Self.RawValue == String {
-    public var stringValue: String { return rawValue }
-}
-
-protocol RSDDocumentableObject : RSDDocumentable {
-    
-    /// A list of `CodingKey` values for all the `Decodable` properties on this object.
-    static func codingKeys() -> [CodingKey]
-}
-
-/// This is an internal protocol (accessible by test but not externally) that can be used to set up
-/// testing of `Codable` objects and for use in documenting them.
-protocol RSDDocumentableCodableObject : RSDDocumentableObject, Codable {
-
-    /// An array of encodable objects to use as the set of examples for decoding this object.
-    static func examples() -> [Encodable]
-}
-
-/// This is an internal protocol (accessible by test but not externally) that can be used to set up
-/// testing of `Codable` objects and for use in documenting them.
-protocol RSDDocumentableDecodableObject : RSDDocumentableObject, Decodable {
-    
-    /// An array of encodable objects to use as the set of examples for decoding this object.
-    static func examples() -> [[String : RSDJSONValue]]
 }

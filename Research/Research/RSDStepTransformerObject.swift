@@ -32,15 +32,17 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDStepTransformerObject` is used in decoding a step with replacement properties for some or all of the steps in a
 /// section that is defined using a different resource. The factory will convert this step into an appropriate
 /// `RSDSectionStep` from the decoded object.
-public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
-    
+public struct RSDStepTransformerObject : RSDStepTransformer, RSDStep, Decodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, resourceTransformer
+        case identifier, stepType = "type", resourceTransformer
     }
+    
+    public private(set) var stepType: RSDStepType = .transform
     
     /// The transformed step.
     public let transformedStep: RSDStep!
@@ -56,13 +58,7 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
     ///            {
     ///             "identifier"         : "heartRate.before",
     ///             "type"               : "transform",
-    ///             "steps"   : [{   "identifier"   : "instruction",
-    ///                                         "title"        : "This is a replacement title for the instruction.",
-    ///                                         "detail"         : "This is some replacement text." },
-    ///                                     {   "identifier"   : "feedback",
-    ///                                         "detail"         : "Your pre run heart rate is" }
-    ///                                     ],
-    ///            "resourceTransformer"    : { "resourceName": "HeartrateStep.json"}
+    ///             "resourceTransformer"    : { "resourceName": "HeartrateStep.json"}
     ///            }
     ///         """.data(using: .utf8)! // our data in native (JSON) format
     ///     ```
@@ -79,7 +75,7 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
         let resourceDecoder = try decoder.factory.createDecoder(for: resourceType,
                                                                 taskIdentifier: decoder.taskIdentifier,
                                                                 schemaInfo: decoder.schemaInfo,
-                                                                resourceInfo: FactoryResourceInfo(from: decoder))
+                                                                resourceInfo: _ResourceInfo(from: decoder))
         let stepDecoder = try resourceDecoder.decode(_StepDecoder.self, from: data)
         
         // copy to transformer
@@ -93,6 +89,36 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
             self.transformedStep = stepDecoder.step
         }
     }
+    
+    private init() {
+        self.transformedStep = PlaceholderStep(identifier: RSDStepType.transform.rawValue)
+    }
+
+    internal static func serializableExample() -> RSDStepTransformerObject { .init() }
+    
+    // Wrapper for the transformed step.
+    
+    public var identifier: String {
+        transformedStep.identifier
+    }
+    
+    public func instantiateStepResult() -> RSDResult {
+        transformedStep.instantiateStepResult()
+    }
+    
+    public func validate() throws {
+        try transformedStep.validate()
+    }
+}
+
+fileprivate struct _ResourceInfo : ResourceInfo {
+    let factoryBundle: ResourceBundle?
+    let packageName: String?
+    var bundleIdentifier: String? { return nil }
+    init(from decoder: Decoder) {
+        self.factoryBundle = decoder.bundle
+        self.packageName = decoder.packageName
+    }
 }
 
 fileprivate struct _StepDecoder: Decodable {
@@ -100,22 +126,44 @@ fileprivate struct _StepDecoder: Decodable {
     let step: RSDStep
     
     init(from decoder: Decoder) throws {
-        guard let step = try decoder.factory.decodeStep(from: decoder) else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to decode a step from the given decoder.")
-            throw DecodingError.dataCorrupted(context)
-        }
-        self.step = step
+        self.step = try decoder.factory.decodePolymorphicObject(RSDStep.self, from: decoder)
     }
 }
 
-extension RSDStepTransformerObject : RSDDocumentableDecodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
+fileprivate struct PlaceholderStep: RSDStep {
+    let identifier: String
+    let stepType: RSDStepType = "placeholder"
+    func instantiateStepResult() -> RSDResult { RSDResultObject(identifier: identifier) }
+    func validate() throws { }
+}
+
+extension RSDStepTransformerObject : DocumentableObject {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
     }
     
-    static func examples() -> [[String : RSDJSONValue]] {
-        // TODO: Add some resource examples. syoung 04/11/2018
-        return []
+    public static func isOpen() -> Bool { false }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { true }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .stepType:
+            return .init(constValue: RSDStepType.transform)
+        case .resourceTransformer:
+            return .init(propertyType: .reference(RSDResourceTransformerObject.documentableType()))
+        }
+    }
+    
+    public static func jsonExamples() throws -> [[String : JsonSerializable]] {
+        [[ "identifier" : "heartRate.before",
+          "type" : "transform",
+          "resourceTransformer" : ["resourceName" : "HeartrateStep.json"]
+        ]]
     }
 }

@@ -1,5 +1,5 @@
 //
-//  RSDResourceInfo.swift
+//  ResourceInfo.swift
 //  Research
 //
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
@@ -32,36 +32,10 @@
 //
 
 import Foundation
-
-/// The resource info is used to generically describe codable info for loading resources from a
-/// bundle or package.
-public protocol RSDResourceInfo {
-
-    // MARK: Apple
-    
-    /// The bundle that a given factory that was used to decode an object can use to load its
-    /// resources. This is *always* a pointer to the `Bundle` from which a JSON file was decoded
-    /// but is defined generically here so that the lowest level of the model does not include
-    /// bundle information directly.
-    var factoryBundle: RSDResourceBundle? { get }
-    
-    /// The identifier of the bundle within which the resource is embedded on Apple platforms.
-    var bundleIdentifier: String? { get }
-    
-    
-    // MARK: Android
-    
-    /// The package within which the resource is embedded on Android platforms.
-    var packageName: String? { get }
-}
-
-/// The android-type of the resource.
-public enum RSDResourceNameType : String, Codable, CaseIterable {
-    case drawable, color, font
-}
+import JsonModel
 
 /// The resource data info describes additional information for a *specific* file.
-public protocol RSDResourceDataInfo : RSDResourceInfo {
+public protocol RSDResourceDataInfo : ResourceInfo {
     
     /// The name of the resource.
     var resourceName: String { get }
@@ -77,7 +51,7 @@ public protocol RSDResourceDataInfo : RSDResourceInfo {
     /// - note: This is different from the Apple bundle structure where you would use either the
     /// raw file extension or the initializer with the resource name and bundle to construct the
     /// object.
-    var resourceType: RSDResourceNameType? { get }
+    var resourceType: String? { get }
 }
 
 extension RSDResourceDataInfo {
@@ -91,14 +65,5 @@ extension RSDResourceDataInfo {
         }
         return filename
     }
-}
-
-/// A resource bundle is used on Apple platforms to point to the `Bundle` for the resource. It is
-/// not directly referenced within this framework so as to avoid any Apple-specific resource
-/// handling classes.
-public protocol RSDResourceBundle : class {
-    
-    /// The identifier of the bundle within which the resource is embedded on Apple platforms.
-    var bundleIdentifier: String? { get }
 }
 

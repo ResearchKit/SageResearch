@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDTaskResultObject` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
@@ -96,11 +97,11 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
         }
         
         let resultsContainer = try container.nestedUnkeyedContainer(forKey: .stepHistory)
-        self.stepHistory = try decoder.factory.decodeResults(from: resultsContainer)
+        self.stepHistory = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: resultsContainer)
         
         if container.contains(.asyncResults) {
             let asyncResultsContainer = try container.nestedUnkeyedContainer(forKey: .asyncResults)
-            self.asyncResults = try decoder.factory.decodeResults(from: asyncResultsContainer)
+            self.asyncResults = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: asyncResultsContainer)
         }
     }
     
@@ -134,21 +135,50 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
     }
 }
 
-extension RSDTaskResultObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDTaskResultObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
     
-    static func exampleResult() -> RSDTaskResultObject {
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case .type, .identifier, .startDate, .endDate, .taskRunUUID, .stepHistory:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .type:
+            return .init(constValue: RSDResultType.task)
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .startDate, .endDate:
+            return .init(propertyType: .primitive(.string))
+        case .taskRunUUID:
+            return .init(propertyType: .primitive(.string))
+        case .schemaInfo:
+            return .init(propertyType: .interface("\(RSDSchemaInfo.self)"))
+        case .stepHistory, .asyncResults:
+            return .init(propertyType: .interfaceArray("\(RSDResult.self)"))
+        }
+    }
+    
+    public static func examples() -> [RSDTaskResultObject] {
         
         var result = RSDTaskResultObject(identifier: "example")
         result.schemaInfo = RSDSchemaInfoObject(identifier: "example schema", revision: 3)
         
         var introStepResult = RSDResultObject(identifier: "introduction")
-        introStepResult.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        introStepResult.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         introStepResult.endDate = introStepResult.startDate.addingTimeInterval(20)
-        var collectionResult = RSDCollectionResultObject.exampleResult()
+        var collectionResult = RSDCollectionResultObject.examples().first!
         collectionResult.startDate = introStepResult.endDate
         collectionResult.endDate = collectionResult.startDate.addingTimeInterval(2 * 60)
         var conclusionStepResult = RSDResultObject(identifier: "conclusion")
@@ -156,7 +186,7 @@ extension RSDTaskResultObject : RSDDocumentableCodableObject {
         conclusionStepResult.endDate = conclusionStepResult.startDate.addingTimeInterval(20)
         result.stepHistory = [introStepResult, collectionResult, conclusionStepResult]
         
-        var fileResult = RSDFileResultObject.exampleResult()
+        var fileResult = RSDFileResultObject.examples().first!
         fileResult.startDate = collectionResult.startDate
         fileResult.endDate = collectionResult.endDate
         result.asyncResults = [fileResult]
@@ -164,11 +194,6 @@ extension RSDTaskResultObject : RSDDocumentableCodableObject {
         result.startDate = introStepResult.startDate
         result.endDate = conclusionStepResult.endDate
         
-        return result
-    }
-    
-    static func examples() -> [Encodable] {
-        let result = exampleResult()
         return [result]
     }
 }

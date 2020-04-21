@@ -52,7 +52,7 @@ extension RSDResourceFontData {
     }
     
     /// The Android resource type for a font is always "font".
-    public var resourceType: RSDResourceNameType? {
-        return .font
+    public var resourceType: String? {
+        return "font"
     }
 }

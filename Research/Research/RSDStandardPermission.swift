@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// Standard permission types.
 ///
@@ -84,10 +85,7 @@ public enum RSDStandardPermissionType: String, RSDPermissionType, Codable, CaseI
     }
 }
 
-extension RSDStandardPermissionType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
-        return allCases.map{ $0.rawValue }
-    }
+extension RSDStandardPermissionType : DocumentableStringEnum, StringEnumSet {
 }
 
 
@@ -113,7 +111,7 @@ public final class RSDStandardPermission : RSDPermission, Codable {
     public static let locationWhenInUse = RSDStandardPermission(permissionType: .locationWhenInUse)
     
     /// Default initializer.
-    public init(permissionType : RSDStandardPermissionType, title: String? = nil, reason: String? = nil, deniedMessage: String? = nil, restrictedMessage: String? = nil, requestIfNeeded: Bool = true, isOptional: Bool = false) {
+    public init(permissionType : RSDStandardPermissionType, title: String? = nil, reason: String? = nil, deniedMessage: String? = nil, restrictedMessage: String? = nil, requestIfNeeded: Bool? = nil, isOptional: Bool? = nil) {
         self.permissionType = permissionType
         self.title = title
         self.reason = reason
@@ -258,5 +256,42 @@ public enum RSDPermissionError : Error {
     /// The user-info dictionary.
     public var errorUserInfo: [String : Any] {
         return ["NSDebugDescription": self.localizedDescription]
+    }
+}
+
+extension RSDStandardPermission : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .permissionType
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .permissionType:
+            return .init(propertyType: .reference(RSDStandardPermissionType.documentableType()))
+        case .title,.reason,._restrictedMessage,._deniedMessage:
+            return .init(propertyType: .primitive(.string))
+        case ._requestIfNeeded, ._isOptional:
+            return .init(propertyType: .primitive(.boolean))
+        }
+    }
+    
+    public static func examples() -> [RSDStandardPermission] {
+        let exampleA = RSDStandardPermission(permissionType: .motion)
+        let exampleB = RSDStandardPermission(permissionType: .camera,
+                                             title: "Permission to use the camera",
+                                             reason: "Because we want to take a picture.",
+                                             deniedMessage: "You didn't give permission",
+                                             restrictedMessage: "Your camera access is restricted",
+                                             requestIfNeeded: false,
+                                             isOptional: true)
+        return [exampleA, exampleB]
     }
 }

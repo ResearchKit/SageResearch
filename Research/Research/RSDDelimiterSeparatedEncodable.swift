@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// A special-case encodable that can be encoded to a comma-delimited string.
 ///
@@ -99,7 +100,7 @@ extension Encodable {
     }
     
     /// Encode the object using the factory encoder.
-    func rsd_encodeObject(to encoder: RSDFactoryEncoder) throws -> Data {
+    func rsd_encodeObject(to encoder: FactoryEncoder) throws -> Data {
         let wrapper = _EncodableWrapper(encodable: self)
         return try encoder.encode(wrapper)
     }

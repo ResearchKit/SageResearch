@@ -1008,7 +1008,7 @@ class CodableInputItemTests: XCTestCase {
     struct InputItemWrapper<Value : InputItemBuilder> : Decodable {
         let inputItem : Value
         init(from decoder: Decoder) throws {
-            let value = try decoder.factory.decodeInputItem(from: decoder)
+            let value = try decoder.factory.decodePolymorphicObject(InputItemBuilder.self, from: decoder)
             guard let inputItem = value as? Value else {
                 let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to decode \(Value.self)")
                 throw DecodingError.typeMismatch(Value.self, context)

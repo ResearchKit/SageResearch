@@ -32,22 +32,16 @@
 //
 
 import Foundation
+import JsonModel
 
 // TODO: syoung 04/02/2020 Add documentation for the Kotlin interfaces.
 
 
-/// An enum listing the json-types for serialization.
-public enum JsonType : String, Codable, CaseIterable {
-    case string, number, integer, boolean, null, array, object
-    
-    var isPrimitive: Bool {
-        let primitiveTypes: [JsonType] = [.string, .number, .integer, .boolean, .null]
-        return primitiveTypes.contains(self)
-    }
-}
-
 /// The protocol for the answer type of a question.
-public protocol AnswerType : Codable {
+public protocol AnswerType : PolymorphicRepresentable, Encodable {
+    var objectType: AnswerTypeType { get }
+    static var defaultType: AnswerTypeType { get }
+    
     var baseType: JsonType { get }
     
     /// Decode the JsonElement for this AnswerType from the given decoder.
@@ -69,6 +63,10 @@ public protocol AnswerType : Codable {
     /// - parameter value: The value to encode.
     /// - returns: The JSON serializable object for this encodable.
     func encodeAnswer(from value: Any?) throws -> JsonElement
+}
+
+public extension AnswerType {
+    var typeName: String { objectType.rawValue }
 }
 
 public protocol Question : ContentNode {

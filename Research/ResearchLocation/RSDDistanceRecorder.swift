@@ -620,7 +620,7 @@ extension CLLocation {
 // Documentation and Tests
 
 // TODO: syoung 09/27/2019 Look into whether or not there is a simple way to use the Documentable protocols in other frameworks.
-extension RSDDistanceRecord { //: RSDDocumentableCodableObject {
+extension RSDDistanceRecord { //: DocumentableStruct {
     
     public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases

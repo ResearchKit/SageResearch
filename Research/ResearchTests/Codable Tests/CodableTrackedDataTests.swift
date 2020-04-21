@@ -110,7 +110,7 @@ class CodableTrackedDataTests: XCTestCase {
     func testWeeklyScheduleItem_Codable() {
         let json = """
         {
-            "daysOfWeek": [1,3,5],
+            "daysOfWeek": ["Sunday","Tuesday","Thursday"],
             "timeOfDay": "08:15"
         }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -146,7 +146,7 @@ class CodableTrackedDataTests: XCTestCase {
     func testWeeklyScheduleItem_Codable_HourOnly() {
         let json = """
         {
-            "daysOfWeek": [1,3,5],
+            "daysOfWeek": ["Sunday","Tuesday","Thursday"],
             "timeOfDay": "08:00"
         }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -182,7 +182,7 @@ class CodableTrackedDataTests: XCTestCase {
     func testWeeklyScheduleItem_Codable_Default() {
         let json = """
         {
-            "daysOfWeek": [1,3,5]
+            "daysOfWeek": ["Sunday","Tuesday","Thursday"]
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         

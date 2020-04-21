@@ -375,7 +375,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open func showLoading(for taskInfo: RSDTaskInfo) {
         // Only if the delegate specifically says to show the task info view, then do so. Otherwise, show loading
         // and exit.
-        let step = (taskInfo as? RSDTaskInfoStep) ?? RSDTaskInfoStepObject(with: taskInfo)
+        let step = (taskInfo as? RSDTaskInfoStep) ?? TaskInfoStep(taskInfo: taskInfo)
         guard let showTaskInfo = self.delegate?.taskViewController?(self, shouldShowTaskInfoFor: step), showTaskInfo,
             let stepController = stepController(for: step, with: self.taskViewModel.currentTaskPath),
             let vc = stepController as? UIViewController
@@ -388,6 +388,20 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         let animated = (taskViewModel.currentChild != nil)
         let direction: RSDStepDirection = animated ? .forward : .none
         pageViewController.setViewControllers([vc], direction: direction, animated: animated, completion: nil)
+    }
+    
+    struct TaskInfoStep : RSDTaskInfoStep {
+        let taskInfo: RSDTaskInfo
+        
+        var identifier: String { taskInfo.identifier }
+        var stepType: RSDStepType { .taskInfo }
+        
+        func instantiateStepResult() -> RSDResult {
+            RSDTaskResultObject(identifier: identifier)
+        }
+         
+        func validate() throws {
+        }
     }
     
     /// Fired when the task controller is ready to go forward. This method must invoke the `goForward()`

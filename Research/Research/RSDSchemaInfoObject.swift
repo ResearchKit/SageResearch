@@ -32,6 +32,11 @@
 //
 
 import Foundation
+import JsonModel
+
+// TODO: syoung 04/14/2020 Deprecate and replace with Kotlin implementation of "resultIdentifier"
+// and "versionString" for tracking the task version and result where these are different from the
+// task identifier.
 
 /// `RSDSchemaInfoObject` is a concrete implementation of the `RSDSchemaInfo` protocol.
 public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable, Hashable {
@@ -63,17 +68,27 @@ public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable, Hashable {
     }
 }
 
-extension RSDSchemaInfoObject : RSDDocumentableDecodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
+extension RSDSchemaInfoObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
     }
     
-    static func examples() -> [[String : RSDJSONValue]] {
-        let json: [String : RSDJSONValue] = [
-            "identifier": "foo",
-            "revision": 3 ]
-        return [json]
+    public static func isRequired(_ codingKey: CodingKey) -> Bool { true }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .revision:
+            return .init(propertyType: .primitive(.integer))
+        }
+    }
+    
+    public static func examples() -> [RSDSchemaInfoObject] {
+        [RSDSchemaInfoObject(identifier: "foo", revision: 2)]
     }
 }
 

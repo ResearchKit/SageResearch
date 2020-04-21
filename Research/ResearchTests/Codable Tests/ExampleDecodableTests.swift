@@ -32,6 +32,7 @@
 //
 
 import XCTest
+import JsonModel
 @testable import Research
 
 class ExampleDecodableTests: XCTestCase {
@@ -40,7 +41,7 @@ class ExampleDecodableTests: XCTestCase {
         super.setUp()
         
         // Use a statically defined timezone.
-        rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
+        ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
     
     override func tearDown() {
@@ -50,41 +51,37 @@ class ExampleDecodableTests: XCTestCase {
     func testAllCodableObjects() {
         let documentCreator = RSDDocumentCreator()
         for objectType in documentCreator.allCodableObjects {
-            
-            let encoder = RSDFactory.shared.createJSONEncoder()
-            let decoder = RSDFactory.shared.createJSONDecoder()
-            
-            for example in objectType.examples() {
-                do {
-                    let wrapper = _EncodableWrapper(encodableObject: example)
-                    let encodedObject = try encoder.encode(wrapper)
-                    _DecodableObjectWrapper._unboxType = objectType
-                    let decodedObject = try decoder.decode(_DecodableObjectWrapper.self, from: encodedObject)
-                    XCTAssertTrue(type(of: decodedObject.value) == objectType)
-                } catch let err {
-                    XCTFail("Failed to encode/decode \(example) for \(objectType). \(err)")
-                }
-            }
+            XCTAssertTrue(decodeExamples(for: objectType))
         }
     }
     
     func testAllDecodableObjects() {
         let documentCreator = RSDDocumentCreator()
         for objectType in documentCreator.allDecodableObjects {
-            
+            XCTAssertTrue(decodeExamples(for: objectType))
+        }
+    }
+    
+    func decodeExamples(for objectType: DocumentableObject.Type) -> Bool {
+        do {
             let decoder = RSDFactory.shared.createJSONDecoder()
-            
-            for example in objectType.examples() {
+            let examples = try objectType.jsonExamples()
+            for example in examples {
                 do {
                     let wrapper = example.jsonObject()
                     let encodedObject = try JSONSerialization.data(withJSONObject: wrapper, options: [])
-                    _DecodableObjectWrapper._unboxType = objectType
+                    _DecodableObjectWrapper._unboxType = (objectType as! Decodable.Type)
                     let decodedObject = try decoder.decode(_DecodableObjectWrapper.self, from: encodedObject)
                     XCTAssertTrue(type(of: decodedObject.value) == objectType)
                 } catch let err {
                     XCTFail("Failed to encode/decode \(example) for \(objectType). \(err)")
                 }
             }
+            return true
+        }
+        catch let err {
+            XCTFail("Failed to decode \(objectType). \(err)")
+            return false
         }
     }
     
@@ -104,7 +101,7 @@ class ExampleDecodableTests: XCTestCase {
                 XCTAssertEqual(decodedObject.items.count, examples.count)
                 for (idx, value) in decodedObject.items.enumerated() {
                     XCTAssertTrue(type(of: value) == objectType)
-                    if let obj = value as? RSDDocumentableStringLiteral, idx < examples.count {
+                    if let obj = value as? DocumentableStringLiteral, idx < examples.count {
                         let expectedValue = examples[idx]
                         XCTAssertEqual(obj.stringValue, expectedValue)
                     } else {
@@ -124,7 +121,7 @@ class ExampleDecodableTests: XCTestCase {
             let encoder = RSDFactory.shared.createJSONEncoder()
             let decoder = RSDFactory.shared.createJSONDecoder()
             
-            let examples = Array(objectType.allCodingKeys())
+            let examples = Array(objectType.allValues())
             do {
                 let wrapper = _EncodableWrapper(encodableObject: examples)
                 let encodedObject = try encoder.encode(wrapper)
@@ -133,7 +130,7 @@ class ExampleDecodableTests: XCTestCase {
                 XCTAssertEqual(decodedObject.items.count, examples.count)
                 for (idx, value) in decodedObject.items.enumerated() {
                     XCTAssertTrue(type(of: value) == objectType)
-                    if let obj = value as? RSDDocumentableStringEnum, idx < examples.count {
+                    if let obj = value as? DocumentableStringEnum, idx < examples.count {
                         let expectedValue = examples[idx]
                         XCTAssertEqual(obj.stringValue, expectedValue)
                     } else {
@@ -153,7 +150,7 @@ class ExampleDecodableTests: XCTestCase {
             let encoder = RSDFactory.shared.createJSONEncoder()
             let decoder = RSDFactory.shared.createJSONDecoder()
             
-            for option in objectType.allCodingKeys() {
+            for option in objectType.examples() {
                 let examples = [option]
                 do {
                     let wrapper = _EncodableWrapper(encodableObject: examples)

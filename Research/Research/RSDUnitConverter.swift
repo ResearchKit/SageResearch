@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDUnitConverter` is a static struct for defined unit converters for converting between US English (imperial)
 /// to metric units. This is used to allow for displaying a person's height or weight in imperial units, while
@@ -87,7 +88,7 @@ public struct RSDUnitConverter {
         public func measurement(from value: Any) -> Measurement<UnitType>? {
             if let ret = value as? Measurement<UnitType> {
                 return ret.converted(to: baseUnit)
-            } else if let num = (value as? NSNumber) ?? (value as? RSDJSONNumber)?.jsonNumber() {
+            } else if let num = (value as? NSNumber) ?? (value as? JsonNumber)?.jsonNumber() {
                 return Measurement(value: num.doubleValue, unit: baseUnit)
             } else {
                 return nil

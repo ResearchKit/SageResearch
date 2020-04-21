@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 extension Date {
     func yearComponent() -> Int {
@@ -471,105 +472,5 @@ open class RSDInputFieldObject : ConvertableInputField, RSDSurveyInputField, RSD
                 try encodable.encode(to: nestedEncoder)
             }
         }
-    }
-    
-    
-    // Overrides must be defined in the base implementation
-    
-    class func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    class func examples() -> [[String : RSDJSONValue]] {
-        
-        let baseTypes = RSDFormDataType.BaseType.allCases
-        let examples = baseTypes.compactMap { (baseType) -> [String : RSDJSONValue]? in
-            switch baseType {
-            case .boolean:
-                return [ "identifier" : "booleanExample",
-                         "prompt" : "This is a boolean input field",
-                         "type" : "boolean",
-                         "uiHint" : "toggle",
-                         "optional" : true]
-            
-            case .date:
-                return [ "identifier" : "dateExample",
-                         "prompt" : "This is a date input field",
-                         "type" : "date",
-                         "uiHint" : "picker",
-                         "placeholder" : "enter a date",
-                         "range" : [ "minimumDate" : "2017-02-20",
-                                     "maximumDate" : "2017-03-20",
-                                     "codingFormat" : "yyyy-MM-dd"]]
-            case .decimal:
-                return [ "identifier" : "decimalExample",
-                         "prompt" : "This is a decimal input field",
-                         "type" : "decimal",
-                         "uiHint" : "slider",
-                         "placeholder" : "select a numer",
-                         "range" : [ "minimumValue" : -2.5,
-                                     "maximumValue" : 3,
-                                     "stepInterval" : 0.1,
-                                     "unit" : "feet",
-                                     "formatter" : ["maximumDigits" : 3]],
-                         "surveyRules" : [["skipToIdentifier": "lessThan",
-                                           "ruleOperator": "lt",
-                                           "matchingAnswer": 0],
-                                          ["skipToIdentifier": "greaterThan",
-                                           "ruleOperator": "gt",
-                                           "matchingAnswer": 0]]]
-            case .integer:
-                return [ "identifier" : "integerExample",
-                         "prompt" : "This is a integer input field",
-                         "type" : "integer",
-                         "uiHint" : "popover",
-                         "placeholder" : "select a numer",
-                         "range" : [ "minimumValue" : -10,
-                                     "maximumValue" : 10,
-                                     "stepInterval" : 2],
-                         "matchingAnswer" : 0]
-                
-            case .fraction:
-                return [ "identifier" : "fractionExample",
-                         "prompt" : "This is a fraction input field",
-                         "type" : "fraction",
-                         "uiHint" : "textfield",
-                         "placeholderText" : "select a numer",
-                         "range" : [ "minimumValue" : -1.0,
-                                     "maximumValue" : 1.0,
-                                     "stepInterval" : 0.25],
-                         "matchingAnswer" : 0]
-                
-            case .duration:
-                return [ "identifier" : "durationExample",
-                         "prompt" : "This is a duration input field",
-                         "type" : "duration",
-                         "uiHint" : "picker",
-                         "placeholderText" : "Select a duration",
-                         "range" : [ "minimumValue" : 0,
-                                     "maximumValue" : 26,
-                                     "unit" : "minute"]]
-                
-            case .year:
-                return [ "identifier" : "yearExample",
-                         "prompt" : "This is a year input field",
-                         "type" : "year",
-                         "uiHint" : "textfield",
-                         "placeholder" : "birth year",
-                         "range" : [ "allowFuture" : false]]
-            
-            case .string:
-                return [ "identifier" : "stringExample",
-                         "prompt" : "This is a string input field",
-                         "type" : "string",
-                         "placeholder" : "enter some text",
-                         "textFieldOptions" : [ "keyboardType" : "asciiCapable"]]
-                
-            case .codable:
-                return nil
-            }
-        }
-
-        return examples
     }
 }

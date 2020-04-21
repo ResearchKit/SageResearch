@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDChoiceObject` is a concrete implementation of `RSDChoice` that can be used to
 /// track a multiple choice, single choice, or multiple component input field where each
@@ -165,46 +166,5 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, Codable {
             try container.encodeIfPresent(self.imageData?.imageIdentifier, forKey: .detail)
         }
         try container.encode(isExclusive, forKey: .exclusive)
-    }
-}
-
-extension RSDChoiceObject : RSDDocumentableDecodableObject {
-
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func exampleDictionary() -> [String : RSDJSONValue]? {
-        if Value.self == String.self {
-            return ["value": "a", "text": "one", "iconName": "iconOne", "detail": "The number one", "exclusive": true]
-        } else if Value.self == Bool.self {
-            return ["value": true, "text": "Yes"]
-        } else if Value.self == Int.self {
-            return ["value": 1, "text": "one", "iconName": "iconOne", "detail": "The number one", "exclusive": true]
-        } else if Value.self == Double.self {
-            return ["value": 1.2, "text": "one point two"]
-        } else if Value.self == RSDFraction.self {
-            return ["value": "1/2", "text": "one half"]
-        } else if Value.self == Date.self {
-            return ["value": Date(), "text": "now"]
-        } else {
-            return nil
-        }
-    }
-    
-    static func examples() -> [[String : RSDJSONValue]] {
-        guard let dictionary = exampleDictionary() else { return [] }
-        return [dictionary]
-    }
-}
-
-extension RSDChoiceObject : RSDDocumentableStringLiteral {
-    
-    var stringValue: String {
-        return self._value as? String ?? ""
-    }
-    
-    static func examples() -> [String] {
-        return ["Blue Dogs"]
     }
 }

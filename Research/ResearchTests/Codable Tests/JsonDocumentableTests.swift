@@ -1,8 +1,8 @@
 //
-//  RSDImageThemeElementType.swift
-//  Research
+//  JsonDocumentableTests.swift
+//  ResearchTests_iOS
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,36 +31,35 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import XCTest
+@testable import Research
+import JsonModel
 
-/// The type of the image theme. This is used to decode a `RSDImageThemeElement` using a `RSDFactory`. It can also be used
-/// to customize the UI.
-public struct RSDImageThemeElementType : RSDFactoryTypeRepresentable, Codable, Equatable, Hashable {
-    public let rawValue: String
-    
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-    
-    /// Defaults to creating a `RSDFetchableImageThemeElementObject`.
-    public static let fetchable: RSDImageThemeElementType = "fetchable"
-    
-    /// Defaults to creating a `RSDAnimatedImageThemeElementObject`.
-    public static let animated: RSDImageThemeElementType = "animated"
-    
-    public static func allStandardTypes() -> [RSDImageThemeElementType] {
-        return [.fetchable, .animated]
-    }
-}
+class JsonDocumentableTests: XCTestCase {
 
-extension RSDImageThemeElementType : ExpressibleByStringLiteral {
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
+    override func setUp() {
+        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-}
 
-extension RSDImageThemeElementType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
-        return allStandardTypes().map{ $0.rawValue }
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    }
+
+    func testCreateJsonSchemaDocumentation() {
+        let factory = RSDFactory()
+        let baseUrl = URL(string: "http://sagebionetworks.org/jsonSchema/")!
+        
+        let doc = JsonDocumentBuilder(baseUrl: baseUrl,
+                                      rootName: "SageResearch",
+                                      factory: factory)
+        
+        do {
+            let _ = try doc.buildSchema()
+
+            
+        }
+        catch let err {
+            XCTFail("Failed to build the JsonSchema: \(err)")
+        }
     }
 }

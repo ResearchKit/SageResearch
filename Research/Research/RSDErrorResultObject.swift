@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDErrorResult` is a result that holds information about an error.
 public struct RSDErrorResultObject : RSDErrorResult, Codable {
@@ -99,19 +100,41 @@ public struct RSDErrorResultObject : RSDErrorResult, Codable {
     }
 }
 
-extension RSDErrorResultObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDErrorResultObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
     
-    static func exampleResult() -> RSDErrorResultObject {
-        return RSDErrorResultObject(identifier: "errorResult", description: "example error", domain: "ExampleDomain", code: 1)
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case ._startDate, ._endDate:
+            return false
+        default:
+            return true
+        }
     }
     
-    static func examples() -> [Encodable] {
-        let result = exampleResult()
-        return [result]
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .type:
+            return .init(constValue: RSDResultType.error)
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case ._startDate, ._endDate:
+            return .init(propertyType: .primitive(.string))
+        case .errorDomain, .errorDescription:
+            return .init(propertyType: .primitive(.string))
+        case .errorCode:
+            return .init(propertyType: .primitive(.integer))
+        }
+    }
+    
+    public static func examples() -> [RSDErrorResultObject] {
+        return [RSDErrorResultObject(identifier: "errorResult", description: "example error", domain: "ExampleDomain", code: 1)]
     }
 }
 

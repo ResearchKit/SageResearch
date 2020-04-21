@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// A compact object for storing information about a task run that can be used by a task to influence
 /// subsequent task runs.
@@ -45,5 +46,5 @@ public protocol RSDTaskData {
     var timestampDate: Date? { get }
     
     /// Return a JSON type object. Elements may be any one of the serializable JSON types.
-    var json: RSDJSONSerializable { get }
+    var json: JsonSerializable { get }
 }

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDTextInputTableItem` is used to represent a single row in a table that holds a text entry input field.
 /// Typically, this would be used to represent a single `RSDInputField` value, but it can also be used to represent a
@@ -127,7 +128,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem, TextInputItemState {
     final func setPreviousAnswer(_ jsonValue: Any?) throws {
         // If setting a previous answer, then look to see if the answer can be converted from
         // json *before* validating to see if the answer is still a valid response.
-        if let newValue = jsonValue as? RSDJSONSerializable {
+        if let newValue = jsonValue as? JsonSerializable {
             let answer = try answerType.jsonDecode(from: newValue)
             _answer = try validatedAnswer(answer)
         }
@@ -235,7 +236,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem, TextInputItemState {
                 throw RSDInputFieldError.invalidType(context)
             }
         }
-        else if let num = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber()  {
+        else if let num = (answer as? NSNumber) ?? (answer as? JsonNumber)?.jsonNumber()  {
             switch answerType.baseType  {
             case .boolean:
                 return num.boolValue

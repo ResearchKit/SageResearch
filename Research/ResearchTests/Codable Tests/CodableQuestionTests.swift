@@ -406,7 +406,7 @@ class CodableQuestionTests: XCTestCase {
     struct QuestionWrapper<Value : QuestionStep> : Decodable {
         let questionStep : Value
         init(from decoder: Decoder) throws {
-            let step = try decoder.factory.decodeStep(from: decoder)
+            let step = try decoder.factory.decodePolymorphicObject(RSDStep.self, from: decoder)
             guard let qStep = step as? Value else {
                 let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to decode a QuestionStep")
                 throw DecodingError.typeMismatch(Value.self, context)

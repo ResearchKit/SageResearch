@@ -33,6 +33,7 @@
 
 import XCTest
 import Research
+import JsonModel
 
 class BundleWrapper {
     class var bundleIdentifier: String? {
@@ -49,7 +50,7 @@ struct TestResourceWrapper : RSDResourceTransformer, Codable {
     let resourceName: String
     let bundleIdentifier: String?
     let classType: String?
-    var factoryBundle: RSDResourceBundle? = nil
+    var factoryBundle: ResourceBundle? = nil
     var packageName: String? = nil
 
     public init(resourceName: String, bundleIdentifier: String?) {

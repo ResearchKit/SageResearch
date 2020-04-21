@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 
 /// The `RSDSampleRecord` defines the properties that are included with all JSON logging samples.
 /// By defining a protocol, the logger can include markers for step transitions and the records
@@ -852,14 +853,14 @@ public class RSDRecordSampleLogger : RSDDataLogger {
 }
 
 // TODO: syoung 09/27/2019 Look into whether or not there is a simple way to use the Documentable protocols in other frameworks.
-extension RSDRecordMarker { //} : RSDDocumentableCodableObject {
+extension RSDRecordMarker { //} : DocumentableStruct {
 
     static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
 
     static func examples() -> [Encodable] {
-        let date = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        let date = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         return [RSDRecordMarker(uptime: 12344.56, timestamp: 0, date: date, stepPath: "/Foo Task/sectionA/step1")]
     }
 }

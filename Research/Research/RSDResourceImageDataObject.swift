@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 extension String {
     
@@ -64,7 +65,7 @@ extension RSDEmbeddedIconData {
 
 /// Implementation of a resource image pointer that can be decoded from a string.
 public struct RSDResourceImageDataObject : RSDThemeResourceImageData, Codable, Hashable {
-
+    
     /// The name of the image.
     public let imageName: String
     
@@ -72,7 +73,7 @@ public struct RSDResourceImageDataObject : RSDThemeResourceImageData, Codable, H
     public let rawFileExtension: String?
     
     /// Pointer to the factory bundle.
-    public var factoryBundle: RSDResourceBundle?
+    public var factoryBundle: ResourceBundle?
     
     /// The package within which the resource is embedded on Android platforms.
     public var packageName: String?
@@ -92,7 +93,7 @@ public struct RSDResourceImageDataObject : RSDThemeResourceImageData, Codable, H
         return nil
     }
     
-    public init(imageName: String, factoryBundle: RSDResourceBundle? = nil, packageName: String? = nil) {
+    public init(imageName: String, factoryBundle: ResourceBundle? = nil, packageName: String? = nil) {
         let splitFile = imageName.splitFilename()
         self.imageName = splitFile.resourceName
         self.rawFileExtension = splitFile.fileExtension
@@ -136,8 +137,8 @@ extension RSDResourceImageDataObject : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDResourceImageDataObject : RSDDocumentableStringLiteral {
-    static func examples() -> [String] {
+extension RSDResourceImageDataObject : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return ["happyFaceIcon"]
     }
 }

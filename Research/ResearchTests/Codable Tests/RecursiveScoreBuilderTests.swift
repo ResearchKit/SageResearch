@@ -32,6 +32,7 @@
 //
 
 import XCTest
+import JsonModel
 @testable import Research
 
 class RecursiveScoreBuilderTests: XCTestCase {
@@ -79,7 +80,7 @@ class RecursiveScoreBuilderTests: XCTestCase {
         subResultC.appendStepHistory(with: score3)
         taskResult.appendStepHistory(with: subResultC)
         
-        let expectedJson: [String : RSDJSONSerializable] = [
+        let expectedJson: [String : JsonSerializable] = [
             "sectionA" : [
                 "score1" : 1,
                 "answer1" : true,
@@ -114,7 +115,7 @@ struct TestResult : RSDScoringResult {
     
     var endDate: Date = Date()
 
-    func dataScore() throws -> RSDJSONSerializable? {
+    func dataScore() throws -> JsonSerializable? {
         return score
     }
     

@@ -32,19 +32,20 @@
 //
 
 import Foundation
+import JsonModel
 
 // MARK: Value Decoding
 @available(*, deprecated, message: "Use `Question` and `InputItem` instead")
 extension RSDAnswerResultType {
     
-    /// Decode a `RSDJSONValue` from the given JSON value.
+    /// Decode a `JsonValue` from the given JSON value.
     ///
     /// - parameters:
     ///     - jsonValue: The JSON value (from an array or dictionary) with the answer.
     ///     - dataType: The data type to use to hint at the transform.
     /// - returns: The decoded value or `nil` if the value is not present.
     /// - throws: `DecodingError` if the encountered stored value cannot be decoded.
-    public func jsonDecode(from jsonValue: RSDJSONSerializable?, with dataType: RSDFormDataType? = nil) throws -> Any? {
+    public func jsonDecode(from jsonValue: JsonSerializable?, with dataType: RSDFormDataType? = nil) throws -> Any? {
         guard let jsonValue = jsonValue, !(jsonValue is NSNull) else { return nil }
         var answerType = self
         if let dataType = dataType {
@@ -53,12 +54,12 @@ extension RSDAnswerResultType {
         return try AnswerResultTypeCodingWrapper.value(from: jsonValue, for: answerType)
     }
     
-    /// Decode a `RSDJSONValue` from the given decoder.
+    /// Decode a `JsonValue` from the given decoder.
     ///
     /// - parameter decoder: The decoder that holds the value.
     /// - returns: The decoded value or `nil` if the value is not present.
     /// - throws: `DecodingError` if the encountered stored value cannot be decoded.
-    public func decodeValue(from decoder:Decoder) throws -> RSDJSONValue? {
+    public func decodeValue(from decoder:Decoder) throws -> JsonValue? {
         // Look to see if the decoded value is nil and exit early if that is the case.
         if let nilContainer = try? decoder.singleValueContainer(), nilContainer.decodeNil() {
             return nil
@@ -68,7 +69,7 @@ extension RSDAnswerResultType {
             switch sType {
             case .array:
                 do {
-                    var values: [RSDJSONValue] = []
+                    var values: [JsonValue] = []
                     var container = try decoder.unkeyedContainer()
                     while !container.isAtEnd {
                         let value = try _decodeSingleValue(from: container.superDecoder())
@@ -88,7 +89,7 @@ extension RSDAnswerResultType {
                 }
                 
             case .dictionary:
-                var values: [String : RSDJSONValue] = [:]
+                var values: [String : JsonValue] = [:]
                 let container = try decoder.container(keyedBy: AnyCodingKey.self)
                 for key in container.allKeys {
                     let nestedDecoder = try container.superDecoder(forKey: key)
@@ -103,7 +104,7 @@ extension RSDAnswerResultType {
         }
     }
     
-    private func _decodeStringValue(from string: String, decoder: Decoder) throws -> RSDJSONValue {
+    private func _decodeStringValue(from string: String, decoder: Decoder) throws -> JsonValue {
         let value = try _decodeStringValue(from: string, decoder: decoder, baseType: self.baseType)
         if let dataType = self.formDataType?.baseType, dataType == .fraction {
             return try _decodeFraction(from: value)
@@ -113,7 +114,7 @@ extension RSDAnswerResultType {
         }
     }
     
-    private func _decodeStringValue(from string: String, decoder: Decoder, baseType: RSDAnswerResultType.BaseType) throws -> RSDJSONValue {
+    private func _decodeStringValue(from string: String, decoder: Decoder, baseType: RSDAnswerResultType.BaseType) throws -> JsonValue {
         switch baseType {
         case .boolean:
             return (string as NSString).boolValue
@@ -143,7 +144,7 @@ extension RSDAnswerResultType {
         }
     }
     
-    private func _decodeSingleValue(from decoder: Decoder) throws -> RSDJSONValue {
+    private func _decodeSingleValue(from decoder: Decoder) throws -> JsonValue {
         let value = try _decodeSingleValue(from: decoder, baseType: self.baseType)
         if let dataType = self.formDataType?.baseType, dataType == .fraction {
             return try _decodeFraction(from: value)
@@ -153,12 +154,12 @@ extension RSDAnswerResultType {
         }
     }
     
-    private func _decodeSingleValue(from decoder: Decoder, baseType: RSDAnswerResultType.BaseType) throws -> RSDJSONValue {
+    private func _decodeSingleValue(from decoder: Decoder, baseType: RSDAnswerResultType.BaseType) throws -> JsonValue {
         
         // special-case the ".codable" type to return a dictionary
         if baseType == .codable {
-            let container = try decoder.container(keyedBy: AnyCodingKey.self)
-            return try container.rsd_decode(Dictionary<String, Any>.self)
+            let element = try AnyCodableDictionary(from: decoder)
+            return element.dictionary
         }
         
         // all other types are single value
@@ -210,7 +211,7 @@ extension RSDAnswerResultType {
         return formatter.date(from: string)
     }
     
-    private func _decodeFraction(from jsonValue: RSDJSONValue) throws -> RSDFraction {
+    private func _decodeFraction(from jsonValue: JsonValue) throws -> RSDFraction {
         if let string = jsonValue as? String {
             let formatter = RSDFractionFormatter()
             guard let num = formatter.number(from: string) else {
@@ -219,7 +220,7 @@ extension RSDAnswerResultType {
             }
             return num.fractionalValue()
         }
-        else if let num = (jsonValue as? NSNumber) ?? (jsonValue as? RSDJSONNumber)?.jsonNumber() {
+        else if let num = (jsonValue as? NSNumber) ?? (jsonValue as? JsonNumber)?.jsonNumber() {
             return num.fractionalValue()
         }
         else {
@@ -236,7 +237,7 @@ extension RSDAnswerResultType {
     /// Returns a JSON serializable object that is encoded for this answer type from the given value.
     /// - paramenter value: The value to encode.
     /// - returns: The JSON serializable object for this encodable.
-    public func jsonEncode(from value: Any?) throws -> RSDJSONSerializable? {
+    public func jsonEncode(from value: Any?) throws -> JsonSerializable? {
         guard let obj = value else { return nil }
         let wrapper = AnswerResultTypeCodingWrapper(answerType: self, object: obj)
         return try wrapper.jsonValue()
@@ -442,12 +443,12 @@ fileprivate struct AnswerResultTypeCodingWrapper : Codable {
         try answerType.encode(object, to: nestedEncoder)
     }
     
-    func jsonValue() throws -> RSDJSONSerializable {
+    func jsonValue() throws -> JsonSerializable {
         let jsonEncoder = RSDFactory.shared.createJSONEncoder()
         let data = try jsonEncoder.encode(self)
         let json = try JSONSerialization.jsonObject(with: data, options: [])
         guard let dictionary = json as? [String : Any],
-            let value = dictionary[CodingKeys.object.rawValue] as? RSDJSONValue
+            let value = dictionary[CodingKeys.object.rawValue] as? JsonValue
             else {
                 let context = EncodingError.Context(codingPath: [], debugDescription: "Could not decode the encoded value.")
                 throw EncodingError.invalidValue(object ?? NSNull(), context)
@@ -455,7 +456,7 @@ fileprivate struct AnswerResultTypeCodingWrapper : Codable {
         return value.jsonObject()
     }
     
-    static func value(from jsonValue: RSDJSONSerializable, for answerType: RSDAnswerResultType) throws -> Any? {
+    static func value(from jsonValue: JsonSerializable, for answerType: RSDAnswerResultType) throws -> Any? {
         let jsonDecoder = JSONDecoder()
         let encodedAnswerType = try answerType.rsd_jsonEncodedDictionary()
         let dictionary: [String : Any] = [CodingKeys.object.stringValue : jsonValue,

@@ -2,7 +2,7 @@
 //  RSDAsyncActionType.swift
 //  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -32,6 +32,35 @@
 //
 
 import Foundation
+import JsonModel
+
+public final class AsyncActionConfigurationSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    override init() {
+        let examples: [SerializableAsyncActionConfiguration] = [
+            RSDMotionRecorderConfiguration.examples().first!,
+            RSDDistanceRecorderConfiguration.examples().first!,
+        ]
+        self.examples = examples
+    }
+    
+    public private(set) var examples: [RSDAsyncActionConfiguration]
+    
+    public func add(_ example: SerializableAsyncActionConfiguration) {
+        if let idx = examples.firstIndex(where: {
+            ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
+            examples.remove(at: idx)
+        }
+        examples.append(example)
+    }
+}
+
+public protocol SerializableAsyncActionConfiguration : RSDAsyncActionConfiguration, PolymorphicRepresentable, Encodable {
+    var asyncActionType: RSDAsyncActionType { get }
+}
+
+public extension SerializableAsyncActionConfiguration {
+    var typeName: String { return asyncActionType.rawValue }
+}
 
 /// The type of the async action configuration. This is used to decode async action configurations
 /// using an instance of `RSDFactory`.
@@ -55,15 +84,14 @@ public struct RSDAsyncActionType : RSDFactoryTypeRepresentable, Codable, Hashabl
     }
 }
 
-extension RSDAsyncActionType : ExpressibleByStringLiteral {    
+extension RSDAsyncActionType : ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }
 }
 
-extension RSDAsyncActionType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
+extension RSDAsyncActionType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
         return allBaseTypes().map{ $0.rawValue }
     }
 }
-

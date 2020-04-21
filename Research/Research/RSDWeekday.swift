@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The weekday enum assigns an enum value to each day of the week and implements `Comparable` to allow
 /// for sorting the weekdays by the order appropriate for the participant's current Locale.
@@ -117,7 +118,7 @@ extension RSDWeekday : RSDChoice, RSDComparable {
     }
 }
 
-extension RSDWeekday : RSDDocumentableStringEnum {
+extension RSDWeekday : DocumentableStringEnum {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -127,6 +128,7 @@ extension RSDWeekday : RSDDocumentableStringEnum {
         }
         else {
             let rawValue = try container.decode(Int.self)
+            debugPrint("WARNING!!! Decoding weekday from an Int is deprecated. Use string keywords.")
             self.init(rawValue: rawValue)!
         }
     }
@@ -136,11 +138,11 @@ extension RSDWeekday : RSDDocumentableStringEnum {
         try singleValueContainer.encode(self.stringValue)
     }
     
-    var stringValue: String {
+    public var stringValue: String {
         return RSDWeekday.weekdayNames[self.rawValue - 1]
     }
     
-    static func allCodingKeys() -> [String] {
+    public static func allValues() -> [String] {
         return weekdayNames
     }
 }

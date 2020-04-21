@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDPickerViewProtocol` is a protocol for an input view that can be used to pick an answer.
 @objc
@@ -390,7 +391,7 @@ open class RSDNumberPickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
             let number: Decimal
             if let decimal = newValue as? Decimal {
                 number = decimal
-            } else if let num = (newValue as? NSNumber) ?? (newValue as? RSDJSONNumber)?.jsonNumber() {
+            } else if let num = (newValue as? NSNumber) ?? (newValue as? JsonNumber)?.jsonNumber() {
                 number = Decimal(num.doubleValue)
             } else {
                 number = .nan

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDComparableSurveyRuleObject` is a survey rule that matches an expected result to the answer and vends a skip
 /// identifier if the match is evaluated to `true`.
@@ -101,37 +102,3 @@ public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRu
         self.cohort = cohort
     }
 }
-
-extension RSDComparableSurveyRuleObject : RSDDocumentableDecodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func examples() -> [[String : RSDJSONValue]] {
-        if Value.self == Bool.self {
-            return [ ["skipToIdentifier" : "nextSection", "matchingAnswer" : true] ]
-        }
-        else if Value.self == String.self {
-            return [ ["skipToIdentifier" : "nextSection", "matchingAnswer" : "foo"],
-                     ["matchingAnswer" : "bar", "ruleOperator" : "ne"]]
-        }
-        else if Value.self == Date.self {
-            return [ ["skipToIdentifier" : "nextSection",
-                      "matchingAnswer" : "2017-10-16T22:28:09.000-07:00",
-                      "ruleOperator" : "lt"]]
-        }
-        else if Value.self == Double.self {
-            return [ ["skipToIdentifier" : "nextSection",
-                      "matchingAnswer" : 10.7,
-                      "ruleOperator" : "gt"]]
-        }
-        else if Value.self == Int.self {
-            return [ ["skipToIdentifier" : "nextSection",
-                      "matchingAnswer" : 10,
-                      "ruleOperator" : "ne"]]
-        }
-        return []
-    }
-}
-

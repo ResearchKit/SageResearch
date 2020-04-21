@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 
 /// `RSDPickerDataSource` includes information that can be used to build a picker UI element.
 public protocol RSDPickerDataSource {
@@ -60,11 +61,11 @@ extension RSDDatePickerMode {
     public var defaultCodingFormat: String {
         switch self {
         case .dateAndTime:
-            return rsd_ISO8601TimestampFormatter.dateFormat
+            return ISO8601TimestampFormatter.dateFormat
         case .date:
-            return rsd_ISO8601DateOnlyFormatter.dateFormat
+            return ISO8601DateOnlyFormatter.dateFormat
         case .time:
-            return rsd_ISO8601TimeOnlyFormatter.dateFormat
+            return ISO8601TimeOnlyFormatter.dateFormat
         }
     }
 }

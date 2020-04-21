@@ -32,8 +32,52 @@
 //
 
 import Foundation
+import JsonModel
 
-public struct InputItemType : RSDFactoryTypeRepresentable, Codable, Hashable {
+public final class InputItemSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    override init() {
+        let examples: [SerializableInputItemBuilder] = [
+            
+            DoubleTextInputItemObject(),
+            IntegerTextInputItemObject(),
+            StringTextInputItemObject(),
+            YearTextInputItemObject(),
+            
+            DateTimeInputItemObject(),
+            DateInputItemObject(),
+            TimeInputItemObject(),
+            
+            StringChoicePickerInputItemObject(choices: []),
+            ChoicePickerInputItemObject(jsonChoices: []),
+
+            CheckboxInputItemObject(fieldLabel: "Checkbox A"),
+            
+            HeightInputItemBuilderObject(),
+            WeightInputItemBuilderObject(),
+        ]
+        self.examples = examples
+    }
+    
+    public private(set) var examples: [InputItemBuilder]
+    
+    public func add(_ example: SerializableInputItemBuilder) {
+        if let idx = examples.firstIndex(where: {
+            ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
+            examples.remove(at: idx)
+        }
+        examples.append(example)
+    }
+}
+
+public protocol SerializableInputItemBuilder : InputItemBuilder, PolymorphicRepresentable, Encodable {
+    var inputItemType: InputItemType { get }
+}
+
+public extension SerializableInputItemBuilder {
+    var typeName: String { return inputItemType.rawValue }
+}
+
+public struct InputItemType : TypeRepresentable, Codable, Hashable {
     public let rawValue: String
     public init(rawValue: String) {
         self.rawValue = rawValue
@@ -44,7 +88,7 @@ public struct InputItemType : RSDFactoryTypeRepresentable, Codable, Hashable {
     }
 }
 
-extension InputItemType : ExpressibleByStringLiteral {
+extension InputItemType : ExpressibleByStringLiteral, DocumentableStringLiteral {
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }
@@ -64,6 +108,26 @@ extension InputItemType : ExpressibleByStringLiteral {
     
     public static let height: InputItemType = "height"
     public static let weight: InputItemType = "weight"
+    
+    static func allStandardTypes() -> [InputItemType] {
+        return [
+            .checkbox,
+            .choicePicker,
+            .date,
+            .dateTime,
+            .decimal,
+            .height,
+            .integer,
+            .string,
+            .stringChoicePicker,
+            .time,
+            .weight,
+            .year]
+    }
+    
+    public static func examples() -> [String] {
+        allStandardTypes().map { $0.rawValue }
+    }
 }
 
 open class AbstractInputItemObject {
@@ -134,72 +198,44 @@ open class AbstractInputItemObject {
         try container.encodeIfPresent(_isOptional, forKey: .isOptional)
         try container.encodeIfPresent(_isExclusive, forKey: .isExclusive)
     }
+    
+    // DocumentableObject implementation
+    
+    open class func codingKeys() -> [CodingKey] {
+        return CodingKeys.allCases
+    }
+    
+    open class func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .inputItemType
+    }
+    
+    open class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not handled by \(self).")
+        }
+        switch key {
+        case .inputItemType:
+            return .init(constValue: defaultType())
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .inputUIHint:
+            return .init(propertyType: .reference(RSDFormUIHint.documentableType()))
+        case .fieldLabel:
+            return .init(propertyType: .primitive(.string))
+        case .placeholder:
+            return .init(propertyType: .primitive(.string))
+        case .isOptional:
+            return .init(propertyType: .primitive(.boolean))
+        case .isExclusive:
+            return .init(propertyType: .primitive(.boolean))
+        }
+    }
 }
 
 // MARK: TextInputItem
 
-public struct KeyboardOptionsObject : KeyboardOptions, Codable {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case _isSecureTextEntry = "isSecureTextEntry"
-        case _autocapitalizationType = "autocapitalizationType"
-        case _autocorrectionType = "autocorrectionType"
-        case _spellCheckingType = "spellCheckingType"
-        case _keyboardType = "keyboardType"
-    }
-    
-    public var isSecureTextEntry: Bool { _isSecureTextEntry ?? false }
-    private var _isSecureTextEntry: Bool?
-    
-    public var autocapitalizationType: RSDTextAutocapitalizationType { _autocapitalizationType ?? .none }
-    private var _autocapitalizationType: RSDTextAutocapitalizationType?
-    
-    public var autocorrectionType: RSDTextAutocorrectionType { _autocorrectionType ?? .no }
-    private var _autocorrectionType: RSDTextAutocorrectionType?
-    
-    public var spellCheckingType: RSDTextSpellCheckingType { _spellCheckingType ?? .no }
-    private var _spellCheckingType: RSDTextSpellCheckingType?
-    
-    public var keyboardType: RSDKeyboardType { _keyboardType ?? .default }
-    private var _keyboardType: RSDKeyboardType?
-    
-    public init(isSecureTextEntry: Bool? = nil,
-                autocapitalizationType: RSDTextAutocapitalizationType? = nil,
-                autocorrectionType: RSDTextAutocorrectionType? = nil,
-                spellCheckingType: RSDTextSpellCheckingType? = nil,
-                keyboardType: RSDKeyboardType? = nil) {
-        _isSecureTextEntry = isSecureTextEntry
-        _autocapitalizationType = autocapitalizationType
-        _autocorrectionType = autocorrectionType
-        _spellCheckingType = spellCheckingType
-        _keyboardType = keyboardType
-    }
-    
-    public static let integerEntryOptions = KeyboardOptionsObject(isSecureTextEntry: false,
-                                                                  autocapitalizationType: RSDTextAutocapitalizationType.none,
-                                                                 autocorrectionType: .no,
-                                                                 spellCheckingType: .no,
-                                                                 keyboardType: .numberPad)
-
-    public static let decimalEntryOptions = KeyboardOptionsObject(isSecureTextEntry: false,
-                                                                  autocapitalizationType: RSDTextAutocapitalizationType.none,
-                                                                  autocorrectionType: .no,
-                                                                  spellCheckingType: .no,
-                                                                  keyboardType: .decimalPad)
-    
-    public static let dateTimeEntryOptions = KeyboardOptionsObject(isSecureTextEntry: false,
-                                                                   autocapitalizationType: RSDTextAutocapitalizationType.none,
-                                                                   autocorrectionType: .no,
-                                                                   spellCheckingType: .no,
-                                                                   keyboardType: .numbersAndPunctuation)
-    
-    public static let measurementEntryOptions = KeyboardOptionsObject(isSecureTextEntry: false,
-                                                                   autocapitalizationType: RSDTextAutocapitalizationType.none,
-                                                                   autocorrectionType: .no,
-                                                                   spellCheckingType: .no,
-                                                                   keyboardType: .numbersAndPunctuation)
-}
-
-public final class DoubleTextInputItemObject : AbstractInputItemObject, DoubleTextInputItem, Codable {
+public final class DoubleTextInputItemObject : AbstractInputItemObject, SerializableInputItemBuilder, DoubleTextInputItem {
     public override class func defaultType() -> InputItemType {
         return .decimal
     }
@@ -230,9 +266,36 @@ public final class DoubleTextInputItemObject : AbstractInputItemObject, DoubleTe
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.formatOptions, forKey: .formatOptions)
     }
+    
+    public override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        keys.append(contentsOf: CodingKeys.allCases)
+        return keys
+    }
+    
+    public override class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .formatOptions:
+            return .init(propertyType: .reference(DoubleFormatOptions.documentableType()))
+        }
+    }
 }
 
-public final class IntegerTextInputItemObject : AbstractInputItemObject, IntegerTextInputItem, Codable {
+extension DoubleTextInputItemObject : DocumentableStruct {
+    public static func examples() -> [DoubleTextInputItemObject] {
+        let exA = DoubleTextInputItemObject()
+        let exB = DoubleTextInputItemObject(resultIdentifier: "field1")
+        exB.formatOptions = DoubleFormatOptions.examples().first
+        exB.fieldLabel = "How much?"
+        exB.placeholder = "Enter a value"
+        return [exA, exB]
+    }
+}
+
+public final class IntegerTextInputItemObject : AbstractInputItemObject, SerializableInputItemBuilder, IntegerTextInputItem {
     public override class func defaultType() -> InputItemType {
         return .integer
     }
@@ -270,9 +333,38 @@ public final class IntegerTextInputItemObject : AbstractInputItemObject, Integer
         try container.encodeIfPresent(self.formatOptions, forKey: .formatOptions)
         try container.encodeIfPresent(self.keyboardOptionsObject, forKey: .keyboardOptions)
     }
+        
+    public override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        keys.append(contentsOf: CodingKeys.allCases)
+        return keys
+    }
+    
+    public override class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .formatOptions:
+            return .init(propertyType: .reference(IntegerFormatOptions.documentableType()))
+        case .keyboardOptions:
+            return .init(propertyType: .reference(KeyboardOptionsObject.documentableType()))
+        }
+    }
 }
 
-public final class YearTextInputItemObject : AbstractInputItemObject, YearTextInputItem, Codable {
+extension IntegerTextInputItemObject : DocumentableStruct {
+    public static func examples() -> [IntegerTextInputItemObject] {
+        let exA = IntegerTextInputItemObject()
+        let exB = IntegerTextInputItemObject(resultIdentifier: "field1")
+        exB.formatOptions = IntegerFormatOptions.examples().first
+        exB.fieldLabel = "How much?"
+        exB.placeholder = "Enter a value"
+        return [exA, exB]
+    }
+}
+
+public final class YearTextInputItemObject : AbstractInputItemObject, SerializableInputItemBuilder, YearTextInputItem {
     public override class func defaultType() -> InputItemType {
         return .year
     }
@@ -303,9 +395,36 @@ public final class YearTextInputItemObject : AbstractInputItemObject, YearTextIn
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.formatOptions, forKey: .formatOptions)
     }
+    
+    public override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        keys.append(contentsOf: CodingKeys.allCases)
+        return keys
+    }
+    
+    public override class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .formatOptions:
+            return .init(propertyType: .reference(YearFormatOptions.documentableType()))
+        }
+    }
 }
 
-public final class StringTextInputItemObject : AbstractInputItemObject, KeyboardTextInputItem, Codable {
+extension YearTextInputItemObject : DocumentableStruct {
+    public static func examples() -> [YearTextInputItemObject] {
+        let exA = YearTextInputItemObject()
+        let exB = YearTextInputItemObject(resultIdentifier: "field1")
+        exB.formatOptions = YearFormatOptions.examples().first
+        exB.fieldLabel = "How much?"
+        exB.placeholder = "Enter a value"
+        return [exA, exB]
+    }
+}
+
+public final class StringTextInputItemObject : AbstractInputItemObject, SerializableInputItemBuilder, KeyboardTextInputItem {
     public override class func defaultType() -> InputItemType {
         return .string
     }
@@ -350,6 +469,36 @@ public final class StringTextInputItemObject : AbstractInputItemObject, Keyboard
     }
     
     public func buildPickerSource() -> RSDPickerDataSource? { nil }
+        
+    public override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        keys.append(contentsOf: CodingKeys.allCases)
+        return keys
+    }
+    
+    public override class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .keyboardOptions:
+            return .init(propertyType: .reference(KeyboardOptionsObject.documentableType()))
+        case .regExValidator:
+            return .init(propertyType: .reference(RegExValidator.documentableType()))
+        }
+    }
+}
+
+extension StringTextInputItemObject : DocumentableStruct {
+    public static func examples() -> [StringTextInputItemObject] {
+        let exA = StringTextInputItemObject()
+        let exB = StringTextInputItemObject(resultIdentifier: "field1")
+        exB.keyboardOptionsObject = KeyboardOptionsObject.examples().first
+        exB.regExValidator = RegExValidator.examples().first
+        exB.fieldLabel = "How much?"
+        exB.placeholder = "Enter a value"
+        return [exA, exB]
+    }
 }
 
 // MARK: Date and Time
@@ -357,7 +506,7 @@ public final class StringTextInputItemObject : AbstractInputItemObject, Keyboard
 // Note: syoung 04/10/2020 - These classes are included to support parity with Kotlin where there
 // isn't a class for "Date" that includes both date and time.
 
-public class DateTimeInputItemObject : AbstractInputItemObject, DateTimeInputItem, Codable {
+public class DateTimeInputItemObject : AbstractInputItemObject, SerializableInputItemBuilder, DateTimeInputItem {
     public override class func defaultType() -> InputItemType {
         return .dateTime
     }
@@ -392,11 +541,50 @@ public class DateTimeInputItemObject : AbstractInputItemObject, DateTimeInputIte
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.formatOptions, forKey: .formatOptions)
     }
+    
+    public override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        keys.append(contentsOf: CodingKeys.allCases)
+        return keys
+    }
+    
+    public override class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .formatOptions:
+            return .init(propertyType: .reference(RSDDateRangeObject.documentableType()))
+        }
+    }
+    
+    public class func isOpen() -> Bool { true }
+    
+    public class func jsonExamples() throws -> [[String : JsonSerializable]] {
+         [["identifier": "foo", "type": "date-time"]]
+    }
+}
+
+extension DateTimeInputItemObject : DocumentableObject {
 }
 
 public final class DateInputItemObject : DateTimeInputItemObject {
     override public class func defaultType() -> InputItemType {
         return .date
+    }
+    
+    public override class func isOpen() -> Bool { false }
+    
+    public override class func jsonExamples() throws -> [[String : JsonSerializable]] {
+         [[
+            "identifier": "foo",
+            "type": "date",
+            "formatOptions" : [
+                "minimumValue" : "1900-01",
+                "allowFuture" : false,
+                "codingFormat" : "yyyy-MM"
+            ]
+        ]]
     }
 }
 
@@ -404,11 +592,25 @@ public final class TimeInputItemObject : DateTimeInputItemObject {
     override public class func defaultType() -> InputItemType {
         return .time
     }
+
+    public override class func isOpen() -> Bool { false }
+    
+    public override class func jsonExamples() throws -> [[String : JsonSerializable]] {
+         [[
+            "identifier": "foo",
+            "type": "time",
+            "formatOptions" : [
+                "minimumValue" : "06:00",
+                "allowFuture" : false,
+                "codingFormat" : "HH:mm"
+            ]
+        ]]
+    }
 }
 
 // MARK: Choice Picker
 
-open class ChoicePickerInputItemObject : AbstractInputItemObject, ChoicePickerInputItem, Codable {
+open class ChoicePickerInputItemObject : AbstractInputItemObject, SerializableInputItemBuilder, ChoicePickerInputItem {
     open override class func defaultType() -> InputItemType {
         return .choicePicker
     }
@@ -458,7 +660,6 @@ open class ChoicePickerInputItemObject : AbstractInputItemObject, ChoicePickerIn
     }
     
     open func decodeJsonChoice(from decoder: Decoder) throws -> JsonChoice {
-        
         try JsonChoiceObject(from: decoder)
     }
     
@@ -469,6 +670,41 @@ open class ChoicePickerInputItemObject : AbstractInputItemObject, ChoicePickerIn
             try $0.encode(to: nestedEncoder)
         }
     }
+    
+    public override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        keys.append(contentsOf: CodingKeys.allCases)
+        return keys
+    }
+    
+    public override class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .jsonChoices:
+            return .init(propertyType: .referenceArray(JsonChoiceObject.documentableType()))
+        }
+    }
+    
+    open class func isOpen() -> Bool { true }
+    
+    open class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        [[
+         "identifier": "foo",
+         "type": "choicePicker",
+         "fieldLabel": "Favorite color",
+         "placeholder": "Blue, no! Red!",
+         "choices" : [
+            [  "value" : 0, "text" : "never"],
+            [  "value" : 1, "text" : "sometimes"],
+            [  "value" : 2, "text" : "often"],
+            [  "value" : 3, "text" : "always"]]
+        ]]
+    }
+}
+
+extension ChoicePickerInputItemObject : DocumentableObject {
 }
 
 internal func defaultBaseType(for jsonChoices: [JsonChoice]) -> JsonType {
@@ -480,6 +716,14 @@ internal func defaultBaseType(for jsonChoices: [JsonChoice]) -> JsonType {
 public final class StringChoicePickerInputItemObject : ChoicePickerInputItemObject {
     public override class func defaultType() -> InputItemType {
         .stringChoicePicker
+    }
+    
+    public init(choices: [String], resultIdentifier: String? = nil) {
+        super.init(jsonChoices: choices.map { JsonChoiceObject(text: $0) }, resultIdentifier: resultIdentifier)
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
     }
     
     public override func decodeJsonChoice(from decoder: Decoder) throws -> JsonChoice {
@@ -494,9 +738,22 @@ public final class StringChoicePickerInputItemObject : ChoicePickerInputItemObje
             try nestedContainer.encode($0.text)
         }
     }
+    
+    public override class func isOpen() -> Bool { false }
+    
+    public override class func jsonExamples() throws -> [[String : JsonSerializable]] {
+        [[
+         "identifier": "foo",
+         "type": "stringChoicePicker",
+         "fieldLabel": "Favorite color",
+         "placeholder": "Blue, no! Red!",
+         "choices" : ["never","sometimes","often","always"]
+        ]]
+    }
 }
 
 // MARK: SkipCheckboxInputItem
+
 
 public struct SkipCheckboxInputItemObject : SkipCheckboxInputItem, Codable, Hashable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
@@ -519,9 +776,38 @@ public struct SkipCheckboxInputItemObject : SkipCheckboxInputItem, Codable, Hash
     }
 }
 
+extension SkipCheckboxInputItemObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .fieldLabel || key == .classType
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .classType:
+            return .init(constValue: InputItemType(rawValue: "skipCheckbox"), propertyDescription: "Kotlin serialization requires a 'type' field for any polymorphic class.")
+        case .fieldLabel:
+            return .init(propertyType: .primitive(.string))
+        case .matchingValue:
+            return .init(propertyType: .any)
+        }
+    }
+    
+    public static func examples() -> [SkipCheckboxInputItemObject] {
+        [SkipCheckboxInputItemObject(fieldLabel: "Perfer not to answer", matchingValue: .integer(-1))]
+    }
+}
+
 // MARK: CheckboxInputItem
 
-public struct CheckboxInputItemObject : CheckboxInputItem, Codable, Hashable {
+public struct CheckboxInputItemObject : CheckboxInputItem, SerializableInputItemBuilder, Hashable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case inputItemType = "type", fieldLabel, detail, identifier
     }
@@ -535,10 +821,37 @@ public struct CheckboxInputItemObject : CheckboxInputItem, Codable, Hashable {
         return fieldLabel
     }
 
-    public init(fieldLabel: String, resultIdentifier: String?, detail: String? = nil) {
+    public init(fieldLabel: String, resultIdentifier: String? = nil, detail: String? = nil) {
         self.fieldLabel = fieldLabel
         self.detail = detail
         self.identifier = resultIdentifier
+    }
+}
+
+extension CheckboxInputItemObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .inputItemType || key == .fieldLabel
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .inputItemType:
+            return .init(constValue: InputItemType.checkbox)
+        case .fieldLabel, .detail, .identifier:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [CheckboxInputItemObject] {
+        [CheckboxInputItemObject(fieldLabel: "Check the box")]
     }
 }
 
@@ -546,6 +859,9 @@ public struct CheckboxInputItemObject : CheckboxInputItem, Codable, Hashable {
 
 public enum HumanMeasurementRange : String, Codable, CaseIterable {
     case adult, child, infant
+}
+
+extension HumanMeasurementRange : StringEnumSet, DocumentableStringEnum {
 }
 
 public class AbstractMeasurementInputItemObject : AbstractInputItemObject, Codable {
@@ -582,9 +898,25 @@ public class AbstractMeasurementInputItemObject : AbstractInputItemObject, Codab
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.measurementRange, forKey: .measurementRange)
     }
+    
+    public override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        keys.append(contentsOf: CodingKeys.allCases)
+        return keys
+    }
+    
+    public override class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .measurementRange:
+            return .init(propertyType: .reference(HumanMeasurementRange.documentableType()))
+        }
+    }
 }
 
-public final class HeightInputItemBuilderObject : AbstractMeasurementInputItemObject, InputItemBuilder {
+public final class HeightInputItemBuilderObject : AbstractMeasurementInputItemObject, SerializableInputItemBuilder {
     public override class func defaultType() -> InputItemType {
         .height
     }
@@ -597,6 +929,12 @@ public final class HeightInputItemBuilderObject : AbstractMeasurementInputItemOb
                               fieldLabel: self.fieldLabel,
                               isOptional: self.isOptional,
                               placeholder: self.placeholder)
+    }
+}
+
+extension HeightInputItemBuilderObject : DocumentableStruct {
+    public static func examples() -> [HeightInputItemBuilderObject] {
+        [HeightInputItemBuilderObject()]
     }
 }
 
@@ -659,7 +997,7 @@ extension HeightInputItemObject : MeasurementTextInputValidator {
     var measurementFormatter: MeasurementFormatter { lengthFormatter }
 }
 
-public final class WeightInputItemBuilderObject : AbstractMeasurementInputItemObject, InputItemBuilder {
+public final class WeightInputItemBuilderObject : AbstractMeasurementInputItemObject, SerializableInputItemBuilder {
     public override class func defaultType() -> InputItemType {
         .weight
     }
@@ -672,6 +1010,12 @@ public final class WeightInputItemBuilderObject : AbstractMeasurementInputItemOb
                               fieldLabel: self.fieldLabel,
                               isOptional: self.isOptional,
                               placeholder: self.placeholder)
+    }
+}
+
+extension WeightInputItemBuilderObject : DocumentableStruct {
+    public static func examples() -> [WeightInputItemBuilderObject] {
+        [WeightInputItemBuilderObject()]
     }
 }
 

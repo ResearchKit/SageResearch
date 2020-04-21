@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStringLiteral {
     var stringValue: String { get }
@@ -39,11 +40,32 @@ public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStr
 
 /// `RSDFactory` handles customization of decoding the elements of a task. Applications should
 /// override this factory to add custom elements required to run their task modules.
-open class RSDFactory {
+open class RSDFactory : SerializationFactory {
     
-    /// Singleton for the shared factory. If a factory is not passed in when creating tasks
-    /// then this will be used.
-    public static var shared = RSDFactory()
+    public static var shared = RSDFactory.defaultFactory
+    
+    public let answerTypeSerializer = AnswerTypeSerializer()
+    public let asyncActionSerializer = AsyncActionConfigurationSerializer()
+    public let buttonActionSerializer = ButtonActionSerializer()
+    public let colorMappingSerializer = ColorMappingSerializer()
+    public let imageThemeSerializer = ImageThemeSerializer()
+    public let inputItemSerializer = InputItemSerializer()
+    public let resultSerializer = RSDResultSerializer()
+    public let stepSerializer = StepSerializer()
+    public let viewThemeSerializer = ViewThemeSerializer()
+    
+    public required init() {
+        super.init()
+        self.registerSerializer(answerTypeSerializer)
+        self.registerSerializer(asyncActionSerializer)
+        self.registerSerializer(buttonActionSerializer)
+        self.registerSerializer(colorMappingSerializer)
+        self.registerSerializer(imageThemeSerializer)
+        self.registerSerializer(inputItemSerializer)
+        self.registerSerializer(resultSerializer)
+        self.registerSerializer(stepSerializer)
+        self.registerSerializer(viewThemeSerializer)
+    }
     
     /// The type of device to point use when decoding different text depending upon the target
     /// device.
@@ -59,12 +81,57 @@ open class RSDFactory {
         #endif
     }()
     
-    // Initializer
-    public init() {
-    }
-    
     /// Optional shared tracking rules
     open var trackingRules: [RSDTrackingRule] = []
+    
+    // MARK: Deprecation handling
+    
+    open override func serializer<T>(for type: T.Type) -> GenericSerializer? {
+        if type == Result.self {
+            // syoung 04/16/2020 For now, the start/end date is required to match the RSDResult
+            // protocol. While this may change in the future to better support parity between
+            // Kotlin and iOS, for now, leave this as-is but allow for returning the `RSDResult`
+            // serializer in the place of the `Result`.
+            return resultSerializer
+        }
+        else {
+            return super.serializer(for: type)
+        }
+    }
+    
+    @available(*, deprecated, message: "Use of a default type is deprecated. Please convert your code to use the serializers with a 'type' key instead.")
+    open override func decodeDefaultObject<T>(_ type: T.Type, from decoder: Decoder) throws -> T {
+        if type == AnswerType.self {
+            return try decodeAnswerType(from: decoder) as! T
+        }
+        else if type == RSDAsyncActionConfiguration.self {
+            return try decodeAsyncActionConfiguration(from: decoder) as! T
+        }
+        else if type == RSDUIAction.self {
+            return try decodeUIAction(from: decoder, for: .custom("")) as! T
+        }
+        else if type == RSDColorMappingThemeElement.self {
+            return try decodeColorMappingThemeElement(from: decoder) as! T
+        }
+        else if type == RSDImageThemeElement.self {
+            return try decodeImageThemeElement(from: decoder) as! T
+        }
+        else if type == InputItemBuilder.self {
+            return try decodeInputItem(from: decoder) as! T
+        }
+        else if type == RSDResult.self || type == Result.self {
+            return try decodeResult(from: decoder) as! T
+        }
+        else if type == RSDStep.self {
+            return try decodeStep(from: decoder) as! T
+        }
+        else if type == RSDViewThemeElement.self {
+            return try decodeViewThemeElement(from: decoder) as! T
+        }
+        else {
+            return try super.decodeDefaultObject(type, from: decoder)
+        }
+    }
 
     // MARK: Class name factory
     
@@ -101,21 +168,10 @@ open class RSDFactory {
         let (data, type) = try resourceTransformer.resourceData()
         return try decodeTask(with: data,
                               resourceType: type,
-                              typeName: resourceTransformer.classType,
+                              typeName: nil, //resourceTransformer.classType, TODO: syoung 04/14/2020 Refactor task decoding to a serialization strategy supported by Kotlin.
                               taskIdentifier: taskIdentifier,
                               schemaInfo: schemaInfo,
                               resourceInfo: resourceTransformer)
-    }
-    
-    /// - deprecated: "Use `createPropertyListDecoder(resourceInfo:) instead."
-    @available(*, deprecated, message: "Use `createPropertyListDecoder(resourceInfo:) instead.")
-    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String?, taskIdentifier: String?, schemaInfo: RSDSchemaInfo?, bundle: Bundle?) throws -> RSDTask {
-        return try self.decodeTask(with: data,
-                                   resourceType: resourceType,
-                                   typeName: typeName,
-                                   taskIdentifier: taskIdentifier,
-                                   schemaInfo: schemaInfo,
-                                   resourceInfo: DeprecationResourceInfo(factoryBundle: bundle))
     }
     
     /// Decode an object with top-level data (json or plist) for a given `resourceType`,
@@ -130,7 +186,7 @@ open class RSDFactory {
     ///     - resourceInfo:    The resource info for the source of the data.
     /// - returns: The decoded task.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: RSDResourceInfo? = nil) throws -> RSDTask {
+    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: ResourceInfo? = nil) throws -> RSDTask {
         let decoder = try createDecoder(for: resourceType, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo, resourceInfo: resourceInfo)
         return try decoder.factory.decodeTask(with: data, from: decoder)
     }
@@ -142,7 +198,7 @@ open class RSDFactory {
     ///     - decoder: The decoder to use to instantiate the object.
     /// - returns: The decoded task.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeTask(with data: Data, from decoder: RSDFactoryDecoder) throws -> RSDTask {
+    open func decodeTask(with data: Data, from decoder: FactoryDecoder) throws -> RSDTask {
         let task = try decoder.decode(RSDTaskObject.self, from: data)
         try task.validate()
         return task
@@ -166,6 +222,7 @@ open class RSDFactory {
     /// - returns: The task info created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDTaskGroupObject`
+    @available(*, deprecated, message: "Use of a default type is deprecated. Please convert your decode `RSDTaskInfoObject` or the appropriate replacement directly.")
     open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfo {
         return try RSDTaskInfoObject(from: decoder)
     }
@@ -246,6 +303,39 @@ open class RSDFactory {
     
 
     // MARK: Step factory
+    
+    /// Override mapping the array to allow steps to add a pointer between the countdown step and
+    /// the active step. This is handled in Kotlin native serialization during unpacking.
+    open override func mapDecodedArray<RSDStep>(_ objects: [RSDStep]) throws -> [RSDStep] {
+        objects.enumerated().forEach { (index, step) in
+            if let countdown = step as? RSDCountdownUIStepObject,
+                index + 1 < objects.count,
+                let activeStep = objects[index + 1] as? RSDActiveUIStep {
+                // Special-case handling of a countdown step. Inspect the step to see if this is
+                // a countdown/active step pairing and if so, set the countdown step to include a
+                // pointer to the active step.
+                //
+                // WARNING: This is *not* a weak pointer b/c the `RSDActiveUIStep` protocol does not
+                // require that step to be a class (but it might be) so this will cause a retain
+                // loop if this special-case handling is ever modified to have a pointer from the
+                // countdown step to the active step. syoung 07/12/2019
+                //
+                countdown.activeStep = activeStep
+            }
+        }
+        return objects
+    }
+    
+    /// Override mapping the object to check if this is a step transformer, and transform the step
+    /// if needed. In Kotlin native, this is handled during unpacking of the assessment.
+    open override func mapDecodedObject<T>(_ type: T.Type, object: Any, codingPath: [CodingKey]) throws -> T {
+        if let step = (object as? RSDStepTransformer)?.transformedStep as? T {
+            return step
+        }
+        else {
+            return try super.mapDecodedObject(type, object: object, codingPath: codingPath)
+        }
+    }
 
     /// Convenience method for decoding a list of steps.
     ///
@@ -253,6 +343,7 @@ open class RSDFactory {
     /// - returns: An array of the steps.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDConditionalStepNavigatorObject`, `RSDSectionStepObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicArray` instead.")
     public func decodeSteps(from container: UnkeyedDecodingContainer) throws -> [RSDStep] {
         var steps : [RSDStep] = []
         var stepsContainer = container
@@ -292,6 +383,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeStep(from decoder: Decoder) throws -> RSDStep? {
         guard let name = try typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath,
@@ -311,6 +403,7 @@ open class RSDFactory {
     ///     - decoder:     The decoder to use to instantiate the object.
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
         if let standardType = RSDStepType.StandardType(rawValue: type.rawValue) {
             return try decodeStandardStep(from: decoder, standardType: standardType)
@@ -323,9 +416,12 @@ open class RSDFactory {
         }
     }
     
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     func decodeStandardStep(from decoder: Decoder, standardType: RSDStepType.StandardType) throws -> RSDStep {
         switch (standardType) {
-        case .instruction, .active:
+        case .instruction:
+            return try RSDInstructionStepObject(from: decoder)
+        case .active:
             return try RSDActiveUIStepObject(from: decoder)
         case .countdown:
             return try RSDCountdownUIStepObject(from: decoder)
@@ -378,6 +474,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step transform created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeStepTransformer(from decoder: Decoder) throws -> RSDStepTransformer {
         return try RSDStepTransformerObject(from: decoder)
     }
@@ -388,6 +485,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step created from transforming this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeTransformableStep(from decoder: Decoder) throws -> RSDStep {
         let transform = try self.decodeStepTransformer(from: decoder)
         return transform.transformedStep
@@ -395,6 +493,7 @@ open class RSDFactory {
     
     // MARK: Answer type factory
     
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeAnswerType(from decoder: Decoder) throws -> AnswerType {
         guard let name = try typeName(from: decoder) else {
             return try decodeDeprecatedAnswerType(from: decoder)
@@ -498,17 +597,19 @@ open class RSDFactory {
     
     // MARK: InputItem
     
+    @available(*, deprecated, message: "Use `decodePolymorphicArray` instead.")
     public func decodeInputItems(from itemsContainer: UnkeyedDecodingContainer) throws -> [InputItemBuilder] {
         var container = itemsContainer
         var items = [InputItemBuilder]()
         while !container.isAtEnd {
             let nestedDecoder = try container.superDecoder()
-            let item = try self.decodeInputItem(from: nestedDecoder)
+            let item = try self.decodePolymorphicObject(InputItemBuilder.self, from: nestedDecoder)
             items.append(item)
         }
         return items
     }
     
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     public func decodeInputItem(from decoder: Decoder) throws -> InputItemBuilder {
         guard let name = try typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath,
@@ -692,12 +793,14 @@ open class RSDFactory {
     /// - returns: The number formatter created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDNumberRangeObject`
+    @available(*, deprecated, message: "Use `Question` instead. This protocol is not supported by Kotlin.")
     open func decodeNumberFormatter(from decoder: Decoder) throws -> NumberFormatter {
         return try NumberFormatter(from: decoder)
     }
 
     
     // MARK: UI action factory
+
     
     /// Decode UI action from the given decoder.
     ///
@@ -708,6 +811,7 @@ open class RSDFactory {
     /// - returns: The UI action created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIActionHandlerObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
         guard let typeName = try self.typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding a UI action without a `type` key defining a value for the the class name.")
@@ -725,6 +829,7 @@ open class RSDFactory {
     ///     - objectType: The object type to which this action should be cast.
     /// - returns: The UI action created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeUIAction(from decoder:Decoder, with objectType: RSDUIActionObjectType) throws -> RSDUIAction {
         switch objectType {
         case .navigation:
@@ -750,6 +855,7 @@ open class RSDFactory {
     /// - returns: The UI color theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIStepObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeColorMappingThemeElement(from decoder:Decoder) throws -> RSDColorMappingThemeElement? {
         guard let typeName = try self.typeName(from: decoder)
             else {
@@ -775,6 +881,7 @@ open class RSDFactory {
     /// - returns: The UI view theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIStepObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeViewThemeElement(from decoder:Decoder) throws -> RSDViewThemeElement? {
         return try _decodeResource(RSDViewThemeElementObject.self, from: decoder)
     }
@@ -786,6 +893,7 @@ open class RSDFactory {
     /// - returns: The UI image theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIStepObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeImageThemeElement(from decoder:Decoder) throws -> RSDImageThemeElement? {
         guard let typeName = try self.typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding an image theme without a `type` key defining a value for the the class name.")
@@ -804,7 +912,7 @@ open class RSDFactory {
         }
     }
     
-    private func _decodeResource<T>(_ type: T.Type, from decoder: Decoder) throws -> T where T : RSDDecodableBundleInfo {
+    private func _decodeResource<T>(_ type: T.Type, from decoder: Decoder) throws -> T where T : DecodableBundleInfo {
         var resource = try T(from: decoder)
         resource.factoryBundle = decoder.bundle
         return resource
@@ -823,6 +931,7 @@ open class RSDFactory {
     /// - returns: The configuration (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDTaskObject`, `RSDSectionStepObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeAsyncActionConfiguration(from decoder:Decoder) throws -> RSDAsyncActionConfiguration? {
         guard let typeName = try typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding an async action without a `type` key defining a value for the the class name.")
@@ -844,6 +953,7 @@ open class RSDFactory {
     ///     - decoder:      The decoder to use to instantiate the object.
     /// - returns: The configuration (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeAsyncActionConfiguration(from decoder:Decoder, with typeName: String) throws -> RSDAsyncActionConfiguration? {
         
         // Look to see if there is a standard permission to map to this config.
@@ -867,6 +977,7 @@ open class RSDFactory {
     /// - returns: An array of the results.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDTaskResultObject`, `RSDCollectionResultObject`
+    @available(*, deprecated, message: "Use `decodePolymorphicArray` instead.")
     public func decodeResults(from container: UnkeyedDecodingContainer) throws -> [RSDResult] {
         var results : [RSDResult] = []
         var mutableContainer = container
@@ -883,6 +994,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The result (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeResult(from decoder: Decoder) throws -> RSDResult {
         guard let typeName = try typeName(from: decoder) else {
             return try RSDResultObject(from: decoder)
@@ -897,6 +1009,7 @@ open class RSDFactory {
     ///     - decoder:      The decoder to use to instantiate the object.
     /// - returns: The result (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    @available(*, deprecated, message: "Use `decodePolymorphicObject` instead.")
     open func decodeResult(from decoder: Decoder, with resultType: RSDResultType) throws -> RSDResult {
 
         switch resultType {
@@ -914,108 +1027,11 @@ open class RSDFactory {
             throw RSDValidationError.undefinedClassType("\(self) does not support `\(resultType)` as a decodable class type for a result.")
         }
     }
-    
-    
-    // MARK: Date Result Format
-    
-    /// Get the date result formatter to use for the given calendar components.
-    ///
-    /// | Returned Formatter | Description                                                         |
-    /// |--------------------|:-------------------------------------------------------------------:|
-    /// |`dateOnlyFormatter` | If only date components (year, month, day) are included.            |
-    /// |`timeOnlyFormatter` | If only time components (hour, minute, second) are included.        |
-    /// |`timestampFormatter`| If both date and time components are included.                      |
-    ///
-    /// - parameter calendarComponents: The calendar components to include.
-    /// - returns: The appropriate date formatter.
-    open func dateResultFormatter(from calendarComponents: Set<Calendar.Component>) -> DateFormatter {
-        let hasDateComponents = calendarComponents.intersection([.year, .month, .day]).count > 0
-        let hasTimeComponents = calendarComponents.intersection([.hour, .minute, .second]).count > 0
-        if hasDateComponents && hasTimeComponents {
-            return timestampFormatter
-        } else if hasTimeComponents {
-            return timeOnlyFormatter
-        } else {
-            return dateOnlyFormatter
-        }
-    }
-    
-    /// `DateFormatter` to use for coding date-only strings. Default = `rsd_ISO8601DateOnlyFormatter`.
-    open var dateOnlyFormatter: DateFormatter {
-        return rsd_ISO8601DateOnlyFormatter
-    }
-    
-    /// `DateFormatter` to use for coding time-only strings. Default = `rsd_ISO8601TimeOnlyFormatter`.
-    open var timeOnlyFormatter: DateFormatter {
-        return rsd_ISO8601TimeOnlyFormatter
-    }
-    
-    /// `DateFormatter` to use for coding timestamp strings that include both date and time components.
-    /// Default = `rsd_ISO8601TimestampFormatter`.
-    open var timestampFormatter: DateFormatter {
-        return rsd_ISO8601TimestampFormatter
-    }
-    
-    /// The default coding strategy to use for non-conforming elements.
-    open var nonConformingCodingStrategy: (positiveInfinity: String, negativeInfinity: String, nan: String)
-        = ("Infinity", "-Infinity", "NaN")
 
     // MARK: Decoder
-
-    /// - deprecated: Use `createJSONDecoder(resourceInfo:) instead.
-    @available(*, deprecated, message: "Use `createJSONDecoder(resourceInfo:) instead.")
-    open func createJSONDecoder(bundle: Bundle?) -> JSONDecoder {
-        return self.createJSONDecoder(resourceInfo: DeprecationResourceInfo(factoryBundle: bundle))
-    }
-    
-    /// Create a `JSONDecoder` with this factory assigned in the user info keys as the factory
-    /// to use when decoding this object.
-    open func createJSONDecoder(resourceInfo: RSDResourceInfo? = nil) -> JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
-            let container = try decoder.singleValueContainer()
-            let string = try container.decode(String.self)
-            return try self.decodeDate(from: string, formatter: nil, codingPath: decoder.codingPath)
-        })
-        decoder.userInfo[.factory] = self
-        decoder.userInfo[.bundle] = resourceInfo?.bundle
-        decoder.userInfo[.packageName] = resourceInfo?.packageName
-        decoder.userInfo[.codingInfo] = RSDCodingInfo()
-        decoder.nonConformingFloatDecodingStrategy = .convertFromString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
-                                                                        negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
-                                                                        nan: nonConformingCodingStrategy.nan)
-        decoder.dataDecodingStrategy = .base64
-        return decoder
-    }
-    
-    /// - deprecated: Use `createPropertyListDecoder(resourceInfo:) instead.
-    @available(*, deprecated, message: "Use `createPropertyListDecoder(resourceInfo:) instead.")
-    open func createPropertyListDecoder(bundle: Bundle?) -> PropertyListDecoder {
-        return self.createPropertyListDecoder(resourceInfo: DeprecationResourceInfo(factoryBundle: bundle))
-    }
-    
-    /// Create a `PropertyListDecoder` with this factory assigned in the user info keys as the factory
-    /// to use when decoding this object.
-    open func createPropertyListDecoder(resourceInfo: RSDResourceInfo? = nil) -> PropertyListDecoder {
-        let decoder = PropertyListDecoder()
-        decoder.userInfo[.factory] = self
-        decoder.userInfo[.bundle] = resourceInfo?.bundle
-        decoder.userInfo[.packageName] = resourceInfo?.packageName
-        decoder.userInfo[.codingInfo] = RSDCodingInfo()
-        return decoder
-    }
-    
-    /// - deprecated: Use `createDecoder(for resourceType:, taskIdentifier:, schemaInfo:, resourceInfo:)` instead.
-    @available(*, deprecated, message: "Use `createDecoder(for resourceType:, taskIdentifier:, schemaInfo:, resourceInfo:)` instead")
-    open func createDecoder(for resourceType: RSDResourceType, taskIdentifier: String?, schemaInfo: RSDSchemaInfo?, bundle: Bundle?) throws -> RSDFactoryDecoder {
-        return try self.createDecoder(for: resourceType,
-                                      taskIdentifier: taskIdentifier,
-                                      schemaInfo: schemaInfo,
-                                      resourceInfo: DeprecationResourceInfo(factoryBundle: bundle))
-    }
     
     /// Create the appropriate decoder for the given resource type. This method will return an
-    /// decoder that conforms to the `RSDFactoryDecoder` protocol. The decoder will assign the
+    /// decoder that conforms to the `FactoryDecoder` protocol. The decoder will assign the
     /// user info coding keys as appropriate.
     ///
     /// - parameters:
@@ -1025,8 +1041,8 @@ open class RSDFactory {
     ///     - resourceInfo:    The resource info for this decoder.
     /// - returns: The decoder for the given type.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func createDecoder(for resourceType: RSDResourceType, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: RSDResourceInfo? = nil) throws -> RSDFactoryDecoder {
-        var decoder : RSDFactoryDecoder = try {
+    open func createDecoder(for resourceType: RSDResourceType, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, resourceInfo: ResourceInfo? = nil) throws -> FactoryDecoder {
+        var decoder : FactoryDecoder = try {
             if resourceType == .json {
                 return self.createJSONDecoder(resourceInfo: resourceInfo)
             }
@@ -1047,112 +1063,11 @@ open class RSDFactory {
         }
         return decoder
     }
-    
-    /// Decode a date from a string. This method is used during object decoding and is defined
-    /// as `open` so that subclass factories can define their own formatters.
-    ///
-    /// This method uses drop-through to first check the `formatter` (if provided). If the date
-    /// cannot be decoded using the expected *encoding* formatter, then the string will be inspected
-    /// to see if it matches any of the expected formats for date and time, time only, or date only.
-    ///
-    /// - parameters:
-    ///     - string:       The string to use in decoding the date.
-    ///     - formatter:    A formatter to use.
-    /// - returns: The date created from this string.
-    open func decodeDate(from string: String, formatter: DateFormatter? = nil) -> Date? {
-        if let dateFormatter = formatter, let date = dateFormatter.date(from: string) {
-            return date
-        } else if let date = timestampFormatter.date(from: string) {
-            return date
-        } else if let date = dateOnlyFormatter.date(from: string) {
-            return date
-        } else if let date = timeOnlyFormatter.date(from: string) {
-            return date
-        } else if let date = _oldTimeOnlyFormatter.date(from: string) {
-            return date
-        } else if let date = _androidTimestampFormatter.date(from: string) {
-            return date
-        } else {
-            return ISO8601DateFormatter().date(from: string)
-        }
-    }
-    
-    /// syoung 11/06/2019 Discovered that this format does not match the format being used on Bridge.
-    private lazy var _oldTimeOnlyFormatter: DateFormatter = {
-        var formatter = rsd_ISO8601TimeOnlyFormatter
-        formatter.dateFormat = "HH:mm:ss"
-        return formatter
-    }()
-    
-    /// syoung 11/06/2019 Older Android devices do not support the timestamp formatter that we are
-    /// using on iOS. Therefore, check the formatter for dates decoded from Android.
-    private lazy var _androidTimestampFormatter: DateFormatter = {
-        var formatter = rsd_ISO8601TimeOnlyFormatter
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        return formatter
-    }()
-    
-    internal func decodeDate(from string: String, formatter: DateFormatter?, codingPath: [CodingKey]) throws -> Date {
-        guard let date = decodeDate(from: string, formatter: formatter) else {
-            let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Could not decode \(string) into a date.")
-            throw DecodingError.typeMismatch(Date.self, context)
-        }
-        return date
-    }
-    
-    // MARK: Encoder
-    
-    /// Create a `JSONEncoder` with this factory assigned in the user info keys as the factory
-    /// to use when encoding objects.
-    open func createJSONEncoder() -> JSONEncoder {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted]
-        encoder.dateEncodingStrategy = .custom({ (date, encoder) in
-            let string = self.encodeString(from: date, codingPath: encoder.codingPath)
-            var container = encoder.singleValueContainer()
-            try container.encode(string)
-        })
-        encoder.outputFormatting = .prettyPrinted
-        encoder.userInfo[.factory] = self
-        encoder.userInfo[.codingInfo] = RSDCodingInfo()
-        encoder.nonConformingFloatEncodingStrategy = .convertToString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
-                                                                        negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
-                                                                        nan: nonConformingCodingStrategy.nan)
-        encoder.dataEncodingStrategy = .custom({ (data, encoder) in
-            let string = self.encodeString(from: data, codingPath: encoder.codingPath)
-            var container = encoder.singleValueContainer()
-            try container.encode(string)
-        })
-        return encoder
-    }
-    
-    /// Create a `PropertyListEncoder` with this factory assigned in the user info keys as the factory
-    /// to use when encoding objects.
-    open func createPropertyListEncoder() -> PropertyListEncoder {
-        let encoder = PropertyListEncoder()
-        encoder.userInfo[.factory] = self
-        encoder.userInfo[.codingInfo] = RSDCodingInfo()
-        return encoder
-    }
-    
-    /// Overridable method for encoding a date to a string. By default, this method uses the `timestampFormatter`
-    /// as the date formatter.
-    open func encodeString(from date: Date, codingPath: [CodingKey]) -> String {
-        return timestampFormatter.string(from: date)
-    }
-    
-    /// Overridable method for encoding data to a string. By default, this method uses base64 encoding.
-    open func encodeString(from data: Data, codingPath: [CodingKey]) -> String {
-        return data.base64EncodedString()
-    }
 }
 
 /// Extension of CodingUserInfoKey to add keys used by the Codable objects in this framework.
 extension CodingUserInfoKey {
-    
-    /// The key for the factory to use when coding.
-    public static let factory = CodingUserInfoKey(rawValue: "RSDFactory.factory")!
-    
+        
     /// The key for the task identifier to use when coding.
     public static let taskIdentifier = CodingUserInfoKey(rawValue: "RSDFactory.taskIdentifier")!
     
@@ -1161,35 +1076,12 @@ extension CodingUserInfoKey {
     
     /// The key for the task data source to use when coding.
     public static let taskDataSource = CodingUserInfoKey(rawValue: "RSDFactory.taskDataSource")!
-    
-    /// The key for pointing to a specific bundle for the decoded resources.
-    public static let bundle = CodingUserInfoKey(rawValue: "RSDFactory.bundle")!
-    
-    /// The key for pointing to a specific bundle for the decoded resources.
-    public static let packageName = CodingUserInfoKey(rawValue: "RSDFactory.packageName")!
-    
-    /// The key for pointing to mutable coding info.
-    public static let codingInfo = CodingUserInfoKey(rawValue: "RSDFactory.codingInfo")!
 }
 
-/// `JSONDecoder` and `PropertyListDecoder` do not share a common protocol so extend them to be
-/// able to create the appropriate decoder and set the userInfo keys as needed.
-public protocol RSDFactoryDecoder {
-    func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable
-    var userInfo: [CodingUserInfoKey : Any] { get set }
-}
-
-extension JSONDecoder : RSDFactoryDecoder {
-}
-
-extension PropertyListDecoder : RSDFactoryDecoder {
-}
-
-extension RSDFactoryDecoder {
+extension FactoryDecoder {
     
-    /// The factory to use when decoding.
-    public var factory: RSDFactory {
-        return self.userInfo[.factory] as? RSDFactory ?? RSDFactory.shared
+    public var factory : RSDFactory {
+        (serializationFactory as? RSDFactory) ?? RSDFactory.shared
     }
     
     /// The task identifier to use when decoding.
@@ -1202,9 +1094,8 @@ extension RSDFactoryDecoder {
 /// in this framework.
 extension Decoder {
     
-    /// The factory to use when decoding.
-    public var factory: RSDFactory {
-        return self.userInfo[.factory] as? RSDFactory ?? RSDFactory.shared
+    public var factory : RSDFactory {
+        (serializationFactory as? RSDFactory) ?? RSDFactory.shared
     }
     
     /// The task identifier to use when decoding.
@@ -1216,43 +1107,14 @@ extension Decoder {
     public var schemaInfo: RSDSchemaInfo? {
         return self.userInfo[.schemaInfo] as? RSDSchemaInfo
     }
-    
-    /// The default bundle to use for embedded resources.
-    public var bundle: RSDResourceBundle? {
-        return self.userInfo[.bundle] as? RSDResourceBundle
-    }
-    
-    /// The default package to use for embedded resources.
-    public var packageName: String? {
-        return self.userInfo[.packageName] as? String
-    }
-    
-    /// The coding info object to use when decoding.
-    public var codingInfo: RSDCodingInfo? {
-        return self.userInfo[.codingInfo] as? RSDCodingInfo
-    }
-}
-
-/// `JSONEncoder` and `PropertyListEncoder` do not share a common protocol so extend them to be able
-/// to create the appropriate decoder and set the userInfo keys as needed.
-public protocol RSDFactoryEncoder {
-    func encode<T>(_ value: T) throws -> Data where T : Encodable
-    var userInfo: [CodingUserInfoKey : Any] { get set }
-}
-
-extension JSONEncoder : RSDFactoryEncoder {
-}
-
-extension PropertyListEncoder : RSDFactoryEncoder {
 }
 
 /// Extension of Encoder to return the factory objects used by the Codable objects
 /// in this framework.
 extension Encoder {
     
-    /// The factory to use when encoding.
-    public var factory: RSDFactory {
-        return self.userInfo[.factory] as? RSDFactory ?? RSDFactory.shared
+    public var factory : RSDFactory {
+        (serializationFactory as? RSDFactory) ?? RSDFactory.shared
     }
     
     /// The task info to use when encoding.
@@ -1263,32 +1125,5 @@ extension Encoder {
     /// The schema info to use when encoding.
     public var schemaInfo: RSDSchemaInfo? {
         return self.userInfo[.schemaInfo] as? RSDSchemaInfo
-    }
-    
-    /// The coding info object to use when encoding.
-    public var codingInfo: RSDCodingInfo? {
-        return self.userInfo[.codingInfo] as? RSDCodingInfo
-    }
-}
-
-/// `RSDCodingInfo` is used as a pointer to a mutable class that can be used to assign any info that must be
-/// mutated during the Decoding of an object.
-public class RSDCodingInfo {
-    public var userInfo : [CodingUserInfoKey : Any] = [:]
-}
-
-internal struct DeprecationResourceInfo : RSDResourceInfo {
-    let factoryBundle: RSDResourceBundle?
-    var bundleIdentifier: String? { return nil }
-    var packageName: String? { return nil }
-}
-
-internal struct FactoryResourceInfo : RSDResourceInfo {
-    let factoryBundle: RSDResourceBundle?
-    let packageName: String?
-    var bundleIdentifier: String? { return nil }
-    init(from decoder: Decoder) {
-        self.factoryBundle = decoder.bundle
-        self.packageName = decoder.packageName
     }
 }

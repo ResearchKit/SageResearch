@@ -32,11 +32,12 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDConditionalStepNavigatorObject` is a concrete implementation of the `RSDConditionalStepNavigator` protocol.
 public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, RSDCopyStepNavigator, Decodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case steps, conditionalRule, progressMarkers, insertAfterIdentifier
+        case steps, progressMarkers, insertAfterIdentifier
     }
     
     /// An ordered list of steps to run for this task.
@@ -110,7 +111,7 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
     }
     
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
-    /// with the decoder to decode the `steps` and the `conditionalRule`.
+    /// with the decoder to decode the `steps`.
     ///
     /// - example:
     ///
@@ -131,8 +132,7 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
     ///                           { "identifier" : "step3",
     ///                             "type" : "instruction",
     ///                             "title" : "Step 3" }
-    ///                         ],
-    ///                "conditionalRule" : {"type" : "medicationTracker"}
+    ///                         ]
     ///            }
     ///            """.data(using: .utf8)! // our data in native (JSON) format
     ///     ```
@@ -141,25 +141,47 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
     /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let factory = decoder.factory
         
         // Decode the steps
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
-        self.steps = try factory.decodeSteps(from: stepsContainer)
+        self.steps = try decoder.factory.decodePolymorphicArray(RSDStep.self, from: stepsContainer)
         
         // Decode the markers
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)
     }
 }
 
-extension RSDConditionalStepNavigatorObject : RSDDocumentableDecodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDConditionalStepNavigatorObject : DocumentableObject {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
     
-    static func examples() -> [[String : RSDJSONValue]] {
-        let json: [String : RSDJSONValue] = [
+    public static func isOpen() -> Bool {
+        return false
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .steps
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .steps:
+            return .init(propertyType: .interfaceArray("\(RSDStep.self)"))
+        case .progressMarkers:
+            return .init(propertyType: .primitiveArray(.string))
+        case .insertAfterIdentifier:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func jsonExamples() throws -> [[String : JsonSerializable]] {
+        let json: [String : JsonSerializable] = [
+                        "insertAfterIdentifier": "foo",
                         "progressMarkers": ["step1", "step2", "step3"],
                         "steps": [
                                    [ "identifier" : "step1",

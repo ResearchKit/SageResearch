@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// A cohort rule can be used to mutate a list of cohorts of which the participant is a member. A cohort
 /// is a data group that participants are added to based on the results of survey questions.
@@ -136,26 +137,36 @@ public struct RSDCohortNavigationRuleObject : RSDCohortNavigationRule, Codable {
 
 // Documentable implementations
 
-extension RSDCohortRuleOperator : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
-        let allKeys: [RSDCohortRuleOperator] = [.all, .any]
-        return allKeys.map { $0.stringValue }
-    }
+extension RSDCohortRuleOperator : DocumentableStringEnum, StringEnumSet {
 }
 
-extension RSDCohortNavigationRuleObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDCohortNavigationRuleObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
+
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .requiredCohorts
+    }
     
-    static func _examples() -> [RSDCohortNavigationRuleObject] {
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .requiredCohorts:
+            return .init(propertyType: .primitiveArray(.string))
+        case .cohortOperator:
+            return .init(propertyType: .reference(RSDCohortRuleOperator.documentableType()))
+        case .skipToIdentifier:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+    
+    public static func examples() -> [RSDCohortNavigationRuleObject] {
         let exampleA = RSDCohortNavigationRuleObject(requiredCohorts: ["foo", "goo"], cohortOperator: nil, skipToIdentifier: nil)
         let exampleB = RSDCohortNavigationRuleObject(requiredCohorts: ["blue", "moo"], cohortOperator: .any, skipToIdentifier: "magoo")
         return [exampleA, exampleB]
-    }
-    
-    static func examples() -> [Encodable] {
-        return _examples()
     }
 }

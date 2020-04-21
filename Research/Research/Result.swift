@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 // TODO: syoung 04/06/2020 Deprecate the existing `RSDResult` in favor of the newer result protocols.
 // The Kotlin results do not *require* the startDate/endDate and other properties on all results.
@@ -39,7 +40,13 @@ import Foundation
 
 /// A `Result` is any data result that should be included with an `Assessment`. The base level
 /// interface only has an `identifier` and does not include any other properties.
-public protocol Result : Encodable {
+///
+/// - note: syoung 04/16/2020 Since the purpose of the `Result` protocol is to support
+/// serialization of the result set, and since this framework is no longer reverse-compatible to
+/// ResearchKit.ORKResult objects, these objected are now defined as `PolymorphicRepresentable`
+/// and `Encodable`.
+///
+public protocol Result : PolymorphicRepresentable, Encodable {
 
     /// The identifier for the result.
     var identifier: String { get }

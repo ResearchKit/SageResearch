@@ -2,7 +2,7 @@
 //  RSDMotionRecorderConfiguration.swift
 //  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDMotionRecorderType` is used to enumerate the sensors and calculated measurements
 /// that can be recorded by the `RSDMotionRecorder`.
@@ -50,7 +51,7 @@ import Foundation
 /// schema allows for a single table to be used to store the data which can then be filtered
 /// by type to perform calculations and DSP on the input sources.
 ///
-public enum RSDMotionRecorderType : String, Codable, RSDStringEnumSet {
+public enum RSDMotionRecorderType : String, Codable, StringEnumSet {
     
     /// Raw accelerometer reading. `CMAccelerometerData` accelerometer.
     /// - seealso: https://developer.apple.com/documentation/coremotion/getting_raw_accelerometer_events
@@ -157,7 +158,7 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
     public let identifier: String
     
     /// The standard permission type associated with this configuration.
-    public let type: RSDStandardPermissionType
+    public private(set) var asyncActionType: RSDAsyncActionType = .motion
     
     /// An identifier marking the step to start the action. If `nil`, then the action will be started when
     /// the task is started.
@@ -211,7 +212,7 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
     public var usesCSVEncoding : Bool?
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, recorderTypes, startStepIdentifier, stopStepIdentifier, frequency, _requiresBackgroundAudio = "requiresBackgroundAudio", usesCSVEncoding, _shouldDeletePrevious = "shouldDeletePrevious"
+        case identifier, asyncActionType = "type", recorderTypes, startStepIdentifier, stopStepIdentifier, frequency, _requiresBackgroundAudio = "requiresBackgroundAudio", usesCSVEncoding, _shouldDeletePrevious = "shouldDeletePrevious"
     }
     
     /// Default initializer.
@@ -221,7 +222,6 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
     ///     - requiresBackgroundAudio: Whether or not the recorder requires background audio. Default = `false`.
     ///     - frequency: The sampling frequency of the motion sensors.
     public init(identifier: String, recorderTypes: Set<RSDMotionRecorderType>?, requiresBackgroundAudio: Bool = false, frequency: Double? = nil, shouldDeletePrevious: Bool? = nil) {
-        self.type = .motion
         self.identifier = identifier
         self.recorderTypes = recorderTypes
         self._requiresBackgroundAudio = requiresBackgroundAudio
@@ -234,20 +234,47 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
     }
 }
 
-
-// Documentation and Tests
-
-extension RSDMotionRecorderType : RSDDocumentableStringEnum {
+extension RSDMotionRecorderConfiguration : SerializableAsyncActionConfiguration {
 }
 
-extension RSDMotionRecorderConfiguration : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
+extension RSDMotionRecorderType : DocumentableStringEnum {
+}
+
+extension RSDMotionRecorderConfiguration : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
+
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .identifier || key == .asyncActionType
+    }
     
-    static func examples() -> [Encodable] {
-        
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .asyncActionType:
+            return .init(constValue: RSDAsyncActionType.motion)
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .recorderTypes:
+            return .init(propertyType: .referenceArray(RSDMotionRecorderType.documentableType()))
+        case .startStepIdentifier, .stopStepIdentifier:
+            return .init(propertyType: .primitive(.string))
+        case .frequency:
+            return .init(propertyType: .primitive(.number))
+        case ._requiresBackgroundAudio:
+            return .init(defaultValue: .boolean(false))
+        case .usesCSVEncoding:
+            return .init(propertyType: .primitive(.boolean))
+        case ._shouldDeletePrevious:
+            return .init(defaultValue: .boolean(true))
+        }
+    }
+
+    public static func examples() -> [RSDMotionRecorderConfiguration] {
         var example = RSDMotionRecorderConfiguration(identifier: "motion", recorderTypes: [.accelerometer, .gyro], requiresBackgroundAudio: true, frequency: 50)
         example.startStepIdentifier = "start"
         example.stopStepIdentifier = "stop"

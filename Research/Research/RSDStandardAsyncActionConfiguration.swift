@@ -2,7 +2,7 @@
 //  RSDStandardAsyncActionConfiguration.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDStandardAsyncActionConfiguration` is a concrete implementation of `RSDRecorderConfiguration` that can be used to
 /// decode an async configuration for a recorder.
@@ -97,17 +98,5 @@ public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Co
     /// This method does nothing but is required by the `RSDAsyncActionConfiguration` protocol.
     public func validate() throws {
         // Do nothing
-    }
-}
-
-extension RSDStandardAsyncActionConfiguration : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func examples() -> [Encodable] {
-        let types = RSDStandardPermissionType.allCases
-        return types.map { RSDStandardAsyncActionConfiguration(identifier: $0.rawValue, type: $0.asyncActionType, startStepIdentifier: "\($0.rawValue)StartStep", stopStepIdentifier: "\($0.rawValue)StopStep") }
     }
 }

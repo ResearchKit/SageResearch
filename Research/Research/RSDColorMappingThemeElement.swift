@@ -32,11 +32,12 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The color mapping theme element defines the colors to use on a given screen. Typically, this
 /// includes the background color for the header or a background color that is applied to the
 /// full screen.
-public protocol RSDColorMappingThemeElement : RSDResourceInfo {
+public protocol RSDColorMappingThemeElement : ResourceInfo {
     
     /// The custom color data needed to get a background color that is not one of the standard
     /// colors (primary, secondary, accent, system background, black, white).

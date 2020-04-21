@@ -31,12 +31,13 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 
 /// The `RSDUIAction` protocol can be used to customize the title and image displayed for a
 /// given action of the UI.
 ///
 /// - seealso: `RSDUIActionType` and `RSDUIActionHandler`
-public protocol RSDUIAction : RSDResourceInfo {
+public protocol RSDUIAction : ResourceInfo {
     
     /// The title to display on the button associated with this action.
     var buttonTitle: String? { get }

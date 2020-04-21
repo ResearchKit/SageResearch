@@ -137,7 +137,7 @@ extension RSDColor {
     open class func rsd_color(named name: String, in bundle: Bundle?, compatibleWith traitCollection: UITraitCollection? = nil) -> RSDColor? {
         if let color = RSDColor(hexString: name) {
             return color
-        } else if #available(iOS 11.0, tvOS 11.0, *), let color = UIColor(named: name, in: bundle, compatibleWith: traitCollection) {
+        } else if let color = UIColor(named: name, in: bundle, compatibleWith: traitCollection) {
             return color
         } else if let colorHex = ColorInfoPList(name: "ColorInfo", bundle: bundle).colorHex(for: name) {
             return RSDColor(hexString: colorHex)

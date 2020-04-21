@@ -31,9 +31,83 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
+
 /// `RSDEmbeddedResourceUIAction` is a convenience protocol for returning an image using an
 /// encodable strings for the name and bundle identifier.
-public protocol RSDEmbeddedResourceUIAction: RSDUIAction, RSDDecodableBundleInfo {
+public protocol RSDEmbeddedResourceUIAction: SerializableUIAction, DecodableBundleInfo {
+}
+
+/// The type of the ui action. This is used to decode a `RSDUIAction` using a `RSDFactory`. It can also be used
+/// to customize the UI.
+public struct RSDUIActionObjectType : TypeRepresentable, Codable, Hashable {
+    
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+    
+    /// Defaults to creating a `RSDUIActionObject`.
+    public static let defaultNavigation: RSDUIActionObjectType = "default"
+    
+    /// Defaults to creating a `RSDNavigationUIActionObject`.
+    public static let navigation: RSDUIActionObjectType = "navigation"
+    
+    /// Defaults to creating a `RSDReminderUIActionObject`.
+    public static let reminder: RSDUIActionObjectType = "reminder"
+    
+    /// Defaults to creating a `RSDWebViewUIActionObject`.
+    public static let webView: RSDUIActionObjectType = "webView"
+    
+    /// Defaults to creating a `RSDVideoViewUIActionObject`.
+    public static let videoView: RSDUIActionObjectType = "videoView"
+    
+    public static func allStandardTypes() -> [RSDUIActionObjectType] {
+        return [.defaultNavigation, .webView, .videoView, .navigation, .reminder]
+    }
+}
+
+extension RSDUIActionObjectType : ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+}
+
+extension RSDUIActionObjectType : DocumentableStringLiteral {
+    public static func examples() -> [String] {
+        return allStandardTypes().map{ $0.rawValue }
+    }
+}
+
+public final class ButtonActionSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    override init() {
+        examples = [
+            RSDUIActionObject.examples().first!,
+            RSDNavigationUIActionObject.examples().first!,
+            RSDReminderUIActionObject.examples().first!,
+            RSDWebViewUIActionObject.examples().first!,
+            RSDVideoViewUIActionObject.examples().first!,
+        ]
+    }
+    
+    public private(set) var examples: [RSDUIAction]
+    
+    public func add(_ example: SerializableUIAction) {
+        if let idx = examples.firstIndex(where: {
+            ($0 as! SerializableUIAction).objectType != example.objectType }) {
+            examples.remove(at: idx)
+        }
+        examples.append(example)
+    }
+}
+
+public protocol SerializableUIAction : RSDUIAction, PolymorphicRepresentable, Encodable {
+    var objectType: RSDUIActionObjectType { get }
+}
+
+public extension SerializableUIAction {
+    var typeName: String { return objectType.rawValue }
 }
 
 /// `RSDUIActionObject` is a concrete implementation of `RSDUIAction` that can be used to customize the
@@ -55,7 +129,7 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction {
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?
@@ -81,7 +155,7 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction {
     /// - parameters:
     ///     - iconName: The name of the image to display on the button.
     ///     - bundle: The resource bundle that contains the image.
-    public init(iconName: String, bundle: RSDResourceBundle?) {
+    public init(iconName: String, bundle: ResourceBundle?) {
         self.buttonTitle = nil
         self.iconName = iconName
         self.bundleIdentifier = bundle?.bundleIdentifier
@@ -110,7 +184,7 @@ public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavi
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?
@@ -150,7 +224,7 @@ public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDRemind
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?
@@ -201,7 +275,7 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?
@@ -266,7 +340,7 @@ public struct RSDVideoViewUIActionObject : RSDEmbeddedResourceUIAction, RSDVideo
     public var bundleIdentifier: String?
     
     /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: RSDResourceBundle? = nil
+    public var factoryBundle: ResourceBundle? = nil
     
     /// The Android package for the resource.
     public var packageName: String?
@@ -305,71 +379,161 @@ public struct RSDVideoViewUIActionObject : RSDEmbeddedResourceUIAction, RSDVideo
     }
 }
 
-extension RSDUIActionObject : RSDDocumentableCodableObject {
+extension RSDUIActionObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
     
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .objectType
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .objectType:
+            return .init(constValue: RSDUIActionObjectType.defaultNavigation)
+        case .buttonTitle, .iconName, .bundleIdentifier, .packageName:
+            return .init(propertyType: .primitive(.string))
+        }
     }
 
-    static func actionExamples() -> [RSDUIActionObject] {
+    public static func examples() -> [RSDUIActionObject] {
         let titleAction = RSDUIActionObject(buttonTitle: "Go, Dogs! Go")
         let imageAction = RSDUIActionObject(iconName: "closeX", bundleIdentifier: "org.example.SharedResources")
         return [titleAction, imageAction]
     }
-    
-    static func examples() -> [Encodable] {
-        return actionExamples()
-    }
 }
 
-extension RSDNavigationUIActionObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
+extension RSDNavigationUIActionObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
     }
     
-    static func actionExamples() -> [RSDNavigationUIActionObject] {
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .objectType || key == .skipToIdentifier
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .objectType:
+            return .init(constValue: RSDUIActionObjectType.navigation)
+        case .buttonTitle, .iconName, .bundleIdentifier, .packageName:
+            return .init(propertyType: .primitive(.string))
+        case .skipToIdentifier:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+
+    public static func examples() -> [RSDNavigationUIActionObject] {
         let titleAction = RSDNavigationUIActionObject(skipToIdentifier: "nextSection", buttonTitle: "Go, Dogs! Go")
         return [titleAction]
     }
+}
+
+extension RSDReminderUIActionObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
     
-    static func examples() -> [Encodable] {
-        return actionExamples()
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .objectType || key == .reminderIdentifier
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .objectType:
+            return .init(constValue: RSDUIActionObjectType.navigation)
+        case ._buttonTitle, .iconName, .bundleIdentifier, .packageName:
+            return .init(propertyType: .primitive(.string))
+        case .reminderIdentifier:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+
+    public static func examples() -> [RSDReminderUIActionObject] {
+        let titleAction = RSDReminderUIActionObject(reminderIdentifier: "foo", buttonTitle: "Remind me later")
+        return [titleAction]
     }
 }
 
-extension RSDWebViewUIActionObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
+extension RSDWebViewUIActionObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
     }
     
-    static func actionExamples() -> [RSDWebViewUIActionObject] {
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .objectType || key == .url
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .objectType:
+            return .init(constValue: RSDUIActionObjectType.defaultNavigation)
+        case .buttonTitle, .iconName, .bundleIdentifier, .packageName:
+            return .init(propertyType: .primitive(.string))
+        case .url:
+            return .init(propertyType: .format(.uri))
+        case .usesBackButton:
+            return .init(propertyType: .primitive(.boolean))
+        case .title:
+            return .init(propertyType: .primitive(.string))
+        case .closeButtonTitle:
+            return .init(propertyType: .primitive(.string))
+        }
+    }
+
+    public static func examples() -> [RSDWebViewUIActionObject] {
         var titleAction = RSDWebViewUIActionObject(url: "About_Dogs.html", buttonTitle: "Go, Dogs! Go")
         titleAction.usesBackButton = true
         titleAction.title = "Go, Dogs! Go"
         let imageAction = RSDWebViewUIActionObject(url: "About_Dogs.html", iconName: "iconInfo", bundleIdentifier: "org.example.SharedResources")
         return [titleAction, imageAction]
     }
-    
-    static func examples() -> [Encodable] {
-        return actionExamples()
-    }
 }
 
-extension RSDVideoViewUIActionObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
+extension RSDVideoViewUIActionObject : DocumentableStruct {
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
     }
     
-    static func actionExamples() -> [RSDVideoViewUIActionObject] {
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        return key == .objectType || key == .url
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .objectType:
+            return .init(constValue: RSDUIActionObjectType.defaultNavigation)
+        case .buttonTitle, .iconName, .bundleIdentifier, .packageName:
+            return .init(propertyType: .primitive(.string))
+        case .url:
+            return .init(propertyType: .format(.uri))
+        }
+    }
+
+    public static func examples() -> [RSDVideoViewUIActionObject] {
         let titleAction = RSDVideoViewUIActionObject(url: "About_Dogs.mp4", buttonTitle: "Go, Dogs! Go")
         let imageAction = RSDVideoViewUIActionObject(url: "About_Dogs.mp4", iconName: "iconInfo", bundleIdentifier: "org.example.SharedResources")
         return [titleAction, imageAction]
-    }
-    
-    static func examples() -> [Encodable] {
-        return actionExamples()
     }
 }

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDUIActionHandlerObject` is intended as an abstract implementation of the action handler that implements
 /// the `Codable` protocol.
@@ -127,7 +128,7 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
             for key in nestedContainer.allKeys {
                 let objectDecoder = try nestedContainer.superDecoder(forKey: key)
                 let actionType = RSDUIActionType(rawValue: key.stringValue)
-                let action = try decoder.factory.decodeUIAction(from: objectDecoder, for: actionType)
+                let action = try decoder.factory.decodePolymorphicObject(RSDUIAction.self, from: objectDecoder)
                 actions[actionType] = action
             }
             self.actions = actions
@@ -150,7 +151,25 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
         try container.encodeIfPresent(shouldHideActions, forKey: .shouldHideActions)
     }
     
-    class func codingKeys() -> [CodingKey] {
+    // DocumentableObject implementation
+    
+    open class func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
+    }
+    
+    open class func isOpen() -> Bool { true }
+    
+    open class func isRequired(_ codingKey: CodingKey) -> Bool { false }
+    
+    open class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not handled by \(self).")
+        }
+        switch key {
+        case .actions:
+            return DocumentProperty(propertyType: .interfaceDictionary("\(RSDUIAction.self)"))
+        case .shouldHideActions:
+            return DocumentProperty(propertyType: .referenceArray(RSDUIActionType.documentableType()))
+        }
     }
 }
