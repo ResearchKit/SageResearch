@@ -35,6 +35,7 @@ import XCTest
 @testable import JsonSchemaBuilder
 import Research
 import JsonModel
+import JSONSchema
 
 class JsonSchemaBuilderTests: XCTestCase {
 
@@ -46,7 +47,7 @@ class JsonSchemaBuilderTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
+    func testJson() {
         let factory = RSDFactory()
         let baseUrl = URL(string: "http://sagebionetworks.org/jsonSchema/")!
         
@@ -64,6 +65,24 @@ class JsonSchemaBuilderTests: XCTestCase {
             
             try json.write(to: url)
             print(url)
+            
+            let exs = doc.definitions?.values.flatMap { (definition) -> [[String : Any]] in
+                guard case .object(let value) = definition, let ex = value.examples else {
+                    return []
+                }
+                return ex.map { $0.dictionary }
+            }
+            guard let examples = exs else {
+                XCTFail("Definitions should not be nil")
+                return
+            }
+            
+            let jsonSchema = try JSONSerialization.jsonObject(with: json, options: []) as! [String : Any]
+
+            examples.forEach {
+                let validationResult = JSONSchema.validate($0, schema: jsonSchema)
+                XCTAssertTrue(validationResult.valid, "\(validationResult.errors ?? [])")
+            }
         }
         catch let err {
             XCTFail("Failed to build the JsonSchema: \(err)")
