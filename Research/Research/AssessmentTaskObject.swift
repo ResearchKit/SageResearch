@@ -90,7 +90,7 @@ public protocol SerializableTask : RSDTask, PolymorphicRepresentable {
 extension AssessmentTaskObject : SerializableTask {
 }
 
-open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Codable {
+open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Decodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case taskType = "type", identifier, steps, progressMarkers, asyncActions, resultIdentifier, versionString, estimatedMinutes, usesTrackedData
     }
@@ -194,21 +194,26 @@ open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrac
         // Decode the steps.
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
         self.steps = try decoder.factory.decodePolymorphicArray(RSDStep.self, from: stepsContainer)
+
+        self._initCompleted = false
+        try super.init(from: decoder)
+        try self.decode(from: decoder)
+        self._initCompleted = true
+    }
+    
+    open func decode(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Decode optional properties.
         if container.contains(.asyncActions) {
             let asyncActionsContainer = try container.nestedUnkeyedContainer(forKey: .asyncActions)
             self.asyncActions = try decoder.factory.decodePolymorphicArray(RSDAsyncActionConfiguration.self, from: asyncActionsContainer)
         }
-        self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)
-        self.usesTrackedData = try container.decodeIfPresent(Bool.self, forKey: .usesTrackedData) ?? false
-        self.resultIdentifier = try container.decodeIfPresent(String.self, forKey: .resultIdentifier)
-        self.versionString = try container.decodeIfPresent(String.self, forKey: .versionString)
-        self._estimatedMinutes = try container.decodeIfPresent(Int.self, forKey: .estimatedMinutes)
-
-        self._initCompleted = false
-        try super.init(from: decoder)
-        self._initCompleted = true
+        self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers) ?? self.progressMarkers
+        self.usesTrackedData = try container.decodeIfPresent(Bool.self, forKey: .usesTrackedData) ?? self.usesTrackedData
+        self.resultIdentifier = try container.decodeIfPresent(String.self, forKey: .resultIdentifier) ?? self.resultIdentifier
+        self.versionString = try container.decodeIfPresent(String.self, forKey: .versionString) ?? self.versionString
+        self._estimatedMinutes = try container.decodeIfPresent(Int.self, forKey: .estimatedMinutes) ?? self._estimatedMinutes
         
         let deprecatedContainer = try decoder.container(keyedBy: DeprecatedCodingKeys.self)
         if deprecatedContainer.contains(.schemaInfo) {
