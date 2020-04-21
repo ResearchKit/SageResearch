@@ -313,7 +313,7 @@ open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrac
         return TaskData(identifier: self.identifier, timestampDate: taskResult.endDate, json: score)
     }
     
-    /// Setup the data tracker. In the default implementation, the task object only acts as a pass-through
+    /// Set up the data tracker. In the default implementation, the task object only acts as a pass-through
     /// for the step navigator if that object implements the protocol.
     open func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
         if let tracker = self.stepNavigator as? RSDTrackingTask {
