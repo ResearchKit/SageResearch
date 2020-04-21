@@ -13,4 +13,7 @@
    <FileRef
       location = "group:JsonConverter/JsonConverter.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:JsonSchemaBuilder/JsonSchemaBuilder.xcodeproj">
+   </FileRef>
 </Workspace>
