@@ -55,7 +55,9 @@ public final class ViewThemeSerializer : AbstractPolymorphicSerializer, Polymorp
         do {
             return try super.typeName(from: decoder)
         } catch DecodingError.keyNotFound(_, _) {
-            debugPrint("WARNING!!! Kotlin serialization requires that objects that are defined as polymorphic include a 'type' key. A default key is not supported.")
+            // The kotlin implementation for decoding the viewTheme is *not* polymorphic, but this
+            // implementation pre-dated that implementation and JsonModel factory serialization
+            // used here allows for a default type. syoung 04/23/2020
             return RSDViewThemeElementType.defaultTheme.rawValue
         }
     }
