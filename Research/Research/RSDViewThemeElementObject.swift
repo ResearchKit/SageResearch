@@ -98,15 +98,18 @@ extension RSDViewThemeElementType : DocumentableStringLiteral {
 /// the `RSDStepController`.
 public struct RSDViewThemeElementObject: SerializableViewTheme, DecodableBundleInfo {
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case _type = "type", storyboardIdentifier, viewIdentifier, bundleIdentifier, packageName
+        case _type = "type", storyboardIdentifier, _viewIdentifier = "viewIdentifier", bundleIdentifier, packageName, fragmentIdentifier, fragmentLayout
     }
     public var type: RSDViewThemeElementType { .defaultTheme }
     
     // Kotlin support requires a "type" and does not support a default decodable.
     private var _type: RSDViewThemeElementType? = .defaultTheme
     
+    // MARK: Apple
+    
     /// The storyboard view controller identifier or the nib name for this view controller.
-    public let viewIdentifier: String
+    public var viewIdentifier: String { _viewIdentifier ?? "null" }
+    private var _viewIdentifier: String?
     
     /// If the storyboard identifier is non-nil then the view is assumed to be accessible within the
     /// storyboard via the `viewIdentifier`.
@@ -118,6 +121,14 @@ public struct RSDViewThemeElementObject: SerializableViewTheme, DecodableBundleI
     /// The default bundle from the factory used to decode this object.
     public var factoryBundle: ResourceBundle? = nil
     
+    // MARK: Android
+    
+    /// An identifier for the Fragment.
+    public let fragmentIdentifier: String?
+    
+    /// The name of the custom Fragment layout.
+    public let fragmentLayout: String?
+    
     /// The Android package for the resource.
     public var packageName: String?
     
@@ -128,10 +139,16 @@ public struct RSDViewThemeElementObject: SerializableViewTheme, DecodableBundleI
     ///       controller.
     ///     - bundleIdentifier: The bundle identifier for the nib or storyboard. Default = `nil`.
     ///     - storyboardIdentifier: The storyboard identifier. Default = `nil`.
-    public init(viewIdentifier: String, bundleIdentifier: String? = nil, storyboardIdentifier: String? = nil) {
-        self.viewIdentifier = viewIdentifier
+    public init(viewIdentifier: String,
+                bundleIdentifier: String? = nil,
+                storyboardIdentifier: String? = nil,
+                fragmentLayout: String? = nil,
+                fragmentIdentifier: String? = nil) {
+        self._viewIdentifier = viewIdentifier
         self.bundleIdentifier = bundleIdentifier
         self.storyboardIdentifier = storyboardIdentifier
+        self.fragmentLayout = fragmentLayout
+        self.fragmentIdentifier = fragmentIdentifier
     }
 }
 
@@ -142,7 +159,7 @@ extension RSDViewThemeElementObject : DocumentableStruct {
     
     public static func isRequired(_ codingKey: CodingKey) -> Bool {
         guard let key = codingKey as? CodingKeys else { return false }
-        return key == .viewIdentifier || key == ._type
+        return key == ._viewIdentifier || key == ._type
     }
     
     public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
