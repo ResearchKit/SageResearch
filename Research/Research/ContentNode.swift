@@ -70,3 +70,31 @@ public protocol ContentNode {
      */
     var footnote: String? { get }
 }
+
+public protocol ResultNode : ContentNode {
+    func instantiateResult() -> Result
+}
+
+public protocol FormStep : ResultNode, RSDUIStep {
+    
+    /// A list of the child result nodes. Typically, these will be a collection of `Question`
+    /// objects but that is not required.
+    var children: [ResultNode] { get }
+}
+
+public extension FormStep {
+    
+    /// A form step instantiates a step result.
+    func instantiateResult() -> Result {
+        instantiateStepResult()
+    }
+    
+    /// Check to see if the step result is a collection result and return that if valid.
+    func instantiateCollectionResult() -> CollectionResult {
+        guard let result = instantiateStepResult() as? CollectionResult else {
+            debugPrint("WARNING!!! The instantiated step result does not conform to `CollectionResult`.")
+            return RSDCollectionResultObject(identifier: self.identifier)
+        }
+        return result
+    }
+}

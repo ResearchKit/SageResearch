@@ -69,12 +69,18 @@ public extension AnswerType {
     var typeName: String { objectType.rawValue }
 }
 
-public protocol Question : ContentNode {
+public protocol Question : ResultNode {
     var isOptional: Bool { get }
     var isSingleAnswer: Bool { get }
     var answerType: AnswerType { get }
     func buildInputItems() -> [InputItem]
     func instantiateAnswerResult() -> AnswerResult
+}
+
+public extension Question {
+    func instantiateResult() -> Result {
+        instantiateAnswerResult()
+    }
 }
 
 public protocol QuestionStep : Question, RSDUIStep {

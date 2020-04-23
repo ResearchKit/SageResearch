@@ -182,19 +182,19 @@ public extension SerializableStep {
 }
 
 extension RSDUIStepObject : SerializableStep {
-    fileprivate static func serializationExample() -> Self {
+    internal static func serializationExample() -> Self {
         self.init(identifier: self.defaultType().rawValue)
     }
 }
 
 extension RSDTaskInfoStepObject : SerializableStep {
-    fileprivate static func serializationExample() -> RSDTaskInfoStepObject {
+    internal static func serializationExample() -> RSDTaskInfoStepObject {
         self.examples().first!
     }
 }
 
 extension RSDSectionStepObject : SerializableStep {
-    fileprivate static func serializationExample() -> RSDSectionStepObject {
+    internal static func serializationExample() -> RSDSectionStepObject {
         RSDSectionStepObject(identifier: RSDStepType.section.rawValue, steps: [])
     }
 }
