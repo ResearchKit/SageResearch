@@ -255,7 +255,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     override open class func jsonExamples() throws -> [[String : JsonSerializable]] {
         let jsonA: [String : JsonSerializable] = [
             "identifier": "foo",
-            "type": "active",
+            "type" : self.defaultType().rawValue,
             "title": "Hello World!",
             "detail": "Some text.",
             "duration": 30,

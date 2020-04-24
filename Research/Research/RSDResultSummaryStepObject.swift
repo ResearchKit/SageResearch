@@ -128,7 +128,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
     override open class func jsonExamples() throws -> [[String : JsonSerializable]] {
         let jsonA: [String : JsonSerializable] = [
             "identifier": "foo",
-            "type": "completion",
+            "type" : self.defaultType().rawValue,
             "title": "Hello World!",
             "detail": "Some text.",
             "resultTitle": "This is a title",

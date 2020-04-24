@@ -87,79 +87,122 @@ class ExampleDecodableTests: XCTestCase {
     
     func testAllStringLiterals() {
         let documentCreator = RSDDocumentCreator()
-        for objectType in documentCreator.allStringLiterals {
-            
-            let encoder = RSDFactory.shared.createJSONEncoder()
-            let decoder = RSDFactory.shared.createJSONDecoder()
-            
-            let examples = objectType.examples()
-            do {
-                let wrapper = _EncodableWrapper(encodableObject: examples)
-                let encodedObject = try encoder.encode(wrapper)
-                _DecodableArrayWrapper._unboxType = objectType
-                let decodedObject = try decoder.decode(_DecodableArrayWrapper.self, from: encodedObject)
-                XCTAssertEqual(decodedObject.items.count, examples.count)
-                for (idx, value) in decodedObject.items.enumerated() {
-                    XCTAssertTrue(type(of: value) == objectType)
-                    if let obj = value as? DocumentableStringLiteral, idx < examples.count {
-                        let expectedValue = examples[idx]
-                        XCTAssertEqual(obj.stringValue, expectedValue)
-                    } else {
-                        XCTFail("Failed to decode to expected type for \(value)")
-                    }
-                }
-            } catch let err {
-                XCTFail("Failed to encode/decode \(examples) for \(objectType). \(err)")
-            }
+        documentCreator.allStringLiterals.forEach {
+            XCTAssertTrue(decodeDocumentableStringLiteral(for: $0), "\($0)")
         }
+    }
+    func decodeDocumentableStringLiteral(for objectType: DocumentableStringLiteral.Type) -> Bool {
+        let encoder = RSDFactory.shared.createJSONEncoder()
+        let decoder = RSDFactory.shared.createJSONDecoder()
+        
+        var success = true
+        let examples = objectType.examples()
+        do {
+            let wrapper = _EncodableWrapper(encodableObject: examples)
+            let encodedObject = try encoder.encode(wrapper)
+            _DecodableArrayWrapper._unboxType = objectType
+            let decodedObject = try decoder.decode(_DecodableArrayWrapper.self, from: encodedObject)
+            XCTAssertEqual(decodedObject.items.count, examples.count)
+            for (idx, value) in decodedObject.items.enumerated() {
+                XCTAssertTrue(type(of: value) == objectType)
+                if let obj = value as? DocumentableStringLiteral, idx < examples.count {
+                    let expectedValue = examples[idx]
+                    XCTAssertEqual(obj.stringValue, expectedValue)
+                } else {
+                    XCTFail("Failed to decode to expected type for \(value)")
+                    success = false
+                }
+            }
+        } catch let err {
+            XCTFail("Failed to encode/decode \(examples) for \(objectType). \(err)")
+            success = false
+        }
+        return success
     }
     
     func testAllStringEnums() {
         let documentCreator = RSDDocumentCreator()
-        for objectType in documentCreator.allStringEnums {
-            
-            let encoder = RSDFactory.shared.createJSONEncoder()
-            let decoder = RSDFactory.shared.createJSONDecoder()
-            
-            let examples = Array(objectType.allValues())
-            do {
-                let wrapper = _EncodableWrapper(encodableObject: examples)
-                let encodedObject = try encoder.encode(wrapper)
-                _DecodableArrayWrapper._unboxType = objectType
-                let decodedObject = try decoder.decode(_DecodableArrayWrapper.self, from: encodedObject)
-                XCTAssertEqual(decodedObject.items.count, examples.count)
-                for (idx, value) in decodedObject.items.enumerated() {
-                    XCTAssertTrue(type(of: value) == objectType)
-                    if let obj = value as? DocumentableStringEnum, idx < examples.count {
-                        let expectedValue = examples[idx]
-                        XCTAssertEqual(obj.stringValue, expectedValue)
-                    } else {
-                        XCTFail("Failed to decode to expected type for \(value)")
-                    }
-                }
-            } catch let err {
-                XCTFail("Failed to encode/decode \(examples) for \(objectType). \(err)")
-            }
+        documentCreator.allStringEnums.forEach {
+            XCTAssertTrue(decodeDocumentableStringEnum(for: $0), "\($0)")
         }
+    }
+    func decodeDocumentableStringEnum(for objectType: DocumentableStringEnum.Type) -> Bool {
+        let encoder = RSDFactory.shared.createJSONEncoder()
+        let decoder = RSDFactory.shared.createJSONDecoder()
+        
+        var success = true
+        let examples = Array(objectType.allValues())
+        do {
+            let wrapper = _EncodableWrapper(encodableObject: examples)
+            let encodedObject = try encoder.encode(wrapper)
+            _DecodableArrayWrapper._unboxType = objectType
+            let decodedObject = try decoder.decode(_DecodableArrayWrapper.self, from: encodedObject)
+            XCTAssertEqual(decodedObject.items.count, examples.count)
+            for (idx, value) in decodedObject.items.enumerated() {
+                XCTAssertTrue(type(of: value) == objectType)
+                if let obj = value as? DocumentableStringEnum, idx < examples.count {
+                    let expectedValue = examples[idx]
+                    XCTAssertEqual(obj.stringValue, expectedValue)
+                } else {
+                    XCTFail("Failed to decode to expected type for \(value)")
+                    success = false
+                }
+            }
+        } catch let err {
+            XCTFail("Failed to encode/decode \(examples) for \(objectType). \(err)")
+            success = false
+        }
+        return success
     }
     
     func testAllOptionSets() {
         let documentCreator = RSDDocumentCreator()
-        for objectType in documentCreator.allOptionSets {
-            
-            let encoder = RSDFactory.shared.createJSONEncoder()
-            let decoder = RSDFactory.shared.createJSONDecoder()
-            
-            for option in objectType.examples() {
-                let examples = [option]
-                do {
-                    let wrapper = _EncodableWrapper(encodableObject: examples)
-                    let encodedObject = try encoder.encode(wrapper)
-                    _DecodableObjectWrapper._unboxType = objectType
-                    let decodedObject = try decoder.decode(_DecodableObjectWrapper.self, from: encodedObject)
-                    XCTAssertTrue(type(of: decodedObject.value) == objectType)
-                } catch let err {
-                    XCTFail("Failed to encode/decode \(examples) for \(objectType). \(err)")
+        documentCreator.allOptionSets.forEach {
+            XCTAssertTrue(decodeDocumentableOptionSet(for: $0), "\($0)")
+        }
+    }
+    func decodeDocumentableOptionSet(for objectType: DocumentableStringOptionSet.Type) -> Bool {
+        let encoder = RSDFactory.shared.createJSONEncoder()
+        let decoder = RSDFactory.shared.createJSONDecoder()
+        
+        var success = true
+        for option in objectType.examples() {
+            let examples = [option]
+            do {
+                let wrapper = _EncodableWrapper(encodableObject: examples)
+                let encodedObject = try encoder.encode(wrapper)
+                _DecodableObjectWrapper._unboxType = objectType
+                let decodedObject = try decoder.decode(_DecodableObjectWrapper.self, from: encodedObject)
+                XCTAssertTrue(type(of: decodedObject.value) == objectType)
+                
+            } catch let err {
+                XCTFail("Failed to encode/decode \(examples) for \(objectType). \(err)")
+                success = false
+            }
+        }
+        return success
+    }
+    
+    func testFactoryExamples() {
+        let factory = RSDFactory()
+        factory.serializerMap.forEach { (key, serializer) in
+            serializer.documentableExamples().forEach { (exampleObject) in
+                if let obj = exampleObject as? DocumentableStringLiteral {
+                    XCTAssertTrue(decodeDocumentableStringLiteral(for: type(of: obj)), "\(key):\(obj)")
+                }
+                else if let obj = exampleObject as? DocumentableStringEnum {
+                    XCTAssertTrue(decodeDocumentableStringEnum(for: type(of: obj)), "\(key):\(obj)")
+                }
+                else if let obj = exampleObject as? DocumentableStringOptionSet {
+                    XCTAssertTrue(decodeDocumentableOptionSet(for: type(of: obj)), "\(key):\(obj)")
+                }
+                else if exampleObject is Decodable {
+                    guard !(exampleObject is RSDStepTransformerObject) else { return }
+                    let obj = exampleObject
+                    XCTAssertTrue(decodeExamples(for: type(of: obj)), "\(key):\(obj)")
+                }
+                else {
+                    XCTFail("Failed to find the documentable type for \(key) : \(exampleObject)")
                 }
             }
         }
