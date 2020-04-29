@@ -60,7 +60,7 @@ public protocol Result : PolymorphicRepresentable, Encodable {
 /// controller to keep replacing the result in the collection or task result that contains the
 /// value. However, that means that the instance *must* be explicitly copied when using this
 /// to revisit a question.
-public protocol AnswerResult : class, Result {
+public protocol AnswerResult : class, Result, AnswerFinder {
     
     /// Optional property for defining additional information about the answer expected for this result.
     var jsonAnswerType: AnswerType? { get }
@@ -97,10 +97,6 @@ public protocol AnswerFinder {
     func findAnswer(with identifier: String) -> AnswerResult?
 }
 
-// TODO: syoung 04/06/2020 These are stubbed out here for reference. These will require modification
-// to the protocols in order to support using them while running a task instead of the older
-// RSDResult protocols.
-
 /// A `CollectionResult` is used to describe a collection of results.
 public protocol CollectionResult : Result, AnswerFinder {
 
@@ -108,8 +104,18 @@ public protocol CollectionResult : Result, AnswerFinder {
     /// to a service call, or the results from a form where all the fields are displayed together
     /// and the results do not represent a linear path. The results within this set should each
     /// have a unique identifier.
-    var inputResults: [Result] { get }
+    var children: [Result] { get }
 }
+
+public extension CollectionResult {
+    func findAnswer(with identifier: String) -> AnswerResult? {
+        self.children.first(where: { $0.identifier == identifier }) as? AnswerResult
+    }
+}
+
+// TODO: syoung 04/06/2020 These are stubbed out here for reference. These will require modification
+// to the protocols in order to support using them while running a task instead of the older
+// RSDResult protocols.
 
 /// The `BranchNodeResult` is the result created for a given level of navigation of a node tree.
 public protocol BranchNodeResult : CollectionResult {

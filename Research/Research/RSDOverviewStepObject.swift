@@ -115,7 +115,7 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep, Encodable {
     override open class func jsonExamples() throws -> [[String : JsonSerializable]] {
         let jsonA: [String : JsonSerializable] = [
             "identifier": "foo",
-            "type": "active",
+            "type" : self.defaultType().rawValue,
             "title": "Hello World!",
             "detail": "Some text.",
             "permissions" : [["permissionType": "location"]],

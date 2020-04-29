@@ -300,7 +300,7 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
     override public class func jsonExamples() throws -> [[String : JsonSerializable]] {
         [[
             "identifier": "foo",
-            "type": "simpleQuestion",
+            "type" : self.defaultType().rawValue,
             "title": "Hello World!",
             "optional": false,
             "inputItem": ["type" : "year"],
@@ -405,7 +405,7 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
     override public class func jsonExamples() throws -> [[String : JsonSerializable]] {
         [[
             "identifier": "foo",
-            "type": "multipleInputQuestion",
+            "type" : self.defaultType().rawValue,
             "title": "Hello World!",
             "optional": false,
             "inputItems":[["type" : "year", "identifier": "year"],
@@ -543,7 +543,7 @@ open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, Ques
     override open class func jsonExamples() throws -> [[String : JsonSerializable]] {
         [[
             "identifier": "foo",
-            "type": "choiceQuestion",
+            "type" : self.defaultType().rawValue,
             "title": "Hello World!",
             "optional": false,
             "singleChoice": false,
@@ -612,7 +612,7 @@ public final class StringChoiceQuestionStepObject : ChoiceQuestionStepObject {
     override public class func jsonExamples() throws -> [[String : JsonSerializable]] {
         [[
             "identifier": "foo",
-            "type": "stringChoiceQuestion",
+            "type" : self.defaultType().rawValue,
             "title": "Hello World!",
             "optional": false,
             "singleChoice": false,

@@ -482,7 +482,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     open class func jsonExamples() throws -> [[String : JsonSerializable]] {
         let jsonA: [String : JsonSerializable] = [
             "identifier": "foo",
-            "type": "instruction",
+            "type" : self.defaultType().rawValue,
             "title": "Hello World!",
             "subtitle": "Some text.",
             "detail": "This is a test.",
