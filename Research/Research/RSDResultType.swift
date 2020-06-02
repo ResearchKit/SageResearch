@@ -83,6 +83,14 @@ extension RSDResultType : DocumentableStringLiteral {
 }
 
 public final class RSDResultSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    public var documentDescription: String? {
+        """
+        `RSDResult` is the base implementation for a result associated with a task, step, or
+        asynchronous action. When running a task, there will be a result of some variety used to
+        mark each step in the task.
+        """
+    }
+    
     override init() {
         self.examples = [
             RSDResultObject.examples().first!,

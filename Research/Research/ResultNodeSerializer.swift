@@ -35,6 +35,10 @@ import Foundation
 import JsonModel
 
 public final class ResultNodeSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    public var documentDescription: String? {
+        "`ResultNode` is an interface used to allow for a related grouping of questions."
+    }
+    
     override init() {
         let examples: [SerializableResultNode] = [
             ChoiceQuestionStepObject.serializationExample(),

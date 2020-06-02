@@ -35,6 +35,21 @@ import Foundation
 import JsonModel
 
 public final class InputItemSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    public var documentDescription: String? {
+        """
+        An `InputItem` describes a "part" of a `Question` representing a single answer.
+        
+        For example, if a question is "what is your name" then the input items may include
+        "given name" and "family name" where separate text fields are used to allow the participant
+        to enter their first and last name, and the question may also include a list of titles from
+        which to choose.
+        
+        In another example, the input item could be a single cell in a list that shows the possible
+        choices for a question. In essence, this is akin to a single cell in a table view though
+        the actual implementation may differ.
+        """
+    }
+    
     override init() {
         let examples: [SerializableInputItemBuilder] = [
             
