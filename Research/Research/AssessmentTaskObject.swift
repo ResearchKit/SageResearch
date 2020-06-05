@@ -62,6 +62,13 @@ extension RSDTaskType : DocumentableStringLiteral {
 }
 
 public final class TaskSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    public var documentDescription: String? {
+        """
+        `RSDTask` is the interface for running a task. It includes information about how to
+        calculate progress, validation, and the order of display for the steps.
+        """
+    }
+    
     override init() {
         let examples: [SerializableTask] = [
             AssessmentTaskObject()

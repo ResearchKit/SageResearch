@@ -35,6 +35,13 @@ import Foundation
 import JsonModel
 
 public final class AnswerTypeSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    public var documentDescription: String? {
+        """
+        `AnswerType` is used to allow carrying additional information about the properties of a
+        JSON-encoded `AnswerResult`.
+        """
+    }
+    
     override init() {
         examples = [
             AnswerTypeArray.examples().first!,

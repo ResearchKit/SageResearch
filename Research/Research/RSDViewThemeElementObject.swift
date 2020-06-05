@@ -35,6 +35,13 @@ import Foundation
 import JsonModel
 
 public final class ViewThemeSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    public var documentDescription: String? {
+        """
+        `RSDViewThemeElement` tells the UI where to find the view controller or fragment to use
+        when instantiating the view.
+        """
+    }
+    
     override init() {
         examples = [
             RSDViewThemeElementObject.examples().first!,

@@ -140,6 +140,14 @@ extension RSDStepType : DocumentableStringLiteral {
 }
 
 public final class StepSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+    public var documentDescription: String? {
+        """
+        `RSDStep` is the base protocol for the steps that can compose a task for presentation using
+        a controller appropriate to the device and application. Each `RSDStep` object represents one
+        logical piece of data entry, information, or activity in a larger task.
+        """
+    }
+    
     override init() {
         let uiExamples: [SerializableStep] = [
             RSDActiveUIStepObject.serializationExample(),
