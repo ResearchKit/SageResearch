@@ -37,7 +37,7 @@ import JsonModel
 public final class InputItemSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
-        An `InputItem` describes a "part" of a `Question` representing a single answer.
+        An `InputItem` describes a "part" of a question representing a single answer.
         
         For example, if a question is "what is your name" then the input items may include
         "given name" and "family name" where separate text fields are used to allow the participant

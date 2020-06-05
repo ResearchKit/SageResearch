@@ -68,7 +68,9 @@ extension RSDImageThemeElementType : DocumentableStringLiteral {
 
 public final class ImageThemeSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
-        "`RSDImageThemeElement` extends the UI step to include an image."
+        """
+        `RSDImageThemeElement` extends the UI step to include an image."
+        """
     }
     
     override init() {

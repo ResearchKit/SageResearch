@@ -68,7 +68,11 @@ extension RSDColorMappingThemeElementType : DocumentableStringLiteral {
 
 public final class ColorMappingSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
-        "`RSDColorMappingThemeElement` defines the colors to use on a given screen. Typically, this includes the background color for the header or a background color that is applied to the full screen."
+        """
+        `RSDColorMappingThemeElement` defines the colors to use on a given screen. Typically, this
+        includes the background color for the header or a background color that is applied to the
+        full screen.
+        """
     }
     
     override init() {

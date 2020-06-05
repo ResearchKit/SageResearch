@@ -82,7 +82,10 @@ extension RSDUIActionObjectType : DocumentableStringLiteral {
 
 public final class ButtonActionSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
-        "The `RSDUIAction` protocol can be used to customize the title and image displayed for a given action of the UI."
+        """
+        `RSDUIAction` protocol can be used to customize the title and image displayed for a given
+        action of the UI.
+        """
     }
     
     override init() {
