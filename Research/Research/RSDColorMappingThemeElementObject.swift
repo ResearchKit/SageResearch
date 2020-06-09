@@ -69,10 +69,10 @@ extension RSDColorMappingThemeElementType : DocumentableStringLiteral {
 public final class ColorMappingSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
-        `RSDColorMappingThemeElement` defines the colors to use on a given screen. Typically, this
+        `ColorMappingThemeElement` defines the colors to use on a given screen. Typically, this
         includes the background color for the header or a background color that is applied to the
         full screen.
-        """
+        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
     override init() {
@@ -83,6 +83,10 @@ public final class ColorMappingSerializer : AbstractPolymorphicSerializer, Polym
     }
     
     public private(set) var examples: [RSDColorMappingThemeElement]
+    
+    public override class func typeDocumentProperty() -> DocumentProperty {
+        .init(propertyType: .reference(RSDColorMappingThemeElementType.documentableType()))
+    }
     
     public func add(_ example: SerializableColorMapping) {
         if let idx = examples.firstIndex(where: {

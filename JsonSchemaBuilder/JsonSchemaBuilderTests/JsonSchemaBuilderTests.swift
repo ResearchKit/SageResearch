@@ -49,43 +49,66 @@ class JsonSchemaBuilderTests: XCTestCase {
 
     func testJson() {
         let factory = RSDFactory()
-        let baseUrl = URL(string: "http://sagebionetworks.org/jsonSchema/")!
+        let baseUrl = URL(string: "http://sagebionetworks.org/SageResearch/jsonSchema/")!
         
-        let doc = JsonDocumentBuilder(baseUrl: baseUrl,
-                                      rootName: "SageResearch",
-                                      factory: factory)
+        let doc = JsonDocumentBuilder(baseUrl: baseUrl, factory: factory)
         
         do {
-            let doc = try doc.buildSchema()
+            let docs = try doc.buildSchemas()
             let encoder = factory.createJSONEncoder()
-            let json = try encoder.encode(doc)
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
             
-            let filename = "SageResearch.schema.json"
-            let url = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(filename)
-            
-            try json.write(to: url)
-            print(url)
-            
-            let exs = doc.definitions?.values.flatMap { (definition) -> [[String : Any]] in
-                guard case .object(let value) = definition, let ex = value.examples else {
-                    return []
-                }
-                return ex.map { $0.dictionary }
-            }
-            guard let examples = exs else {
-                XCTFail("Definitions should not be nil")
-                return
-            }
-            
-            let jsonSchema = try JSONSerialization.jsonObject(with: json, options: []) as! [String : Any]
+            let downloadsDirectory = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+            let schemasDirectory = downloadsDirectory.appendingPathComponent("SageResearch/jsonSchema/schemas")
+            let examplesDirectory = downloadsDirectory.appendingPathComponent("SageResearch/jsonSchema/examples")
 
-            examples.forEach {
-                let validationResult = JSONSchema.validate($0, schema: jsonSchema)
-                XCTAssertTrue(validationResult.valid, "\(validationResult.errors ?? [])")
+            let fileManager = FileManager.default
+            try fileManager.createDirectory(at: schemasDirectory, withIntermediateDirectories: true, attributes: nil)
+            try fileManager.createDirectory(at: examplesDirectory, withIntermediateDirectories: true, attributes: nil)
+            
+            try docs.forEach { (doc) in
+            
+                let json = try encoder.encode(doc)
+                
+                let filename = "\(doc.id.className).json"
+                let url = schemasDirectory.appendingPathComponent(filename)
+                try json.write(to: url)
+                print(url)
+                
+                guard let definitions = doc.definitions?.values else {
+                    XCTFail("Definitions should not be nil")
+                    return
+                }
+                                
+                try definitions.forEach { (definition) in
+                    guard case .object(let value) = definition,
+                        let interfaces = value.allOf,
+                        interfaces.contains(where: { $0.ref.className == doc.id.className}),
+                        let examples = value.examples
+                    else {
+                        return
+                    }
+                    
+                    try examples.enumerated().forEach { (index, ex) in
+                        let example = ex.dictionary
+                        
+                        let subdir = examplesDirectory.appendingPathComponent("\(doc.id.className)")
+                        try fileManager.createDirectory(at: subdir, withIntermediateDirectories: true, attributes: nil)
+                        let filename = "\(value.id.className)_\(index).json"
+                        let url = subdir.appendingPathComponent(filename)
+                        let exampleJson = try JSONSerialization.data(withJSONObject: example, options: [])
+                        try exampleJson.write(to: url)
+                        print(url)
+                    }
+                }
             }
         }
         catch let err {
             XCTFail("Failed to build the JsonSchema: \(err)")
         }
+    }
+    
+    func addExamples() {
+        
     }
 }

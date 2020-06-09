@@ -36,7 +36,9 @@ import JsonModel
 
 public final class ResultNodeSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
-        "`ResultNode` is an interface used to allow for a related grouping of questions."
+        """
+        `ResultNode` is an interface used to allow for a related grouping of questions.
+        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
     override init() {

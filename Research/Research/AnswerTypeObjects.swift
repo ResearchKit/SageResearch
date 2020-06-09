@@ -39,7 +39,7 @@ public final class AnswerTypeSerializer : AbstractPolymorphicSerializer, Polymor
         """
         `AnswerType` is used to allow carrying additional information about the properties of a
         JSON-encoded `AnswerResult`.
-        """
+        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
     override init() {
@@ -56,6 +56,10 @@ public final class AnswerTypeSerializer : AbstractPolymorphicSerializer, Polymor
     }
     
     public private(set) var examples: [AnswerType]
+    
+    public override class func typeDocumentProperty() -> DocumentProperty {
+        .init(propertyType: .reference(AnswerTypeType.documentableType()))
+    }
     
     public func add(_ example: AnswerType) {
         if let idx = examples.firstIndex(where: { $0.typeName == example.typeName }) {

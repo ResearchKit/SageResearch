@@ -64,9 +64,9 @@ extension RSDTaskType : DocumentableStringLiteral {
 public final class TaskSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
-        `RSDTask` is the interface for running a task. It includes information about how to
+        `Task` is the interface for running a task. It includes information about how to
         calculate progress, validation, and the order of display for the steps.
-        """
+        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
     override init() {
@@ -77,6 +77,10 @@ public final class TaskSerializer : AbstractPolymorphicSerializer, PolymorphicSe
     }
     
     public private(set) var examples: [RSDTask]
+    
+    public override class func typeDocumentProperty() -> DocumentProperty {
+        .init(propertyType: .reference(RSDTaskType.documentableType()))
+    }
     
     public func add(_ example: SerializableTask) {
         if let idx = examples.firstIndex(where: {

@@ -139,6 +139,26 @@ open class RSDFactory : SerializationFactory {
             return try super.decodeDefaultObject(type, from: decoder)
         }
     }
+    
+    open override func modelName(for className: String) -> String {
+        switch className {
+        case buttonActionSerializer.interfaceName:
+            return "ButtonActionInfo"
+        case imageThemeSerializer.interfaceName:
+            return "ImageInfo"
+        case inputItemSerializer.interfaceName:
+            return "InputItem"
+        case "UIActionType":
+            return "ButtonAction"
+        default:
+            var modelName = className
+            let objcPrefix = "RSD"
+            if modelName.hasPrefix(objcPrefix) {
+                modelName = String(modelName.dropFirst(objcPrefix.count))
+            }
+            return modelName.replacingOccurrences(of: "UIAction", with: "Button")
+        }
+    }
 
     // MARK: Class name factory
     

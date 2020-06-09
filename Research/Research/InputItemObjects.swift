@@ -47,7 +47,7 @@ public final class InputItemSerializer : AbstractPolymorphicSerializer, Polymorp
         In another example, the input item could be a single cell in a list that shows the possible
         choices for a question. In essence, this is akin to a single cell in a table view though
         the actual implementation may differ.
-        """
+        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
     override init() {
@@ -74,6 +74,10 @@ public final class InputItemSerializer : AbstractPolymorphicSerializer, Polymorp
     }
     
     public private(set) var examples: [InputItemBuilder]
+    
+    public override class func typeDocumentProperty() -> DocumentProperty {
+        .init(propertyType: .reference(InputItemType.documentableType()))
+    }
     
     public func add(_ example: SerializableInputItemBuilder) {
         if let idx = examples.firstIndex(where: {

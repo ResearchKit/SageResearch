@@ -5,9 +5,9 @@
         "package": "JsonModel",
         "repositoryURL": "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
         "state": {
-          "branch": null,
-          "revision": "c0b69ad283ca1ecf1be362a5c9bb90da3cb7f915",
-          "version": "1.0.0"
+          "branch": "tweeks",
+          "revision": "859826ac3881b80adb45b98b8224af2e3a39921a",
+          "version": null
         }
       },
       {
