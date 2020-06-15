@@ -36,7 +36,7 @@ import Foundation
 
 /// `RSDCollectionResult` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
-public protocol RSDCollectionResult : CollectionResult, RSDResult, RSDAnswerResultFinder {
+public protocol RSDCollectionResult : CollectionResult, RSDAnswerResultFinder {
     
     /// The list of input results associated with this step. These are generally assumed to be answers to
     /// field inputs, but they are not required to implement the `RSDAnswerResult` protocol.
@@ -45,7 +45,7 @@ public protocol RSDCollectionResult : CollectionResult, RSDResult, RSDAnswerResu
 
 extension RSDCollectionResult {
     
-    public var children: [Result] {
+    public var children: [RSDResult] {
         inputResults
     }
     

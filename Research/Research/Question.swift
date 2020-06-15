@@ -78,7 +78,7 @@ public protocol Question : ResultNode {
 }
 
 public extension Question {
-    func instantiateResult() -> Result {
+    func instantiateResult() -> RSDResult {
         instantiateAnswerResult()
     }
 }

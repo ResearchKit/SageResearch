@@ -114,7 +114,3 @@ public final class RSDResultSerializer : AbstractPolymorphicSerializer, Polymorp
         examples.append(example)
     }
 }
-
-public extension Result {
-    var typeName: String { return self.type.rawValue }
-}

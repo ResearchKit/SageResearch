@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDResult` is the base implementation for a result associated with a task, step, or asynchronous action.
 ///
@@ -39,11 +40,12 @@ import Foundation
 /// the base protocol. All the `RSDResult` objects are required to conform to the `Encodable` protocol to allow
 /// the app to store and upload results in a standardized way.
 ///
-/// - note: The `RSDResult` protocol requires conformance to the `Encodable` protocol but does *not* require
-/// conformance to `Decodable`. This allows using class objects that cannot be extended to conform to the
-/// `Decodable` protocol, such as `ORKResult` classes.
+/// - note: syoung 04/16/2020 Since the purpose of the `Result` protocol is to support
+/// serialization of the result set, and since this framework is no longer reverse-compatible to
+/// ResearchKit.ORKResult objects, these objected are now defined as `PolymorphicRepresentable`
+/// and `Encodable`.
 ///
-public protocol RSDResult : Result {
+public protocol RSDResult : PolymorphicRepresentable, Encodable {
     
     /// The identifier associated with the task, step, or asynchronous action.
     var identifier: String { get }
@@ -59,6 +61,10 @@ public protocol RSDResult : Result {
 }
 
 extension RSDResult {
+    
+    public var typeName: String {
+        type.rawValue
+    }
     
     func shortDescription() -> String {
         if let answerResult = self as? AnswerResult {

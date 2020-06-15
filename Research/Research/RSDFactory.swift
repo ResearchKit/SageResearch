@@ -90,19 +90,6 @@ open class RSDFactory : SerializationFactory {
     
     // MARK: Deprecation handling
     
-    open override func serializer<T>(for type: T.Type) -> GenericSerializer? {
-        if type == Result.self {
-            // syoung 04/16/2020 For now, the start/end date is required to match the RSDResult
-            // protocol. While this may change in the future to better support parity between
-            // Kotlin and iOS, for now, leave this as-is but allow for returning the `RSDResult`
-            // serializer in the place of the `Result`.
-            return resultSerializer
-        }
-        else {
-            return super.serializer(for: type)
-        }
-    }
-    
     @available(*, deprecated, message: "Use of a default type is deprecated. Please convert your code to use the serializers with a 'type' key instead.")
     open override func decodeDefaultObject<T>(_ type: T.Type, from decoder: Decoder) throws -> T {
         if type == AnswerType.self {
@@ -123,7 +110,7 @@ open class RSDFactory : SerializationFactory {
         else if type == InputItemBuilder.self {
             return try decodeInputItem(from: decoder) as! T
         }
-        else if type == RSDResult.self || type == Result.self {
+        else if type == RSDResult.self {
             return try decodeResult(from: decoder) as! T
         }
         else if type == RSDStep.self {
