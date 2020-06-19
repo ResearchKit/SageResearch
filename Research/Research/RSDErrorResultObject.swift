@@ -125,7 +125,7 @@ extension RSDErrorResultObject : DocumentableStruct {
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case ._startDate, ._endDate:
-            return .init(propertyType: .primitive(.string))
+            return .init(propertyType: .format(.dateTime))
         case .errorDomain, .errorDescription:
             return .init(propertyType: .primitive(.string))
         case .errorCode:

@@ -34,7 +34,7 @@
 import Foundation
 import JsonModel
 
-public final class AsyncActionConfigurationSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+public final class AsyncActionConfigurationSerializer : IdentifiableInterfaceSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
         `AsyncActionConfiguration` defines general configuration for an asynchronous action that

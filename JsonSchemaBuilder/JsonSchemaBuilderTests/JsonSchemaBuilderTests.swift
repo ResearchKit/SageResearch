@@ -35,7 +35,6 @@ import XCTest
 @testable import JsonSchemaBuilder
 import Research
 import JsonModel
-import JSONSchema
 
 class JsonSchemaBuilderTests: XCTestCase {
 
@@ -51,7 +50,9 @@ class JsonSchemaBuilderTests: XCTestCase {
         let factory = RSDFactory()
         let baseUrl = URL(string: "http://sagebionetworks.org/SageResearch/jsonSchema/")!
         
-        let doc = JsonDocumentBuilder(baseUrl: baseUrl, factory: factory)
+        let doc = JsonDocumentBuilder(baseUrl: baseUrl,
+                                      factory: factory,
+                                      rootDocuments: [AssessmentTaskObject.self, RSDTaskResultObject.self])
         
         do {
             let docs = try doc.buildSchemas()
@@ -106,9 +107,5 @@ class JsonSchemaBuilderTests: XCTestCase {
         catch let err {
             XCTFail("Failed to build the JsonSchema: \(err)")
         }
-    }
-    
-    func addExamples() {
-        
     }
 }

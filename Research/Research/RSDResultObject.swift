@@ -93,7 +93,7 @@ extension RSDResultObject : DocumentableStruct {
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case .startDate, .endDate:
-            return .init(propertyType: .primitive(.string))
+            return .init(propertyType: .format(.dateTime))
         case .skipToIdentifier:
             return .init(propertyType: .primitive(.string))
         }

@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FF7D851F244F778200F09A81 /* JSONSchema in Frameworks */ = {isa = PBXBuildFile; productRef = FF7D851E244F778200F09A81 /* JSONSchema */; };
 		FF9B859B244F5EC3006FA06F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B859A244F5EC3006FA06F /* AppDelegate.swift */; };
 		FF9B859D244F5EC3006FA06F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B859C244F5EC3006FA06F /* ViewController.swift */; };
 		FF9B859F244F5EC5006FA06F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF9B859E244F5EC5006FA06F /* Assets.xcassets */; };
@@ -61,7 +60,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF9B85BA244F629B006FA06F /* Research.framework in Frameworks */,
-				FF7D851F244F778200F09A81 /* JSONSchema in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +140,6 @@
 			);
 			name = JsonSchemaBuilder;
 			packageProductDependencies = (
-				FF7D851E244F778200F09A81 /* JSONSchema */,
 			);
 			productName = JsonSchemaBuilder;
 			productReference = FF9B8597244F5EC3006FA06F /* JsonSchemaBuilder.app */;
@@ -195,7 +192,6 @@
 			);
 			mainGroup = FF9B858E244F5EC3006FA06F;
 			packageReferences = (
-				FF7D851D244F778200F09A81 /* XCRemoteSwiftPackageReference "JSONSchema.swift" */,
 			);
 			productRefGroup = FF9B8598244F5EC3006FA06F /* Products */;
 			projectDirPath = "";
@@ -494,25 +490,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		FF7D851D244F778200F09A81 /* XCRemoteSwiftPackageReference "JSONSchema.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kylef/JSONSchema.swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		FF7D851E244F778200F09A81 /* JSONSchema */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FF7D851D244F778200F09A81 /* XCRemoteSwiftPackageReference "JSONSchema.swift" */;
-			productName = JSONSchema;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FF9B858F244F5EC3006FA06F /* Project object */;
 }

@@ -39,7 +39,6 @@
 		F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB72095550C00C6A4BC /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42AC0209555C400C6A4BC /* RSDCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A672095518400C6A4BC /* RSDCatalogTests.swift */; };
 		F8DC072E2256DD8A0045D530 /* ArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */; };
-        FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */ = {isa = PBXBuildFile; fileRef = FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */; };
 		FF432A1F23A3033F0027288F /* HoldPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A1D23A3033F0027288F /* HoldPhone@2x.png */; };
 		FF432A2023A3033F0027288F /* HoldPhone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A1E23A3033F0027288F /* HoldPhone@3x.png */; };
 		FF432A2923A3036E0027288F /* PhoneInPocket-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A2123A3036E0027288F /* PhoneInPocket-1@2x.png */; };
@@ -54,7 +53,9 @@
 		FF432A3423A3038A0027288F /* topBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3223A3038A0027288F /* topBackground@2x.png */; };
 		FF432A3723A303BB0027288F /* topMarginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3523A303BA0027288F /* topMarginBackground@2x.png */; };
 		FF432A3823A303BB0027288F /* topMarginBackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3623A303BB0027288F /* topMarginBackground@3x.png */; };
+		FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */ = {isa = PBXBuildFile; fileRef = FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */; };
 		FF8FC21922F3A0AF00FA6DAF /* Theme_Image.json in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */; };
+		FFE39AEF249D55B500446A8B /* SimpleSurvey.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE39AEE249D55B500446A8B /* SimpleSurvey.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,7 +127,6 @@
 		F8D42AB52095550C00C6A4BC /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42AB72095550C00C6A4BC /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveManager.swift; sourceTree = "<group>"; };
-        FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Silver_Cat_01_Videvo.mov; sourceTree = "<group>"; };
 		FF432A1D23A3033F0027288F /* HoldPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HoldPhone@2x.png"; sourceTree = "<group>"; };
 		FF432A1E23A3033F0027288F /* HoldPhone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HoldPhone@3x.png"; sourceTree = "<group>"; };
 		FF432A2123A3036E0027288F /* PhoneInPocket-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-1@2x.png"; sourceTree = "<group>"; };
@@ -141,7 +141,9 @@
 		FF432A3223A3038A0027288F /* topBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topBackground@2x.png"; sourceTree = "<group>"; };
 		FF432A3523A303BA0027288F /* topMarginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topMarginBackground@2x.png"; sourceTree = "<group>"; };
 		FF432A3623A303BB0027288F /* topMarginBackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topMarginBackground@3x.png"; sourceTree = "<group>"; };
+		FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Silver_Cat_01_Videvo.mov; sourceTree = "<group>"; };
 		FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Theme_Image.json; sourceTree = "<group>"; };
+		FFE39AEE249D55B500446A8B /* SimpleSurvey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SimpleSurvey.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +250,7 @@
 		F8D42A92209552EC00C6A4BC /* JSON Files */ = {
 			isa = PBXGroup;
 			children = (
+				FFE39AEE249D55B500446A8B /* SimpleSurvey.json */,
 				FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */,
 				F82A4AC222960DD400BEBE3C /* Recorder_Distance.json */,
 				F8D42A93209552EC00C6A4BC /* Recorder_Motion.json */,
@@ -420,6 +423,7 @@
 				F8D42A91209552CB00C6A4BC /* Main.storyboard in Resources */,
 				FF432A2E23A3036E0027288F /* PhoneInPocket-3@2x.png in Resources */,
 				FF432A2C23A3036E0027288F /* PhoneInPocket-1@3x.png in Resources */,
+				FFE39AEF249D55B500446A8B /* SimpleSurvey.json in Resources */,
 				F8D42A9C209552EC00C6A4BC /* FormStep_List.json in Resources */,
 				F8D42AA1209552EC00C6A4BC /* TaskGroups.json in Resources */,
 				F8D42A5A2095518400C6A4BC /* Assets.xcassets in Resources */,

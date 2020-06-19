@@ -112,7 +112,7 @@ extension RSDFileResultObject : DocumentableStruct {
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case ._startDate, ._endDate:
-            return .init(propertyType: .primitive(.string))
+            return .init(propertyType: .format(.dateTime))
         case .contentType, .relativePath:
             return .init(propertyType: .primitive(.string))
         case .startUptime:

@@ -82,7 +82,7 @@ extension RSDResultType : DocumentableStringLiteral {
     }
 }
 
-public final class RSDResultSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+public final class RSDResultSerializer : IdentifiableInterfaceSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
         `Result` is the base implementation for a result associated with a task, step, or

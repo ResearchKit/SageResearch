@@ -126,9 +126,9 @@ extension RSDCollectionResultObject : DocumentableStruct {
     public static func isRequired(_ codingKey: CodingKey) -> Bool {
         guard let key = codingKey as? CodingKeys else { return false }
         switch key {
-        case .type, .identifier, .startDate, .endDate, .inputResults:
+        case .type, .identifier, .startDate, .inputResults:
             return true
-        case .skipToIdentifier:
+        case .skipToIdentifier, .endDate:
             return false
         }
     }
@@ -143,7 +143,7 @@ extension RSDCollectionResultObject : DocumentableStruct {
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case .startDate, .endDate:
-            return .init(propertyType: .primitive(.string))
+            return .init(propertyType: .format(.dateTime))
         case .skipToIdentifier:
             return .init(propertyType: .primitive(.string))
         case .inputResults:

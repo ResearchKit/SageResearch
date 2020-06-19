@@ -111,14 +111,8 @@ public protocol AssessmentResult : BranchNodeResult {
     /// A unique identifier for this run of the assessment. This property is defined as readwrite
     /// to allow the controller for the task to set this on the `AssessmentResult` children
     /// included in this run.
-    var runUUIDString: String { get set }
+    var taskRunUUID: String { get set }
 
     /// The `versionString` may be a semantic version, timestamp, or sequential revision integer.
     var versionString: String? { get }
-
-    /// The start date timestamp for the result.
-    var startDateString: String { get }
-
-    /// The end date timestamp for the result.
-    var endDateString: String { get }
 }

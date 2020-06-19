@@ -160,11 +160,11 @@ extension RSDTaskResultObject : DocumentableStruct {
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case .startDate, .endDate:
-            return .init(propertyType: .primitive(.string))
+            return .init(propertyType: .format(.dateTime))
         case .taskRunUUID:
             return .init(propertyType: .primitive(.string))
         case .schemaInfo:
-            return .init(propertyType: .interface("\(RSDSchemaInfo.self)"))
+            return .init(propertyType: .reference(RSDSchemaInfoObject.documentableType()))
         case .stepHistory, .asyncResults:
             return .init(propertyType: .interfaceArray("\(RSDResult.self)"))
         }

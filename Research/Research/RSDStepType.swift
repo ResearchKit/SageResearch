@@ -139,7 +139,7 @@ extension RSDStepType : DocumentableStringLiteral {
     }
 }
 
-public final class StepSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+public final class StepSerializer : IdentifiableInterfaceSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
         `Step` is the base protocol for the steps that can compose a task for presentation using

@@ -20,39 +20,8 @@
             },
             "title": "Pick a number between -2 and +3",
             "type": "simpleQuestion",
-            "identifier": "step4",
+            "identifier": "pickANumber",
             "optional": false
-        },
-        {
-            "identifier": "heightAndWeight",
-            "type": "form",
-            "title": "Height and Weight",
-            "detail": "Enter height and weight in your current Locale.",
-            "inputFields": [{
-                    "identifier": "heightAdult",
-                    "type": "height.adult",
-                    "uiHint": "textfield",
-                    "prompt": "Enter a height for an adult"
-                },
-                {
-                    "identifier": "weightAdult",
-                    "type": "weight.adult",
-                    "uiHint": "textfield",
-                    "prompt": "Enter a weight for an adult"
-                },
-                {
-                    "identifier": "heightInfant",
-                    "type": "height.infant",
-                    "uiHint": "textfield",
-                    "prompt": "Enter a height for a baby"
-                },
-                {
-                    "identifier": "weightInfant",
-                    "type": "weight.infant",
-                    "uiHint": "textfield",
-                    "prompt": "Enter a weight for a baby"
-                }
-            ]
         },
         {
             "inputItem": {
@@ -61,7 +30,6 @@
                 },
                 "uiHint": "textfield",
                 "type": "year",
-                "identifier": "year",
                 "optional": false
             },
             "title": "Enter a year",

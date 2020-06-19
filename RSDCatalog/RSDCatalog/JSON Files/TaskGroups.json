@@ -28,7 +28,15 @@
                "detail": "The steps included in this task are all examples of RSDInputField objects that use the `textfield` RSDFormUIHint that are currently supported by the ResearchUI framework.",
                "icon": "activityIcon",
                "taskTransformer" : { "resourceName": "FormStep_Textfield" }
-               }]
+               },
+               {
+               "identifier": "simpleSurvey",
+               "title": "Example Survey",
+               "detail": "This is an example survey used to generate example JSON archives.",
+               "icon": "activityIcon",
+               "taskTransformer" : { "resourceName": "SimpleSurvey" }
+               }
+    ]
  },
  {
      "identifier": "recorderExamples",
