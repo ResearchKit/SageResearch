@@ -82,13 +82,13 @@ extension RSDResultType : DocumentableStringLiteral {
     }
 }
 
-public final class RSDResultSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
+public final class RSDResultSerializer : IdentifiableInterfaceSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
-        `RSDResult` is the base implementation for a result associated with a task, step, or
+        `Result` is the base implementation for a result associated with a task, step, or
         asynchronous action. When running a task, there will be a result of some variety used to
         mark each step in the task.
-        """
+        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
     override init() {
@@ -103,14 +103,14 @@ public final class RSDResultSerializer : AbstractPolymorphicSerializer, Polymorp
     
     public private(set) var examples: [RSDResult]
     
+    public override class func typeDocumentProperty() -> DocumentProperty {
+        .init(propertyType: .reference(RSDResultType.documentableType()))
+    }
+    
     public func add(_ example: RSDResult) {
         if let idx = examples.firstIndex(where: { $0.typeName == example.typeName }) {
             examples.remove(at: idx)
         }
         examples.append(example)
     }
-}
-
-public extension Result {
-    var typeName: String { return self.type.rawValue }
 }

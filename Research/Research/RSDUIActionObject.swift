@@ -83,9 +83,9 @@ extension RSDUIActionObjectType : DocumentableStringLiteral {
 public final class ButtonActionSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
-        `RSDUIAction` protocol can be used to customize the title and image displayed for a given
+        `ButtonActionInfo` protocol can be used to customize the title and image displayed for a given
         action of the UI.
-        """
+        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
     override init() {
@@ -99,6 +99,10 @@ public final class ButtonActionSerializer : AbstractPolymorphicSerializer, Polym
     }
     
     public private(set) var examples: [RSDUIAction]
+    
+    public override class func typeDocumentProperty() -> DocumentProperty {
+        .init(propertyType: .reference(RSDUIActionObjectType.documentableType()))
+    }
     
     public func add(_ example: SerializableUIAction) {
         if let idx = examples.firstIndex(where: {

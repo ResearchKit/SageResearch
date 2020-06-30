@@ -34,33 +34,12 @@
 import Foundation
 import JsonModel
 
-// TODO: syoung 04/06/2020 Deprecate the existing `RSDResult` in favor of the newer result protocols.
-// The Kotlin results do not *require* the startDate/endDate and other properties on all results.
-// This allows for a simplier serialization strategy for handling stored results.
-
-/// A `Result` is any data result that should be included with an `Assessment`. The base level
-/// interface only has an `identifier` and does not include any other properties.
-///
-/// - note: syoung 04/16/2020 Since the purpose of the `Result` protocol is to support
-/// serialization of the result set, and since this framework is no longer reverse-compatible to
-/// ResearchKit.ORKResult objects, these objected are now defined as `PolymorphicRepresentable`
-/// and `Encodable`.
-///
-public protocol Result : PolymorphicRepresentable, Encodable {
-
-    /// The identifier for the result.
-    var identifier: String { get }
-    
-    /// A String that indicates the type of the result. This is used to decode the result.
-    var type: RSDResultType { get }
-}
-
 /// An `AnswerResult` is used to hold a serializable answer to a question or measurement. This
 /// protocol is defined as a class to allow for mutating the `jsonValue` without requiring the
 /// controller to keep replacing the result in the collection or task result that contains the
 /// value. However, that means that the instance *must* be explicitly copied when using this
 /// to revisit a question.
-public protocol AnswerResult : class, Result, AnswerFinder {
+public protocol AnswerResult : class, RSDResult, AnswerFinder {
     
     /// Optional property for defining additional information about the answer expected for this result.
     var jsonAnswerType: AnswerType? { get }
@@ -98,13 +77,13 @@ public protocol AnswerFinder {
 }
 
 /// A `CollectionResult` is used to describe a collection of results.
-public protocol CollectionResult : Result, AnswerFinder {
+public protocol CollectionResult : RSDResult, AnswerFinder {
 
     /// The collection of results. This can be the async results of a sensor recorder, a response
     /// to a service call, or the results from a form where all the fields are displayed together
     /// and the results do not represent a linear path. The results within this set should each
     /// have a unique identifier.
-    var children: [Result] { get }
+    var children: [RSDResult] { get }
 }
 
 public extension CollectionResult {
@@ -123,7 +102,7 @@ public protocol BranchNodeResult : CollectionResult {
     /// The running history of the nodes that were traversed as a part of running an assessment.
     /// This will only include a subset (section) that is the path defined at this level of the
     /// overall assessment hierarchy.
-    var pathHistoryResults: [Result] { get }
+    var pathHistoryResults: [RSDResult] { get }
 }
 
 /// An `AssessmentResult` is the top-level `Result` for an assessment.
@@ -132,14 +111,8 @@ public protocol AssessmentResult : BranchNodeResult {
     /// A unique identifier for this run of the assessment. This property is defined as readwrite
     /// to allow the controller for the task to set this on the `AssessmentResult` children
     /// included in this run.
-    var runUUIDString: String { get set }
+    var taskRunUUID: String { get set }
 
     /// The `versionString` may be a semantic version, timestamp, or sequential revision integer.
     var versionString: String? { get }
-
-    /// The start date timestamp for the result.
-    var startDateString: String { get }
-
-    /// The end date timestamp for the result.
-    var endDateString: String { get }
 }

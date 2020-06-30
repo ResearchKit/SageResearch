@@ -69,8 +69,8 @@ extension RSDImageThemeElementType : DocumentableStringLiteral {
 public final class ImageThemeSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
-        `RSDImageThemeElement` extends the UI step to include an image."
-        """
+        `ImageInfo` extends the UI step to include an image."
+        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
     override init() {
@@ -81,6 +81,10 @@ public final class ImageThemeSerializer : AbstractPolymorphicSerializer, Polymor
     }
     
     public private(set) var examples: [RSDImageThemeElement]
+    
+    public override class func typeDocumentProperty() -> DocumentProperty {
+        .init(propertyType: .reference(RSDImageThemeElementType.documentableType()))
+    }
     
     public func add(_ example: SerializableImageTheme) {
         if let idx = examples.firstIndex(where: {

@@ -37,9 +37,9 @@ import JsonModel
 public final class ViewThemeSerializer : AbstractPolymorphicSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
-        `RSDViewThemeElement` tells the UI where to find the view controller or fragment to use
+        `ViewThemeElement` tells the UI where to find the view controller or fragment to use
         when instantiating the view.
-        """
+        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
     override init() {
@@ -49,6 +49,10 @@ public final class ViewThemeSerializer : AbstractPolymorphicSerializer, Polymorp
     }
     
     public private(set) var examples: [RSDViewThemeElement]
+    
+    public override class func typeDocumentProperty() -> DocumentProperty {
+        .init(propertyType: .reference(RSDViewThemeElementType.documentableType()))
+    }
     
     public func add(_ example: SerializableViewTheme) {
         if let idx = examples.firstIndex(where: {

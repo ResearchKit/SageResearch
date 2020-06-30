@@ -293,7 +293,7 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
         }
         switch key {
         case .inputItem:
-            return .init(propertyType: .interface("\(InputItem.self)"))
+            return .init(propertyType: .interface("\(InputItemBuilder.self)"))
         }
     }
     

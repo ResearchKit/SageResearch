@@ -129,6 +129,8 @@ public class DataArchive : NSObject, RSDDataArchive {
         let encoder = RSDFactory.shared.createJSONEncoder()
         let jsonData = try encoder.encode(metadata)
         let json = String(data: jsonData, encoding: .utf8)
+        let url = self.outputDirectory.appendingPathComponent("metadata.json")
+        try jsonData.write(to: url)
         #if DEBUG
         print("Archive complete. outputDirectory: \(String(describing: outputDirectory))\n\n\(json!)")
         #endif

@@ -1085,10 +1085,10 @@
 		FFABCB9522D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9622D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9722D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
-		FFAEE7D3243C007300F18BCB /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D2243C007300F18BCB /* Result.swift */; };
-		FFAEE7D4243C007300F18BCB /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D2243C007300F18BCB /* Result.swift */; };
-		FFAEE7D5243C007300F18BCB /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D2243C007300F18BCB /* Result.swift */; };
-		FFAEE7D6243C007300F18BCB /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D2243C007300F18BCB /* Result.swift */; };
+		FFAEE7D3243C007300F18BCB /* Result-KotlinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D2243C007300F18BCB /* Result-KotlinModel.swift */; };
+		FFAEE7D4243C007300F18BCB /* Result-KotlinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D2243C007300F18BCB /* Result-KotlinModel.swift */; };
+		FFAEE7D5243C007300F18BCB /* Result-KotlinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D2243C007300F18BCB /* Result-KotlinModel.swift */; };
+		FFAEE7D6243C007300F18BCB /* Result-KotlinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D2243C007300F18BCB /* Result-KotlinModel.swift */; };
 		FFAEE7DA243C0D3B00F18BCB /* AnswerResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D9243C0D3B00F18BCB /* AnswerResultObject.swift */; };
 		FFAEE7DB243C0D3B00F18BCB /* AnswerResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D9243C0D3B00F18BCB /* AnswerResultObject.swift */; };
 		FFAEE7DC243C0D3B00F18BCB /* AnswerResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D9243C0D3B00F18BCB /* AnswerResultObject.swift */; };
@@ -1122,6 +1122,10 @@
 		FFD4C7AC243E43780027CE6C /* TableDataSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C7A9243E43780027CE6C /* TableDataSourceImpl.swift */; };
 		FFD4C7AD243E43780027CE6C /* TableDataSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C7A9243E43780027CE6C /* TableDataSourceImpl.swift */; };
 		FFDAFF3D23A835AB004B5291 /* RSDStudyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCB9862229E9620011F27F /* RSDStudyConfiguration.swift */; };
+		FFE39AEA249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */; };
+		FFE39AEB249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */; };
+		FFE39AEC249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */; };
+		FFE39AED249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */; };
 		FFEA2F5124366C18008695D6 /* ContentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F5024366C18008695D6 /* ContentNode.swift */; };
 		FFEA2F5224366C18008695D6 /* ContentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F5024366C18008695D6 /* ContentNode.swift */; };
 		FFEA2F5324366C18008695D6 /* ContentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F5024366C18008695D6 /* ContentNode.swift */; };
@@ -1623,7 +1627,7 @@
 		FFA94E58244E35DB00A706F2 /* MigrationNotes_v3.3.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MigrationNotes_v3.3.md; sourceTree = "<group>"; };
 		FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskControllerTests.swift; sourceTree = "<group>"; };
 		FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownUIStepObject.swift; sourceTree = "<group>"; };
-		FFAEE7D2243C007300F18BCB /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		FFAEE7D2243C007300F18BCB /* Result-KotlinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result-KotlinModel.swift"; sourceTree = "<group>"; };
 		FFAEE7D9243C0D3B00F18BCB /* AnswerResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerResultObject.swift; sourceTree = "<group>"; };
 		FFB015C91F8BE62E00AC209B /* RSDRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRange.swift; sourceTree = "<group>"; };
 		FFB015CB1F8BE96A00AC209B /* RSDTextFieldOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextFieldOptions.swift; sourceTree = "<group>"; };
@@ -1661,6 +1665,7 @@
 		FFE0BD452445436100B941BC /* MigrationNotes_v3.1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MigrationNotes_v3.1.md; sourceTree = "<group>"; };
 		FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextFieldOptionsObject.swift; sourceTree = "<group>"; };
 		FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIStepObject.swift; sourceTree = "<group>"; };
+		FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableInterfaceSerializer.swift; sourceTree = "<group>"; };
 		FFEA2F5024366C18008695D6 /* ContentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentNode.swift; sourceTree = "<group>"; };
 		FFEA2F562436763B008695D6 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		FFEA2F6124368B53008695D6 /* AnswerTypeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerTypeObjects.swift; sourceTree = "<group>"; };
@@ -1821,7 +1826,7 @@
 		F802F3E1204DF1D40027CB00 /* Results */ = {
 			isa = PBXGroup;
 			children = (
-				FFAEE7D2243C007300F18BCB /* Result.swift */,
+				FFAEE7D2243C007300F18BCB /* Result-KotlinModel.swift */,
 				FF72B25C1F687199004C6F15 /* RSDResult.swift */,
 				F82D11162125EAF300EA1A33 /* RSDCollectionResult.swift */,
 				F82D110E2125EA7400EA1A33 /* RSDErrorResult.swift */,
@@ -2696,6 +2701,7 @@
 			children = (
 				F8A695082135CE920052EB82 /* README-Data-Model.md */,
 				FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */,
+				FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */,
 				FFEA2F752436BE07008695D6 /* Deprecated */,
 				F8BE10F02135EF8B000AAB1E /* Transformers */,
 				F8BE11632136132D000AAB1E /* Objects */,
@@ -3622,7 +3628,7 @@
 				F8A33494224069A700390601 /* RSDColorMappingThemeElementObject.swift in Sources */,
 				F8BE12B521371A4C000AAB1E /* RSDTaskController.swift in Sources */,
 				FFD4C7A8243D630D0027CE6C /* QuestionStepDataSource.swift in Sources */,
-				FFAEE7D6243C007300F18BCB /* Result.swift in Sources */,
+				FFAEE7D6243C007300F18BCB /* Result-KotlinModel.swift in Sources */,
 				FF225E03243B969C00AD2461 /* JsonSurveyRuleObject.swift in Sources */,
 				F8BE12C421371B21000AAB1E /* RSDDateCoderObject.swift in Sources */,
 				F8BE12EB21371B56000AAB1E /* RSDTaskObject.swift in Sources */,
@@ -3722,6 +3728,7 @@
 				F8EB48C8228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */,
 				F8BE129A21371A1C000AAB1E /* RSDInputField.swift in Sources */,
 				F8BE130321371F7B000AAB1E /* RSDDatePickerDataSourceObject.swift in Sources */,
+				FFE39AED249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */,
 				FFD4C7AD243E43780027CE6C /* TableDataSourceImpl.swift in Sources */,
 				FF287A9123A3701100677D62 /* RSDImageThemeElement+Platform.swift in Sources */,
 				F8BE130021371EED000AAB1E /* RSDTaskResourceTransformer.swift in Sources */,
@@ -3871,7 +3878,7 @@
 				FF8B54A41FCE6CF7006B6937 /* RSDTableItemGroup.swift in Sources */,
 				F8BE10F62135F11D000AAB1E /* RSDTaskResourceTransformer.swift in Sources */,
 				FFD4C7A5243D630D0027CE6C /* QuestionStepDataSource.swift in Sources */,
-				FFAEE7D3243C007300F18BCB /* Result.swift in Sources */,
+				FFAEE7D3243C007300F18BCB /* Result-KotlinModel.swift in Sources */,
 				FF225E00243B969C00AD2461 /* JsonSurveyRuleObject.swift in Sources */,
 				F8F9544620239ED400347940 /* RSDNumberRangeObject.swift in Sources */,
 				FF287A4623A3701100677D62 /* RSDColorRules.swift in Sources */,
@@ -3971,6 +3978,7 @@
 				F8C0A8D420FC127900EC758A /* RSDDetailInputFieldObject.swift in Sources */,
 				FF8B53AF1FCE6C7A006B6937 /* RSDSurveyRule.swift in Sources */,
 				F8C28F30204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift in Sources */,
+				FFE39AEA249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */,
 				FF8B549F1FCE6CF6006B6937 /* RSDFormStepDataSourceObject.swift in Sources */,
 				F8EB48C5228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */,
 				FFD4C7AA243E43780027CE6C /* TableDataSourceImpl.swift in Sources */,
@@ -4164,7 +4172,7 @@
 				FF8B54461FCE6CAA006B6937 /* RSDMultipleComponentInputFieldObject.swift in Sources */,
 				FF8B54471FCE6CAA006B6937 /* RSDDurationRangeObject.swift in Sources */,
 				FFD4C7A6243D630D0027CE6C /* QuestionStepDataSource.swift in Sources */,
-				FFAEE7D4243C007300F18BCB /* Result.swift in Sources */,
+				FFAEE7D4243C007300F18BCB /* Result-KotlinModel.swift in Sources */,
 				FF225E01243B969C00AD2461 /* JsonSurveyRuleObject.swift in Sources */,
 				F82D111C2125EB2500EA1A33 /* RSDTaskResult.swift in Sources */,
 				FF287A4723A3701100677D62 /* RSDColorRules.swift in Sources */,
@@ -4267,6 +4275,7 @@
 				F8EB48C6228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */,
 				FF8B53C41FCE6C7B006B6937 /* RSDSurveyRule.swift in Sources */,
 				F8BE10B62135DC0D000AAB1E /* RSDRequestConfiguration.swift in Sources */,
+				FFE39AEB249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */,
 				FF8B54A51FCE6CF7006B6937 /* RSDFormStepDataSourceObject.swift in Sources */,
 				FFD4C7AB243E43780027CE6C /* TableDataSourceImpl.swift in Sources */,
 				FF8B53BA1FCE6C7B006B6937 /* RSDFormUIStep.swift in Sources */,
@@ -4416,7 +4425,7 @@
 				F825BA62207FD70000D29F60 /* RSDWeeklyScheduleObject.swift in Sources */,
 				FF8B54491FCE6CAA006B6937 /* RSDChoiceObject.swift in Sources */,
 				FFD4C7A7243D630D0027CE6C /* QuestionStepDataSource.swift in Sources */,
-				FFAEE7D5243C007300F18BCB /* Result.swift in Sources */,
+				FFAEE7D5243C007300F18BCB /* Result-KotlinModel.swift in Sources */,
 				FF225E02243B969C00AD2461 /* JsonSurveyRuleObject.swift in Sources */,
 				FF8B54B01FCE6CF8006B6937 /* RSDTableItemGroup.swift in Sources */,
 				FF287A4823A3701100677D62 /* RSDColorRules.swift in Sources */,
@@ -4516,6 +4525,7 @@
 				FF8B53D91FCE6C7B006B6937 /* RSDSurveyRule.swift in Sources */,
 				F8BE10EF2135EBD0000AAB1E /* RSDOrderedStepNavigator.swift in Sources */,
 				F80CA53B1FFEBF6800E89C06 /* RSDInputFieldTableItemGroup.swift in Sources */,
+				FFE39AEC249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */,
 				FF8B54AB1FCE6CF8006B6937 /* RSDFormStepDataSourceObject.swift in Sources */,
 				F88051A42011B43800B0FDDD /* RSDFraction.swift in Sources */,
 				FFD4C7AC243E43780027CE6C /* TableDataSourceImpl.swift in Sources */,
@@ -5621,7 +5631,7 @@
 			repositoryURL = "https://github.com/Sage-Bionetworks/JsonModel-Swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

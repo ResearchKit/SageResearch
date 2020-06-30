@@ -1,5 +1,5 @@
 //
-//  ResultNodeSerializer.swift
+//  IdentifiableInterfaceSerializer.swift
 //  Research
 //
 //  Copyright © 2020 Sage Bionetworks. All rights reserved.
@@ -34,37 +34,28 @@
 import Foundation
 import JsonModel
 
-public final class ResultNodeSerializer : IdentifiableInterfaceSerializer, PolymorphicSerializer {
-    public var documentDescription: String? {
-        """
-        `ResultNode` is an interface used to allow for a related grouping of questions.
-        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
+open class IdentifiableInterfaceSerializer : AbstractPolymorphicSerializer {
+    private enum InterfaceKeys : String, CodingKey, CaseIterable {
+        case identifier
     }
     
-    override init() {
-        let examples: [SerializableResultNode] = [
-            ChoiceQuestionStepObject.serializationExample(),
-            MultipleInputQuestionStepObject.serializationExample(),
-            SimpleQuestionStepObject.serializationExample(),
-            StringChoiceQuestionStepObject.serializationExample(),
-        ]
-        self.examples = examples
+    open override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        keys.append(contentsOf: InterfaceKeys.allCases)
+        return keys
     }
     
-    public private(set) var examples: [ResultNode]
+    open override class func isRequired(_ codingKey: CodingKey) -> Bool {
+        (codingKey is InterfaceKeys) || super.isRequired(codingKey)
+    }
     
-    public func add(_ example: SerializableResultNode) {
-        if let idx = examples.firstIndex(where: {
-            ($0 as! PolymorphicRepresentable).typeName == example.typeName }) {
-            examples.remove(at: idx)
+    open override class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? InterfaceKeys else {
+            return try super.documentProperty(for: codingKey)
         }
-        examples.append(example)
+        switch key {
+        case .identifier:
+            return .init(propertyType: .primitive(.string))
+        }
     }
 }
-
-public protocol SerializableResultNode : ResultNode, PolymorphicRepresentable {
-}
-
-extension ChoiceQuestionStepObject : SerializableResultNode {}
-extension MultipleInputQuestionStepObject : SerializableResultNode {}
-extension SimpleQuestionStepObject : SerializableResultNode {}

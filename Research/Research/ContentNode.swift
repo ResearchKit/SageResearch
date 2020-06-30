@@ -72,7 +72,7 @@ public protocol ContentNode {
 }
 
 public protocol ResultNode : ContentNode {
-    func instantiateResult() -> Result
+    func instantiateResult() -> RSDResult
 }
 
 public protocol FormStep : ResultNode, RSDUIStep {
@@ -85,7 +85,7 @@ public protocol FormStep : ResultNode, RSDUIStep {
 public extension FormStep {
     
     /// A form step instantiates a step result.
-    func instantiateResult() -> Result {
+    func instantiateResult() -> RSDResult {
         instantiateStepResult()
     }
     
