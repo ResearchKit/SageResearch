@@ -29,8 +29,8 @@ or "detail". In ResearchUI, the `UILabel`  that was mapped to `text` will now ma
 
 In a future version, the `RSDResult` protocol will be replaced with the `Result` protocol. For this version, 
 `RSDAnswerResult` is deprecated and replaced with `AnswerResult`. Likewise, `RSDAnswerResultObject` has
-been deprecated in favor of `AnswerResultObject`. Eventually, this will mean that results will *not* require a 
-`startDate` and `endDate` for all results. They will still require `identifier` and `type` since those are used in 
+been deprecated in favor of `AnswerResultObject`. Eventually, this will mean that results will *not* require an 
+ `endDate` for all results. They will still require `identifier` and `type` since those are used in 
 serialization and in finding the result for a matching step.
 
 The `RSDAnswerResultType` has been replaced with `AnswerType` which is a protocol that conforms to the 

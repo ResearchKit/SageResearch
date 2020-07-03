@@ -164,7 +164,7 @@ open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
     
     /// The description of the path.
     override open var description: String {
-        return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
+        return "\(type(of: self)): \(fullPath) steps: [\(fullPath)]"
     }
     
     // MARK: UIAction handling

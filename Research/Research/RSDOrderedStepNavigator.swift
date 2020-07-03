@@ -93,8 +93,8 @@ extension RSDOrderedStepNavigator {
     private func _nextStepIdentifier(with parentResult: RSDTaskResult, isPeeking: Bool) -> String? {
         guard let sectionStep = self as? RSDStep,
             let taskResult = parentResult.findResult(for: sectionStep) as? RSDTaskResult,
-            let lastResult = taskResult.stepHistory.last,
-            let previousStep = self.step(with: lastResult.identifier)
+            let lastResult = taskResult.nodePath.last ?? taskResult.stepHistory.last?.identifier,
+            let previousStep = self.step(with: lastResult)
             else {
                 return nil
         }
@@ -250,20 +250,22 @@ extension RSDOrderedStepNavigator {
             return nil
         }
         
-        guard let beforeResult: RSDResult = {
-            if let _ = result.stepHistory.last(where: { step.identifier == $0.identifier }) {
+        let nodePath = result.nodePath.count > 0 ? result.nodePath : result.stepHistory.map { $0.identifier }
+        
+        guard let pathMarker: String = {
+            if let _ = nodePath.last(where: { step.identifier == $0 }) {
                 // Look to see if the step being tested is in the step history and if so, look for the step
                 // before that step.
-                return result.stepHistory.rsd_previous(before: {$0.identifier == step.identifier})
+                return nodePath.rsd_previous(before: {$0 == step.identifier})
             }
             else {
                 // Otherwise, the step being tested is the current step and has not yet been added
                 // to the result step so instead return the last result in the history.
-                return result.stepHistory.last
+                return nodePath.last
             }
         }() else { return nil }
         
-        return self.step(with: beforeResult.identifier)
+        return self.step(with: pathMarker)
     }
     
     /// Return the progress through the task for a given step with the current result.
@@ -277,10 +279,11 @@ extension RSDOrderedStepNavigator {
     ///     - isEstimated:  Whether or not the progress is an estimate (if the task has variable navigation).
     public func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)? {
         if let markers = self.progressMarkers {
+            guard let branchResult = result else { return nil }
+            
             // Get the list of steps that have been shown and add the step under test in case this is
             // called before that step is added to the step history.
-            guard let stepHistory = result?.stepHistory.map({ $0.identifier }) else { return nil }
-            var stepList = stepHistory
+            var stepList = branchResult.nodePath.count > 0 ? branchResult.nodePath : branchResult.stepHistory.map { $0.identifier }
             stepList.append(step.identifier)
             
             // Look for last index into the markers where the step has been displayed.
@@ -302,7 +305,12 @@ extension RSDOrderedStepNavigator {
         }
         else {
             // Look at the total number of steps and the result.
-            let resultSet = Set(result?.stepHistory.map({ $0.identifier }) ?? [])
+            let resultSet: Set<String> = {
+                guard let branchResult = result else { return [] }
+                return branchResult.nodePath.count > 0 ?
+                    Set(branchResult.nodePath) :
+                    Set(branchResult.stepHistory.map { $0.identifier })
+            }()
             let stepSet = Set(steps.map({ $0.identifier }))
             let total = stepSet.union(resultSet).count
             let current = resultSet.subtracting([step.identifier]).count

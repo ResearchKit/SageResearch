@@ -36,7 +36,7 @@ import Foundation
 
 /// `RSDTaskResult` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
-public protocol RSDTaskResult : RSDResult, RSDAnswerResultFinder, AnswerFinder {
+public protocol RSDTaskResult : BranchNodeResult, RSDAnswerResultFinder {
     
     /// A unique identifier for this task run.
     var taskRunUUID: UUID { get }
@@ -44,8 +44,7 @@ public protocol RSDTaskResult : RSDResult, RSDAnswerResultFinder, AnswerFinder {
     /// Schema info associated with this task.
     var schemaInfo: RSDSchemaInfo? { get set }
     
-    /// A listing of the step history for this task or section. The listed step results should *only* include the
-    /// last result for any given step.
+    /// A listing of the step history for this task or section. 
     var stepHistory: [RSDResult] { get set }
     
     /// A list of all the asynchronous results for this task. The list should include uniquely identified results.
@@ -64,6 +63,11 @@ public protocol RSDTaskRunResult : RSDTaskResult {
 
 extension RSDTaskResult  {
     
+    public var inputResults: [RSDResult] {
+        get { asyncResults ?? [] }
+        set { asyncResults = newValue }
+    }
+    
     /// Find a result within the step history.
     /// - parameter step: The step associated with the result.
     /// - returns: The result or `nil` if not found.
@@ -79,28 +83,33 @@ extension RSDTaskResult  {
     }
     
 
-    /// Append the result to the end of the step history, replacing the previous instance with the same identifier.
+    /// Append the result to the end of the step history. If the last result has the same
+    /// identifier, then remove it.
     /// - parameter result:  The result to add to the step history.
     /// - returns: The previous result or `nil` if there wasn't one.
     @discardableResult
     mutating public func appendStepHistory(with result: RSDResult) -> RSDResult? {
         var previousResult: RSDResult?
-        if let idx = stepHistory.firstIndex(where: { $0.identifier == result.identifier }) {
-            previousResult = stepHistory.remove(at: idx)
+        if let idx = stepHistory.lastIndex(where: { $0.identifier == result.identifier }) {
+            previousResult = (idx == stepHistory.count - 1) ? stepHistory.remove(at: idx) : stepHistory[idx]
         }
         stepHistory.append(result)
+        if nodePath.last != result.identifier {
+            nodePath.append(result.identifier)
+        }
         return previousResult
     }
     
-    /// Remove results from the step history from the result with the given identifier to the end of the array.
+    /// Remove the nodePath from `stepIdentifier` to the end of the result set.
     /// - parameter stepIdentifier:  The identifier of the result associated with the given step.
-    /// - returns: The previous result or `nil` if there wasn't one.
+    /// - returns: The previous results or `nil` if there wasn't one.
     @discardableResult
     mutating public func removeStepHistory(from stepIdentifier: String) -> Array<RSDResult>? {
-        guard let idx = stepHistory.firstIndex(where: { $0.identifier == stepIdentifier }) else { return nil }
-        let subrange = stepHistory[idx...]
-        stepHistory.replaceSubrange(idx..., with: [])
-        return Array(subrange)
+        if let idx = nodePath.lastIndex(of: stepIdentifier) {
+            nodePath.removeSubrange(idx...)
+        }
+        guard let idx = stepHistory.lastIndex(where: { $0.identifier == stepIdentifier }) else { return nil }
+        return Array(stepHistory[idx...])
     }
     
     /// Append the async results with the given result, replacing the previous instance with the same identifier.
