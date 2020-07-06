@@ -57,7 +57,7 @@ public struct RSDTaskMetadata : Codable {
     public let taskIdentifier: String
     
     /// The task run UUID.
-    public let taskRunUUID: UUID
+    public let taskRunUUID: UUID?
     
     /// The timestamp for when the task was started.
     public let startDate: Date
@@ -96,7 +96,7 @@ public struct RSDTaskMetadata : Codable {
         }
         
         self.taskIdentifier = taskResult.identifier
-        self.taskRunUUID = taskResult.taskRunUUID
+        self.taskRunUUID = (taskResult as? AssessmentResult)?.taskRunUUID
         self.startDate = taskResult.startDate
         self.endDate = taskResult.endDate
         self.schemaIdentifier = taskResult.schemaInfo?.schemaIdentifier

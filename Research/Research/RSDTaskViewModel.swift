@@ -121,7 +121,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         self.dataManager = (parent as? RSDHistoryPathComponent)?.dataManager
         self.previousResults = (parent.taskResult.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
         var runResult = self.taskResult as? RSDTaskRunResult
-        runResult?.taskRunUUID = parent.taskResult.taskRunUUID
+        if let uuid = (parent.taskResult as? AssessmentResult)?.taskRunUUID {
+            runResult?.taskRunUUID = uuid
+        }
         self.taskResult = runResult ?? self.taskResult
         if let _ = self.task as? RSDSectionStep {
             self.shouldShowAbbreviatedInstructions = (parentPath as? RSDTaskViewModel)?.shouldShowAbbreviatedInstructions
@@ -471,7 +473,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
                     newResult.asyncResults = results
                 }
                 var runResult = newResult as? RSDTaskRunResult
-                runResult?.taskRunUUID = previousResult.taskRunUUID
+                if let uuid = (previousResult as? AssessmentResult)?.taskRunUUID {
+                    runResult?.taskRunUUID = uuid
+                }
                 strongSelf.taskResult = runResult ?? newResult
             }
             else {
