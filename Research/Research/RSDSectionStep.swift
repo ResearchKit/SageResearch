@@ -66,7 +66,7 @@ extension RSDSectionStep {
         let result = self.instantiateStepResult()
         guard let taskResult = result as? RSDTaskResult else {
             assertionFailure("Expected that a section step will return a result that conforms to RSDTaskResult protocol.")
-            return RSDTaskResultObject(identifier: identifier)
+            return SectionResultObject(identifier: identifier)
         }
         return taskResult
     }

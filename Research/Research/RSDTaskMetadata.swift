@@ -79,7 +79,6 @@ public struct RSDTaskMetadata : Codable {
     ///     - taskResult: The task result to use to pull information included in the top-level metadata.
     ///     - files: A list of files included with this metadata.
     public init(taskResult: RSDTaskResult, files: [RSDFileManifest]) {
-
         if let platformContext = currentPlatformContext {
             self.deviceInfo = platformContext.deviceInfo
             self.deviceTypeIdentifier = platformContext.deviceTypeIdentifier
@@ -94,14 +93,20 @@ public struct RSDTaskMetadata : Codable {
             self.appVersion = "Unknown"
             self.rsdFrameworkVersion = "Unknown"
         }
-        
         self.taskIdentifier = taskResult.identifier
-        self.taskRunUUID = (taskResult as? AssessmentResult)?.taskRunUUID
         self.startDate = taskResult.startDate
         self.endDate = taskResult.endDate
-        self.schemaIdentifier = taskResult.schemaInfo?.schemaIdentifier
-        self.schemaRevision = taskResult.schemaInfo?.schemaVersion
         self.files = files
+        if let runResult = taskResult as? RSDTaskRunResult {
+            self.taskRunUUID = runResult.taskRunUUID
+            self.schemaIdentifier = runResult.schemaInfo?.schemaIdentifier
+            self.schemaRevision = runResult.schemaInfo?.schemaVersion
+        }
+        else {
+            self.taskRunUUID = nil
+            self.schemaIdentifier = nil
+            self.schemaRevision = nil
+        }
     }
 }
 

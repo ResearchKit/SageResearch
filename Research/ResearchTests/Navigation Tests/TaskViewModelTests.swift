@@ -50,7 +50,7 @@ class TaskViewModelTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         let taskInfo = TestTaskInfo(task: task)
         let taskViewModel = TestTaskViewModel(taskInfo: taskInfo)
-        let runUUID = taskViewModel.taskResult.taskRunUUID
+        let runUUID = taskViewModel.taskRunUUID ?? UUID()
         let startDate = taskViewModel.taskResult.startDate
         
         let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
@@ -73,7 +73,7 @@ class TaskViewModelTests: XCTestCase {
         
         // The task run UUID should be the same but the task result should have been replaced with a new
         // instance that has a different start date.
-        XCTAssertEqual(taskViewModel.taskResult.taskRunUUID, runUUID)
+        XCTAssertEqual(taskViewModel.taskRunUUID, runUUID)
         XCTAssertNotEqual(taskViewModel.taskResult.startDate, startDate)
     }
     
@@ -119,7 +119,7 @@ class TaskViewModelTests: XCTestCase {
         let taskInfo = TestTaskInfo(task: task)
         let taskViewModel = TestTaskViewModel(taskInfo: taskInfo)
         
-        let runUUID = taskViewModel.taskResult.taskRunUUID
+        let runUUID = taskViewModel.taskRunUUID ?? UUID()
         let startDate = taskViewModel.taskResult.startDate
         
         // Create an answer result to add to the temporary task result.
@@ -146,7 +146,7 @@ class TaskViewModelTests: XCTestCase {
         
         // The task run UUID should be the same but the task result should have been replaced with a new
         // instance that has a different start date.
-        XCTAssertEqual(taskViewModel.taskResult.taskRunUUID, runUUID)
+        XCTAssertEqual(taskViewModel.taskRunUUID, runUUID)
         XCTAssertNotEqual(taskViewModel.taskResult.startDate, startDate)
         
         // The async results should include both blu and goo

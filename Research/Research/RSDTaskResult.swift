@@ -37,10 +37,7 @@ import Foundation
 /// `RSDTaskResult` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
 public protocol RSDTaskResult : BranchNodeResult, RSDAnswerResultFinder {
-    
-    /// Schema info associated with this task.
-    var schemaInfo: RSDSchemaInfo? { get set }
-    
+
     /// A list of all the asynchronous results for this task. The list should include uniquely identified results.
     /// The step history is used to describe the path you took to get to where you are going, whereas
     /// the asynchronous results include any canonical results that are independent of path.
@@ -50,6 +47,9 @@ public protocol RSDTaskResult : BranchNodeResult, RSDAnswerResultFinder {
 /// The `RSDTaskRunResult` is a task result where the task run UUID can be set to allow for nested
 /// results that all use the same run UUID.
 public protocol RSDTaskRunResult : RSDTaskResult, AssessmentResult {
+    
+    /// Schema info associated with this task.
+    var schemaInfo: RSDSchemaInfo? { get set }
 }
 
 extension RSDTaskRunResult {

@@ -55,6 +55,9 @@ public struct RSDResultType : RSDFactoryTypeRepresentable, Codable, Hashable {
     /// Defaults to creating a `RSDTaskResult`.
     public static let task: RSDResultType = "task"
     
+    /// Defaults to creating a `SectionResultObject`.
+    public static let section: RSDResultType = "section"
+    
     /// Defaults to creating a `RSDFileResult`.
     public static let file: RSDResultType = "file"
     
@@ -66,7 +69,7 @@ public struct RSDResultType : RSDFactoryTypeRepresentable, Codable, Hashable {
     
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDResultType] {
-        return [.base, .answer, .collection, .task, .file, .error, .navigation]
+        return [.base, .answer, .collection, .task, .section, .file, .error, .navigation]
     }
 }
 
@@ -93,6 +96,8 @@ public final class RSDResultSerializer : IdentifiableInterfaceSerializer, Polymo
     
     override init() {
         self.examples = [
+            RSDTaskResultObject.examples().first!,
+            SectionResultObject.examples().first!,
             RSDResultObject.examples().first!,
             AnswerResultObject.examples().first!,
             RSDCollectionResultObject.examples().first!,

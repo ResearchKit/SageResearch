@@ -61,6 +61,10 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     /// The task that is currently being run.
     public private(set) var task: RSDTask?
     
+    public var taskRunUUID : UUID? {
+        (self.taskResult as? AssessmentResult)?.taskRunUUID ?? (self.parent as? RSDTaskViewModel)?.taskRunUUID
+    }
+    
     /// The data manager for accessing previous runs of the task.
     public weak var dataManager: RSDDataStorageManager? {
         didSet {

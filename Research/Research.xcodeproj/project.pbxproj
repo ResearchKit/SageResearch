@@ -800,6 +800,10 @@
 		FF432A0E23A05BA20027288F /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF432A0B23A05BA20027288F /* Geometry.swift */; };
 		FF432A0F23A05BA20027288F /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF432A0B23A05BA20027288F /* Geometry.swift */; };
 		FF432A1C23A2FBE90027288F /* ThemeImageViewOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF432A1B23A2FBE80027288F /* ThemeImageViewOwner.swift */; };
+		FF5D2C4D24B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */; };
+		FF5D2C4E24B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */; };
+		FF5D2C4F24B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */; };
+		FF5D2C5024B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */; };
 		FF61FA3223A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */; };
 		FF61FA3323A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */; };
 		FF61FA3423A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */; };
@@ -1524,12 +1528,13 @@
 		FF4329E123A044A20027288F /* RSDResourceImageDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResourceImageDataObject.swift; sourceTree = "<group>"; };
 		FF432A0B23A05BA20027288F /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		FF432A1B23A2FBE80027288F /* ThemeImageViewOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeImageViewOwner.swift; sourceTree = "<group>"; };
-		FF518F8024AC089B003E9DAB /* ReleaseNotes_v3.4.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReleaseNotes_v3.4.md; sourceTree = "<group>"; };
+		FF518F8024AC089B003E9DAB /* ReleaseNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReleaseNotes.md; sourceTree = "<group>"; };
 		FF580BF31F7E3764009B3EE9 /* RSDActiveUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveUIStepObject.swift; sourceTree = "<group>"; };
 		FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FF5C4C1C1F8C872500F311BA /* RSDTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskController.swift; sourceTree = "<group>"; };
 		FF5C4C1E1F8C874300F311BA /* RSDStepController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepController.swift; sourceTree = "<group>"; };
 		FF5C4C311F8C9DC100F311BA /* RSDResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultObject.swift; sourceTree = "<group>"; };
+		FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionResultObject.swift; sourceTree = "<group>"; };
 		FF61FA3023A447F5006B36C5 /* MigrationNotes_v3.0.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MigrationNotes_v3.0.md; sourceTree = "<group>"; };
 		FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSDResourceImageDataObject+Platform.swift"; sourceTree = "<group>"; };
 		FF639615245223C00002B1D1 /* ResultNodeSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultNodeSerializer.swift; sourceTree = "<group>"; };
@@ -2508,6 +2513,7 @@
 				FF78FC851FA7A5F500B8D42C /* RSDFileResultObject.swift */,
 				FF5C4C311F8C9DC100F311BA /* RSDResultObject.swift */,
 				FF8827E81F8DE8CD00CEFDF0 /* RSDTaskResultObject.swift */,
+				FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */,
 			);
 			name = Result;
 			sourceTree = "<group>";
@@ -2529,7 +2535,7 @@
 				FFE0BD452445436100B941BC /* MigrationNotes_v3.1.md */,
 				FFF433FD2446428B00C5F466 /* MigrationNotes_v3.2.md */,
 				FFA94E58244E35DB00A706F2 /* MigrationNotes_v3.3.md */,
-				FF518F8024AC089B003E9DAB /* ReleaseNotes_v3.4.md */,
+				FF518F8024AC089B003E9DAB /* ReleaseNotes.md */,
 				FF72B2331F6859D3004C6F15 /* Research */,
 				FF72B23E1F6859D3004C6F15 /* ResearchTests */,
 				F875575720807E2300235078 /* Research-UnitTest */,
@@ -3552,6 +3558,7 @@
 				F8EB48C4228CDBB3000A2F69 /* RSDDataLogger.swift in Sources */,
 				F8BE128A213719FB000AAB1E /* RSDCohortNavigationStep.swift in Sources */,
 				F8BE124121370A2F000AAB1E /* RSDFractionFormatter.m in Sources */,
+				FF5D2C5024B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */,
 				F8BE130421371F7B000AAB1E /* RSDMultipleComponentOptionsObject.swift in Sources */,
 				FFEA2F6F2436A878008695D6 /* KeyboardOptions.swift in Sources */,
 				FF4329AB239EF1F40027288F /* RSDFontData.swift in Sources */,
@@ -3802,6 +3809,7 @@
 				F8EB48C1228CDBB3000A2F69 /* RSDDataLogger.swift in Sources */,
 				F80CA5391FFEBF6800E89C06 /* RSDInputFieldTableItemGroup.swift in Sources */,
 				FF8B54601FCE6CB8006B6937 /* RSDImageThemeObject.swift in Sources */,
+				FF5D2C4D24B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */,
 				F8904D491FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */,
 				FF8B53AA1FCE6C7A006B6937 /* RSDSectionStep.swift in Sources */,
 				FFEA2F6C2436A878008695D6 /* KeyboardOptions.swift in Sources */,
@@ -4099,6 +4107,7 @@
 				F80CA53A1FFEBF6800E89C06 /* RSDInputFieldTableItemGroup.swift in Sources */,
 				F82D11182125EAF300EA1A33 /* RSDCollectionResult.swift in Sources */,
 				FF8B53BF1FCE6C7B006B6937 /* RSDSectionStep.swift in Sources */,
+				FF5D2C4E24B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */,
 				FFEA2F6D2436A878008695D6 /* KeyboardOptions.swift in Sources */,
 				FFEA2F5224366C18008695D6 /* ContentNode.swift in Sources */,
 				F802F3E4204DF2B80027CB00 /* RSDUIStep.swift in Sources */,
@@ -4349,6 +4358,7 @@
 				F84A2F4721779A640079C92C /* RSDClock.swift in Sources */,
 				F8EB48C3228CDBB3000A2F69 /* RSDDataLogger.swift in Sources */,
 				FF8B549A1FCE6CEE006B6937 /* RSDPickerDataSource.swift in Sources */,
+				FF5D2C4F24B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */,
 				FF8B53DD1FCE6C7B006B6937 /* RSDTextFieldOptions.swift in Sources */,
 				FF8B54661FCE6CB9006B6937 /* RSDImageThemeObject.swift in Sources */,
 				FFEA2F6E2436A878008695D6 /* KeyboardOptions.swift in Sources */,
