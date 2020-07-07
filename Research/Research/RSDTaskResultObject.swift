@@ -38,7 +38,7 @@ import JsonModel
 /// schema identifier, and asynchronous results.
 public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, startDate, endDate, taskRunUUID, schemaInfo, stepHistory, asyncResults
+        case identifier, type, startDate, endDate, taskRunUUID, schemaInfo, stepHistory, asyncResults, nodePath
     }
     
     /// The identifier associated with the task, step, or asynchronous action.
@@ -66,6 +66,9 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
     /// A list of all the asynchronous results for this task. The list should include uniquely identified results.
     public var asyncResults: [RSDResult]?
     
+    /// The path to the current result.
+    public var nodePath: [String] = []
+    
     /// Default initializer for this object.
     ///
     /// - parameters:
@@ -90,6 +93,7 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
         self.startDate = try container.decode(Date.self, forKey: .startDate)
         self.endDate = try container.decode(Date.self, forKey: .endDate)
         self.taskRunUUID = try container.decode(UUID.self, forKey: .taskRunUUID)
+        self.nodePath = try container.decodeIfPresent([String].self, forKey: .nodePath) ?? []
         
         if container.contains(.schemaInfo) {
             let nestedDecoder = try container.superDecoder(forKey: .schemaInfo)
@@ -115,6 +119,7 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
         try container.encode(startDate, forKey: .startDate)
         try container.encode(endDate, forKey: .endDate)
         try container.encode(taskRunUUID, forKey: .taskRunUUID)
+        try container.encode(nodePath, forKey: .nodePath)
         
         let nestedEncoder = container.superEncoder(forKey: .schemaInfo)
         try encoder.factory.encodeSchemaInfo(from: self, to: nestedEncoder)
@@ -167,6 +172,8 @@ extension RSDTaskResultObject : DocumentableStruct {
             return .init(propertyType: .reference(RSDSchemaInfoObject.documentableType()))
         case .stepHistory, .asyncResults:
             return .init(propertyType: .interfaceArray("\(RSDResult.self)"))
+        case .nodePath:
+            return .init(propertyType: .primitiveArray(.string))
         }
     }
     

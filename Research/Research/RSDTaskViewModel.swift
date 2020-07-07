@@ -84,7 +84,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     
     /// The description of the path.
     override open var description: String {
-        return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
+        return "\(type(of: self)): \(fullPath) steps: [\(nodePathHistory)]"
     }
     
     
@@ -370,9 +370,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         // Before loading the step controller, add a new instance of the step result to the step history to
         // indicate that the step was "visited" even if it was not displayed b/c the task controller didn't
         // return a step controller.
-        if self.taskResult.findResult(for: step) == nil {
-            let stepResult = step.instantiateStepResult()
-            self.taskResult.appendStepHistory(with: stepResult)
+        
+        if self.taskResult.stepHistory.last?.identifier != step.identifier  {
+            self.taskResult.appendStepHistory(with: step.instantiateStepResult())
         }
 
         guard let stepController = self.taskController?.stepController(for: step, with: self)
@@ -394,6 +394,11 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         // then return that.
         if ((step is RSDTaskInfoStep) || (step is RSDSectionStep)),
             let childPath = self.childPaths[step.identifier] {
+            
+            if self.taskResult.stepHistory.last?.identifier != step.identifier  {
+                self.taskResult.appendStepHistory(with: childPath.pathResult())
+            }
+            
             return (childPath, nil)
         }
         return self.pathComponent(for: step)

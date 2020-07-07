@@ -185,8 +185,8 @@ extension RSDPathComponent {
     }
     
     /// String representing the current order of steps to this point in the task.
-    public var stepPath: String {
-        return self.taskResult.stepHistory.map( {$0.identifier }).joined(separator: ", ")
+    public var nodePathHistory: String {
+        return taskResult.stepHistory.map { $0.identifier }.joined(separator: ", ")
     }
     
     /// Is this the first step in the task?

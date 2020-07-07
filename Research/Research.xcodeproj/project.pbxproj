@@ -1565,6 +1565,7 @@
 		FF4329E123A044A20027288F /* RSDResourceImageDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResourceImageDataObject.swift; sourceTree = "<group>"; };
 		FF432A0B23A05BA20027288F /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		FF432A1B23A2FBE80027288F /* ThemeImageViewOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeImageViewOwner.swift; sourceTree = "<group>"; };
+		FF518F8024AC089B003E9DAB /* ReleaseNotes_v3.4.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReleaseNotes_v3.4.md; sourceTree = "<group>"; };
 		FF580BF31F7E3764009B3EE9 /* RSDActiveUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveUIStepObject.swift; sourceTree = "<group>"; };
 		FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FF5C4C1C1F8C872500F311BA /* RSDTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskController.swift; sourceTree = "<group>"; };
@@ -2569,6 +2570,7 @@
 				FFE0BD452445436100B941BC /* MigrationNotes_v3.1.md */,
 				FFF433FD2446428B00C5F466 /* MigrationNotes_v3.2.md */,
 				FFA94E58244E35DB00A706F2 /* MigrationNotes_v3.3.md */,
+				FF518F8024AC089B003E9DAB /* ReleaseNotes_v3.4.md */,
 				FF72B2331F6859D3004C6F15 /* Research */,
 				FF72B23E1F6859D3004C6F15 /* ResearchTests */,
 				F875575720807E2300235078 /* Research-UnitTest */,

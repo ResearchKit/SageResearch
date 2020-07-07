@@ -95,7 +95,7 @@ class TaskControllerTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(currentNode.stepPath, "stepA, stepB, stepC")
+        XCTAssertEqual(currentNode.nodePathHistory, "stepA, stepB, stepC")
         
         // check that the path parent has the correct current step
         let currentParentStep = currentNode.parent
@@ -138,7 +138,7 @@ class TaskControllerTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(currentNode.stepPath, "stepX, stepY")
+        XCTAssertEqual(currentNode.nodePathHistory, "stepX, stepY, stepZ, stepY")
         
         // check that the path parent has the correct current step
         let currentParentStep = currentNode.parent
@@ -190,6 +190,8 @@ class TaskControllerTests: XCTestCase {
         XCTAssertNotNil(beforeAnswerResult3)
         XCTAssertEqual(beforeAnswerResult3?.value as? String, "step3")
         
+        XCTAssertEqual(taskController.taskViewModel.taskResult.nodePath, ["introduction", "step1", "step2", "step3"])
+        
         // Now go back one step. The expectation is that the state tracking will move back to step2 and the
         // previous answers to both step2 and step3 will be stored in the previous results.
         taskController.goBack()
@@ -198,11 +200,13 @@ class TaskControllerTests: XCTestCase {
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo?.stepViewModel?.identifier, "step2")
         
+        XCTAssertEqual(taskController.taskViewModel.taskResult.nodePath, ["introduction", "step1", "step2"])
+        
         let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.reverse)
         
-        XCTAssertEqual(taskController.taskViewModel.stepPath, "introduction, step1, step2")
+        XCTAssertEqual(taskController.taskViewModel.nodePathHistory, "introduction, step1, step2, step3, step2")
         
         let currentResult = taskController.taskViewModel.currentNode?.taskResult.stepHistory.last
         XCTAssertNotNil(currentResult)
@@ -256,7 +260,7 @@ class TaskControllerTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(currentNode.stepPath, "stepX, stepY")
+        XCTAssertEqual(currentNode.nodePathHistory, "stepX, stepY")
         
         // check that the path parent has the correct current step
         let currentParentStep = currentNode.parent
@@ -299,7 +303,7 @@ class TaskControllerTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(currentNode.stepPath, "stepA")
+        XCTAssertEqual(currentNode.nodePathHistory, "stepA")
         
         // check that the path parent has the correct current step
         let currentParentStep = currentNode.parent
@@ -337,7 +341,7 @@ class TaskControllerTests: XCTestCase {
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.forward)
         
-        XCTAssertEqual(taskController.taskViewModel.stepPath, "introduction, step1, step2, step3")
+        XCTAssertEqual(taskController.taskViewModel.nodePathHistory, "introduction, step1, step2, step3")
     }
     
     
