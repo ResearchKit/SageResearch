@@ -102,7 +102,7 @@ extension RSDTaskResult  {
     
     /// Remove the nodePath from `stepIdentifier` to the end of the result set.
     /// - parameter stepIdentifier:  The identifier of the result associated with the given step.
-    /// - returns: The previous results or `nil` if there wasn't one.
+    /// - returns: The previous results or `nil` if there weren't any.
     @discardableResult
     mutating public func removeStepHistory(from stepIdentifier: String) -> Array<RSDResult>? {
         if let idx = nodePath.lastIndex(of: stepIdentifier) {
