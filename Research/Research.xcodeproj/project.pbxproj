@@ -1179,13 +1179,9 @@
 		FFF4931923AAB94F0037C54B /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */; };
 		FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */; };
 		FFFBE9DE23AD6A8800650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
-		FFFBE9DF23AD6A8800650F11 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFFBE9E123AD6A9700650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
-		FFFBE9E223AD6A9700650F11 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFFBE9E423AD6A9C00650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
-		FFFBE9E523AD6A9C00650F11 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFFBE9E723AD6A9E00650F11 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; };
-		FFFBE9E823AD6A9E00650F11 /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFFBE9EA23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFBE9E923AD7B9600650F11 /* RSDResourceInfo+Platform.swift */; };
 		FFFBE9EB23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFBE9E923AD7B9600650F11 /* RSDResourceInfo+Platform.swift */; };
 		FFFBE9EC23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFBE9E923AD7B9600650F11 /* RSDResourceInfo+Platform.swift */; };
@@ -1223,43 +1219,6 @@
 			remoteInfo = Research_iOS;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		FFFBE9E023AD6A8800650F11 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FFFBE9DF23AD6A8800650F11 /* Research.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FFFBE9E323AD6A9700650F11 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FFFBE9E223AD6A9700650F11 /* Research.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FFFBE9E623AD6A9C00650F11 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FFFBE9E523AD6A9C00650F11 /* Research.framework in Embed Frameworks */,
-				FFFBE9E823AD6A9E00650F11 /* ResearchMotion.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		80242B0D2018012E00FC4F44 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Research/README.md; sourceTree = SOURCE_ROOT; };
@@ -2975,7 +2934,6 @@
 				F82A4A9C22960BF700BEBE3C /* Sources */,
 				F82A4A9D22960BF700BEBE3C /* Frameworks */,
 				F82A4A9E22960BF700BEBE3C /* Resources */,
-				FFFBE9E623AD6A9C00650F11 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3012,7 +2970,6 @@
 				F870619C227390110056F70E /* Sources */,
 				F870619D227390110056F70E /* Frameworks */,
 				F870619E227390110056F70E /* Resources */,
-				FFFBE9E023AD6A8800650F11 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3067,7 +3024,6 @@
 				F891DD0F228CFCD3001B2A57 /* Sources */,
 				F891DD10228CFCD3001B2A57 /* Frameworks */,
 				F891DD11228CFCD3001B2A57 /* Resources */,
-				FFFBE9E323AD6A9700650F11 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
