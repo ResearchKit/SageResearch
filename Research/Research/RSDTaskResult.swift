@@ -57,6 +57,14 @@ extension RSDTaskRunResult {
         guard let revision = schemaInfo?.schemaVersion else { return nil }
         return "\(revision)"
     }
+    
+    public var assessmentIdentifier: String? {
+        self.identifier
+    }
+    
+    public var schemaIdentifier: String? {
+        self.schemaInfo?.schemaIdentifier
+    }
 }
 
 extension RSDTaskResult  {
