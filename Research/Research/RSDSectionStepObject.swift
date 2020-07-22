@@ -78,7 +78,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
     /// Instantiate a step result that is appropriate for this step. The default for this struct is a `RSDTaskResultObject`.
     /// - returns: A result for this step.
     public func instantiateStepResult() -> RSDResult {
-        return RSDTaskResultObject(identifier: identifier)
+        return SectionResultObject(identifier: identifier)
     }
     
     /// Validate the steps in this section. The steps are valid if their identifiers are unique and if each step is valid.

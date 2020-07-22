@@ -86,7 +86,7 @@ open class RSDTaskState : NSObject {
     /// Create an output directory.
     public func createOutputDirectory() -> URL? {
         let tempDir = NSTemporaryDirectory()
-        let dir = self.taskResult.taskRunUUID.uuidString
+        let dir = ((self.taskResult as? AssessmentResult)?.taskRunUUID ?? UUID()).uuidString
         let path = (tempDir as NSString).appendingPathComponent(dir)
         if !FileManager.default.fileExists(atPath: path) {
             do {

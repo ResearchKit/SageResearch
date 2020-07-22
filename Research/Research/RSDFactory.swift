@@ -270,7 +270,7 @@ open class RSDFactory : SerializationFactory {
     /// - parameters:
     ///     - taskResult: The task result being encoded.
     ///     - encoder: The nested encoder to encode the schema info to.
-    open func encodeSchemaInfo(from taskResult: RSDTaskResult, to encoder: Encoder) throws {
+    open func encodeSchemaInfo(from taskResult: RSDTaskRunResult, to encoder: Encoder) throws {
         if let schema = taskResult.schemaInfo, let encodableSchema = schema as? Encodable {
             try encodableSchema.encode(to: encoder)
         } else {
