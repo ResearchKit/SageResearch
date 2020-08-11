@@ -113,7 +113,7 @@ platform :ios do
       export_method: "#{export_method}",
       destination: "generic/platform=iOS",
       disable_xcpretty: false,
-      xcargs: "-showBuildSettings -UseModernBuildSystem=YES -resolvePackageDependencies"
+      xcargs: ""
     )
   end
 
