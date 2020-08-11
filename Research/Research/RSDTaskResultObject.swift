@@ -39,6 +39,7 @@ import JsonModel
 public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, type, startDate, endDate, taskRunUUID, schemaInfo, stepHistory, asyncResults, nodePath
+        case assessmentIdentifier, schemaIdentifier, versionString
     }
     
     /// The identifier associated with the task, step, or asynchronous action.
@@ -99,6 +100,11 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
             let nestedDecoder = try container.superDecoder(forKey: .schemaInfo)
             self.schemaInfo = try decoder.factory.decodeSchemaInfo(from: nestedDecoder)
         }
+        else if let schemaIdentifier = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier),
+            let versionString = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier) {
+            self.schemaInfo = RSDSchemaInfoObject(identifier: schemaIdentifier,
+                                                  revision: (versionString as NSString).integerValue)
+        }
         
         let resultsContainer = try container.nestedUnkeyedContainer(forKey: .stepHistory)
         self.stepHistory = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: resultsContainer)
@@ -121,6 +127,10 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
         try container.encode(taskRunUUID, forKey: .taskRunUUID)
         try container.encode(nodePath, forKey: .nodePath)
         
+        // For now, include both the "old" schema info keys and the new ones.
+        try container.encodeIfPresent(self.assessmentIdentifier, forKey: .assessmentIdentifier)
+        try container.encodeIfPresent(self.schemaIdentifier, forKey: .schemaIdentifier)
+        try container.encodeIfPresent(self.versionString, forKey: .schemaIdentifier)
         let nestedEncoder = container.superEncoder(forKey: .schemaInfo)
         try encoder.factory.encodeSchemaInfo(from: self, to: nestedEncoder)
         
@@ -163,6 +173,8 @@ extension RSDTaskResultObject : DocumentableStruct {
         case .type:
             return .init(constValue: RSDResultType.task)
         case .identifier:
+            return .init(propertyType: .primitive(.string))
+        case .assessmentIdentifier, .schemaIdentifier, .versionString:
             return .init(propertyType: .primitive(.string))
         case .startDate, .endDate:
             return .init(propertyType: .format(.dateTime))
