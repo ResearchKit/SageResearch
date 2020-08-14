@@ -1888,6 +1888,7 @@
 				F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */,
 			);
 			name = Formatters;
+			path = "Formatters-ObjC";
 			sourceTree = "<group>";
 		};
 		F82A49F32294733D00BEBE3C /* Motion Sensors */ = {
@@ -2453,8 +2454,6 @@
 				FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */,
 				FF8A21531F7CB17D00C7B27F /* SequenceType+Utilities.swift */,
 				F84A2F4421779A640079C92C /* RSDClock.swift */,
-				FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */,
-				FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2586,9 +2585,11 @@
 				FF80B12C1F7C0D1300582849 /* Data Model */,
 				FF74A7E81F7DCE630064A634 /* DataSource */,
 				F8EB48BE228CDB56000A2F69 /* Recorders */,
+				F829F0C91FF71E86001B0680 /* Formatters */,
 				FFFDB9591F99802C00BA1348 /* Localization */,
 				FF2B54FD1F68AE8000663289 /* Serialization */,
 				F8A695052135C55A0052EB82 /* Documentation */,
+				FFF8A64024E742ED00D2AD5D /* ExceptionHandler */,
 				FF2B55021F69077200663289 /* Utilities */,
 			);
 			path = Research;
@@ -2822,10 +2823,19 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
+		FFF8A64024E742ED00D2AD5D /* ExceptionHandler */ = {
+			isa = PBXGroup;
+			children = (
+				FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */,
+				FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */,
+			);
+			name = ExceptionHandler;
+			path = "ExceptionHandler-ObjC";
+			sourceTree = "<group>";
+		};
 		FFFDB9591F99802C00BA1348 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				F829F0C91FF71E86001B0680 /* Formatters */,
 				F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */,
 				F8B42BE21FE9ABE200E23783 /* Localization.swift */,
 				FFFDB9611F99D4A500BA1348 /* Research.strings */,
