@@ -1826,7 +1826,7 @@
 				F80CA51A1FFEAD1F00E89C06 /* RSDUSMeasurementPickerDataSource.swift */,
 				F8321EB7201AB7F900074DFA /* RSDDurationPickerDataSourceObject.swift */,
 			);
-			name = PickerDataSource;
+			path = PickerDataSource;
 			sourceTree = "<group>";
 		};
 		F80CA5221FFEBCFE00E89C06 /* TableItem */ = {
@@ -1836,7 +1836,7 @@
 				FFD4C79A243D51C60027CE6C /* InputItemTableItem.swift */,
 				F8A204D320671F4D004E2B5D /* RSDModalStepTableItem.swift */,
 			);
-			name = TableItem;
+			path = TableItem;
 			sourceTree = "<group>";
 		};
 		F80CA5331FFEBEB000E89C06 /* TableItemGroup */ = {
@@ -1845,7 +1845,7 @@
 				FF0920C01FCE37AD00C9E031 /* RSDTableItemGroup.swift */,
 				FFD4C79F243D5E010027CE6C /* QuestionTableItemGroup.swift */,
 			);
-			name = TableItemGroup;
+			path = TableItemGroup;
 			sourceTree = "<group>";
 		};
 		F814DCE822750435004579EF /* ResearchRecorders */ = {
@@ -2651,7 +2651,7 @@
 				FFD4C7A4243D630D0027CE6C /* QuestionStepDataSource.swift */,
 				FFD4C7A9243E43780027CE6C /* TableDataSourceImpl.swift */,
 			);
-			name = DataSource;
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		FF80B12C1F7C0D1300582849 /* Data Model */ = {
@@ -2725,6 +2725,7 @@
 				FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */,
 			);
 			name = Deprecated;
+			path = "DataSource-Deprecated";
 			sourceTree = "<group>";
 		};
 		FFE0DE501F87FA2F00BB1BDF /* UIAction */ = {
