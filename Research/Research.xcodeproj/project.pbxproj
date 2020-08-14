@@ -2455,7 +2455,7 @@
 				FF8A21531F7CB17D00C7B27F /* SequenceType+Utilities.swift */,
 				F84A2F4421779A640079C92C /* RSDClock.swift */,
 			);
-			name = Utilities;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		FF2DA6181F96E7C4006F83C4 /* Codable Tests */ = {
