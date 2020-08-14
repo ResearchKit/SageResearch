@@ -2285,7 +2285,7 @@
 				F8EB48BF228CDBB3000A2F69 /* RSDDataLogger.swift */,
 				F8EB48C0228CDBB3000A2F69 /* RSDSampleRecorder.swift */,
 			);
-			name = Recorders;
+			path = Recorders;
 			sourceTree = "<group>";
 		};
 		F8EB48CB228CDBF5000A2F69 /* Authorization */ = {
