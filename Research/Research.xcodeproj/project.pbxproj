@@ -2210,14 +2210,6 @@
 			path = ResearchMotionTests;
 			sourceTree = "<group>";
 		};
-		F8A695052135C55A0052EB82 /* Documentation */ = {
-			isa = PBXGroup;
-			children = (
-				FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */,
-			);
-			name = Documentation;
-			sourceTree = "<group>";
-		};
 		F8BE10AA2135D3D6000AAB1E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -2587,8 +2579,6 @@
 				F8EB48BE228CDB56000A2F69 /* Recorders */,
 				F829F0C91FF71E86001B0680 /* Formatters */,
 				FFFDB9591F99802C00BA1348 /* Localization */,
-				FF2B54FD1F68AE8000663289 /* Serialization */,
-				F8A695052135C55A0052EB82 /* Documentation */,
 				FFF8A64024E742ED00D2AD5D /* ExceptionHandler */,
 				FF2B55021F69077200663289 /* Utilities */,
 			);
@@ -2669,7 +2659,9 @@
 			children = (
 				F8A695082135CE920052EB82 /* README-Data-Model.md */,
 				FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */,
+				FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */,
 				FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */,
+				FF2B54FD1F68AE8000663289 /* Serialization */,
 				FFEA2F752436BE07008695D6 /* Deprecated */,
 				F8BE10F02135EF8B000AAB1E /* Transformers */,
 				F8BE11632136132D000AAB1E /* Objects */,
@@ -2840,7 +2832,7 @@
 				F8B42BE21FE9ABE200E23783 /* Localization.swift */,
 				FFFDB9611F99D4A500BA1348 /* Research.strings */,
 			);
-			name = Localization;
+			path = Localization;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
