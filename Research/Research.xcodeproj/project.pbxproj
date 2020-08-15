@@ -2356,7 +2356,7 @@
 				FF287A3023A3701100677D62 /* PlatformContext.swift */,
 				FF287A2C23A3701100677D62 /* RSDDesignSystem.swift */,
 				FF2893E223A372C700D7A29D /* Font */,
-				FF2893E323A372F900D7A29D /* Colors */,
+				FF2893E323A372F900D7A29D /* Color */,
 				FF2893E423A3732700D7A29D /* Image */,
 				FF2893E523A3736400D7A29D /* Model+Platform */,
 			);
@@ -2369,10 +2369,10 @@
 				FF287A2F23A3701100677D62 /* RSDFontRules.swift */,
 				FF287A3223A3701100677D62 /* RSDFont+Lato.swift */,
 			);
-			name = Font;
+			path = Font;
 			sourceTree = "<group>";
 		};
-		FF2893E323A372F900D7A29D /* Colors */ = {
+		FF2893E323A372F900D7A29D /* Color */ = {
 			isa = PBXGroup;
 			children = (
 				FF287A2823A3701100677D62 /* RSDColorRules.swift */,
@@ -2381,7 +2381,7 @@
 				FF287A3823A3701100677D62 /* RSDColor.swift */,
 				FF287A3C23A3701100677D62 /* RSDColorPalette.swift */,
 			);
-			name = Colors;
+			path = Color;
 			sourceTree = "<group>";
 		};
 		FF2893E423A3732700D7A29D /* Image */ = {
@@ -2391,7 +2391,7 @@
 				FF287A2D23A3701100677D62 /* RSDImage.swift */,
 				FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */,
 			);
-			name = Image;
+			path = Image;
 			sourceTree = "<group>";
 		};
 		FF2893E523A3736400D7A29D /* Model+Platform */ = {
@@ -2405,7 +2405,7 @@
 				FF287A3323A3701100677D62 /* RSDUIAction+Platform.swift */,
 				FFFBE9E923AD7B9600650F11 /* RSDResourceInfo+Platform.swift */,
 			);
-			name = "Model+Platform";
+			path = "Model+Platform";
 			sourceTree = "<group>";
 		};
 		FF2ACF401FBB86870018D87F /* Navigation Tests */ = {
