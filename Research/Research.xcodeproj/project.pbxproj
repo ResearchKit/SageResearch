@@ -2251,7 +2251,7 @@
 				F8BE111C21360158000AAB1E /* RSDStepTransformer.swift */,
 				F8BE10F52135F11D000AAB1E /* RSDTaskResourceTransformer.swift */,
 			);
-			name = Transformers;
+			path = Transformers;
 			sourceTree = "<group>";
 		};
 		F8BE110F2135FA20000AAB1E /* Navigation */ = {
@@ -2260,13 +2260,12 @@
 				F8BAF41E2048DD35004B9406 /* RSDStepNavigatorType.swift */,
 				FF1D6D3D1F8311BE00B05349 /* RSDConditionalStepNavigatorObject.swift */,
 			);
-			name = Navigation;
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		F8BE11632136132D000AAB1E /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				FF72B2601F68845A004C6F15 /* RSDDeviceType.swift */,
 				FFF53EA91FBF90AC004211D2 /* Common */,
 				FFB015CD1F8BF0A900AC209B /* AsyncAction */,
 				F8BE110F2135FA20000AAB1E /* Navigation */,
@@ -2276,7 +2275,7 @@
 				F8F72433203DF1CD00AC0E5B /* Tracking */,
 				FFE0DE501F87FA2F00BB1BDF /* UIAction */,
 			);
-			name = Objects;
+			path = Objects;
 			sourceTree = "<group>";
 		};
 		F8EB48BE228CDB56000A2F69 /* Recorders */ = {
@@ -2306,7 +2305,7 @@
 				F825BA63207FD75300D29F60 /* RSDWeekday.swift */,
 				F825BA5F207FD70000D29F60 /* RSDWeeklyScheduleObject.swift */,
 			);
-			name = Tracking;
+			path = Tracking;
 			sourceTree = "<group>";
 		};
 		F8FD56332141BD2200BA2FA6 /* Data Archiving */ = {
@@ -2434,7 +2433,7 @@
 				F8C28F2F204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift */,
 				FFF53EAA1FBF9495004211D2 /* RSDStringLiteralOptionSet.swift */,
 			);
-			name = Serialization;
+			path = Serialization;
 			sourceTree = "<group>";
 		};
 		FF2B55021F69077200663289 /* Utilities */ = {
@@ -2506,7 +2505,7 @@
 				FF8827E81F8DE8CD00CEFDF0 /* RSDTaskResultObject.swift */,
 				FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */,
 			);
-			name = Result;
+			path = Result;
 			sourceTree = "<group>";
 		};
 		FF6396142452239E0002B1D1 /* Form Step */ = {
@@ -2516,6 +2515,7 @@
 				FF2BB8CB2453531500AB65F9 /* AbstractFormStepObject.swift */,
 			);
 			name = "Form Step";
+			path = FormStep;
 			sourceTree = "<group>";
 		};
 		FF72B2271F6859D2004C6F15 = {
@@ -2634,7 +2634,7 @@
 				FFEA2F6024368B26008695D6 /* Question */,
 				FFBD073B1FAA5B76000CB34F /* UIThemeElement */,
 			);
-			name = Step;
+			path = Step;
 			sourceTree = "<group>";
 		};
 		FF74A7E81F7DCE630064A634 /* DataSource */ = {
@@ -2661,12 +2661,13 @@
 				FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */,
 				FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */,
 				FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */,
-				FF2B54FD1F68AE8000663289 /* Serialization */,
 				FFEA2F752436BE07008695D6 /* Deprecated */,
+				FF2B54FD1F68AE8000663289 /* Serialization */,
 				F8BE10F02135EF8B000AAB1E /* Transformers */,
 				F8BE11632136132D000AAB1E /* Objects */,
 			);
 			name = "Data Model";
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 		FF87CD821F84110800084426 /* Test files */ = {
@@ -2687,7 +2688,7 @@
 				FF81E0B4244A4FF90081644B /* RSDTaskInfoObject.swift */,
 				FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */,
 			);
-			name = Task;
+			path = Task;
 			sourceTree = "<group>";
 		};
 		FFB015CD1F8BF0A900AC209B /* AsyncAction */ = {
@@ -2699,6 +2700,7 @@
 				F8B17854202E1AB100B62416 /* RSDDistanceRecorderConfiguration.swift */,
 			);
 			name = AsyncAction;
+			path = AsyncActions;
 			sourceTree = "<group>";
 		};
 		FFBD073B1FAA5B76000CB34F /* UIThemeElement */ = {
@@ -2708,7 +2710,7 @@
 				FFBD073E1FAA603E000CB34F /* RSDImageThemeObject.swift */,
 				FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */,
 			);
-			name = UIThemeElement;
+			path = UIThemeElement;
 			sourceTree = "<group>";
 		};
 		FFD4C794243D50CA0027CE6C /* Deprecated */ = {
@@ -2734,7 +2736,7 @@
 				FF269B711F7E128700C9289E /* RSDUIActionObject.swift */,
 				FF427CE71FA3B247005A5AD2 /* RSDUIActionHandlerObject.swift */,
 			);
-			name = UIAction;
+			path = UIAction;
 			sourceTree = "<group>";
 		};
 		FFEA2F55243673C7008695D6 /* Questions */ = {
@@ -2763,7 +2765,7 @@
 				F8F9544120239E8F00347940 /* RSDDateRangeObject.swift */,
 				FFB6A4B81F8607C300E37752 /* RSDDurationRangeObject.swift */,
 			);
-			name = Question;
+			path = Question;
 			sourceTree = "<group>";
 		};
 		FFEA2F752436BE07008695D6 /* Deprecated */ = {
@@ -2784,6 +2786,7 @@
 				FFDAE9EA1F91324A001D0CC0 /* RSDAnswerResultObject.swift */,
 			);
 			name = Deprecated;
+			path = "DataModel-Deprecated";
 			sourceTree = "<group>";
 		};
 		FFF53EA71FBF8F86004211D2 /* Types */ = {
@@ -2808,12 +2811,13 @@
 		FFF53EA91FBF90AC004211D2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				FF72B2601F68845A004C6F15 /* RSDDeviceType.swift */,
 				F837222D22322A6A00C9A2EA /* RSDIconInfo.swift */,
 				FFD1A2891F8818A700ECD730 /* RSDDateCoderObject.swift */,
 				FF177D7C1F82E4F600C2D4D7 /* RSDStepValidator.swift */,
 				FF4329E123A044A20027288F /* RSDResourceImageDataObject.swift */,
 			);
-			name = Common;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		FFF8A64024E742ED00D2AD5D /* ExceptionHandler */ = {
