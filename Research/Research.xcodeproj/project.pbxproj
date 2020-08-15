@@ -1771,7 +1771,7 @@
 				FFEA2F55243673C7008695D6 /* Questions */,
 				F802F3E6204DF3130027CB00 /* UI Step */,
 			);
-			name = Steps;
+			path = Steps;
 			sourceTree = "<group>";
 		};
 		F802F3E0204DF1880027CB00 /* Tasks */ = {
@@ -1785,7 +1785,7 @@
 				F8112E60222F600A005BCC93 /* RSDTrackingTask.swift */,
 				F82A49F522947C9B00BEBE3C /* RSDBackgroundTask.swift */,
 			);
-			name = Tasks;
+			path = Tasks;
 			sourceTree = "<group>";
 		};
 		F802F3E1204DF1D40027CB00 /* Results */ = {
@@ -1800,7 +1800,7 @@
 				F8112E6F2230B4A3005BCC93 /* RSDScoringResult.swift */,
 				F82D111A2125EB2500EA1A33 /* RSDTaskResult.swift */,
 			);
-			name = Results;
+			path = Results;
 			sourceTree = "<group>";
 		};
 		F802F3E6204DF3130027CB00 /* UI Step */ = {
@@ -1813,6 +1813,7 @@
 				FF4329AC239EFA760027288F /* Themed UI */,
 			);
 			name = "UI Step";
+			path = UISteps;
 			sourceTree = "<group>";
 		};
 		F80CA5111FFEAB9700E89C06 /* PickerDataSource */ = {
@@ -1940,7 +1941,7 @@
 				F8BE11242136027A000AAB1E /* RSDCopyWithIdentifier.swift */,
 				F8BE11352136049A000AAB1E /* RSDComparable.swift */,
 			);
-			name = Common;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		F83E44012249E8A300E13207 /* Utility Tests */ = {
@@ -2078,7 +2079,7 @@
 				F8BE10B02135DBD5000AAB1E /* RSDRecorderConfiguration.swift */,
 				F8BE10B42135DC0D000AAB1E /* RSDRequestConfiguration.swift */,
 			);
-			name = AsyncAction;
+			path = AsyncAction;
 			sourceTree = "<group>";
 		};
 		F8475BB42125E5AC0031D802 /* UIActions */ = {
@@ -2091,7 +2092,7 @@
 				F8BE11102135FF1D000AAB1E /* RSDWebViewUIAction.swift */,
 				CB554F6422B40E8D0001D1DA /* RSDVideoViewUIAction.swift */,
 			);
-			name = UIActions;
+			path = UIActions;
 			sourceTree = "<group>";
 		};
 		F858D149201BA61A00132325 /* ModelObject Tests */ = {
@@ -2123,7 +2124,7 @@
 				F8BE10AA2135D3D6000AAB1E /* Presentation */,
 				F8FD56332141BD2200BA2FA6 /* Data Archiving */,
 			);
-			name = Core;
+			path = Core;
 			sourceTree = "<group>";
 		};
 		F87061A1227390110056F70E /* ResearchUI */ = {
@@ -2224,7 +2225,7 @@
 				FF8E5F461F8C3DA000611C23 /* RSDAsyncAction.swift */,
 				F8FD56AC21475D2F00BA2FA6 /* RSDModalStepDataSource.swift */,
 			);
-			name = Presentation;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		F8BE10BA2135DE85000AAB1E /* Navigation */ = {
@@ -2238,7 +2239,7 @@
 				F8BE10EC2135EBD0000AAB1E /* RSDOrderedStepNavigator.swift */,
 				F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */,
 			);
-			name = Navigation;
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		F8BE10F02135EF8B000AAB1E /* Transformers */ = {
@@ -2294,7 +2295,7 @@
 				FFB015DF1F8C081200AC209B /* RSDPermissionType.swift */,
 				F8EB48CC228CDC51000A2F69 /* RSDStandardPermission.swift */,
 			);
-			name = Authorization;
+			path = Authorization;
 			sourceTree = "<group>";
 		};
 		F8F72433203DF1CD00AC0E5B /* Tracking */ = {
@@ -2322,6 +2323,7 @@
 				F814DD0222750809004579EF /* RSDFileResultUtility.swift */,
 			);
 			name = "Data Archiving";
+			path = DataArchiving;
 			sourceTree = "<group>";
 		};
 		FF225DF9243A6AF700AD2461 /* Deprecated */ = {
@@ -2337,6 +2339,7 @@
 				F8C0A8CB20FB045C00EC758A /* RSDUITransitionStyle.swift */,
 			);
 			name = Deprecated;
+			path = "Core-Deprecated";
 			sourceTree = "<group>";
 		};
 		FF287A1E23A36F7200677D62 /* PlatformContextTests */ = {
@@ -2473,6 +2476,7 @@
 				FF4329A7239EF1F40027288F /* RSDFontData.swift */,
 			);
 			name = "Resource Handling";
+			path = ResourceHandling;
 			sourceTree = "<group>";
 		};
 		FF4329AC239EFA760027288F /* Themed UI */ = {
@@ -2484,6 +2488,7 @@
 				FF4329AD239EFC250027288F /* RSDViewThemeElement.swift */,
 			);
 			name = "Themed UI";
+			path = ThemedUI;
 			sourceTree = "<group>";
 		};
 		FF5C4C301F8C9D9600F311BA /* Result */ = {
@@ -2741,7 +2746,7 @@
 				FF8335B41F991328009FC1A8 /* RSDPickerDataSource.swift */,
 				FFB015C91F8BE62E00AC209B /* RSDRange.swift */,
 			);
-			name = Questions;
+			path = Questions;
 			sourceTree = "<group>";
 		};
 		FFEA2F6024368B26008695D6 /* Question */ = {
@@ -2798,7 +2803,7 @@
 				F8FCB98D222D9F510011F27F /* RSDFrequencyType.swift */,
 				FF432A0B23A05BA20027288F /* Geometry.swift */,
 			);
-			name = Types;
+			path = Types;
 			sourceTree = "<group>";
 		};
 		FFF53EA91FBF90AC004211D2 /* Common */ = {
