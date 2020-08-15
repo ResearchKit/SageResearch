@@ -2352,6 +2352,7 @@
 		FF287A2523A3701100677D62 /* PlatformContext */ = {
 			isa = PBXGroup;
 			children = (
+				FFF8A64224E773E900D2AD5D /* Resources */,
 				FF287A3023A3701100677D62 /* PlatformContext.swift */,
 				FF287A2C23A3701100677D62 /* RSDDesignSystem.swift */,
 				FF2893E223A372C700D7A29D /* Font */,
@@ -2367,13 +2368,6 @@
 			children = (
 				FF287A2F23A3701100677D62 /* RSDFontRules.swift */,
 				FF287A3223A3701100677D62 /* RSDFont+Lato.swift */,
-				FF287A2623A3701100677D62 /* lato_black.ttf */,
-				FF287A2723A3701100677D62 /* lato_italic.ttf */,
-				FF287A2B23A3701100677D62 /* lato_bolditalic.ttf */,
-				FF287A3123A3701100677D62 /* lato_lightitalic.ttf */,
-				FF287A3523A3701100677D62 /* lato_regular.ttf */,
-				FF287A3623A3701100677D62 /* lato_bold.ttf */,
-				FF287A3B23A3701100677D62 /* lato_light.ttf */,
 			);
 			name = Font;
 			sourceTree = "<group>";
@@ -2386,7 +2380,6 @@
 				FF287A3423A3701100677D62 /* RSDColorSwatch.swift */,
 				FF287A3823A3701100677D62 /* RSDColor.swift */,
 				FF287A3C23A3701100677D62 /* RSDColorPalette.swift */,
-				FF287A3D23A3701100677D62 /* ColorMatrix.json */,
 			);
 			name = Colors;
 			sourceTree = "<group>";
@@ -2828,6 +2821,29 @@
 			);
 			name = ExceptionHandler;
 			path = "ExceptionHandler-ObjC";
+			sourceTree = "<group>";
+		};
+		FFF8A64224E773E900D2AD5D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FF287A3D23A3701100677D62 /* ColorMatrix.json */,
+				FFF8A64424E7746800D2AD5D /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FFF8A64424E7746800D2AD5D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FF287A2623A3701100677D62 /* lato_black.ttf */,
+				FF287A2723A3701100677D62 /* lato_italic.ttf */,
+				FF287A2B23A3701100677D62 /* lato_bolditalic.ttf */,
+				FF287A3123A3701100677D62 /* lato_lightitalic.ttf */,
+				FF287A3523A3701100677D62 /* lato_regular.ttf */,
+				FF287A3623A3701100677D62 /* lato_bold.ttf */,
+				FF287A3B23A3701100677D62 /* lato_light.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		FFFDB9591F99802C00BA1348 /* Localization */ = {
