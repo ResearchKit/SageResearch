@@ -2611,7 +2611,7 @@
 				F802F3E0204DF1880027CB00 /* Tasks */,
 				F8475BB42125E5AC0031D802 /* UIActions */,
 			);
-			name = Interfaces;
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 		FF74A7DA1F7DA2890064A634 /* Step */ = {
