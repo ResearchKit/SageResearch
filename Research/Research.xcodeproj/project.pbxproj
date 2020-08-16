@@ -1249,8 +1249,6 @@
 		F8112E60222F600A005BCC93 /* RSDTrackingTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTrackingTask.swift; sourceTree = "<group>"; };
 		F8112E6A2230B110005BCC93 /* RSDScoreBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDScoreBuilder.swift; sourceTree = "<group>"; };
 		F8112E6F2230B4A3005BCC93 /* RSDScoringResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDScoringResult.swift; sourceTree = "<group>"; };
-		F814DCE922750435004579EF /* ResearchRecorders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchRecorders.h; sourceTree = "<group>"; };
-		F814DCEA22750435004579EF /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		F814DD0222750809004579EF /* RSDFileResultUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileResultUtility.swift; sourceTree = "<group>"; };
 		F814DD0922750899004579EF /* RSDMotionRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDMotionRecorder.swift; sourceTree = "<group>"; };
 		F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDDistanceRecorder.swift; sourceTree = "<group>"; };
@@ -1847,15 +1845,6 @@
 				FFD4C79F243D5E010027CE6C /* QuestionTableItemGroup.swift */,
 			);
 			path = TableItemGroup;
-			sourceTree = "<group>";
-		};
-		F814DCE822750435004579EF /* ResearchRecorders */ = {
-			isa = PBXGroup;
-			children = (
-				F814DCE922750435004579EF /* ResearchRecorders.h */,
-				F814DCEA22750435004579EF /* Info-iOS.plist */,
-			);
-			path = ResearchRecorders;
 			sourceTree = "<group>";
 		};
 		F829F0C41FF71C45001B0680 /* DataSource Tests */ = {
@@ -2534,7 +2523,6 @@
 				F891DD1F228CFCD4001B2A57 /* ResearchMotionTests */,
 				F82A4AA122960BF700BEBE3C /* ResearchLocation */,
 				F82A4AAC22960BF700BEBE3C /* ResearchLocationTests */,
-				F814DCE822750435004579EF /* ResearchRecorders */,
 				F891DCF0228CF9D0001B2A57 /* ResearchToolbox */,
 				FF72B2321F6859D3004C6F15 /* Products */,
 				F875575F20807E8B00235078 /* Frameworks */,
