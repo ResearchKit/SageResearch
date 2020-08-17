@@ -6,7 +6,7 @@ This version changes the `RSDTaskResult.stepHistory` to include an instance
 of the step result for *each* display of that step so that there can be duplicates of the same step identifier in the
 results.
 
-In order to track the current path of a task that can navigate back, a new field have been added to the protocol:
+In order to track the current path of a task that can navigate back, a new field has been added to the protocol:
 
 ```
 /// The `BranchNodeResult` is the result created for a given level of navigation of a node tree.
