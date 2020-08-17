@@ -92,10 +92,6 @@ public extension CollectionResult {
     }
 }
 
-// TODO: syoung 04/06/2020 These are stubbed out here for reference. These will require modification
-// to the protocols in order to support using them while running a task instead of the older
-// RSDResult protocols.
-
 /// The `BranchNodeResult` is the result created for a given level of navigation of a node tree.
 public protocol BranchNodeResult : CollectionResult {
 
