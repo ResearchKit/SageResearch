@@ -1,8 +1,8 @@
 //
-//  CodableObjectTests.swift
-//  ResearchTests
+//  ResourceLoader.swift
+//  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,40 +31,43 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import XCTest
-import Research
+import Foundation
 import JsonModel
 
-class BundleWrapper {
-    class var bundleIdentifier: String? {
-        return Bundle(for: BundleWrapper.self).bundleIdentifier
-    }
-}
-
-struct TestResourceWrapper : RSDResourceTransformer, Codable {
-
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case resourceName, bundleIdentifier, classType
-    }
+public final class ResourceLoader : RSDResourceLoader {
     
-    let resourceName: String
-    let bundleIdentifier: String?
-    let classType: String?
-    var factoryBundle: ResourceBundle? = nil
-    var packageName: String? = nil
-
-    public init(resourceName: String, bundleIdentifier: String?) {
-        self.resourceName = resourceName
-        self.bundleIdentifier = bundleIdentifier
-        self.classType = nil
+    public init() {
     }
-}
 
-var decoder: JSONDecoder {
-    resourceLoader = ResourceLoader()
-    return RSDFactory.shared.createJSONDecoder()
-}
+    public func url(for resourceInfo: RSDResourceTransformer, ofType defaultExtension: String?, using bundle: ResourceBundle?) throws -> (url: URL, resourceType: RSDResourceType) {
+        
+        // get the resource name and extension
+        let splitValue = resourceInfo.resourceName.splitFilename(defaultExtension: defaultExtension)
+        let resource = splitValue.resourceName
+        let ext = splitValue.fileExtension ?? RSDResourceType.json.rawValue
+        let resourceType = RSDResourceType(rawValue: ext)
+        
+        // get the bundle
+        let rBundle: Bundle
+        if let inBundle = bundle as? Bundle {
+            rBundle = inBundle
+        }
+        else if let factoryBundle = resourceInfo.bundle {
+            rBundle = factoryBundle
+        }
+        else if let bundleIdentifier = resourceInfo.bundleIdentifier {
+            let bundleIds = Bundle.allBundles.compactMap { $0.bundleIdentifier }
+            throw RSDResourceTransformerError.bundleNotFound("\(bundleIdentifier) Not Found. Available identifiers: \(bundleIds.joined(separator: ","))")
+        }
+        else {
+            rBundle = Bundle.main
+        }
 
-var encoder: JSONEncoder {
-    return RSDFactory.shared.createJSONEncoder()
+        // get the url
+        guard let url = rBundle.url(forResource: resource, withExtension: ext) else {
+            throw RSDResourceTransformerError.fileNotFound("\(resource) not found in \(String(describing: rBundle.bundleIdentifier))")
+        }
+        
+        return (url, resourceType)
+    }
 }

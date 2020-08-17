@@ -69,6 +69,8 @@ class PlatformContext : RSDPlatformContextInfo {
         self.appName = Bundle.main.executableName
         self.appVersion = Bundle.main.fullVersion
         self.rsdFrameworkVersion = Bundle(for: RSDTaskViewModel.self).fullVersion
+        
+        resourceLoader = ResourceLoader()
     }
 }
 

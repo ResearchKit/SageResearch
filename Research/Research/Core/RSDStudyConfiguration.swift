@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The study configuration is intended as a shared singleton that contains any information that should be
 /// applied to the entire study that may effect the presentation of a given module.
@@ -130,3 +131,23 @@ public var currentPlatformContext: RSDPlatformContextInfo! {
     }
 }
 private var _currentPlatformContext: RSDPlatformContextInfo?
+
+/// The resource loader protocol is used to allow loading resources
+public protocol RSDResourceLoader : class {
+    
+    /// Get the URL for the given resource.
+    func url(for resourceInfo: RSDResourceTransformer, ofType defaultExtension: String?, using bundle: ResourceBundle?) throws -> (url: URL, resourceType: RSDResourceType)
+}
+
+/// Set the resource loader on startup. If this value is set more than once then subsequent calls
+/// will be ignored.
+public var resourceLoader: RSDResourceLoader? {
+    get {
+        return _resourceLoader
+    }
+    set {
+        guard _resourceLoader == nil else { return }
+        _resourceLoader = newValue
+    }
+}
+private var _resourceLoader: RSDResourceLoader?
