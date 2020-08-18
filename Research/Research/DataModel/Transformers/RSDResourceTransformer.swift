@@ -82,41 +82,16 @@ extension RSDResourceTransformer {
     /// - parameters:
     ///     - defaultExtension: The default extension for the URL. If `nil` then the `resourceName` will be inspected
     ///                         for a file extension. If that is `nil` then "json" will be assumed.
-    ///     - bundle: The bundle to use for fetching the resource. If `nil` then the `RSDResourceConfig` will be used.
+    ///     - bundle: The preferred bundle to use for fetching the resource.
     /// - returns:
     ///     - url: The returned URL for this resource.
     ///     - resourceType: The resource type.
     /// - throws: `RSDResourceTransformerError` if the file cannot be found.
     public func resourceURL(ofType defaultExtension: String? = nil, bundle: ResourceBundle? = nil) throws -> (url: URL, resourceType: RSDResourceType) {
-        
-        // get the resource name and extension
-        let splitValue = resourceName.splitFilename(defaultExtension: defaultExtension)
-        let resource = splitValue.resourceName
-        let ext = splitValue.fileExtension ?? RSDResourceType.json.rawValue
-        let resourceType = RSDResourceType(rawValue: ext)
-        
-        // get the bundle
-        let rBundle: Bundle
-        if let inBundle = bundle as? Bundle {
-            rBundle = inBundle
+        guard let loader = resourceLoader else {
+            throw RSDValidationError.unexpectedNullObject("The `resouceLoader` pointer has not been set. Cannot load resources.")
         }
-        else if let factoryBundle = self.bundle {
-            rBundle = factoryBundle
-        }
-        else if let bundleIdentifier = self.bundleIdentifier {
-            let bundleIds = Bundle.allBundles.compactMap { $0.bundleIdentifier }
-            throw RSDResourceTransformerError.bundleNotFound("\(bundleIdentifier) Not Found. Available identifiers: \(bundleIds.joined(separator: ","))")
-        }
-        else {
-            rBundle = Bundle.main
-        }
-
-        // get the url
-        guard let url = rBundle.url(forResource: resource, withExtension: ext) else {
-            throw RSDResourceTransformerError.fileNotFound("\(resource) not found in \(String(describing: rBundle.bundleIdentifier))")
-        }
-        
-        return (url, resourceType)
+        return try loader.url(for: self, ofType: defaultExtension, using: bundle)
     }
     
     

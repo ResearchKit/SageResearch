@@ -42,4 +42,16 @@ conforms to `RSDTaskRunResult` with a read/write `taskRunUUID` that is comparabl
 implementation of an `AssessmentResultObject`.  This change allows for only including the task run UUID at the
 top level of the task result JSON file.
 
+## Version 3.6
 
+Refactored `RSDResourceTransformer` to load the resource URL indirectly by using the `RSDResourceLoader`.
+
+In most cases, no migration should be required. If you do *not* use `RSDDesignSystem` or `RSDAppDelegate`
+and you *do* use `RSDResourceTransformer` then you will need to add the following line of code to your 
+launch set up:
+
+```
+resourceLoader = ResourceLoader()
+```
+
+This will set up the resource loader to look in the appropriate bundles for resources that load from a URL.
