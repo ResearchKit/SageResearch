@@ -66,3 +66,7 @@ If you do *not* use `RSDAppDelegate` then you will need to add the following lin
 ```
 LocalizationBundle.registerDefaultBundlesIfNeeded()
 ```
+
+## Version 3.8
+
+Deprecated `RSDCollectionResult`. Use `CollectionResult` directly, instead.
