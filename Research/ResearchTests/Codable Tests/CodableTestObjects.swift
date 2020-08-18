@@ -34,6 +34,7 @@
 import XCTest
 import Research
 import JsonModel
+@testable import Research_UnitTest
 
 class BundleWrapper {
     class var bundleIdentifier: String? {
@@ -61,8 +62,7 @@ struct TestResourceWrapper : RSDResourceTransformer, Codable {
 }
 
 var decoder: JSONDecoder {
-    resourceLoader = ResourceLoader()
-    LocalizationBundle.registerDefaultBundlesIfNeeded()
+    setupPlatformContext()
     return RSDFactory.shared.createJSONDecoder()
 }
 

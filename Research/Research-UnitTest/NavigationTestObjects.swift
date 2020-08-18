@@ -35,6 +35,12 @@ import Foundation
 @testable import Research
 import JsonModel
 import UIKit
+import ResearchUI
+
+func setupPlatformContext() {
+    resourceLoader = ResourceLoader()
+    LocalizationBundle.registerDefaultBundlesIfNeeded()
+}
 
 public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDOptionalStep {
     

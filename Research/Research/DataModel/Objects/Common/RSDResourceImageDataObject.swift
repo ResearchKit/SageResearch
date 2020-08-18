@@ -37,7 +37,7 @@ import JsonModel
 extension String {
     
     /// Convenience utility for spliting a string that represents a file into it's name and extension.
-    func splitFilename(defaultExtension: String? = nil) -> (resourceName: String, fileExtension: String?) {
+    public func splitFilename(defaultExtension: String? = nil) -> (resourceName: String, fileExtension: String?) {
         var resource = self
         var ext = defaultExtension
         let split = self.components(separatedBy: ".")

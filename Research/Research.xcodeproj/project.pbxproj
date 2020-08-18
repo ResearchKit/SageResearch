@@ -647,9 +647,6 @@
 		FF225E06243BC2FC00AD2461 /* JsonChoiceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF225E04243BC2FC00AD2461 /* JsonChoiceObject.swift */; };
 		FF225E07243BC2FC00AD2461 /* JsonChoiceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF225E04243BC2FC00AD2461 /* JsonChoiceObject.swift */; };
 		FF225E08243BC2FC00AD2461 /* JsonChoiceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF225E04243BC2FC00AD2461 /* JsonChoiceObject.swift */; };
-		FF287A2223A36F7300677D62 /* ColorRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A1F23A36F7200677D62 /* ColorRulesTests.swift */; };
-		FF287A2323A36F7300677D62 /* ColorMappingThemeElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2023A36F7200677D62 /* ColorMappingThemeElementTests.swift */; };
-		FF287A2423A36F7300677D62 /* ColorPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2123A36F7200677D62 /* ColorPaletteTests.swift */; };
 		FF2BB8CC2453531500AB65F9 /* AbstractFormStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2BB8CB2453531500AB65F9 /* AbstractFormStepObject.swift */; };
 		FF2BB8CD2453531500AB65F9 /* AbstractFormStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2BB8CB2453531500AB65F9 /* AbstractFormStepObject.swift */; };
 		FF2BB8CE2453531500AB65F9 /* AbstractFormStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2BB8CB2453531500AB65F9 /* AbstractFormStepObject.swift */; };
@@ -1027,7 +1024,7 @@
 		FFB14B9A24EC503A00D0637D /* ResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF8A64624EB1FDC00D2AD5D /* ResourceLoader.swift */; };
 		FFB14B9B24EC503A00D0637D /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2C23A3701100677D62 /* RSDDesignSystem.swift */; };
 		FFB14B9C24EC504900D0637D /* ColorMatrix.json in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3D23A3701100677D62 /* ColorMatrix.json */; };
-		FFB14B9D24EC505100D0637D /* Research.strings in Resources */ = {isa = PBXBuildFile; fileRef = FFFDB9611F99D4A500BA1348 /* Research.strings */; };
+		FFB14B9D24EC505100D0637D /* ResearchUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = FFFDB9611F99D4A500BA1348 /* ResearchUI.strings */; };
 		FFB14B9E24EC505B00D0637D /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2623A3701100677D62 /* lato_black.ttf */; };
 		FFB14B9F24EC505B00D0637D /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2723A3701100677D62 /* lato_italic.ttf */; };
 		FFB14BA024EC505B00D0637D /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2B23A3701100677D62 /* lato_bolditalic.ttf */; };
@@ -1035,6 +1032,10 @@
 		FFB14BA224EC505B00D0637D /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3523A3701100677D62 /* lato_regular.ttf */; };
 		FFB14BA324EC505B00D0637D /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3623A3701100677D62 /* lato_bold.ttf */; };
 		FFB14BA424EC505B00D0637D /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3B23A3701100677D62 /* lato_light.ttf */; };
+		FFB14BA524EC52ED00D0637D /* ColorRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A1F23A36F7200677D62 /* ColorRulesTests.swift */; };
+		FFB14BA624EC52ED00D0637D /* ColorMappingThemeElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2023A36F7200677D62 /* ColorMappingThemeElementTests.swift */; };
+		FFB14BA724EC52ED00D0637D /* ColorPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2123A36F7200677D62 /* ColorPaletteTests.swift */; };
+		FFB14BA824EC536E00D0637D /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
 		FFBD07D724491B49006A39E0 /* RSDAsyncActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBD07D624491B49006A39E0 /* RSDAsyncActionType.swift */; };
 		FFBD07D824491B49006A39E0 /* RSDAsyncActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBD07D624491B49006A39E0 /* RSDAsyncActionType.swift */; };
 		FFBD07D924491B49006A39E0 /* RSDAsyncActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBD07D624491B49006A39E0 /* RSDAsyncActionType.swift */; };
@@ -1165,6 +1166,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = FF8B53131FCE678E006B6937;
 			remoteInfo = Research_iOS;
+		};
+		FFB14BAA24EC536E00D0637D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F870619F227390110056F70E;
+			remoteInfo = "ResearchUI (iOS)";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1607,7 +1615,7 @@
 		FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDActiveStepViewController.xib; sourceTree = "<group>"; };
 		FFFBE9E923AD7B9600650F11 /* RSDResourceInfo+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSDResourceInfo+Platform.swift"; sourceTree = "<group>"; };
 		FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDRoundedToggleButton.swift; sourceTree = "<group>"; };
-		FFFDB9601F99D4A500BA1348 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Research.strings; sourceTree = "<group>"; };
+		FFFDB9601F99D4A500BA1348 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResearchUI.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1650,6 +1658,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F875576020807E8B00235078 /* Research.framework in Frameworks */,
+				FFB14BA824EC536E00D0637D /* ResearchUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2097,6 +2106,7 @@
 		F87061AC227390120056F70E /* ResearchUITests */ = {
 			isa = PBXGroup;
 			children = (
+				FF287A1E23A36F7200677D62 /* PlatformContextTests */,
 				F87061AF227390120056F70E /* Info.plist */,
 			);
 			path = ResearchUITests;
@@ -2577,7 +2587,6 @@
 				FF8B53231FCE678E006B6937 /* Info-iOS.plist */,
 				FF8B534C1FCE67C8006B6937 /* Info-tvOS.plist */,
 				F829F0EC1FFC0544001B0680 /* ResearchTests_iOS-Bridging-Header.h */,
-				FF287A1E23A36F7200677D62 /* PlatformContextTests */,
 				FF87CD821F84110800084426 /* Test files */,
 				FF2DA6181F96E7C4006F83C4 /* Codable Tests */,
 				F829F0C41FF71C45001B0680 /* DataSource Tests */,
@@ -2829,7 +2838,7 @@
 			isa = PBXGroup;
 			children = (
 				F84495FC2273A22100EAA3E0 /* DefaultImages.xcassets */,
-				FFFDB9611F99D4A500BA1348 /* Research.strings */,
+				FFFDB9611F99D4A500BA1348 /* ResearchUI.strings */,
 				FF287A3D23A3701100677D62 /* ColorMatrix.json */,
 				FFF8A64424E7746800D2AD5D /* Fonts */,
 			);
@@ -3050,6 +3059,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FFB14BAB24EC536E00D0637D /* PBXTargetDependency */,
 			);
 			name = "Research-UnitTest";
 			productName = "Research-UnitTest";
@@ -3366,7 +3376,7 @@
 			files = (
 				FFB14B9F24EC505B00D0637D /* lato_italic.ttf in Resources */,
 				FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */,
-				FFB14B9D24EC505100D0637D /* Research.strings in Resources */,
+				FFB14B9D24EC505100D0637D /* ResearchUI.strings in Resources */,
 				F84496512273A23100EAA3E0 /* RSDInstructionStepViewController.xib in Resources */,
 				FFB14B9E24EC505B00D0637D /* lato_black.ttf in Resources */,
 				F84496552273A23100EAA3E0 /* RSDTaskInfoStepViewController.xib in Resources */,
@@ -3571,6 +3581,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFB14BA524EC52ED00D0637D /* ColorRulesTests.swift in Sources */,
+				FFB14BA624EC52ED00D0637D /* ColorMappingThemeElementTests.swift in Sources */,
+				FFB14BA724EC52ED00D0637D /* ColorPaletteTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4094,7 +4107,6 @@
 			files = (
 				F8C7D40B2092876B007490BC /* CodableTrackedDataTests.swift in Sources */,
 				F8C7D39D20915E67007490BC /* CodableUIActionObjectTests.swift in Sources */,
-				FF287A2223A36F7300677D62 /* ColorRulesTests.swift in Sources */,
 				F83E44032249E8EF00E13207 /* ArrayExtensionTests.swift in Sources */,
 				FFA94E4C244A8A2D00A706F2 /* JsonDocumentableTests.swift in Sources */,
 				FFF20D002329A59700F501C3 /* AnswerResultTypeJSONTests.swift in Sources */,
@@ -4106,7 +4118,6 @@
 				FF633D731FCE7A6900CF2267 /* CodableTestObjects.swift in Sources */,
 				F853828E214C447100C3B774 /* StepViewModelTests.swift in Sources */,
 				F829F0EA1FFB4620001B0680 /* PickerDataSourceTests.swift in Sources */,
-				FF287A2423A36F7300677D62 /* ColorPaletteTests.swift in Sources */,
 				F8D074B1204FBD0D006CDABB /* DataArchiveTests.swift in Sources */,
 				FF633D741FCE7A6900CF2267 /* CodableInputFieldObjectTests.swift in Sources */,
 				FF633D891FCE7A7300CF2267 /* StepControllerTests.swift in Sources */,
@@ -4125,7 +4136,6 @@
 				F818EAC6201948D0001C9FE4 /* TableItemTests.swift in Sources */,
 				FF633D8A1FCE7A7300CF2267 /* SurveyRuleTests.swift in Sources */,
 				F8FCE05F203F46EC00616CE8 /* ScheduleTests.swift in Sources */,
-				FF287A2323A36F7300677D62 /* ColorMappingThemeElementTests.swift in Sources */,
 				FF633D791FCE7A6900CF2267 /* ExampleDecodableTests.swift in Sources */,
 				FF633D761FCE7A6900CF2267 /* CodableStepObjectTests.swift in Sources */,
 				FF633D8B1FCE7A7300CF2267 /* TaskControllerTests.swift in Sources */,
@@ -4635,15 +4645,20 @@
 			target = FF8B53131FCE678E006B6937 /* Research (iOS) */;
 			targetProxy = FF8B531E1FCE678E006B6937 /* PBXContainerItemProxy */;
 		};
+		FFB14BAB24EC536E00D0637D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F870619F227390110056F70E /* ResearchUI (iOS) */;
+			targetProxy = FFB14BAA24EC536E00D0637D /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		FFFDB9611F99D4A500BA1348 /* Research.strings */ = {
+		FFFDB9611F99D4A500BA1348 /* ResearchUI.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				FFFDB9601F99D4A500BA1348 /* en */,
 			);
-			name = Research.strings;
+			name = ResearchUI.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

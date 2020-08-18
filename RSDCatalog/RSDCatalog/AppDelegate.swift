@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import Research
+import ResearchUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

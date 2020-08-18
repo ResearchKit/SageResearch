@@ -43,10 +43,9 @@ extension RSDResourceImageDataObject {
     ///         bundle returned by a call to `RSDResourceConfig.resourceBundle()`.
     public init?(imageName: String, bundle: Bundle?) throws {
         try validateImage(imageName: imageName, bundle: bundle)
-        self.imageName = imageName
+        self.init(imageName: imageName)
         self.factoryBundle = bundle
         self.packageName = nil
-        self.rawFileExtension = nil
     }
 }
 

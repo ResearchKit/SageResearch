@@ -91,21 +91,6 @@ open class Localization: NSObject {
         // Fallback to the key
         return key
     }
-    
-    /// Return a localized formatted string for the given key and arguments.
-    ///
-    /// - deprecated: Use `String.localizedStringWithFormat(Localization.localizedString(key), CVarArg...)` instead. This method can crash with an invalid pointer if passed an argument that is not an Obj-c pointer.
-    ///
-    /// - parameters:
-    ///     - key: The key into the `Strings` file.
-    ///     - arguments: The argument list for the localized formatted string.
-    /// - returns: The localized string or the key if not found.
-    @available(*, deprecated, message: "Use `String.localizedStringWithFormat(Localization.localizedString(key), CVarArg...)` instead. This method can crash with an invalid pointer if passed an argument that is not an Obj-c pointer.")
-    public static func localizedStringWithFormatKey(_ key: String, _ arguments: CVarArg...) -> String {
-        return withVaList(arguments) {
-            (NSString(format: localizedString(key), locale: Locale.current, arguments: $0) as String)
-            } as String
-    }
 
     /// Join the list of text strings using a localized "or".
     ///
