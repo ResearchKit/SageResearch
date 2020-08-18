@@ -1915,14 +1915,6 @@
 			path = "Utility Tests";
 			sourceTree = "<group>";
 		};
-		F84495F92273A22100EAA3E0 /* Styleguide */ = {
-			isa = PBXGroup;
-			children = (
-				F84495FC2273A22100EAA3E0 /* DefaultImages.xcassets */,
-			);
-			path = Styleguide;
-			sourceTree = "<group>";
-		};
 		F84496022273A23100EAA3E0 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -2098,7 +2090,6 @@
 				F84495F72273A1EB00EAA3E0 /* jazzy_config.yml */,
 				FF287A2523A3701100677D62 /* PlatformContext */,
 				F84496022273A23100EAA3E0 /* iOS */,
-				F84495F92273A22100EAA3E0 /* Styleguide */,
 			);
 			path = ResearchUI;
 			sourceTree = "<group>";
@@ -2837,6 +2828,7 @@
 		FFF8A64224E773E900D2AD5D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F84495FC2273A22100EAA3E0 /* DefaultImages.xcassets */,
 				FFFDB9611F99D4A500BA1348 /* Research.strings */,
 				FF287A3D23A3701100677D62 /* ColorMatrix.json */,
 				FFF8A64424E7746800D2AD5D /* Fonts */,
