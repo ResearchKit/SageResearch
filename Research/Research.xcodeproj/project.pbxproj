@@ -484,7 +484,6 @@
 		F8BE12BF21371A5C000AAB1E /* RSDStringLiteralOptionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF53EAA1FBF9495004211D2 /* RSDStringLiteralOptionSet.swift */; };
 		F8BE12C021371A65000AAB1E /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
 		F8BE12C121371A65000AAB1E /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
-		F8BE12C221371A69000AAB1E /* Research.strings in Resources */ = {isa = PBXBuildFile; fileRef = FFFDB9611F99D4A500BA1348 /* Research.strings */; };
 		F8BE12C321371B11000AAB1E /* RSDFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */; };
 		F8BE12C421371B21000AAB1E /* RSDDateCoderObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1A2891F8818A700ECD730 /* RSDDateCoderObject.swift */; };
 		F8BE12C521371B21000AAB1E /* RSDRegExValidatorObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2872571FCCA99E00809A84 /* RSDRegExValidatorObject.swift */; };
@@ -651,102 +650,6 @@
 		FF287A2223A36F7300677D62 /* ColorRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A1F23A36F7200677D62 /* ColorRulesTests.swift */; };
 		FF287A2323A36F7300677D62 /* ColorMappingThemeElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2023A36F7200677D62 /* ColorMappingThemeElementTests.swift */; };
 		FF287A2423A36F7300677D62 /* ColorPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2123A36F7200677D62 /* ColorPaletteTests.swift */; };
-		FF287A3E23A3701100677D62 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2623A3701100677D62 /* lato_black.ttf */; };
-		FF287A3F23A3701100677D62 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2623A3701100677D62 /* lato_black.ttf */; };
-		FF287A4023A3701100677D62 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2623A3701100677D62 /* lato_black.ttf */; };
-		FF287A4123A3701100677D62 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2623A3701100677D62 /* lato_black.ttf */; };
-		FF287A4223A3701100677D62 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2723A3701100677D62 /* lato_italic.ttf */; };
-		FF287A4323A3701100677D62 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2723A3701100677D62 /* lato_italic.ttf */; };
-		FF287A4423A3701100677D62 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2723A3701100677D62 /* lato_italic.ttf */; };
-		FF287A4523A3701100677D62 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2723A3701100677D62 /* lato_italic.ttf */; };
-		FF287A4623A3701100677D62 /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2823A3701100677D62 /* RSDColorRules.swift */; };
-		FF287A4723A3701100677D62 /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2823A3701100677D62 /* RSDColorRules.swift */; };
-		FF287A4823A3701100677D62 /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2823A3701100677D62 /* RSDColorRules.swift */; };
-		FF287A4923A3701100677D62 /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2823A3701100677D62 /* RSDColorRules.swift */; };
-		FF287A4A23A3701100677D62 /* RSDColorMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2923A3701100677D62 /* RSDColorMatrix.swift */; };
-		FF287A4B23A3701100677D62 /* RSDColorMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2923A3701100677D62 /* RSDColorMatrix.swift */; };
-		FF287A4C23A3701100677D62 /* RSDColorMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2923A3701100677D62 /* RSDColorMatrix.swift */; };
-		FF287A4D23A3701100677D62 /* RSDColorMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2923A3701100677D62 /* RSDColorMatrix.swift */; };
-		FF287A4E23A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2A23A3701100677D62 /* RSDTextFieldOptions+Platform.swift */; };
-		FF287A4F23A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2A23A3701100677D62 /* RSDTextFieldOptions+Platform.swift */; };
-		FF287A5023A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2A23A3701100677D62 /* RSDTextFieldOptions+Platform.swift */; };
-		FF287A5123A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2A23A3701100677D62 /* RSDTextFieldOptions+Platform.swift */; };
-		FF287A5223A3701100677D62 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2B23A3701100677D62 /* lato_bolditalic.ttf */; };
-		FF287A5323A3701100677D62 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2B23A3701100677D62 /* lato_bolditalic.ttf */; };
-		FF287A5423A3701100677D62 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2B23A3701100677D62 /* lato_bolditalic.ttf */; };
-		FF287A5523A3701100677D62 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2B23A3701100677D62 /* lato_bolditalic.ttf */; };
-		FF287A5623A3701100677D62 /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2C23A3701100677D62 /* RSDDesignSystem.swift */; };
-		FF287A5723A3701100677D62 /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2C23A3701100677D62 /* RSDDesignSystem.swift */; };
-		FF287A5823A3701100677D62 /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2C23A3701100677D62 /* RSDDesignSystem.swift */; };
-		FF287A5923A3701100677D62 /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2C23A3701100677D62 /* RSDDesignSystem.swift */; };
-		FF287A5A23A3701100677D62 /* RSDImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2D23A3701100677D62 /* RSDImage.swift */; };
-		FF287A5B23A3701100677D62 /* RSDImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2D23A3701100677D62 /* RSDImage.swift */; };
-		FF287A5C23A3701100677D62 /* RSDImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2D23A3701100677D62 /* RSDImage.swift */; };
-		FF287A5D23A3701100677D62 /* RSDImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2D23A3701100677D62 /* RSDImage.swift */; };
-		FF287A5E23A3701100677D62 /* RSDImageData+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2E23A3701100677D62 /* RSDImageData+Platform.swift */; };
-		FF287A5F23A3701100677D62 /* RSDImageData+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2E23A3701100677D62 /* RSDImageData+Platform.swift */; };
-		FF287A6023A3701100677D62 /* RSDImageData+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2E23A3701100677D62 /* RSDImageData+Platform.swift */; };
-		FF287A6123A3701100677D62 /* RSDImageData+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2E23A3701100677D62 /* RSDImageData+Platform.swift */; };
-		FF287A6223A3701100677D62 /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2F23A3701100677D62 /* RSDFontRules.swift */; };
-		FF287A6323A3701100677D62 /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2F23A3701100677D62 /* RSDFontRules.swift */; };
-		FF287A6423A3701100677D62 /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2F23A3701100677D62 /* RSDFontRules.swift */; };
-		FF287A6523A3701100677D62 /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2F23A3701100677D62 /* RSDFontRules.swift */; };
-		FF287A6623A3701100677D62 /* PlatformContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3023A3701100677D62 /* PlatformContext.swift */; };
-		FF287A6723A3701100677D62 /* PlatformContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3023A3701100677D62 /* PlatformContext.swift */; };
-		FF287A6823A3701100677D62 /* PlatformContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3023A3701100677D62 /* PlatformContext.swift */; };
-		FF287A6923A3701100677D62 /* PlatformContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3023A3701100677D62 /* PlatformContext.swift */; };
-		FF287A6A23A3701100677D62 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3123A3701100677D62 /* lato_lightitalic.ttf */; };
-		FF287A6B23A3701100677D62 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3123A3701100677D62 /* lato_lightitalic.ttf */; };
-		FF287A6C23A3701100677D62 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3123A3701100677D62 /* lato_lightitalic.ttf */; };
-		FF287A6D23A3701100677D62 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3123A3701100677D62 /* lato_lightitalic.ttf */; };
-		FF287A6E23A3701100677D62 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3223A3701100677D62 /* RSDFont+Lato.swift */; };
-		FF287A6F23A3701100677D62 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3223A3701100677D62 /* RSDFont+Lato.swift */; };
-		FF287A7023A3701100677D62 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3223A3701100677D62 /* RSDFont+Lato.swift */; };
-		FF287A7123A3701100677D62 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3223A3701100677D62 /* RSDFont+Lato.swift */; };
-		FF287A7223A3701100677D62 /* RSDUIAction+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3323A3701100677D62 /* RSDUIAction+Platform.swift */; };
-		FF287A7323A3701100677D62 /* RSDUIAction+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3323A3701100677D62 /* RSDUIAction+Platform.swift */; };
-		FF287A7423A3701100677D62 /* RSDUIAction+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3323A3701100677D62 /* RSDUIAction+Platform.swift */; };
-		FF287A7523A3701100677D62 /* RSDUIAction+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3323A3701100677D62 /* RSDUIAction+Platform.swift */; };
-		FF287A7623A3701100677D62 /* RSDColorSwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3423A3701100677D62 /* RSDColorSwatch.swift */; };
-		FF287A7723A3701100677D62 /* RSDColorSwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3423A3701100677D62 /* RSDColorSwatch.swift */; };
-		FF287A7823A3701100677D62 /* RSDColorSwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3423A3701100677D62 /* RSDColorSwatch.swift */; };
-		FF287A7923A3701100677D62 /* RSDColorSwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3423A3701100677D62 /* RSDColorSwatch.swift */; };
-		FF287A7A23A3701100677D62 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3523A3701100677D62 /* lato_regular.ttf */; };
-		FF287A7B23A3701100677D62 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3523A3701100677D62 /* lato_regular.ttf */; };
-		FF287A7C23A3701100677D62 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3523A3701100677D62 /* lato_regular.ttf */; };
-		FF287A7D23A3701100677D62 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3523A3701100677D62 /* lato_regular.ttf */; };
-		FF287A7E23A3701100677D62 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3623A3701100677D62 /* lato_bold.ttf */; };
-		FF287A7F23A3701100677D62 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3623A3701100677D62 /* lato_bold.ttf */; };
-		FF287A8023A3701100677D62 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3623A3701100677D62 /* lato_bold.ttf */; };
-		FF287A8123A3701100677D62 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3623A3701100677D62 /* lato_bold.ttf */; };
-		FF287A8223A3701100677D62 /* RSDImageRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3723A3701100677D62 /* RSDImageRules.swift */; };
-		FF287A8323A3701100677D62 /* RSDImageRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3723A3701100677D62 /* RSDImageRules.swift */; };
-		FF287A8423A3701100677D62 /* RSDImageRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3723A3701100677D62 /* RSDImageRules.swift */; };
-		FF287A8523A3701100677D62 /* RSDImageRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3723A3701100677D62 /* RSDImageRules.swift */; };
-		FF287A8623A3701100677D62 /* RSDColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3823A3701100677D62 /* RSDColor.swift */; };
-		FF287A8723A3701100677D62 /* RSDColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3823A3701100677D62 /* RSDColor.swift */; };
-		FF287A8823A3701100677D62 /* RSDColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3823A3701100677D62 /* RSDColor.swift */; };
-		FF287A8923A3701100677D62 /* RSDColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3823A3701100677D62 /* RSDColor.swift */; };
-		FF287A8A23A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3923A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift */; };
-		FF287A8B23A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3923A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift */; };
-		FF287A8C23A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3923A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift */; };
-		FF287A8D23A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3923A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift */; };
-		FF287A8E23A3701100677D62 /* RSDImageThemeElement+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3A23A3701100677D62 /* RSDImageThemeElement+Platform.swift */; };
-		FF287A8F23A3701100677D62 /* RSDImageThemeElement+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3A23A3701100677D62 /* RSDImageThemeElement+Platform.swift */; };
-		FF287A9023A3701100677D62 /* RSDImageThemeElement+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3A23A3701100677D62 /* RSDImageThemeElement+Platform.swift */; };
-		FF287A9123A3701100677D62 /* RSDImageThemeElement+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3A23A3701100677D62 /* RSDImageThemeElement+Platform.swift */; };
-		FF287A9223A3701100677D62 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3B23A3701100677D62 /* lato_light.ttf */; };
-		FF287A9323A3701100677D62 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3B23A3701100677D62 /* lato_light.ttf */; };
-		FF287A9423A3701100677D62 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3B23A3701100677D62 /* lato_light.ttf */; };
-		FF287A9523A3701100677D62 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3B23A3701100677D62 /* lato_light.ttf */; };
-		FF287A9623A3701100677D62 /* RSDColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3C23A3701100677D62 /* RSDColorPalette.swift */; };
-		FF287A9723A3701100677D62 /* RSDColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3C23A3701100677D62 /* RSDColorPalette.swift */; };
-		FF287A9823A3701100677D62 /* RSDColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3C23A3701100677D62 /* RSDColorPalette.swift */; };
-		FF287A9923A3701100677D62 /* RSDColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3C23A3701100677D62 /* RSDColorPalette.swift */; };
-		FF287A9A23A3701100677D62 /* ColorMatrix.json in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3D23A3701100677D62 /* ColorMatrix.json */; };
-		FF287A9B23A3701100677D62 /* ColorMatrix.json in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3D23A3701100677D62 /* ColorMatrix.json */; };
-		FF287A9C23A3701100677D62 /* ColorMatrix.json in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3D23A3701100677D62 /* ColorMatrix.json */; };
-		FF287A9D23A3701100677D62 /* ColorMatrix.json in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3D23A3701100677D62 /* ColorMatrix.json */; };
 		FF2BB8CC2453531500AB65F9 /* AbstractFormStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2BB8CB2453531500AB65F9 /* AbstractFormStepObject.swift */; };
 		FF2BB8CD2453531500AB65F9 /* AbstractFormStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2BB8CB2453531500AB65F9 /* AbstractFormStepObject.swift */; };
 		FF2BB8CE2453531500AB65F9 /* AbstractFormStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2BB8CB2453531500AB65F9 /* AbstractFormStepObject.swift */; };
@@ -816,10 +719,6 @@
 		FF5D2C4E24B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */; };
 		FF5D2C4F24B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */; };
 		FF5D2C5024B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */; };
-		FF61FA3223A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */; };
-		FF61FA3323A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */; };
-		FF61FA3423A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */; };
-		FF61FA3523A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */; };
 		FF633D6D1FCE7A6000CF2267 /* FactoryTest_TaskGroup.json in Resources */ = {isa = PBXBuildFile; fileRef = FF74A7D91F7D8B7F0064A634 /* FactoryTest_TaskGroup.json */; };
 		FF633D6E1FCE7A6000CF2267 /* FactoryTest_TaskFoo.json in Resources */ = {isa = PBXBuildFile; fileRef = FF87CD841F84130400084426 /* FactoryTest_TaskFoo.json */; };
 		FF633D731FCE7A6900CF2267 /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */; };
@@ -1059,9 +958,6 @@
 		FF8B54AE1FCE6CF8006B6937 /* RSDTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0920BE1FCE310500C9E031 /* RSDTableSection.swift */; };
 		FF8B54AF1FCE6CF8006B6937 /* RSDTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0920C21FCE3F0300C9E031 /* RSDTableItem.swift */; };
 		FF8B54B01FCE6CF8006B6937 /* RSDTableItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0920C01FCE37AD00C9E031 /* RSDTableItemGroup.swift */; };
-		FF8B54B71FCE6CFF006B6937 /* Research.strings in Resources */ = {isa = PBXBuildFile; fileRef = FFFDB9611F99D4A500BA1348 /* Research.strings */; };
-		FF8B54B81FCE6D00006B6937 /* Research.strings in Resources */ = {isa = PBXBuildFile; fileRef = FFFDB9611F99D4A500BA1348 /* Research.strings */; };
-		FF8B54B91FCE6D01006B6937 /* Research.strings in Resources */ = {isa = PBXBuildFile; fileRef = FFFDB9611F99D4A500BA1348 /* Research.strings */; };
 		FF8B54BC1FCE6D09006B6937 /* NumberFormatter+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2948721FCCBC71002BD221 /* NumberFormatter+Codable.swift */; };
 		FF8B54BD1FCE6D09006B6937 /* RSDDocumentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */; };
 		FF8B54C01FCE6D09006B6937 /* RSDStringLiteralOptionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF53EAA1FBF9495004211D2 /* RSDStringLiteralOptionSet.swift */; };
@@ -1090,10 +986,6 @@
 		FF8B54EE1FCE6D15006B6937 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
 		FF9557CC23060F4B00B8D60B /* RSDAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */; };
 		FF9C264B243FA48B00241202 /* QuestionTableDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C264A243FA48B00241202 /* QuestionTableDataSourceTests.swift */; };
-		FF9F343724EB473600736F04 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F343624EB473600736F04 /* LocalizationBundle.swift */; };
-		FF9F343824EB473600736F04 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F343624EB473600736F04 /* LocalizationBundle.swift */; };
-		FF9F343924EB473600736F04 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F343624EB473600736F04 /* LocalizationBundle.swift */; };
-		FF9F343A24EB473600736F04 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F343624EB473600736F04 /* LocalizationBundle.swift */; };
 		FFA0717F2356B66400EA371F /* DateTableItemGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */; };
 		FFA94E4C244A8A2D00A706F2 /* JsonDocumentableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E4B244A8A2D00A706F2 /* JsonDocumentableTests.swift */; };
 		FFA94E4E244E083100A706F2 /* AssessmentTaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */; };
@@ -1113,6 +1005,36 @@
 		FFAEE7DB243C0D3B00F18BCB /* AnswerResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D9243C0D3B00F18BCB /* AnswerResultObject.swift */; };
 		FFAEE7DC243C0D3B00F18BCB /* AnswerResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D9243C0D3B00F18BCB /* AnswerResultObject.swift */; };
 		FFAEE7DD243C0D3B00F18BCB /* AnswerResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEE7D9243C0D3B00F18BCB /* AnswerResultObject.swift */; };
+		FFB14B8724EC500300D0637D /* RSDColorMappingThemeElement+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3923A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift */; };
+		FFB14B8824EC500300D0637D /* RSDImageData+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2E23A3701100677D62 /* RSDImageData+Platform.swift */; };
+		FFB14B8924EC500300D0637D /* RSDImageThemeElement+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3A23A3701100677D62 /* RSDImageThemeElement+Platform.swift */; };
+		FFB14B8A24EC500300D0637D /* RSDResourceImageDataObject+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */; };
+		FFB14B8B24EC500300D0637D /* RSDTextFieldOptions+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2A23A3701100677D62 /* RSDTextFieldOptions+Platform.swift */; };
+		FFB14B8C24EC500300D0637D /* RSDUIAction+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3323A3701100677D62 /* RSDUIAction+Platform.swift */; };
+		FFB14B8D24EC500300D0637D /* RSDResourceInfo+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFBE9E923AD7B9600650F11 /* RSDResourceInfo+Platform.swift */; };
+		FFB14B8E24EC501000D0637D /* RSDImageRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3723A3701100677D62 /* RSDImageRules.swift */; };
+		FFB14B8F24EC501000D0637D /* RSDImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2D23A3701100677D62 /* RSDImage.swift */; };
+		FFB14B9024EC501000D0637D /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */; };
+		FFB14B9124EC502000D0637D /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2823A3701100677D62 /* RSDColorRules.swift */; };
+		FFB14B9224EC502000D0637D /* RSDColorMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2923A3701100677D62 /* RSDColorMatrix.swift */; };
+		FFB14B9324EC502000D0637D /* RSDColorSwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3423A3701100677D62 /* RSDColorSwatch.swift */; };
+		FFB14B9424EC502000D0637D /* RSDColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3823A3701100677D62 /* RSDColor.swift */; };
+		FFB14B9524EC502000D0637D /* RSDColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3C23A3701100677D62 /* RSDColorPalette.swift */; };
+		FFB14B9624EC502900D0637D /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2F23A3701100677D62 /* RSDFontRules.swift */; };
+		FFB14B9724EC502900D0637D /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3223A3701100677D62 /* RSDFont+Lato.swift */; };
+		FFB14B9824EC503000D0637D /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F343624EB473600736F04 /* LocalizationBundle.swift */; };
+		FFB14B9924EC503A00D0637D /* PlatformContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A3023A3701100677D62 /* PlatformContext.swift */; };
+		FFB14B9A24EC503A00D0637D /* ResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF8A64624EB1FDC00D2AD5D /* ResourceLoader.swift */; };
+		FFB14B9B24EC503A00D0637D /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2C23A3701100677D62 /* RSDDesignSystem.swift */; };
+		FFB14B9C24EC504900D0637D /* ColorMatrix.json in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3D23A3701100677D62 /* ColorMatrix.json */; };
+		FFB14B9D24EC505100D0637D /* Research.strings in Resources */ = {isa = PBXBuildFile; fileRef = FFFDB9611F99D4A500BA1348 /* Research.strings */; };
+		FFB14B9E24EC505B00D0637D /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2623A3701100677D62 /* lato_black.ttf */; };
+		FFB14B9F24EC505B00D0637D /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2723A3701100677D62 /* lato_italic.ttf */; };
+		FFB14BA024EC505B00D0637D /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A2B23A3701100677D62 /* lato_bolditalic.ttf */; };
+		FFB14BA124EC505B00D0637D /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3123A3701100677D62 /* lato_lightitalic.ttf */; };
+		FFB14BA224EC505B00D0637D /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3523A3701100677D62 /* lato_regular.ttf */; };
+		FFB14BA324EC505B00D0637D /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3623A3701100677D62 /* lato_bold.ttf */; };
+		FFB14BA424EC505B00D0637D /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF287A3B23A3701100677D62 /* lato_light.ttf */; };
 		FFBD07D724491B49006A39E0 /* RSDAsyncActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBD07D624491B49006A39E0 /* RSDAsyncActionType.swift */; };
 		FFBD07D824491B49006A39E0 /* RSDAsyncActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBD07D624491B49006A39E0 /* RSDAsyncActionType.swift */; };
 		FFBD07D924491B49006A39E0 /* RSDAsyncActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBD07D624491B49006A39E0 /* RSDAsyncActionType.swift */; };
@@ -1193,23 +1115,11 @@
 		FFF43409244645D300C5F466 /* KeyboardOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF43407244645D300C5F466 /* KeyboardOptionsObject.swift */; };
 		FFF4340A244645D300C5F466 /* KeyboardOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF43407244645D300C5F466 /* KeyboardOptionsObject.swift */; };
 		FFF4340B244645D300C5F466 /* KeyboardOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF43407244645D300C5F466 /* KeyboardOptionsObject.swift */; };
-		FFF4931623AAB94F0037C54B /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */; };
-		FFF4931723AAB94F0037C54B /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */; };
-		FFF4931823AAB94F0037C54B /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */; };
-		FFF4931923AAB94F0037C54B /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */; };
-		FFF8A64724EB1FDC00D2AD5D /* ResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF8A64624EB1FDC00D2AD5D /* ResourceLoader.swift */; };
-		FFF8A64824EB1FDC00D2AD5D /* ResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF8A64624EB1FDC00D2AD5D /* ResourceLoader.swift */; };
-		FFF8A64924EB1FDC00D2AD5D /* ResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF8A64624EB1FDC00D2AD5D /* ResourceLoader.swift */; };
-		FFF8A64A24EB1FDC00D2AD5D /* ResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF8A64624EB1FDC00D2AD5D /* ResourceLoader.swift */; };
 		FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */; };
 		FFFBE9DE23AD6A8800650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
 		FFFBE9E123AD6A9700650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
 		FFFBE9E423AD6A9C00650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
 		FFFBE9E723AD6A9E00650F11 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; };
-		FFFBE9EA23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFBE9E923AD7B9600650F11 /* RSDResourceInfo+Platform.swift */; };
-		FFFBE9EB23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFBE9E923AD7B9600650F11 /* RSDResourceInfo+Platform.swift */; };
-		FFFBE9EC23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFBE9E923AD7B9600650F11 /* RSDResourceInfo+Platform.swift */; };
-		FFFBE9ED23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFBE9E923AD7B9600650F11 /* RSDResourceInfo+Platform.swift */; };
 		FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -2186,6 +2096,7 @@
 				F84495F82273A1EB00EAA3E0 /* README.md */,
 				F87061A3227390110056F70E /* Info-iOS.plist */,
 				F84495F72273A1EB00EAA3E0 /* jazzy_config.yml */,
+				FF287A2523A3701100677D62 /* PlatformContext */,
 				F84496022273A23100EAA3E0 /* iOS */,
 				F84495F92273A22100EAA3E0 /* Styleguide */,
 			);
@@ -2658,7 +2569,6 @@
 				F8BE123821370931000AAB1E /* Info-macOS.plist */,
 				F84693392273B05600CCFAD9 /* jazzy_config.yml */,
 				F861B6C52135C2620077D43A /* Core */,
-				FF287A2523A3701100677D62 /* PlatformContext */,
 				FF80B12C1F7C0D1300582849 /* Data Model */,
 				FF74A7E81F7DCE630064A634 /* DataSource */,
 				F8EB48BE228CDB56000A2F69 /* Recorders */,
@@ -3462,16 +3372,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFB14B9F24EC505B00D0637D /* lato_italic.ttf in Resources */,
 				FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */,
+				FFB14B9D24EC505100D0637D /* Research.strings in Resources */,
 				F84496512273A23100EAA3E0 /* RSDInstructionStepViewController.xib in Resources */,
+				FFB14B9E24EC505B00D0637D /* lato_black.ttf in Resources */,
 				F84496552273A23100EAA3E0 /* RSDTaskInfoStepViewController.xib in Resources */,
 				F84496002273A22100EAA3E0 /* DefaultImages.xcassets in Resources */,
 				F84496532273A23100EAA3E0 /* RSDScrollingOverviewStepViewController.xib in Resources */,
 				F844964F2273A23100EAA3E0 /* RSDImagePickerStepViewController.xib in Resources */,
 				F84496562273A23100EAA3E0 /* DebugStepViewController.xib in Resources */,
 				F844964E2273A23100EAA3E0 /* RSDOverviewStepViewController.xib in Resources */,
+				FFB14BA224EC505B00D0637D /* lato_regular.ttf in Resources */,
 				F84496502273A23100EAA3E0 /* RSDCountdownStepViewController.xib in Resources */,
+				FFB14BA024EC505B00D0637D /* lato_bolditalic.ttf in Resources */,
+				FFB14BA124EC505B00D0637D /* lato_lightitalic.ttf in Resources */,
+				FFB14B9C24EC504900D0637D /* ColorMatrix.json in Resources */,
+				FFB14BA424EC505B00D0637D /* lato_light.ttf in Resources */,
 				F84496522273A23100EAA3E0 /* RSDResultSummaryStepViewController.xib in Resources */,
+				FFB14BA324EC505B00D0637D /* lato_bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3509,15 +3428,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF287A4123A3701100677D62 /* lato_black.ttf in Resources */,
-				FF287A9523A3701100677D62 /* lato_light.ttf in Resources */,
-				FF287A9D23A3701100677D62 /* ColorMatrix.json in Resources */,
-				FF287A5523A3701100677D62 /* lato_bolditalic.ttf in Resources */,
-				FF287A6D23A3701100677D62 /* lato_lightitalic.ttf in Resources */,
-				F8BE12C221371A69000AAB1E /* Research.strings in Resources */,
-				FF287A4523A3701100677D62 /* lato_italic.ttf in Resources */,
-				FF287A8123A3701100677D62 /* lato_bold.ttf in Resources */,
-				FF287A7D23A3701100677D62 /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3539,15 +3449,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF287A9A23A3701100677D62 /* ColorMatrix.json in Resources */,
-				FF287A4223A3701100677D62 /* lato_italic.ttf in Resources */,
-				FF287A7E23A3701100677D62 /* lato_bold.ttf in Resources */,
-				FF287A7A23A3701100677D62 /* lato_regular.ttf in Resources */,
-				FF287A9223A3701100677D62 /* lato_light.ttf in Resources */,
-				FF287A3E23A3701100677D62 /* lato_black.ttf in Resources */,
-				FF287A5223A3701100677D62 /* lato_bolditalic.ttf in Resources */,
-				FF287A6A23A3701100677D62 /* lato_lightitalic.ttf in Resources */,
-				FF8B54B71FCE6CFF006B6937 /* Research.strings in Resources */,
 				F8A695022135C4940052EB82 /* README-Core.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3566,15 +3467,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF287A9B23A3701100677D62 /* ColorMatrix.json in Resources */,
-				FF287A4323A3701100677D62 /* lato_italic.ttf in Resources */,
-				FF287A7F23A3701100677D62 /* lato_bold.ttf in Resources */,
-				FF287A7B23A3701100677D62 /* lato_regular.ttf in Resources */,
-				FF287A9323A3701100677D62 /* lato_light.ttf in Resources */,
-				FF287A3F23A3701100677D62 /* lato_black.ttf in Resources */,
-				FF287A5323A3701100677D62 /* lato_bolditalic.ttf in Resources */,
-				FF287A6B23A3701100677D62 /* lato_lightitalic.ttf in Resources */,
-				FF8B54B81FCE6D00006B6937 /* Research.strings in Resources */,
 				F8A695032135C4940052EB82 /* README-Core.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3583,15 +3475,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF287A9C23A3701100677D62 /* ColorMatrix.json in Resources */,
-				FF287A4423A3701100677D62 /* lato_italic.ttf in Resources */,
-				FF287A8023A3701100677D62 /* lato_bold.ttf in Resources */,
-				FF287A7C23A3701100677D62 /* lato_regular.ttf in Resources */,
-				FF287A9423A3701100677D62 /* lato_light.ttf in Resources */,
-				FF287A4023A3701100677D62 /* lato_black.ttf in Resources */,
-				FF287A5423A3701100677D62 /* lato_bolditalic.ttf in Resources */,
-				FF287A6C23A3701100677D62 /* lato_lightitalic.ttf in Resources */,
-				FF8B54B91FCE6D01006B6937 /* Research.strings in Resources */,
 				F8A695042135C4940052EB82 /* README-Core.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3623,7 +3506,14 @@
 			files = (
 				F844966E2273A23100EAA3E0 /* RSDStatusBarBackgroundView.swift in Sources */,
 				F844965A2273A23100EAA3E0 /* UIImage+Utilities.swift in Sources */,
+				FFB14B8D24EC500300D0637D /* RSDResourceInfo+Platform.swift in Sources */,
+				FFB14B9124EC502000D0637D /* RSDColorRules.swift in Sources */,
+				FFB14B9B24EC503A00D0637D /* RSDDesignSystem.swift in Sources */,
+				FFB14B8A24EC500300D0637D /* RSDResourceImageDataObject+Platform.swift in Sources */,
+				FFB14B8B24EC500300D0637D /* RSDTextFieldOptions+Platform.swift in Sources */,
+				FFB14B9624EC502900D0637D /* RSDFontRules.swift in Sources */,
 				F84496442273A23100EAA3E0 /* RSDResultSummaryStepViewController.swift in Sources */,
+				FFB14B9A24EC503A00D0637D /* ResourceLoader.swift in Sources */,
 				F82A4A022294971B00BEBE3C /* RSDDefaultAudioSessionController.swift in Sources */,
 				F84496722273A23100EAA3E0 /* RSDLoadingView.swift in Sources */,
 				F844964A2273A23100EAA3E0 /* RSDActiveStepViewController.swift in Sources */,
@@ -3636,13 +3526,18 @@
 				F844966A2273A23100EAA3E0 /* RSDTextLabelCell.swift in Sources */,
 				F844963E2273A23100EAA3E0 /* RSDTaskViewController.swift in Sources */,
 				F84496582273A23100EAA3E0 /* UIView+Layout.swift in Sources */,
+				FFB14B9824EC503000D0637D /* LocalizationBundle.swift in Sources */,
 				F84496452273A23100EAA3E0 /* RSDInstructionStepViewController.swift in Sources */,
 				F84496612273A23100EAA3E0 /* RSDStepNavigationView.swift in Sources */,
+				FFB14B8924EC500300D0637D /* RSDImageThemeElement+Platform.swift in Sources */,
+				FFB14B8C24EC500300D0637D /* RSDUIAction+Platform.swift in Sources */,
 				F844964D2273A23100EAA3E0 /* RSDTaskInfoStepViewController.swift in Sources */,
 				F844966F2273A23100EAA3E0 /* RSDPickerViewProtocol.swift in Sources */,
+				FFB14B9324EC502000D0637D /* RSDColorSwatch.swift in Sources */,
 				F84496692273A23100EAA3E0 /* RSDToggleConstraintView.swift in Sources */,
 				F84496622273A23100EAA3E0 /* RSDShadowGradient.swift in Sources */,
 				F84496422273A23100EAA3E0 /* RSDScrollingOverviewStepViewController.swift in Sources */,
+				FFB14B8724EC500300D0637D /* RSDColorMappingThemeElement+Platform.swift in Sources */,
 				F84496712273A23100EAA3E0 /* RSDCountdownDial.swift in Sources */,
 				F84496412273A23100EAA3E0 /* RSDShowViewUIAction.swift in Sources */,
 				F8981A4F2279214B008DD5D0 /* RSDTemplateImageView.swift in Sources */,
@@ -3652,19 +3547,28 @@
 				F844964C2273A23100EAA3E0 /* RSDPermissionStepViewController.swift in Sources */,
 				CBBC876A239EC32E00AC9D8E /* RSDVerticalGridCollectionViewFlowLayout.swift in Sources */,
 				F84496652273A23100EAA3E0 /* RSDUnderlinedButton.swift in Sources */,
+				FFB14B9724EC502900D0637D /* RSDFont+Lato.swift in Sources */,
 				F84496472273A23100EAA3E0 /* DebugStepViewController.swift in Sources */,
 				F84496482273A23100EAA3E0 /* RSDCountdownStepViewController.swift in Sources */,
 				CB05B2332386053400E0E3D2 /* RSDCollectionViewCell.swift in Sources */,
 				F84496402273A23100EAA3E0 /* RSDWebViewController.swift in Sources */,
 				FF9557CC23060F4B00B8D60B /* RSDAppDelegate.swift in Sources */,
 				F844966B2273A23100EAA3E0 /* RSDBackgroundGradient.swift in Sources */,
+				FFB14B9524EC502000D0637D /* RSDColorPalette.swift in Sources */,
+				FFB14B8824EC500300D0637D /* RSDImageData+Platform.swift in Sources */,
 				F84496572273A23100EAA3E0 /* RSDStepViewController.swift in Sources */,
+				FFB14B8F24EC501000D0637D /* RSDImage.swift in Sources */,
 				F844965C2273A23100EAA3E0 /* RSDUISoundPlayer.swift in Sources */,
 				F84496602273A23100EAA3E0 /* RSDTableViewCell.swift in Sources */,
 				F84496492273A23100EAA3E0 /* RSDNavigationController.swift in Sources */,
 				F84496682273A23100EAA3E0 /* RSDImageViewCell.swift in Sources */,
+				FFB14B9024EC501000D0637D /* RSDImageVendor.swift in Sources */,
+				FFB14B8E24EC501000D0637D /* RSDImageRules.swift in Sources */,
 				F84496632273A23100EAA3E0 /* RSDStepTextFieldCell.swift in Sources */,
+				FFB14B9424EC502000D0637D /* RSDColor.swift in Sources */,
 				F844966D2273A23100EAA3E0 /* RSDStepChoiceCell.swift in Sources */,
+				FFB14B9224EC502000D0637D /* RSDColorMatrix.swift in Sources */,
+				FFB14B9924EC503A00D0637D /* PlatformContext.swift in Sources */,
 				F844965E2273A23100EAA3E0 /* RSDButtonCell.swift in Sources */,
 				F84496662273A23100EAA3E0 /* RSDStepProgressView.swift in Sources */,
 				F84496702273A23100EAA3E0 /* RSDRoundedButton.swift in Sources */,
@@ -3732,17 +3636,14 @@
 				FF6489D5244A29AF00CA27FC /* RSDInstructionStepObject.swift in Sources */,
 				F8BE130721371F7B000AAB1E /* RSDDurationPickerDataSourceObject.swift in Sources */,
 				F8BE12F021371B61000AAB1E /* RSDUIActionObject.swift in Sources */,
-				FF287A4923A3701100677D62 /* RSDColorRules.swift in Sources */,
 				F8BE12FC21371EED000AAB1E /* RSDCopyTask.swift in Sources */,
 				F8FD56B021475D2F00BA2FA6 /* RSDModalStepDataSource.swift in Sources */,
 				F8BE12AB21371A33000AAB1E /* RSDWebViewUIAction.swift in Sources */,
 				F8BE130221371F7B000AAB1E /* RSDChoiceOptionsObject.swift in Sources */,
-				FF287A6123A3701100677D62 /* RSDImageData+Platform.swift in Sources */,
 				F8BE131121371F87000AAB1E /* RSDHumanMeasurementTableItemGroup.swift in Sources */,
 				F8BE130621371F7B000AAB1E /* RSDUSMeasurementPickerDataSource.swift in Sources */,
 				F8BE12FD21371EED000AAB1E /* RSDDecodableReplacement.swift in Sources */,
 				F8BE12E621371B4E000AAB1E /* RSDUIStepObject.swift in Sources */,
-				FF287A5D23A3701100677D62 /* RSDImage.swift in Sources */,
 				F82A49F922947C9B00BEBE3C /* RSDBackgroundTask.swift in Sources */,
 				F8BE131021371F87000AAB1E /* RSDInputFieldTableItemGroup.swift in Sources */,
 				F8BE1289213719FB000AAB1E /* RSDOrderedStepNavigator.swift in Sources */,
@@ -3759,7 +3660,6 @@
 				F8BE127E213719EC000AAB1E /* RSDPermissionsConfiguration.swift in Sources */,
 				F8BE12ED21371B5B000AAB1E /* RSDSchedule.swift in Sources */,
 				F8BE1286213719FB000AAB1E /* RSDSurveyRule.swift in Sources */,
-				FFF4931923AAB94F0037C54B /* RSDImageVendor.swift in Sources */,
 				F8BE129121371A03000AAB1E /* RSDNavigationResult.swift in Sources */,
 				F8BE12B121371A41000AAB1E /* RSDStepNavigatorType.swift in Sources */,
 				F8BE127C213719EC000AAB1E /* RSDDateCoder.swift in Sources */,
@@ -3769,7 +3669,6 @@
 				F8BE1281213719F4000AAB1E /* RSDAsyncActionConfiguration.swift in Sources */,
 				F8BE12A321371A2B000AAB1E /* RSDTaskInfo.swift in Sources */,
 				FFAEE7DD243C0D3B00F18BCB /* AnswerResultObject.swift in Sources */,
-				FF287A8523A3701100677D62 /* RSDImageRules.swift in Sources */,
 				FFEA2F7F2436C21C008695D6 /* InputItemObjects.swift in Sources */,
 				F8BE12CD21371B33000AAB1E /* RSDErrorResultObject.swift in Sources */,
 				F8BE129521371A0A000AAB1E /* RSDTaskInfoStep.swift in Sources */,
@@ -3792,7 +3691,6 @@
 				F8BE12EB21371B56000AAB1E /* RSDTaskObject.swift in Sources */,
 				F8FCB991222D9F510011F27F /* RSDFrequencyType.swift in Sources */,
 				FF639619245223C00002B1D1 /* ResultNodeSerializer.swift in Sources */,
-				FFFBE9ED23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */,
 				F8BE1280213719EC000AAB1E /* RSDComparable.swift in Sources */,
 				F8BE12D121371B33000AAB1E /* RSDAnswerResultType+Codable.swift in Sources */,
 				F8BE129D21371A1C000AAB1E /* RSDPickerDataSource.swift in Sources */,
@@ -3802,20 +3700,17 @@
 				FFEA2F6A2436A16A008695D6 /* InputItem.swift in Sources */,
 				F8BE12B921371A52000AAB1E /* RSDTableDataSource.swift in Sources */,
 				F8BE131321371F8C000AAB1E /* RSDInputFieldError.swift in Sources */,
-				FF287A7523A3701100677D62 /* RSDUIAction+Platform.swift in Sources */,
 				F8BE1273213719E3000AAB1E /* RSDFormUIHint.swift in Sources */,
 				F8BE1272213719E3000AAB1E /* RSDFormDataType.swift in Sources */,
 				FFEA2F7A2436C1C5008695D6 /* QuestionObjects.swift in Sources */,
 				F8BE12FF21371EED000AAB1E /* RSDStepTransformer.swift in Sources */,
 				F8112E5F222F4F36005BCC93 /* RSDDataStorageManager.swift in Sources */,
-				FF287A5923A3701100677D62 /* RSDDesignSystem.swift in Sources */,
 				F8BE131421371F8C000AAB1E /* RSDTableSection.swift in Sources */,
 				FFD4C793243D07660027CE6C /* SurveyRuleNavigation.swift in Sources */,
 				F8BE127A213719E3000AAB1E /* RSDUITransitionStyle.swift in Sources */,
 				F8BE129B21371A1C000AAB1E /* RSDTextFieldOptions.swift in Sources */,
 				F8112E4F222F2D44005BCC93 /* RSDTaskData.swift in Sources */,
 				F8BE12E821371B56000AAB1E /* RSDSchemaInfoObject.swift in Sources */,
-				FF287A7123A3701100677D62 /* RSDFont+Lato.swift in Sources */,
 				F8EB48D5228CDCBD000A2F69 /* RSDAuthorizationHandler.swift in Sources */,
 				F8BE123F21370A1F000AAB1E /* RSDExceptionHandler.m in Sources */,
 				F8366DB321418C6700EBA88D /* RSDSubtaskStep.swift in Sources */,
@@ -3827,8 +3722,6 @@
 				F8BE12EE21371B5B000AAB1E /* RSDWeekday.swift in Sources */,
 				F8BE12E921371B56000AAB1E /* RSDTaskGroupObject.swift in Sources */,
 				F8BE129221371A03000AAB1E /* RSDTaskResult.swift in Sources */,
-				FF287A4D23A3701100677D62 /* RSDColorMatrix.swift in Sources */,
-				FF287A6923A3701100677D62 /* PlatformContext.swift in Sources */,
 				F8BE1276213719E3000AAB1E /* RSDImagePlacementType.swift in Sources */,
 				F8BE1282213719F4000AAB1E /* RSDRecorderConfiguration.swift in Sources */,
 				F8BE126E213719B8000AAB1E /* RSDResourceTransformerObject.swift in Sources */,
@@ -3853,12 +3746,9 @@
 				F8BE12BB21371A5C000AAB1E /* NumberFormatter+Codable.swift in Sources */,
 				F8BE126D213719B4000AAB1E /* RSDResourceTransformer.swift in Sources */,
 				FFF20CF6232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */,
-				FF287A8923A3701100677D62 /* RSDColor.swift in Sources */,
 				F8EB48D0228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
-				FF287A5123A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */,
 				F8BE124D21370A81000AAB1E /* Array+Utilities.swift in Sources */,
 				F8BE12C621371B21000AAB1E /* RSDStepValidator.swift in Sources */,
-				FF9F343A24EB473600736F04 /* LocalizationBundle.swift in Sources */,
 				F8BE1277213719E3000AAB1E /* RSDPermissionType.swift in Sources */,
 				F8BE130D21371F81000AAB1E /* RSDModalStepTableItem.swift in Sources */,
 				F8BE1270213719E3000AAB1E /* RSDActiveUIStepCommand.swift in Sources */,
@@ -3870,7 +3760,6 @@
 				F8BE12E021371B4E000AAB1E /* RSDActiveUIStepObject.swift in Sources */,
 				F8BE1287213719FB000AAB1E /* RSDTrackingRule.swift in Sources */,
 				F8BE128F21371A03000AAB1E /* RSDErrorResult.swift in Sources */,
-				FF287A7923A3701100677D62 /* RSDColorSwatch.swift in Sources */,
 				F8BE12E721371B4E000AAB1E /* RSDStepTransformerObject.swift in Sources */,
 				F8112E732230B4A3005BCC93 /* RSDScoringResult.swift in Sources */,
 				FFD4C799243D50E90027CE6C /* RSDInputFieldTableItem.swift in Sources */,
@@ -3880,7 +3769,6 @@
 				FFABCB9722D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */,
 				F8BE12A621371A2B000AAB1E /* RSDTaskTransformer.swift in Sources */,
 				FFD4C79E243D51C60027CE6C /* InputItemTableItem.swift in Sources */,
-				FFF8A64A24EB1FDC00D2AD5D /* ResourceLoader.swift in Sources */,
 				F8BE130821371F81000AAB1E /* RSDTableItem.swift in Sources */,
 				F8BE12D021371B33000AAB1E /* RSDTaskResultObject.swift in Sources */,
 				F8BE1271213719E3000AAB1E /* RSDAnswerResultType.swift in Sources */,
@@ -3890,7 +3778,6 @@
 				F8BE130321371F7B000AAB1E /* RSDDatePickerDataSourceObject.swift in Sources */,
 				FFE39AED249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */,
 				FFD4C7AD243E43780027CE6C /* TableDataSourceImpl.swift in Sources */,
-				FF287A9123A3701100677D62 /* RSDImageThemeElement+Platform.swift in Sources */,
 				F8BE130021371EED000AAB1E /* RSDTaskResourceTransformer.swift in Sources */,
 				F8BE12B321371A4C000AAB1E /* RSDTaskViewModel.swift in Sources */,
 				F8BE127F213719EC000AAB1E /* RSDCopyWithIdentifier.swift in Sources */,
@@ -3899,7 +3786,6 @@
 				F8BE12DC21371B49000AAB1E /* RSDInputFieldObject.swift in Sources */,
 				F8BE1275213719E3000AAB1E /* RSDIdentifier.swift in Sources */,
 				F8BE12B021371A41000AAB1E /* RSDStepType.swift in Sources */,
-				FF287A9923A3701100677D62 /* RSDColorPalette.swift in Sources */,
 				F8BE12C021371A65000AAB1E /* RSDUnitConverter.swift in Sources */,
 				F8BE12C321371B11000AAB1E /* RSDFactory.swift in Sources */,
 				F8864ACB2163EDFD00DF57CF /* RSDSubtaskStepObject.swift in Sources */,
@@ -3907,7 +3793,6 @@
 				FF4329C0239F20DA0027288F /* RSDColorStyle.swift in Sources */,
 				F8BE12B721371A4C000AAB1E /* RSDAsyncAction.swift in Sources */,
 				FF4329A6239EEFEA0027288F /* RSDColorData.swift in Sources */,
-				FF287A8D23A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift in Sources */,
 				F8BE12CC21371B33000AAB1E /* RSDCollectionResultObject.swift in Sources */,
 				F8112E6E2230B110005BCC93 /* RSDScoreBuilder.swift in Sources */,
 				F8BE1288213719FB000AAB1E /* RSDConditionalStepNavigator.swift in Sources */,
@@ -3919,7 +3804,6 @@
 				F8366D93214042F800EBA88D /* RSDStepViewModel.swift in Sources */,
 				FF432A0F23A05BA20027288F /* Geometry.swift in Sources */,
 				F8BE130921371F81000AAB1E /* RSDChoiceTableItem.swift in Sources */,
-				FF61FA3523A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */,
 				F8BE124921370A2F000AAB1E /* NSUnit+RSDUnitConversion.m in Sources */,
 				F8BE12DD21371B49000AAB1E /* RSDMultipleComponentInputFieldObject.swift in Sources */,
 				FF81E0B8244A4FF90081644B /* RSDTaskInfoObject.swift in Sources */,
@@ -3938,7 +3822,6 @@
 				F8BE129321371A0A000AAB1E /* RSDStep.swift in Sources */,
 				F8BE124E21370A81000AAB1E /* Date+ISO8601.swift in Sources */,
 				F8BE12D721371B43000AAB1E /* RSDDurationRangeObject.swift in Sources */,
-				FF287A6523A3701100677D62 /* RSDFontRules.swift in Sources */,
 				F8BE128D21371A03000AAB1E /* RSDAnswerResult.swift in Sources */,
 				FF2BB8CF2453531500AB65F9 /* AbstractFormStepObject.swift in Sources */,
 				FF4329A1239EEF740027288F /* RSDImageData.swift in Sources */,
@@ -3993,7 +3876,6 @@
 				FF8B546F1FCE6CC5006B6937 /* RSDTaskObject.swift in Sources */,
 				F8112E4C222F2D44005BCC93 /* RSDTaskData.swift in Sources */,
 				F837222E22322A6A00C9A2EA /* RSDIconInfo.swift in Sources */,
-				FF287A6E23A3701100677D62 /* RSDFont+Lato.swift in Sources */,
 				FFD4C7A0243D5E010027CE6C /* QuestionTableItemGroup.swift in Sources */,
 				FF8B546D1FCE6CC5006B6937 /* RSDTaskGroupObject.swift in Sources */,
 				F83722412233133100C9A2EA /* RSDStandardPermissionsStep.swift in Sources */,
@@ -4019,7 +3901,6 @@
 				FF8B53B31FCE6C7A006B6937 /* RSDTextFieldOptions.swift in Sources */,
 				F8BE111D21360158000AAB1E /* RSDStepTransformer.swift in Sources */,
 				F8BE10DD2135E662000AAB1E /* RSDNavigationRule.swift in Sources */,
-				FF287A4A23A3701100677D62 /* RSDColorMatrix.swift in Sources */,
 				F8EB48C1228CDBB3000A2F69 /* RSDDataLogger.swift in Sources */,
 				F80CA5391FFEBF6800E89C06 /* RSDInputFieldTableItemGroup.swift in Sources */,
 				FF8B54601FCE6CB8006B6937 /* RSDImageThemeObject.swift in Sources */,
@@ -4033,7 +3914,6 @@
 				FF8B53F91FCE6C86006B6937 /* RSDResourceTransformerObject.swift in Sources */,
 				F8112E6B2230B110005BCC93 /* RSDScoreBuilder.swift in Sources */,
 				FF8B54C01FCE6D09006B6937 /* RSDStringLiteralOptionSet.swift in Sources */,
-				FFF4931623AAB94F0037C54B /* RSDImageVendor.swift in Sources */,
 				F8475BB62125E5E30031D802 /* RSDUIActionHandler.swift in Sources */,
 				F80CA50A1FFEAB2100E89C06 /* RSDNumberPickerDataSourceObject.swift in Sources */,
 				FF8B537F1FCE6C6F006B6937 /* RSDAnswerResultType.swift in Sources */,
@@ -4050,7 +3930,6 @@
 				FFEA2F6224368B53008695D6 /* AnswerTypeObjects.swift in Sources */,
 				FF8B543F1FCE6CA9006B6937 /* RSDMultipleComponentInputFieldObject.swift in Sources */,
 				F8BE11112135FF1D000AAB1E /* RSDWebViewUIAction.swift in Sources */,
-				FF287A5623A3701100677D62 /* RSDDesignSystem.swift in Sources */,
 				F8E94FE02058308B00752B7B /* RSDOverviewStepObject.swift in Sources */,
 				FF8B54401FCE6CA9006B6937 /* RSDDurationRangeObject.swift in Sources */,
 				FF8B547F1FCE6CD3006B6937 /* RSDTaskViewModel.swift in Sources */,
@@ -4062,11 +3941,9 @@
 				FFAEE7D3243C007300F18BCB /* Result-KotlinModel.swift in Sources */,
 				FF225E00243B969C00AD2461 /* JsonSurveyRuleObject.swift in Sources */,
 				F8F9544620239ED400347940 /* RSDNumberRangeObject.swift in Sources */,
-				FF287A4623A3701100677D62 /* RSDColorRules.swift in Sources */,
 				FF8B53A21FCE6C7A006B6937 /* RSDAsyncActionConfiguration.swift in Sources */,
 				FF639616245223C00002B1D1 /* ResultNodeSerializer.swift in Sources */,
 				FF8B548C1FCE6CDD006B6937 /* RSDAsyncAction.swift in Sources */,
-				FFFBE9EA23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */,
 				F814DD0322750809004579EF /* RSDFileResultUtility.swift in Sources */,
 				FF8B54571FCE6CB1006B6937 /* RSDUIActionObject.swift in Sources */,
 				FF8B54E81FCE6D15006B6937 /* Array+Utilities.swift in Sources */,
@@ -4088,7 +3965,6 @@
 				F80CA50E1FFEAB8D00E89C06 /* RSDDatePickerDataSourceObject.swift in Sources */,
 				F80CA5241FFEBD3700E89C06 /* RSDChoiceTableItem.swift in Sources */,
 				F8EB48D2228CDCBD000A2F69 /* RSDAuthorizationHandler.swift in Sources */,
-				FF287A9623A3701100677D62 /* RSDColorPalette.swift in Sources */,
 				F8864ADC2163FE3100DF57CF /* RSDResultSummaryStepObject.swift in Sources */,
 				FF8B53A31FCE6C7A006B6937 /* RSDConditionalStepNavigator.swift in Sources */,
 				F8BE10ED2135EBD0000AAB1E /* RSDOrderedStepNavigator.swift in Sources */,
@@ -4099,19 +3975,16 @@
 				FF8B53B51FCE6C7A006B6937 /* RSDUIAction.swift in Sources */,
 				F8F367E5215B404A00A49F89 /* RSDTaskState.swift in Sources */,
 				F82D111B2125EB2500EA1A33 /* RSDTaskResult.swift in Sources */,
-				FF287A6223A3701100677D62 /* RSDFontRules.swift in Sources */,
 				FF8B53831FCE6C6F006B6937 /* RSDIdentifier.swift in Sources */,
 				F89CA1F42023EF9C00C5EB86 /* RSDDurationFormatter.m in Sources */,
 				F80CA5281FFEBD7600E89C06 /* RSDTextInputTableItem.swift in Sources */,
 				FF8B546E1FCE6CC5006B6937 /* RSDTaskInfoStepObject.swift in Sources */,
 				F8586AE92011697700B2DF65 /* RSDFractionFormatter.m in Sources */,
-				FF287A5A23A3701100677D62 /* RSDImage.swift in Sources */,
 				F8864AC82163EDFD00DF57CF /* RSDSubtaskStepObject.swift in Sources */,
 				F80CA5301FFEBE3200E89C06 /* RSDMeasurementInputTableItem.swift in Sources */,
 				FF8B53A81FCE6C7A006B6937 /* RSDResult.swift in Sources */,
 				FF8B53821FCE6C6F006B6937 /* RSDFormUIHint.swift in Sources */,
 				CB554F6522B40E8D0001D1DA /* RSDVideoViewUIAction.swift in Sources */,
-				FF287A7223A3701100677D62 /* RSDUIAction+Platform.swift in Sources */,
 				FF432999239EDBB30027288F /* RSDResourceInfo.swift in Sources */,
 				F8F72435203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */,
 				F8BE11152135FF45000AAB1E /* RSDNavigationUIAction.swift in Sources */,
@@ -4130,10 +4003,7 @@
 				F8EB48CD228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
 				F8366D952140677600EBA88D /* RSDTaskStepNode.swift in Sources */,
 				FF8B54E91FCE6D15006B6937 /* Date+ISO8601.swift in Sources */,
-				FF287A4E23A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */,
-				FF9F343724EB473600736F04 /* LocalizationBundle.swift in Sources */,
 				F8BF134F213F97B0009505E5 /* RSDPathComponent.swift in Sources */,
-				FF287A5E23A3701100677D62 /* RSDImageData+Platform.swift in Sources */,
 				F8BE11192135FF6E000AAB1E /* RSDReminderUIAction.swift in Sources */,
 				FF8B53B41FCE6C7A006B6937 /* RSDTaskGroup.swift in Sources */,
 				F84E54561FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */,
@@ -4153,7 +4023,6 @@
 				FFABCB9422D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */,
 				FF8B53851FCE6C6F006B6937 /* RSDResultType.swift in Sources */,
 				FFD4C79B243D51C60027CE6C /* InputItemTableItem.swift in Sources */,
-				FFF8A64724EB1FDC00D2AD5D /* ResourceLoader.swift in Sources */,
 				F8C723ED2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */,
 				F8F561E72023C2A8000EEA8C /* RSDDurationPickerDataSourceObject.swift in Sources */,
 				FF8B54261FCE6CA2006B6937 /* RSDSectionStepObject.swift in Sources */,
@@ -4167,7 +4036,6 @@
 				FFD4C7AA243E43780027CE6C /* TableDataSourceImpl.swift in Sources */,
 				F8C0A8CC20FB045C00EC758A /* RSDUITransitionStyle.swift in Sources */,
 				F837224622331DBE00C9A2EA /* RSDOverviewStep.swift in Sources */,
-				FF61FA3223A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */,
 				B59FC2A82073439F002BFDB9 /* RSDImagePlacementType.swift in Sources */,
 				FF4329A8239EF1F40027288F /* RSDFontData.swift in Sources */,
 				F829F0D31FF71EE7001B0680 /* RSDLengthFormatter.m in Sources */,
@@ -4194,9 +4062,7 @@
 				F82D11172125EAF300EA1A33 /* RSDCollectionResult.swift in Sources */,
 				F8BE11212136023A000AAB1E /* RSDDecodableReplacement.swift in Sources */,
 				FF8B54581FCE6CB1006B6937 /* RSDUIActionHandlerObject.swift in Sources */,
-				FF287A8223A3701100677D62 /* RSDImageRules.swift in Sources */,
 				FF81E0B5244A4FF90081644B /* RSDTaskInfoObject.swift in Sources */,
-				FF287A7623A3701100677D62 /* RSDColorSwatch.swift in Sources */,
 				FF8B53841FCE6C6F006B6937 /* RSDPermissionType.swift in Sources */,
 				FF8B54611FCE6CB8006B6937 /* RSDViewThemeElementObject.swift in Sources */,
 				F8B42BE31FE9ABE200E23783 /* Localization.swift in Sources */,
@@ -4207,7 +4073,6 @@
 				F8A5E1601FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */,
 				FF8B543D1FCE6CA9006B6937 /* RSDComparableSurveyRuleObject.swift in Sources */,
 				FF8B540C1FCE6C97006B6937 /* RSDResultObject.swift in Sources */,
-				FF287A8623A3701100677D62 /* RSDColor.swift in Sources */,
 				F8BE11362136049A000AAB1E /* RSDComparable.swift in Sources */,
 				FF8B53F81FCE6C86006B6937 /* RSDRegExValidatorObject.swift in Sources */,
 				F8BE10FA2135F172000AAB1E /* RSDTaskInfo.swift in Sources */,
@@ -4216,7 +4081,6 @@
 				FF2BB8CC2453531500AB65F9 /* AbstractFormStepObject.swift in Sources */,
 				F80CA53D1FFEC01300E89C06 /* RSDHumanMeasurementTableItemGroup.swift in Sources */,
 				F82D11132125EA9F00EA1A33 /* RSDFileResult.swift in Sources */,
-				FF287A8E23A3701100677D62 /* RSDImageThemeElement+Platform.swift in Sources */,
 				F8FCB98E222D9F510011F27F /* RSDFrequencyType.swift in Sources */,
 				FF4329B8239EFC250027288F /* RSDImageThemeElement.swift in Sources */,
 				FF8B53F61FCE6C86006B6937 /* RSDDateCoderObject.swift in Sources */,
@@ -4225,12 +4089,10 @@
 				F8BE10E92135E6C5000AAB1E /* RSDTrackingRule.swift in Sources */,
 				F8C28F28204F09CE00863F5F /* RSDDataArchiveManager.swift in Sources */,
 				F8FD563F2141BE4700BA2FA6 /* RSDDataArchive.swift in Sources */,
-				FF287A6623A3701100677D62 /* PlatformContext.swift in Sources */,
 				FF8B54281FCE6CA2006B6937 /* RSDStepTransformerObject.swift in Sources */,
 				F829F0DB1FF86DA4001B0680 /* RSDMassFormatter.m in Sources */,
 				F8112E702230B4A3005BCC93 /* RSDScoringResult.swift in Sources */,
 				FF8B543E1FCE6CA9006B6937 /* RSDInputFieldObject.swift in Sources */,
-				FF287A8A23A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4292,7 +4154,6 @@
 				F8BE111E21360158000AAB1E /* RSDStepTransformer.swift in Sources */,
 				FF8B54181FCE6C99006B6937 /* RSDTaskResultObject.swift in Sources */,
 				FF8B54741FCE6CC5006B6937 /* RSDTaskObject.swift in Sources */,
-				FF287A6F23A3701100677D62 /* RSDFont+Lato.swift in Sources */,
 				FFD4C7A1243D5E010027CE6C /* QuestionTableItemGroup.swift in Sources */,
 				F8BE10FB2135F172000AAB1E /* RSDTaskInfo.swift in Sources */,
 				F8366DB121418C6700EBA88D /* RSDSubtaskStep.swift in Sources */,
@@ -4318,7 +4179,6 @@
 				FF8B54971FCE6CED006B6937 /* RSDPickerDataSource.swift in Sources */,
 				F8485C4A203EA761007CE2B6 /* RSDSchedule.swift in Sources */,
 				FF8B53C81FCE6C7B006B6937 /* RSDTextFieldOptions.swift in Sources */,
-				FF287A4B23A3701100677D62 /* RSDColorMatrix.swift in Sources */,
 				F8EB48C2228CDBB3000A2F69 /* RSDDataLogger.swift in Sources */,
 				FF8B54631FCE6CB9006B6937 /* RSDImageThemeObject.swift in Sources */,
 				F80CA53A1FFEBF6800E89C06 /* RSDInputFieldTableItemGroup.swift in Sources */,
@@ -4331,7 +4191,6 @@
 				F802F3E4204DF2B80027CB00 /* RSDUIStep.swift in Sources */,
 				F8904D4A1FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */,
 				F86A5F1521251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */,
-				FFF4931723AAB94F0037C54B /* RSDImageVendor.swift in Sources */,
 				FF8B53FD1FCE6C87006B6937 /* RSDResourceTransformerObject.swift in Sources */,
 				F8BE10EA2135E6C5000AAB1E /* RSDTrackingRule.swift in Sources */,
 				F80CA5201FFEB04B00E89C06 /* RSDChoiceOptionsObject.swift in Sources */,
@@ -4348,7 +4207,6 @@
 				FFEA2F6324368B53008695D6 /* AnswerTypeObjects.swift in Sources */,
 				FF8B54A91FCE6CF7006B6937 /* RSDTableItem.swift in Sources */,
 				F829F0E71FF8AF28001B0680 /* NSUnit+RSDUnitConversion.m in Sources */,
-				FF287A5723A3701100677D62 /* RSDDesignSystem.swift in Sources */,
 				FF8B53C71FCE6C7B006B6937 /* RSDTaskTransformer.swift in Sources */,
 				F8E94FE12058308B00752B7B /* RSDOverviewStepObject.swift in Sources */,
 				F8BE11262136027A000AAB1E /* RSDCopyWithIdentifier.swift in Sources */,
@@ -4360,10 +4218,8 @@
 				FFAEE7D4243C007300F18BCB /* Result-KotlinModel.swift in Sources */,
 				FF225E01243B969C00AD2461 /* JsonSurveyRuleObject.swift in Sources */,
 				F82D111C2125EB2500EA1A33 /* RSDTaskResult.swift in Sources */,
-				FF287A4723A3701100677D62 /* RSDColorRules.swift in Sources */,
 				FF8B54801FCE6CD4006B6937 /* RSDTaskViewModel.swift in Sources */,
 				FF8B54421FCE6CAA006B6937 /* RSDChoiceObject.swift in Sources */,
-				FFFBE9EB23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */,
 				F8A204D520671F4D004E2B5D /* RSDModalStepTableItem.swift in Sources */,
 				FF639617245223C00002B1D1 /* ResultNodeSerializer.swift in Sources */,
 				FF8B54AA1FCE6CF7006B6937 /* RSDTableItemGroup.swift in Sources */,
@@ -4387,7 +4243,6 @@
 				F82D1120212602A700EA1A33 /* RSDNavigationResult.swift in Sources */,
 				FF8B548B1FCE6CDD006B6937 /* RSDStepController.swift in Sources */,
 				F82D11142125EA9F00EA1A33 /* RSDFileResult.swift in Sources */,
-				FF287A9723A3701100677D62 /* RSDColorPalette.swift in Sources */,
 				F8EB48D3228CDCBD000A2F69 /* RSDAuthorizationHandler.swift in Sources */,
 				F8BE10EE2135EBD0000AAB1E /* RSDOrderedStepNavigator.swift in Sources */,
 				FF8B54A61FCE6CF7006B6937 /* RSDInputFieldError.swift in Sources */,
@@ -4399,19 +4254,16 @@
 				FF8B53B81FCE6C7B006B6937 /* RSDConditionalStepNavigator.swift in Sources */,
 				F80CA50F1FFEAB8D00E89C06 /* RSDDatePickerDataSourceObject.swift in Sources */,
 				F80CA5251FFEBD3700E89C06 /* RSDChoiceTableItem.swift in Sources */,
-				FF287A6323A3701100677D62 /* RSDFontRules.swift in Sources */,
 				F84A2F4621779A640079C92C /* RSDClock.swift in Sources */,
 				FF8B54171FCE6C99006B6937 /* RSDCollectionResultObject.swift in Sources */,
 				F8366D962140677600EBA88D /* RSDTaskStepNode.swift in Sources */,
 				F8A33492224069A700390601 /* RSDColorMappingThemeElementObject.swift in Sources */,
 				F80CA51C1FFEAD1F00E89C06 /* RSDUSMeasurementPickerDataSource.swift in Sources */,
-				FF287A5B23A3701100677D62 /* RSDImage.swift in Sources */,
 				F8BE11122135FF1D000AAB1E /* RSDWebViewUIAction.swift in Sources */,
 				F837224722331DBE00C9A2EA /* RSDOverviewStep.swift in Sources */,
 				F8112E712230B4A3005BCC93 /* RSDScoringResult.swift in Sources */,
 				CB79396122B4931C00DA4FB9 /* RSDVideoViewUIAction.swift in Sources */,
 				FF8B54701FCE6CC5006B6937 /* RSDConditionalStepNavigatorObject.swift in Sources */,
-				FF287A7323A3701100677D62 /* RSDUIAction+Platform.swift in Sources */,
 				FF43299A239EDBB30027288F /* RSDResourceInfo.swift in Sources */,
 				FF8B53CA1FCE6C7B006B6937 /* RSDUIAction.swift in Sources */,
 				F83722422233133100C9A2EA /* RSDStandardPermissionsStep.swift in Sources */,
@@ -4431,10 +4283,7 @@
 				FF8B53BD1FCE6C7B006B6937 /* RSDResult.swift in Sources */,
 				FF8B538B1FCE6C70006B6937 /* RSDFormUIHint.swift in Sources */,
 				F8EB48CE228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
-				FF287A4F23A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */,
-				FF9F343824EB473600736F04 /* LocalizationBundle.swift in Sources */,
 				FF8B542A1FCE6CA2006B6937 /* RSDFormUIStepObject.swift in Sources */,
-				FF287A5F23A3701100677D62 /* RSDImageData+Platform.swift in Sources */,
 				F8BE10C22135E19B000AAB1E /* RSDValidationError.swift in Sources */,
 				F8C0A8CD20FB045C00EC758A /* RSDUITransitionStyle.swift in Sources */,
 				FF8B53C51FCE6C7B006B6937 /* RSDTask.swift in Sources */,
@@ -4454,7 +4303,6 @@
 				F80CA52D1FFEBDCF00E89C06 /* RSDNumberInputTableItem.swift in Sources */,
 				FFD4C79C243D51C60027CE6C /* InputItemTableItem.swift in Sources */,
 				F8BAF4202048DD35004B9406 /* RSDStepNavigatorType.swift in Sources */,
-				FFF8A64824EB1FDC00D2AD5D /* ResourceLoader.swift in Sources */,
 				FF8B538E1FCE6C70006B6937 /* RSDResultType.swift in Sources */,
 				FF4329A4239EEFEA0027288F /* RSDColorData.swift in Sources */,
 				FF8B542C1FCE6CA2006B6937 /* RSDSectionStepObject.swift in Sources */,
@@ -4467,7 +4315,6 @@
 				FFD4C7AB243E43780027CE6C /* TableDataSourceImpl.swift in Sources */,
 				FF8B53BA1FCE6C7B006B6937 /* RSDFormUIStep.swift in Sources */,
 				F829F0D41FF71EE7001B0680 /* RSDLengthFormatter.m in Sources */,
-				FF61FA3323A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */,
 				FF4329A9239EF1F40027288F /* RSDFontData.swift in Sources */,
 				FF8B53C01FCE6C7B006B6937 /* RSDStep.swift in Sources */,
 				FF8B538A1FCE6C70006B6937 /* RSDFormDataType.swift in Sources */,
@@ -4493,8 +4340,6 @@
 				FF8B54E31FCE6D14006B6937 /* Dictionary+Utilities.swift in Sources */,
 				F8864AC92163EDFD00DF57CF /* RSDSubtaskStepObject.swift in Sources */,
 				FF8B545A1FCE6CB2006B6937 /* RSDUIActionHandlerObject.swift in Sources */,
-				FF287A8323A3701100677D62 /* RSDImageRules.swift in Sources */,
-				FF287A7723A3701100677D62 /* RSDColorSwatch.swift in Sources */,
 				F8C723EE2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */,
 				FF81E0B6244A4FF90081644B /* RSDTaskInfoObject.swift in Sources */,
 				F8BE111A2135FF6E000AAB1E /* RSDReminderUIAction.swift in Sources */,
@@ -4506,7 +4351,6 @@
 				F8A5E1611FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */,
 				FF8B54441FCE6CAA006B6937 /* RSDComparableSurveyRuleObject.swift in Sources */,
 				F8F72436203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */,
-				FF287A8723A3701100677D62 /* RSDColor.swift in Sources */,
 				F8BF1350213F97B0009505E5 /* RSDPathComponent.swift in Sources */,
 				F8864AD82163F96500DF57CF /* RSDResultSummaryStep.swift in Sources */,
 				FF8B54161FCE6C99006B6937 /* RSDResultObject.swift in Sources */,
@@ -4517,7 +4361,6 @@
 				FF2BB8CD2453531500AB65F9 /* AbstractFormStepObject.swift in Sources */,
 				FF8B53C21FCE6C7B006B6937 /* RSDStepValidator.swift in Sources */,
 				F8C7D396209155A9007490BC /* RSDUIActionType.swift in Sources */,
-				FF287A8F23A3701100677D62 /* RSDImageThemeElement+Platform.swift in Sources */,
 				F8BE10DE2135E662000AAB1E /* RSDNavigationRule.swift in Sources */,
 				F8FD563B2141BDE000BA2FA6 /* RSDFileManifest.swift in Sources */,
 				FF4329B9239EFC250027288F /* RSDImageThemeElement.swift in Sources */,
@@ -4527,11 +4370,9 @@
 				F8BE11222136023A000AAB1E /* RSDDecodableReplacement.swift in Sources */,
 				F8112E6C2230B110005BCC93 /* RSDScoreBuilder.swift in Sources */,
 				FF633D9D1FCE857900CF2267 /* RSDDocumentable.swift in Sources */,
-				FF287A6723A3701100677D62 /* PlatformContext.swift in Sources */,
 				FF8B542E1FCE6CA2006B6937 /* RSDStepTransformerObject.swift in Sources */,
 				F829F0DC1FF86DA4001B0680 /* RSDMassFormatter.m in Sources */,
 				FF8B54451FCE6CAA006B6937 /* RSDInputFieldObject.swift in Sources */,
-				FF287A8B23A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4548,7 +4389,6 @@
 				FF8B541D1FCE6C9A006B6937 /* RSDTaskResultObject.swift in Sources */,
 				FF8B54791FCE6CC6006B6937 /* RSDTaskObject.swift in Sources */,
 				F8FD563C2141BDE000BA2FA6 /* RSDFileManifest.swift in Sources */,
-				FF287A7023A3701100677D62 /* RSDFont+Lato.swift in Sources */,
 				FFD4C7A2243D5E010027CE6C /* QuestionTableItemGroup.swift in Sources */,
 				FF8B54771FCE6CC6006B6937 /* RSDTaskGroupObject.swift in Sources */,
 				FF8B53D81FCE6C7B006B6937 /* RSDSurveyNavigationStep.swift in Sources */,
@@ -4574,7 +4414,6 @@
 				F82A49F822947C9B00BEBE3C /* RSDBackgroundTask.swift in Sources */,
 				F8BE10F82135F11D000AAB1E /* RSDTaskResourceTransformer.swift in Sources */,
 				F8485C4B203EA761007CE2B6 /* RSDSchedule.swift in Sources */,
-				FF287A4C23A3701100677D62 /* RSDColorMatrix.swift in Sources */,
 				F84A2F4721779A640079C92C /* RSDClock.swift in Sources */,
 				F8EB48C3228CDBB3000A2F69 /* RSDDataLogger.swift in Sources */,
 				FF8B549A1FCE6CEE006B6937 /* RSDPickerDataSource.swift in Sources */,
@@ -4588,7 +4427,6 @@
 				F802F3E5204DF2B80027CB00 /* RSDUIStep.swift in Sources */,
 				F8904D4B1FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */,
 				FF8B53D41FCE6C7B006B6937 /* RSDSectionStep.swift in Sources */,
-				FFF4931823AAB94F0037C54B /* RSDImageVendor.swift in Sources */,
 				F8FCB9892229E9620011F27F /* RSDStudyConfiguration.swift in Sources */,
 				FF8B54011FCE6C87006B6937 /* RSDResourceTransformerObject.swift in Sources */,
 				FF8B54CC1FCE6D0B006B6937 /* RSDStringLiteralOptionSet.swift in Sources */,
@@ -4605,7 +4443,6 @@
 				FFEA2F6424368B53008695D6 /* AnswerTypeObjects.swift in Sources */,
 				FF8B53DC1FCE6C7B006B6937 /* RSDTaskTransformer.swift in Sources */,
 				FF8B544D1FCE6CAA006B6937 /* RSDMultipleComponentInputFieldObject.swift in Sources */,
-				FF287A5823A3701100677D62 /* RSDDesignSystem.swift in Sources */,
 				F8E94FE22058308B00752B7B /* RSDOverviewStepObject.swift in Sources */,
 				FF8B544E1FCE6CAA006B6937 /* RSDDurationRangeObject.swift in Sources */,
 				F8864AEE2164406700DF57CF /* RSDResultSummaryStepViewModel.swift in Sources */,
@@ -4617,11 +4454,9 @@
 				FFAEE7D5243C007300F18BCB /* Result-KotlinModel.swift in Sources */,
 				FF225E02243B969C00AD2461 /* JsonSurveyRuleObject.swift in Sources */,
 				FF8B54B01FCE6CF8006B6937 /* RSDTableItemGroup.swift in Sources */,
-				FF287A4823A3701100677D62 /* RSDColorRules.swift in Sources */,
 				FF8B53CC1FCE6C7B006B6937 /* RSDAsyncActionConfiguration.swift in Sources */,
 				FF639618245223C00002B1D1 /* ResultNodeSerializer.swift in Sources */,
 				F8BF1351213F97B0009505E5 /* RSDPathComponent.swift in Sources */,
-				FFFBE9EC23AD7B9600650F11 /* RSDResourceInfo+Platform.swift in Sources */,
 				FF8B54861FCE6CDC006B6937 /* RSDAsyncAction.swift in Sources */,
 				FF8B545B1FCE6CB2006B6937 /* RSDUIActionObject.swift in Sources */,
 				F8F9544820239ED400347940 /* RSDNumberRangeObject.swift in Sources */,
@@ -4644,7 +4479,6 @@
 				FF8B54881FCE6CDC006B6937 /* RSDStepController.swift in Sources */,
 				FF8B54AC1FCE6CF8006B6937 /* RSDInputFieldError.swift in Sources */,
 				F8F367E7215B404A00A49F89 /* RSDTaskState.swift in Sources */,
-				FF287A9823A3701100677D62 /* RSDColorPalette.swift in Sources */,
 				F829F0DD1FF86DA4001B0680 /* RSDMassFormatter.m in Sources */,
 				F8C28F32204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift in Sources */,
 				F8BE11132135FF1D000AAB1E /* RSDWebViewUIAction.swift in Sources */,
@@ -4656,18 +4490,15 @@
 				F8FD56AF21475D2F00BA2FA6 /* RSDModalStepDataSource.swift in Sources */,
 				FF8B54751FCE6CC6006B6937 /* RSDConditionalStepNavigatorObject.swift in Sources */,
 				F8BE113421360410000AAB1E /* RSDSurveyRuleOperator.swift in Sources */,
-				FF287A6423A3701100677D62 /* RSDFontRules.swift in Sources */,
 				F80CA52A1FFEBD7600E89C06 /* RSDTextInputTableItem.swift in Sources */,
 				FF8B53DF1FCE6C7B006B6937 /* RSDUIAction.swift in Sources */,
 				F8864ADE2163FE3100DF57CF /* RSDResultSummaryStepObject.swift in Sources */,
 				FF8B53951FCE6C71006B6937 /* RSDIdentifier.swift in Sources */,
 				FF8B54781FCE6CC6006B6937 /* RSDTaskInfoStepObject.swift in Sources */,
-				FF287A5C23A3701100677D62 /* RSDImage.swift in Sources */,
 				F829F0D51FF71EE7001B0680 /* RSDLengthFormatter.m in Sources */,
 				FF8B53D21FCE6C7B006B6937 /* RSDResult.swift in Sources */,
 				F8475BB82125E5E30031D802 /* RSDUIActionHandler.swift in Sources */,
 				FF8B53941FCE6C71006B6937 /* RSDFormUIHint.swift in Sources */,
-				FF287A7423A3701100677D62 /* RSDUIAction+Platform.swift in Sources */,
 				FF43299B239EDBB30027288F /* RSDResourceInfo.swift in Sources */,
 				CB79396222B4931D00DA4FB9 /* RSDVideoViewUIAction.swift in Sources */,
 				F8BE113021360358000AAB1E /* RSDTableStep.swift in Sources */,
@@ -4685,9 +4516,6 @@
 				F8EB48CF228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
 				FF8B54DB1FCE6D14006B6937 /* Date+ISO8601.swift in Sources */,
 				F8366D92214042F800EBA88D /* RSDStepViewModel.swift in Sources */,
-				FF287A5023A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */,
-				FF9F343924EB473600736F04 /* LocalizationBundle.swift in Sources */,
-				FF287A6023A3701100677D62 /* RSDImageData+Platform.swift in Sources */,
 				F8BE10EB2135E6C5000AAB1E /* RSDTrackingRule.swift in Sources */,
 				FF8B53DE1FCE6C7B006B6937 /* RSDTaskGroup.swift in Sources */,
 				F84E54551FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */,
@@ -4708,7 +4536,6 @@
 				F8BE10B32135DBD5000AAB1E /* RSDRecorderConfiguration.swift in Sources */,
 				F837223022322A6A00C9A2EA /* RSDIconInfo.swift in Sources */,
 				FFD4C79D243D51C60027CE6C /* InputItemTableItem.swift in Sources */,
-				FFF8A64924EB1FDC00D2AD5D /* ResourceLoader.swift in Sources */,
 				FF8B54321FCE6CA3006B6937 /* RSDSectionStepObject.swift in Sources */,
 				F8112E63222F600A005BCC93 /* RSDTrackingTask.swift in Sources */,
 				F8BAF4212048DD35004B9406 /* RSDStepNavigatorType.swift in Sources */,
@@ -4722,7 +4549,6 @@
 				FFD4C7AC243E43780027CE6C /* TableDataSourceImpl.swift in Sources */,
 				F8EB48C7228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */,
 				F8FD56372141BD5100BA2FA6 /* RSDTaskMetadata.swift in Sources */,
-				FF61FA3423A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift in Sources */,
 				F87F97C720059B100013D2DC /* RSDErrorResultObject.swift in Sources */,
 				FF4329AA239EF1F40027288F /* RSDFontData.swift in Sources */,
 				FF8B53CF1FCE6C7B006B6937 /* RSDFormUIStep.swift in Sources */,
@@ -4749,9 +4575,7 @@
 				FF8B541A1FCE6C9A006B6937 /* RSDFileResultObject.swift in Sources */,
 				F8BE10DF2135E662000AAB1E /* RSDNavigationRule.swift in Sources */,
 				F8FD56412141BE4700BA2FA6 /* RSDDataArchive.swift in Sources */,
-				FF287A8423A3701100677D62 /* RSDImageRules.swift in Sources */,
 				FF81E0B7244A4FF90081644B /* RSDTaskInfoObject.swift in Sources */,
-				FF287A7823A3701100677D62 /* RSDColorSwatch.swift in Sources */,
 				FF8B54DC1FCE6D14006B6937 /* Dictionary+Utilities.swift in Sources */,
 				FF8B545C1FCE6CB2006B6937 /* RSDUIActionHandlerObject.swift in Sources */,
 				F8C723EF2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */,
@@ -4760,7 +4584,6 @@
 				F8B42BE51FE9ABE200E23783 /* Localization.swift in Sources */,
 				F8C0A8D620FC127900EC758A /* RSDDetailInputFieldObject.swift in Sources */,
 				F8C7D397209155A9007490BC /* RSDUIActionType.swift in Sources */,
-				FF287A8823A3701100677D62 /* RSDColor.swift in Sources */,
 				F8F9544420239E8F00347940 /* RSDDateRangeObject.swift in Sources */,
 				F80CA5321FFEBE3200E89C06 /* RSDMeasurementInputTableItem.swift in Sources */,
 				F8C0A8CE20FB045C00EC758A /* RSDUITransitionStyle.swift in Sources */,
@@ -4771,7 +4594,6 @@
 				FF2BB8CE2453531500AB65F9 /* AbstractFormStepObject.swift in Sources */,
 				FF8B541B1FCE6C9A006B6937 /* RSDResultObject.swift in Sources */,
 				FF8B54001FCE6C87006B6937 /* RSDRegExValidatorObject.swift in Sources */,
-				FF287A9023A3701100677D62 /* RSDImageThemeElement+Platform.swift in Sources */,
 				F8A695002135C3B40052EB82 /* RSDAnswerResultType+Codable.swift in Sources */,
 				FF8B54C81FCE6D0B006B6937 /* NumberFormatter+Codable.swift in Sources */,
 				FF8B53D71FCE6C7B006B6937 /* RSDStepValidator.swift in Sources */,
@@ -4780,12 +4602,10 @@
 				FF8B53CE1FCE6C7B006B6937 /* RSDDateCoder.swift in Sources */,
 				FF8B54341FCE6CA3006B6937 /* RSDStepTransformerObject.swift in Sources */,
 				FF8B544C1FCE6CAA006B6937 /* RSDInputFieldObject.swift in Sources */,
-				FF287A6823A3701100677D62 /* PlatformContext.swift in Sources */,
 				F8BE11232136023A000AAB1E /* RSDDecodableReplacement.swift in Sources */,
 				F80CA51D1FFEAD1F00E89C06 /* RSDUSMeasurementPickerDataSource.swift in Sources */,
 				F82D11152125EA9F00EA1A33 /* RSDFileResult.swift in Sources */,
 				F8BE11382136049A000AAB1E /* RSDComparable.swift in Sources */,
-				FF287A8C23A3701100677D62 /* RSDColorMappingThemeElement+Platform.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

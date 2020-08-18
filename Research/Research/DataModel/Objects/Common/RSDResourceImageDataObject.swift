@@ -97,7 +97,7 @@ public struct RSDResourceImageDataObject : RSDThemeResourceImageData, Codable, H
         let splitFile = imageName.splitFilename()
         self.imageName = splitFile.resourceName
         self.rawFileExtension = splitFile.fileExtension
-        self.factoryBundle = bundle
+        self.factoryBundle = factoryBundle
         self.packageName = packageName
     }
     

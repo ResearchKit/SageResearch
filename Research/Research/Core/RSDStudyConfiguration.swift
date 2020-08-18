@@ -72,26 +72,6 @@ open class RSDStudyConfiguration {
     /// as part of a Phase 1 or Preclinical trial? (Default = `true`)
     open var isParticipantDevice : Bool = true
     
-    /// The default color palette to use for this app.
-    @available(*, deprecated, message: "Use `RSDDesignSystem.shared` directly")
-    open var colorPalette: RSDColorPalette {
-        get {
-            return RSDDesignSystem.shared.colorRules.palette
-        }
-        set {
-            RSDDesignSystem.shared.colorRules.palette = newValue
-        }
-    }
-    
-    /// The default font rules for this app.
-    @available(*, deprecated, message: "Use `RSDDesignSystem.shared` directly")
-    open var fontRules: RSDFontRules {
-        get { return RSDDesignSystem.shared.fontRules }
-        set {
-            RSDDesignSystem.shared.fontRules = newValue
-        }
-    }
-    
     /// A flag for whether or not tasks that support "remind me later" should show that action. (Default = `false`)
     open var shouldShowRemindMe: Bool = false
     
