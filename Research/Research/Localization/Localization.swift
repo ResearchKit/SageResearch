@@ -49,9 +49,10 @@ open class Localization: NSObject {
     /// the `insert(bundle:, at:)` method.
     public private(set) static var allBundles: [LocalizationResourceBundle] = []
     
-    /// Insert a bundle into `allBundles` at a given index. If the index is beyond the range of
-    /// `allBundles`, then the bundle will be appended to the end of the array. If the bundle was
-    /// previously in the array, then the previous instance will be moved to the new .
+    /// Insert a bundle into `allBundles` at a given index. If the index is beyond the
+    /// range of `allBundles`, then the bundle will be appended to the end of the array.
+    /// If the bundle was previously in the array, then the bundle will be moved to the
+    /// new index position.
     @objc(insertBundle:atIndex:)
     public static func insert(bundle: LocalizationResourceBundle, at index: UInt) {
         if let idx = allBundles.firstIndex(where: { $0.isEqual(bundle) }) {
@@ -64,9 +65,9 @@ open class Localization: NSObject {
         }
     }
     
-    /// Insert a bundle into `allBundles` at a given index. If the index is beyond the range of
-    /// `allBundles`, then the bundle will be appended to the end of the array. If the bundle was
-    /// previously in the array, then the previous instance will be moved to the new .
+    /// Insert a bundle into `allBundles` at a given index if and only if the list of
+    /// bundles does not already include the bundle. If the index is beyond the range of
+    /// `allBundles`, then the bundle will be appended to the end of the array.
     public static func insertIfNeeded(bundle: LocalizationResourceBundle, at index: UInt) {
         guard !allBundles.contains(where: { $0.isEqual(bundle) }) else { return }
         if (index < allBundles.count) {

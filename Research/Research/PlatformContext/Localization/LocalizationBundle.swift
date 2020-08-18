@@ -61,7 +61,6 @@ open class LocalizationBundle : NSObject, LocalizationResourceBundle {
         self.init(bundle: bundle, tableName: tableName, targetSuffixes: targetSuffixes)
     }
     
-    /// Convenience initializer that uses the default `tableName` and `targetSuffixes`.
     /// - parameters:
     ///     - bundle: The bundle to check for a localized string.
     ///     - tableName: The table name used as the parameter of the `NSLocalizedString` method.
