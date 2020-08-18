@@ -50,7 +50,7 @@ public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource
             }
             guard let dataManager = taskVM.dataManager,
                 (dataManager.shouldUsePreviousAnswers?(for: taskVM.identifier) ?? false),
-                let dictionary = taskVM.previousTaskData?.json as? [String : Any],
+                let dictionary = taskVM.previousTaskData?.json as? [String : JsonSerializable],
                 let value = dictionary[step.identifier] as? JsonValue
                 else {
                     return nil
@@ -71,7 +71,7 @@ public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource
         self.sections = sections
         self.itemGroup = itemGroup
         
-        parent?.taskResult.appendStepHistory(with: itemGroup.answerResult as! RSDResult)
+        parent?.taskResult.appendStepHistory(with: itemGroup.answerResult)
         
         super.init(step: step, parent: parent)
     }

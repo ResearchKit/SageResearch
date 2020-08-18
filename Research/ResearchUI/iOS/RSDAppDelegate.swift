@@ -68,6 +68,7 @@ open class RSDAppDelegate : UIResponder, RSDAppOrientationLock, RSDAlertPresente
         // Set up color palette and factory.
         RSDFactory.shared = instantiateFactory()
         resourceLoader = ResourceLoader()
+        LocalizationBundle.registerDefaultBundlesIfNeeded()
         let colorRules = instantiateColorRules()
         let fontRules = instantiateFontRules()
         if fontRules != nil || colorRules != nil {

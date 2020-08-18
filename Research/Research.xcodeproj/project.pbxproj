@@ -1078,6 +1078,10 @@
 		FF8B54EE1FCE6D15006B6937 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
 		FF9557CC23060F4B00B8D60B /* RSDAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */; };
 		FF9C264B243FA48B00241202 /* QuestionTableDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C264A243FA48B00241202 /* QuestionTableDataSourceTests.swift */; };
+		FF9F343724EB473600736F04 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F343624EB473600736F04 /* LocalizationBundle.swift */; };
+		FF9F343824EB473600736F04 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F343624EB473600736F04 /* LocalizationBundle.swift */; };
+		FF9F343924EB473600736F04 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F343624EB473600736F04 /* LocalizationBundle.swift */; };
+		FF9F343A24EB473600736F04 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F343624EB473600736F04 /* LocalizationBundle.swift */; };
 		FFA0717F2356B66400EA371F /* DateTableItemGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */; };
 		FFA94E4C244A8A2D00A706F2 /* JsonDocumentableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E4B244A8A2D00A706F2 /* JsonDocumentableTests.swift */; };
 		FFA94E4E244E083100A706F2 /* AssessmentTaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */; };
@@ -1587,6 +1591,7 @@
 		FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAppDelegate.swift; sourceTree = "<group>"; };
 		FF9C264A243FA48B00241202 /* QuestionTableDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTableDataSourceTests.swift; sourceTree = "<group>"; };
 		FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDViewThemeElementObject.swift; sourceTree = "<group>"; };
+		FF9F343624EB473600736F04 /* LocalizationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationBundle.swift; sourceTree = "<group>"; };
 		FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableItemGroupTests.swift; sourceTree = "<group>"; };
 		FFA94E4B244A8A2D00A706F2 /* JsonDocumentableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDocumentableTests.swift; sourceTree = "<group>"; };
 		FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssessmentTaskObject.swift; sourceTree = "<group>"; };
@@ -2353,6 +2358,7 @@
 				FF287A3023A3701100677D62 /* PlatformContext.swift */,
 				FFF8A64624EB1FDC00D2AD5D /* ResourceLoader.swift */,
 				FF287A2C23A3701100677D62 /* RSDDesignSystem.swift */,
+				FF9F343524EB46EF00736F04 /* Localization */,
 				FF2893E223A372C700D7A29D /* Font */,
 				FF2893E323A372F900D7A29D /* Color */,
 				FF2893E423A3732700D7A29D /* Image */,
@@ -2683,6 +2689,14 @@
 			path = Task;
 			sourceTree = "<group>";
 		};
+		FF9F343524EB46EF00736F04 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				FF9F343624EB473600736F04 /* LocalizationBundle.swift */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		FFB015CD1F8BF0A900AC209B /* AsyncAction */ = {
 			isa = PBXGroup;
 			children = (
@@ -2825,6 +2839,7 @@
 		FFF8A64224E773E900D2AD5D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FFFDB9611F99D4A500BA1348 /* Research.strings */,
 				FF287A3D23A3701100677D62 /* ColorMatrix.json */,
 				FFF8A64424E7746800D2AD5D /* Fonts */,
 			);
@@ -2848,9 +2863,8 @@
 		FFFDB9591F99802C00BA1348 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */,
 				F8B42BE21FE9ABE200E23783 /* Localization.swift */,
-				FFFDB9611F99D4A500BA1348 /* Research.strings */,
+				F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -3687,6 +3701,7 @@
 				FF287A5123A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */,
 				F8BE124D21370A81000AAB1E /* Array+Utilities.swift in Sources */,
 				F8BE12C621371B21000AAB1E /* RSDStepValidator.swift in Sources */,
+				FF9F343A24EB473600736F04 /* LocalizationBundle.swift in Sources */,
 				F8BE1277213719E3000AAB1E /* RSDPermissionType.swift in Sources */,
 				F8BE130D21371F81000AAB1E /* RSDModalStepTableItem.swift in Sources */,
 				F8BE1270213719E3000AAB1E /* RSDActiveUIStepCommand.swift in Sources */,
@@ -3939,6 +3954,7 @@
 				F8366D952140677600EBA88D /* RSDTaskStepNode.swift in Sources */,
 				FF8B54E91FCE6D15006B6937 /* Date+ISO8601.swift in Sources */,
 				FF287A4E23A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */,
+				FF9F343724EB473600736F04 /* LocalizationBundle.swift in Sources */,
 				F8BF134F213F97B0009505E5 /* RSDPathComponent.swift in Sources */,
 				FF287A5E23A3701100677D62 /* RSDImageData+Platform.swift in Sources */,
 				F8BE11192135FF6E000AAB1E /* RSDReminderUIAction.swift in Sources */,
@@ -4238,6 +4254,7 @@
 				FF8B538B1FCE6C70006B6937 /* RSDFormUIHint.swift in Sources */,
 				F8EB48CE228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
 				FF287A4F23A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */,
+				FF9F343824EB473600736F04 /* LocalizationBundle.swift in Sources */,
 				FF8B542A1FCE6CA2006B6937 /* RSDFormUIStepObject.swift in Sources */,
 				FF287A5F23A3701100677D62 /* RSDImageData+Platform.swift in Sources */,
 				F8BE10C22135E19B000AAB1E /* RSDValidationError.swift in Sources */,
@@ -4490,6 +4507,7 @@
 				FF8B54DB1FCE6D14006B6937 /* Date+ISO8601.swift in Sources */,
 				F8366D92214042F800EBA88D /* RSDStepViewModel.swift in Sources */,
 				FF287A5023A3701100677D62 /* RSDTextFieldOptions+Platform.swift in Sources */,
+				FF9F343924EB473600736F04 /* LocalizationBundle.swift in Sources */,
 				FF287A6023A3701100677D62 /* RSDImageData+Platform.swift in Sources */,
 				F8BE10EB2135E6C5000AAB1E /* RSDTrackingRule.swift in Sources */,
 				FF8B53DE1FCE6C7B006B6937 /* RSDTaskGroup.swift in Sources */,
