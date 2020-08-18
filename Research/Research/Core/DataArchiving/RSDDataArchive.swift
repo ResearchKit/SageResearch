@@ -207,7 +207,7 @@ internal class TaskArchiver : NSObject {
                 }
             }
         }
-        else if let collection = result as? RSDCollectionResult {
+        else if let collection = result as? CollectionResult {
             let path = (stepPath != nil) ? "\(stepPath!)/\(collection.identifier)" : collection.identifier
             try recursiveAddFunc(sectionIdentifier, collection.identifier, path, collection.inputResults)
         }

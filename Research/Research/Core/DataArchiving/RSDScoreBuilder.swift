@@ -85,7 +85,7 @@ internal struct RecursiveScoreBuilder : RSDScoreBuilder {
         else if let taskResult = result as? RSDTaskResult {
             return try self._recursiveGetScoringData(from: taskResult)
         }
-        else if let collectionResult = result as? RSDCollectionResult {
+        else if let collectionResult = result as? CollectionResult {
             return try self._recursiveGetScoringData(from: collectionResult.inputResults)
         }
         else if let answerResult = result as? AnswerResult {

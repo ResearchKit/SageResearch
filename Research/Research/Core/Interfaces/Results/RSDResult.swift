@@ -70,7 +70,7 @@ extension RSDResult {
         if let answerResult = self as? AnswerResult {
             return "{\(self.identifier) : \(String(describing: answerResult.value)))}"
         }
-        else if let collectionResult = self as? RSDCollectionResult {
+        else if let collectionResult = self as? CollectionResult {
             return "{\(self.identifier) : \(collectionResult.inputResults.map ({ $0.shortDescription() }))}"
         }
         else if let taskResult = self as? RSDTaskResult {
