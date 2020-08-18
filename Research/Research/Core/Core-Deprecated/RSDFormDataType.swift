@@ -255,7 +255,7 @@ public enum RSDFormDataType {
         case .detail(_):
             return [.disclosureArrow, .button, .link, .section]
 
-        case .custom(_):
+        case .custom(_,_):
             return RSDFormUIHint.StandardHints.allCases.map { $0.hint }
         }
     }

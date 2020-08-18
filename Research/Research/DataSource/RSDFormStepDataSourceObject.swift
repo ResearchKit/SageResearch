@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// `RSDFormStepDataSourceObject` is a concrete implementation of the `RSDTableDataSource` protocol that is
 /// designed to be used to supply the data source for a form step. This class inherits from `RSDStepViewModel`
@@ -335,7 +336,7 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
                 else {
                     return nil
             }
-            return parentPath.previousTaskData?.json as? [String : Any]
+            return parentPath.previousTaskData?.json as? [String : JsonSerializable]
         }()
         
         var stepResult = self.collectionResult()
