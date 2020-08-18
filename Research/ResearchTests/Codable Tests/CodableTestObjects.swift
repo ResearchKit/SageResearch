@@ -62,6 +62,7 @@ struct TestResourceWrapper : RSDResourceTransformer, Codable {
 
 var decoder: JSONDecoder {
     resourceLoader = ResourceLoader()
+    LocalizationBundle.registerDefaultBundlesIfNeeded()
     return RSDFactory.shared.createJSONDecoder()
 }
 

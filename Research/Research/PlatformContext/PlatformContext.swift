@@ -51,6 +51,25 @@ class PlatformContext : RSDPlatformContextInfo {
     /// Research framework version.
     public let rsdFrameworkVersion: String
     
+    /// The localized name of this application.
+    /// This method looks at the plist for the main bundle and returns the most
+    /// appropriate display name.
+    public let localizedAppName : String = {
+        let mainBundle = Bundle.main
+        if let bundleInfo = mainBundle.localizedInfoDictionary ?? mainBundle.infoDictionary {
+            if let name = bundleInfo["CFBundleDisplayName"] as? String {
+                return name
+            }
+            else if let name = bundleInfo["CFBundleName"] as? String {
+                return name
+            }
+            else if let name = bundleInfo["CFBundleExecutable"] as? String {
+                return name
+            }
+        }
+        return "???"
+    }()
+    
     init() {
         
         #if os(watchOS)

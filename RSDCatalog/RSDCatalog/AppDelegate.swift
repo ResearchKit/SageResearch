@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         resourceLoader = ResourceLoader()
+        LocalizationBundle.registerDefaultBundlesIfNeeded()
         
         // Set the default configuration for the catalog test app.
         RSDStudyConfiguration.shared.fullInstructionsFrequency = .daily

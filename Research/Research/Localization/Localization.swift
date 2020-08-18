@@ -2,7 +2,7 @@
 //  Localization.swift
 //  Research
 //
-//  Copyright © 2016-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2016-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,80 +33,9 @@
 
 import Foundation
 
-/// `LocalizationBundle` is a wrapper for returning a bundle along with a table name and target suffixes.
-/// This is used by the `Localization` class to return localized strings that are defined in a strings
-/// file embedded in the given bundle.
-open class LocalizationBundle : NSObject {
-    
-    /// The bundle to check for a localized string.
-    public let bundle: Bundle
-    
-    /// The table name used as the parameter of the `NSLocalizedString` method.
-    public let tableName: String?
-    
-    /// Any additional target suffixes to remove from the table name in order to search for
-    /// a shared strings file.
-    public let targetSuffixes: [String]
-    
-    /// Convenience initializer that uses the default `tableName` and `targetSuffixes`.
-    /// - parameter bundle: The bundle to check for a localized string.
-    public convenience init(_ bundle: Bundle) {
-        let tableName = bundle.bundleIdentifier?.components(separatedBy: ".").last
-        let targetSuffixes = ["-iOS", "-tvOS", "-watchOS", "-macOS"]
-        self.init(bundle: bundle, tableName: tableName, targetSuffixes: targetSuffixes)
-    }
-    
-    /// Convenience initializer that uses the default `tableName` and `targetSuffixes`.
-    /// - parameters:
-    ///     - bundle: The bundle to check for a localized string.
-    ///     - tableName: The table name used as the parameter of the `NSLocalizedString` method.
-    ///     - targetSuffixes: Any additional target suffixes to remove from the table name in order to
-    ///                       search for a shared strings file.
-    public init(bundle: Bundle, tableName: String?, targetSuffixes: [String] = []) {
-        self.bundle = bundle
-        self.tableName = tableName
-        self.targetSuffixes = targetSuffixes
-    }
-    
-    /// Find the localized string in this bundle (if any) with the given key.
-    /// - parameter key: The key into the `Strings` file.
-    /// - returns: The localized string or `nil` if not found.
-    open func findLocalizedString(for key: String) -> String? {
-        let bundleStr = NSLocalizedString(key, tableName: tableName, bundle: bundle, value: key, comment: "")
-        if bundleStr != key {
-            // If something is found here then return
-            return bundleStr
-        }
-        if let tableName = tableName {
-            // Otherwise, look in the resource that is shared between targets.
-            for suffix in targetSuffixes {
-                if let range = tableName.range(of: suffix) {
-                    let sharedName = String(tableName.prefix(upTo: range.lowerBound))
-                    let sharedStr = NSLocalizedString(key, tableName: sharedName, bundle: bundle, value: key, comment: "")
-                    if sharedStr != key {
-                        // If something is found here then return.
-                        return sharedStr
-                    }
-                }
-            }
-        }
-        
-        // If nothing found then return nil
-        return nil
-    }
-    
-    // MARK: Equality
-    
-    override open var hash: Int {
-        return bundle.hash ^ RSDObjectHash(tableName as NSString?) ^ RSDObjectHash(targetSuffixes as NSArray)
-    }
-    
-    override open func isEqual(_ object: Any?) -> Bool {
-        guard let castObject = object as? LocalizationBundle else { return false }
-        return castObject.bundle == self.bundle &&
-            castObject.tableName == self.tableName &&
-            castObject.targetSuffixes == self.targetSuffixes
-    }
+@objc
+public protocol LocalizationResourceBundle : NSObjectProtocol {
+    func findLocalizedString(for key: String) -> String?
 }
 
 /// `Localization` is a wrapper class for getting a localized string that allows overriding the
@@ -118,18 +47,28 @@ open class Localization: NSObject {
     /// List of all the bundles to search for a given localized string. This is an ordered set
     /// of all the bundles to search for a localized string. To add a bundle to this set, use
     /// the `insert(bundle:, at:)` method.
-    public private(set) static var allBundles: [LocalizationBundle] = {
-        return [LocalizationBundle(Bundle.main), LocalizationBundle(Bundle(for: Localization.self))]
-    }()
+    public private(set) static var allBundles: [LocalizationResourceBundle] = []
     
     /// Insert a bundle into `allBundles` at a given index. If the index is beyond the range of
     /// `allBundles`, then the bundle will be appended to the end of the array. If the bundle was
     /// previously in the array, then the previous instance will be moved to the new .
     @objc(insertBundle:atIndex:)
-    public static func insert(bundle: LocalizationBundle, at index: UInt) {
-        if let idx = allBundles.firstIndex(of: bundle) {
+    public static func insert(bundle: LocalizationResourceBundle, at index: UInt) {
+        if let idx = allBundles.firstIndex(where: { $0.isEqual(bundle) }) {
             allBundles.remove(at: idx)
         }
+        if (index < allBundles.count) {
+            allBundles.insert(bundle, at: Int(index))
+        } else {
+            allBundles.append(bundle)
+        }
+    }
+    
+    /// Insert a bundle into `allBundles` at a given index. If the index is beyond the range of
+    /// `allBundles`, then the bundle will be appended to the end of the array. If the bundle was
+    /// previously in the array, then the previous instance will be moved to the new .
+    public static func insertIfNeeded(bundle: LocalizationResourceBundle, at index: UInt) {
+        guard !allBundles.contains(where: { $0.isEqual(bundle) }) else { return }
         if (index < allBundles.count) {
             allBundles.insert(bundle, at: Int(index))
         } else {
@@ -231,6 +170,7 @@ open class Localization: NSObject {
     
     /// The localized name of this App. This method looks at the plist for the main bundle and
     /// returns the most appropriate display name.
+    @available(*, deprecated, message: "Use `currentPlatformContext.localizedAppName` instead.")
     public static let localizedAppName : String = {
         let mainBundle = Bundle.main
         if let bundleInfo = mainBundle.localizedInfoDictionary ?? mainBundle.infoDictionary {

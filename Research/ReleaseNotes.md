@@ -55,3 +55,14 @@ resourceLoader = ResourceLoader()
 ```
 
 This will set up the resource loader to look in the appropriate bundles for resources that load from a URL.
+
+## Version 3.7
+
+Refactored `Localization` to *not* initially load the main and Research bundles. This separates out the platform 
+context. 
+
+If you do *not* use `RSDAppDelegate` then you will need to add the following line of code to your launch set up:
+
+```
+LocalizationBundle.registerDefaultBundlesIfNeeded()
+```

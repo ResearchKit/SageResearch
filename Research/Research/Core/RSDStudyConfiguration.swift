@@ -117,6 +117,9 @@ public protocol RSDPlatformContextInfo : class {
     
     /// Research framework version.
     var rsdFrameworkVersion: String { get }
+    
+    /// The localized name of the application.
+    var localizedAppName : String { get }
 }
 
 /// Set the current platform on startup. If this value is set more than once then subsequent calls
