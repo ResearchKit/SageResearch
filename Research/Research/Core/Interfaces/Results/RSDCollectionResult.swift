@@ -36,41 +36,8 @@ import Foundation
 
 /// `RSDCollectionResult` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
+@available(*, deprecated, message: "Use `CollectionResult` directly instead.")
 public protocol RSDCollectionResult : CollectionResult, RSDAnswerResultFinder {
-}
-
-extension RSDCollectionResult {
-    
-    /// Find a result within this collection.
-    /// - parameter identifier: The identifier associated with the result.
-    /// - returns: The result or `nil` if not found.
-    public func findResult(with identifier: String) -> RSDResult? {
-        return self.inputResults.first(where: { $0.identifier == identifier })
-    }
-    
-    /// Append the result to the end of the input results, replacing the previous instance with the same identifier.
-    /// - parameter result: The result to add to the input results.
-    /// - returns: The previous result or `nil` if there wasn't one.
-    @discardableResult
-    mutating public func appendInputResults(with result: RSDResult) -> RSDResult? {
-        var previousResult: RSDResult?
-        if let idx = inputResults.firstIndex(where: { $0.identifier == result.identifier }) {
-            previousResult = inputResults.remove(at: idx)
-        }
-        inputResults.append(result)
-        return previousResult
-    }
-    
-    /// Remove the result with the given identifier.
-    /// - parameter result: The result to remove from the input results.
-    /// - returns: The previous result or `nil` if there wasn't one.
-    @discardableResult
-    mutating public func removeInputResult(with identifier: String) -> RSDResult? {
-        guard let idx = inputResults.firstIndex(where: { $0.identifier == identifier }) else {
-            return nil
-        }
-        return inputResults.remove(at: idx)
-    }
 }
 
 public extension RSDCollectionResult {  // RSDAnswerResultFinder
@@ -84,11 +51,5 @@ public extension RSDCollectionResult {  // RSDAnswerResultFinder
     @available(*, deprecated, message: "Use `AnswerFinder.findAnswer` instead.")
     func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
         return self.findResult(with: identifier) as? RSDAnswerResult
-    }
-}
-
-public extension RSDCollectionResult {  // AnswerFinder
-    func findAnswer(with identifier: String) -> AnswerResult? {
-        self.findResult(with: identifier) as? AnswerResult
     }
 }

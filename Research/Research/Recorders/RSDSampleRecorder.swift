@@ -355,7 +355,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
     /// to collect any results attached to this recorder, including the `ORKFileResult` that points to
     /// the logging file used to record the log samples. The property is marked as `open` to allow subclasses
     /// to point at a different implementation of the `RSDCollectionResult` protocol.
-    open private(set) var collectionResult: RSDCollectionResult
+    open private(set) var collectionResult: CollectionResult
     
     /// The clock for this recorder.
     open private(set) var clock: RSDClock = RSDClock()

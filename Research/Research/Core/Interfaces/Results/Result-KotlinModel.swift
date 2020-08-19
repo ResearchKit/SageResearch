@@ -90,6 +90,37 @@ public extension CollectionResult {
     func findAnswer(with identifier: String) -> AnswerResult? {
         self.inputResults.first(where: { $0.identifier == identifier }) as? AnswerResult
     }
+    
+    /// Find a result within this collection.
+    /// - parameter identifier: The identifier associated with the result.
+    /// - returns: The result or `nil` if not found.
+    func findResult(with identifier: String) -> RSDResult? {
+        return self.inputResults.first(where: { $0.identifier == identifier })
+    }
+    
+    /// Append the result to the end of the input results, replacing the previous instance with the same identifier.
+    /// - parameter result: The result to add to the input results.
+    /// - returns: The previous result or `nil` if there wasn't one.
+    @discardableResult
+    mutating func appendInputResults(with result: RSDResult) -> RSDResult? {
+        var previousResult: RSDResult?
+        if let idx = inputResults.firstIndex(where: { $0.identifier == result.identifier }) {
+            previousResult = inputResults.remove(at: idx)
+        }
+        inputResults.append(result)
+        return previousResult
+    }
+    
+    /// Remove the result with the given identifier.
+    /// - parameter result: The result to remove from the input results.
+    /// - returns: The previous result or `nil` if there wasn't one.
+    @discardableResult
+    mutating func removeInputResult(with identifier: String) -> RSDResult? {
+        guard let idx = inputResults.firstIndex(where: { $0.identifier == identifier }) else {
+            return nil
+        }
+        return inputResults.remove(at: idx)
+    }
 }
 
 /// The `BranchNodeResult` is the result created for a given level of navigation of a node tree.
