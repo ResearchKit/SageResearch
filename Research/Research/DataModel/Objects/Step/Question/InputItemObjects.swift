@@ -786,7 +786,7 @@ public struct SkipCheckboxInputItemObject : SkipCheckboxInputItem, Codable, Hash
     // for polymorphic decoding and does not allow for decoding using a default type. syoung 04/06/2020
     private var classType: String? = "skipCheckbox"
     
-    public let fieldLabel: String
+    public let fieldLabel: String?
     public let matchingValue: JsonElement?
     
     public var text: String? {
@@ -837,7 +837,7 @@ public struct CheckboxInputItemObject : CheckboxInputItem, SerializableInputItem
     public private(set) var inputItemType: InputItemType = .checkbox
     
     public var identifier: String?
-    public let fieldLabel: String
+    public let fieldLabel: String?
     public let detail: String?
     
     public var text: String? {

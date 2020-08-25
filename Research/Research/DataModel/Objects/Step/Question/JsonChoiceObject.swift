@@ -44,7 +44,7 @@ public extension JsonComparable {
     }
 }
 
-public protocol JsonChoice : RSDChoice, JsonComparable { //, Codable {
+public protocol JsonChoice : RSDChoice, JsonComparable {
 }
 
 public extension JsonChoice {
