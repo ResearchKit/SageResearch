@@ -685,8 +685,12 @@ open class ChoicePickerInputItemObject : AbstractInputItemObject, SerializableIn
     open func encodeJsonChoices(to container: UnkeyedEncodingContainer) throws {
         var nestedContainer = container
         try jsonChoices.forEach {
+            guard let encodable = $0 as? Encodable else {
+                let context = EncodingError.Context(codingPath: container.codingPath, debugDescription: "\($0) Does not conform to the Encodable protocol.")
+                throw EncodingError.invalidValue($0, context)
+            }
             let nestedEncoder = nestedContainer.superEncoder()
-            try $0.encode(to: nestedEncoder)
+            try encodable.encode(to: nestedEncoder)
         }
     }
     

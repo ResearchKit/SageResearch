@@ -36,7 +36,7 @@ import JsonModel
 
 public final class AnswerResultObject : AnswerResult, RSDNavigationResult, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case type, identifier, jsonAnswerType = "answerType", jsonValue = "value", questionText, startDate, endDate, skipToIdentifier
+        case type, identifier, jsonAnswerType = "answerType", jsonValue = "value", questionText, questionData, startDate, endDate, skipToIdentifier
     }
     public private(set) var type: RSDResultType = .answer
     
@@ -49,28 +49,38 @@ public final class AnswerResultObject : AnswerResult, RSDNavigationResult, Codab
     public var startDate: Date = Date()
     public var endDate: Date = Date()
     
-    public init(identifier: String, value: JsonElement, questionText: String? = nil) {
+    // Additional data used to identify the answer result.
+    public var questionData: JsonElement?
+    
+    public init(identifier: String, value: JsonElement, questionText: String? = nil, questionData: JsonElement? = nil) {
         self.identifier = identifier
         self.jsonAnswerType = value.answerType
         self.jsonValue = value
         self.questionText = questionText
+        self.questionData = questionData
     }
     
-    public init(identifier: String, answerType: AnswerType?, value: JsonElement? = nil, questionText: String? = nil) {
+    public init(identifier: String, answerType: AnswerType?, value: JsonElement? = nil, questionText: String? = nil, questionData: JsonElement? = nil) {
         self.identifier = identifier
         self.jsonAnswerType = answerType
         self.jsonValue = value
         self.questionText = questionText
+        self.questionData = questionData
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
-        return AnswerResultObject(identifier: identifier, answerType: jsonAnswerType, value: jsonValue)
+        return AnswerResultObject(identifier: identifier,
+                                  answerType: jsonAnswerType,
+                                  value: jsonValue,
+                                  questionText: questionText,
+                                  questionData: questionData)
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.type = try container.decode(RSDResultType.self, forKey: .type)
+        self.questionData = try container.decodeIfPresent(JsonElement.self, forKey: .questionData)
         self.questionText = try container.decodeIfPresent(String.self, forKey: .questionText)
         self.skipToIdentifier = try container.decodeIfPresent(String.self, forKey: .skipToIdentifier)
         if container.contains(.jsonAnswerType) {
@@ -97,6 +107,7 @@ public final class AnswerResultObject : AnswerResult, RSDNavigationResult, Codab
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)
         try container.encode(type, forKey: .type)
+        try container.encodeIfPresent(self.questionData, forKey: .questionData)
         try container.encodeIfPresent(self.questionText, forKey: .questionText)
         try container.encodeIfPresent(self.skipToIdentifier, forKey: .skipToIdentifier)
         try container.encodeIfPresent(self.startDate, forKey: .startDate)
@@ -147,6 +158,8 @@ extension AnswerResultObject : DocumentableStruct {
             return .init(propertyType: .any)
         case .questionText:
             return .init(propertyType: .primitive(.string))
+        case .questionData:
+            return .init(propertyType: .any)
         }
     }
 
