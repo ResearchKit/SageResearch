@@ -44,7 +44,7 @@ public extension JsonComparable {
     }
 }
 
-public protocol JsonChoice : RSDChoice, JsonComparable, Codable {
+public protocol JsonChoice : RSDChoice, JsonComparable {
 }
 
 public extension JsonChoice {
@@ -53,7 +53,7 @@ public extension JsonChoice {
     }
 }
 
-public struct JsonChoiceObject : JsonChoice, Hashable {
+public struct JsonChoiceObject : JsonChoice, Codable, Hashable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case matchingValue = "value", text, detail, _isExclusive = "exclusive", icon
     }

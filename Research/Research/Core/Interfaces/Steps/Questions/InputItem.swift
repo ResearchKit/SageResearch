@@ -60,7 +60,6 @@ public protocol ChoiceInputItem : InputItem, RSDChoice {
 
 public extension ChoiceInputItem {
     var placeholder: String? { nil }
-    var fieldLabel: String? { nil }
     var isOptional: Bool { true }
 }
 

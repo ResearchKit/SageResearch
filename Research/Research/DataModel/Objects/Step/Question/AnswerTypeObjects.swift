@@ -171,7 +171,7 @@ public struct AnswerTypeObject : BaseAnswerType, Codable, Hashable {
     }
     
     public func decodeAnswer(from jsonValue: JsonElement?) throws -> Any? {
-        guard let value = jsonValue else { return nil }
+        guard let value = jsonValue, value != .null else { return nil }
         guard case .object(let obj) = value else {
             throw decodingError()
         }
@@ -213,7 +213,7 @@ public struct AnswerTypeString : BaseAnswerType, Codable, Hashable {
     }
     
     public func decodeAnswer(from jsonValue: JsonElement?) throws -> Any? {
-        guard let value = jsonValue else { return nil }
+        guard let value = jsonValue, value != .null else { return nil }
         guard case .string(let obj) = value else {
             throw decodingError()
         }
@@ -263,11 +263,19 @@ public struct AnswerTypeBoolean : BaseAnswerType, Codable, Hashable {
     }
     
     public func decodeAnswer(from jsonValue: JsonElement?) throws -> Any? {
-        guard let value = jsonValue else { return nil }
-        guard case .boolean(let obj) = value else {
+        guard let value = jsonValue, value != .null else { return nil }
+        switch value {
+        case .boolean(let boolValue):
+            return boolValue
+        case .integer(let intValue):
+            return intValue != 0
+        case .number(let numValue):
+            return numValue.jsonNumber()?.boolValue
+        case .string(let stringValue):
+            return (stringValue as NSString).boolValue
+        default:
             throw decodingError()
         }
-        return obj
     }
     
     public func encodeAnswer(from value: Any?) throws -> JsonElement {
@@ -309,11 +317,17 @@ public struct AnswerTypeInteger : BaseAnswerType, Codable, Hashable {
     }
     
     public func decodeAnswer(from jsonValue: JsonElement?) throws -> Any? {
-        guard let value = jsonValue else { return nil }
-        guard case .integer(let obj) = value else {
+        guard let value = jsonValue, value != .null else { return nil }
+        switch value {
+        case .integer(let intValue):
+            return intValue
+        case .number(let numValue):
+            return numValue.jsonNumber()?.intValue
+        case .string(let stringValue):
+            return (stringValue as NSString).integerValue
+        default:
             throw decodingError()
         }
-        return obj
     }
     
     public func encodeAnswer(from value: Any?) throws -> JsonElement {
@@ -362,11 +376,17 @@ extension RSDNumberAnswerType {
     }
     
     public func decodeAnswer(from jsonValue: JsonElement?) throws -> Any? {
-        guard let value = jsonValue else { return nil }
-        guard case .number(let obj) = value else {
+        guard let value = jsonValue, value != .null else { return nil }
+        switch value {
+        case .integer(let intValue):
+            return intValue
+        case .number(let numValue):
+            return numValue
+        case .string(let stringValue):
+            return (stringValue as NSString).doubleValue
+        default:
             throw decodingError()
         }
-        return obj
     }
     
     public func encodeAnswer(from value: Any?) throws -> JsonElement {

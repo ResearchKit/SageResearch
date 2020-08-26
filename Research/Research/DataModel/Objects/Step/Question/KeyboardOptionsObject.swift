@@ -34,7 +34,7 @@
 import Foundation
 import JsonModel
 
-public struct KeyboardOptionsObject : KeyboardOptions, Codable {
+public struct KeyboardOptionsObject : KeyboardOptions, Codable, Equatable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case _isSecureTextEntry = "isSecureTextEntry"
         case _autocapitalizationType = "autocapitalizationType"

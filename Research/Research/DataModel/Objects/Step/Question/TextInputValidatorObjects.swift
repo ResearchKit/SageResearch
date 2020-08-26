@@ -35,6 +35,7 @@ import Foundation
 import JsonModel
 
 public struct PassThruValidator : TextInputValidator {
+    public init() {}
     public func answerText(for answer: Any?) -> String? {
         let value = (answer as? JsonElement).map { $0 != .null ? $0.jsonObject() : nil } ?? answer
         return value.map { "\($0)" }

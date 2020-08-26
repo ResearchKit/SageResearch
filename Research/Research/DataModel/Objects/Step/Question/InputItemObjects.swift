@@ -685,8 +685,12 @@ open class ChoicePickerInputItemObject : AbstractInputItemObject, SerializableIn
     open func encodeJsonChoices(to container: UnkeyedEncodingContainer) throws {
         var nestedContainer = container
         try jsonChoices.forEach {
+            guard let encodable = $0 as? Encodable else {
+                let context = EncodingError.Context(codingPath: container.codingPath, debugDescription: "\($0) Does not conform to the Encodable protocol.")
+                throw EncodingError.invalidValue($0, context)
+            }
             let nestedEncoder = nestedContainer.superEncoder()
-            try $0.encode(to: nestedEncoder)
+            try encodable.encode(to: nestedEncoder)
         }
     }
     
@@ -782,7 +786,7 @@ public struct SkipCheckboxInputItemObject : SkipCheckboxInputItem, Codable, Hash
     // for polymorphic decoding and does not allow for decoding using a default type. syoung 04/06/2020
     private var classType: String? = "skipCheckbox"
     
-    public let fieldLabel: String
+    public let fieldLabel: String?
     public let matchingValue: JsonElement?
     
     public var text: String? {
@@ -833,7 +837,7 @@ public struct CheckboxInputItemObject : CheckboxInputItem, SerializableInputItem
     public private(set) var inputItemType: InputItemType = .checkbox
     
     public var identifier: String?
-    public let fieldLabel: String
+    public let fieldLabel: String?
     public let detail: String?
     
     public var text: String? {
