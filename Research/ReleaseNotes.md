@@ -70,3 +70,7 @@ LocalizationBundle.registerDefaultBundlesIfNeeded()
 ## Version 3.8
 
 Deprecated `RSDCollectionResult`. Use `CollectionResult` directly, instead.
+
+## Version 3.9
+
+Assorted minor fixes to better support using the newer protocols and objects from other frameworks.
