@@ -639,6 +639,19 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
         }
     }
     
+    open func instantiateFileResult(for fileHandle: RSDFileHandle) -> RSDFileResult {
+        // The result identifier is the logger identifer without the section identifier prefix
+        let identifier = fileHandle.identifier.hasPrefix(sectionIdentifier) ?
+            String(fileHandle.identifier.dropFirst(sectionIdentifier.count)) : fileHandle.identifier
+        var fileResult = RSDFileResultObject(identifier: identifier)
+        fileResult.startDate = self.startDate
+        fileResult.endDate = Date()
+        fileResult.url = fileHandle.url
+        fileResult.startUptime = self.clock.startSystemUptime
+        fileResult.contentType = fileHandle.contentType
+        return fileResult
+    }
+    
     /// Close log files. This method should be called on the `loggerQueue`.
     private func _stopLogger() throws {
         var error: Error?
@@ -647,12 +660,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
                 try logger.close()
                 
                 // Create and add the result
-                var fileResult = RSDFileResultObject(identifier: self.configuration.identifier)
-                fileResult.startDate = self.startDate
-                fileResult.endDate = Date()
-                fileResult.url = logger.url
-                fileResult.startUptime = self.clock.startSystemUptime
-                fileResult.contentType = logger.contentType
+                let fileResult = instantiateFileResult(for: logger)
                 self.appendResults(fileResult)
             }
             catch let err {

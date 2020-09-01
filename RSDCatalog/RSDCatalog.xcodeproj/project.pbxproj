@@ -53,6 +53,9 @@
 		FF432A3423A3038A0027288F /* topBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3223A3038A0027288F /* topBackground@2x.png */; };
 		FF432A3723A303BB0027288F /* topMarginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3523A303BA0027288F /* topMarginBackground@2x.png */; };
 		FF432A3823A303BB0027288F /* topMarginBackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3623A303BB0027288F /* topMarginBackground@3x.png */; };
+		FF4A231925001F9500944009 /* Recorder_Microphone.json in Resources */ = {isa = PBXBuildFile; fileRef = FF4A231825001F9500944009 /* Recorder_Microphone.json */; };
+		FF4A231B2500263600944009 /* ResearchAudioRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */; };
+		FF4A231C2500263600944009 /* ResearchAudioRecorder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */ = {isa = PBXBuildFile; fileRef = FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */; };
 		FF8FC21922F3A0AF00FA6DAF /* Theme_Image.json in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */; };
 		FFE39AEF249D55B500446A8B /* SimpleSurvey.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE39AEE249D55B500446A8B /* SimpleSurvey.json */; };
@@ -83,6 +86,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F82A4AC122960D2500BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
+				FF4A231C2500263600944009 /* ResearchAudioRecorder.framework in Embed Frameworks */,
 				F891DD33228CFDE2001B2A57 /* ResearchMotion.framework in Embed Frameworks */,
 				F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */,
 				F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */,
@@ -141,6 +145,8 @@
 		FF432A3223A3038A0027288F /* topBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topBackground@2x.png"; sourceTree = "<group>"; };
 		FF432A3523A303BA0027288F /* topMarginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topMarginBackground@2x.png"; sourceTree = "<group>"; };
 		FF432A3623A303BB0027288F /* topMarginBackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topMarginBackground@3x.png"; sourceTree = "<group>"; };
+		FF4A231825001F9500944009 /* Recorder_Microphone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Recorder_Microphone.json; sourceTree = "<group>"; };
+		FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchAudioRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Silver_Cat_01_Videvo.mov; sourceTree = "<group>"; };
 		FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Theme_Image.json; sourceTree = "<group>"; };
 		FFE39AEE249D55B500446A8B /* SimpleSurvey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SimpleSurvey.json; sourceTree = "<group>"; };
@@ -152,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F82A4AC022960D2500BEBE3C /* ResearchLocation.framework in Frameworks */,
+				FF4A231B2500263600944009 /* ResearchAudioRecorder.framework in Frameworks */,
 				F891DD32228CFDE2001B2A57 /* ResearchMotion.framework in Frameworks */,
 				F8D42AB62095550C00C6A4BC /* Research.framework in Frameworks */,
 				F8D42AB82095550C00C6A4BC /* ResearchUI.framework in Frameworks */,
@@ -254,6 +261,7 @@
 				FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */,
 				F82A4AC222960DD400BEBE3C /* Recorder_Distance.json */,
 				F8D42A93209552EC00C6A4BC /* Recorder_Motion.json */,
+				FF4A231825001F9500944009 /* Recorder_Microphone.json */,
 				F8D42A94209552EC00C6A4BC /* FormStep_List.json */,
 				F8D42A95209552EC00C6A4BC /* FormStep_Textfield.json */,
 				F8D42A96209552EC00C6A4BC /* Theme_Color.json */,
@@ -267,6 +275,7 @@
 		F8D42AAE209554BD00C6A4BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */,
 				F8D42AB52095550C00C6A4BC /* Research.framework */,
 				F8D42AB72095550C00C6A4BC /* ResearchUI.framework */,
 				F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */,
@@ -413,6 +422,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF432A2A23A3036E0027288F /* PhoneInPocket-4@2x.png in Resources */,
+				FF4A231925001F9500944009 /* Recorder_Microphone.json in Resources */,
 				FF432A2D23A3036E0027288F /* PhoneInPocket-4@3x.png in Resources */,
 				FF432A3423A3038A0027288F /* topBackground@2x.png in Resources */,
 				FF432A3023A3036E0027288F /* PhoneInPocket-3@3x.png in Resources */,

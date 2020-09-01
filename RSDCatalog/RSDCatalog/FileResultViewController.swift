@@ -67,12 +67,12 @@ class FileResultViewController: UIViewController {
         }
 
         do {
-            if url.pathExtension == "jpeg" {
+            if url.pathExtension == "jpeg" || url.pathExtension == "png" {
                 self.imageView.isHidden = false
                 let data = try Data(contentsOf: url)
                 self.imageView.image = UIImage(data: data)
             }
-            else if url.pathExtension == "mov" {
+            else if url.pathExtension == "mov" || url.pathExtension == "mp4" {
                 let player = AVPlayer(url: url)
                 let playerController = AVPlayerViewController()
                 playerController.player = player
