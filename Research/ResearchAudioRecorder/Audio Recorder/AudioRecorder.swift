@@ -68,6 +68,13 @@ extension RSDIdentifier {
 /// - seealso: `AudioRecorderConfiguration`.
 public class AudioRecorder : RSDSampleRecorder, AVAudioRecorderDelegate {
     
+    deinit {
+        // Belt and suspenders. There is apparently a bug that can cause a crash if the timer is not
+        // cancelled before it is deallocated. syoung 09/03/2020
+        meterTimer?.cancel()
+        meterTimer = nil
+    }
+    
     /// The currently-running instance, if any. You should confirm that this is nil
     /// (on the main queue) before starting a passive recorder instance.
     public static var current: AudioRecorder?
@@ -79,7 +86,7 @@ public class AudioRecorder : RSDSampleRecorder, AVAudioRecorderDelegate {
     
     /// The default logger is just a file with markers for each step transition.
     public override var defaultLoggerIdentifier: String {
-        "\(super.defaultLoggerIdentifier)_markers"
+        "\(super.defaultLoggerIdentifier)_levels"
     }
     
     private var audioFileHandle: AudioFileHandle?
@@ -137,11 +144,13 @@ public class AudioRecorder : RSDSampleRecorder, AVAudioRecorderDelegate {
                                                  outputDirectory: outputDirectory)
             
             let recorder = try AVAudioRecorder(url: fileHandle.url, settings: settings)
+            recorder.isMeteringEnabled = true
             recorder.delegate = self
             recorder.record()
             
             self.audioRecorder = recorder
             self.audioFileHandle = fileHandle
+            self.startTimer()
             
             // Set up the interruption observer.
             self.setupInterruptionObserver()
@@ -157,29 +166,86 @@ public class AudioRecorder : RSDSampleRecorder, AVAudioRecorderDelegate {
         updateStatus(to: .processingResults, error: nil)
         
         DispatchQueue.main.async {
-
-            if let fileHandle = self.audioFileHandle {
+            
+            let saveRecording = self.audioConfiguration?.saveAudioFile ?? false
+            if saveRecording, let fileHandle = self.audioFileHandle {
                 let result = self.instantiateFileResult(for: fileHandle)
                 self.appendResults(result)
                 self.audioFileHandle = nil
             }
             
-            self.updateStatus(to: .stopping, error: nil)
+            // Call completion after results are processed but before cleanup.
+            // This allows the UI to go forward while the recorder finishing.
+            completion(.stopping)
             
             self.stopInterruptionObserver()
             
+            self.stopTimer()
             if let recorder = self.audioRecorder {
-                 recorder.stop()
-                 self.audioRecorder = nil
-             }
+                recorder.stop()
+                // delete the recording if it should not be saved.
+                if !saveRecording {
+                    recorder.deleteRecording()
+                }
+                self.audioRecorder = nil
+            }
 
             if AudioRecorder.current == self {
                 AudioRecorder.current = nil
             }
             
-            // and then call finished.
-            completion(.finished)
+            self.updateStatus(to: .finished, error: nil)
         }
+    }
+    
+    // MARK: Record decibel level
+    
+    var meterTimer: DispatchSourceTimer?
+    let timeInterval: TimeInterval = 1.0
+    let meterUnit: String = "dbFS"  // decibel level full scale (0 to -160)
+    
+    /// Do not include the step transition markers in the file stream.
+    public override var shouldIncludeMarkers: Bool { false }
+    
+    func startTimer() {
+        let meterQueue = DispatchQueue(label: "org.sagebase.AudioRecorder.decibelMeter.\(UUID())", attributes: .concurrent)
+        let timer = DispatchSource.makeTimerSource(flags: [], queue: meterQueue)
+        timer.schedule(deadline: .now() + self.timeInterval, repeating: self.timeInterval)
+        timer.setEventHandler { [weak self] in
+            guard let strongSelf = self,
+                strongSelf.status <= .running,
+                let recorder = strongSelf.audioRecorder
+                else {
+                    return
+            }
+            recorder.updateMeters()
+            let average = recorder.averagePower(forChannel: 0)
+            let peak = recorder.peakPower(forChannel: 0)
+            strongSelf.recordMeterLevels(average: average, peak: peak, uptime: RSDClock.uptime())
+        }
+        timer.resume()
+        meterTimer = timer
+    }
+    
+    func recordMeterLevels(average: Float, peak: Float, uptime: TimeInterval) {
+        let sample = AudioLevelRecord(uptime: uptime,
+                                      timestamp: self.clock.runningDuration(for: uptime),
+                                      stepPath: self.currentStepPath,
+                                      timeInterval: self.timeInterval,
+                                      average: convertLevel(average),
+                                      peak: convertLevel(peak),
+                                      unit: self.meterUnit)
+        self.writeSample(sample)
+    }
+    
+    func convertLevel(_ level: Float) -> Float {
+        guard level.isFinite else { return 0.0 }
+        return level
+    }
+    
+    func stopTimer() {
+        meterTimer?.cancel()
+        meterTimer = nil
     }
     
     // MARK: AVAudioRecorderDelegate
@@ -230,4 +296,34 @@ class AudioFileHandle : RSDFileHandle {
         self.identifier = identifier
         self.url = try RSDFileResultUtility.createFileURL(identifier: identifier, ext: "mp4", outputDirectory: outputDirectory, shouldDeletePrevious: false)
     }
+}
+
+public struct AudioLevelRecord : RSDSampleRecord, Codable {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case uptime, timestamp, stepPath, timeInterval, average, peak, unit
+    }
+    
+    /// System clock time.
+    public let uptime: TimeInterval?
+    
+    /// Time that the system has been awake since last reboot.
+    public let timestamp: TimeInterval?
+    
+    /// An identifier marking the current step.
+    public let stepPath: String
+    
+    /// The date timestamp when the measurement was taken (if available).
+    public var timestampDate: Date? { nil }
+    
+    /// The sampling time interval.
+    public let timeInterval: TimeInterval
+    
+    /// The average meter level over the time interval.
+    public let average: Float
+    
+    /// The peak meter level for the time interval.
+    public let peak: Float
+    
+    /// The unit of measurement for the decibel levels.
+    public let unit: String
 }

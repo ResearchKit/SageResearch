@@ -83,8 +83,8 @@ public class RSDClock {
     }
     
     /// The time interval for how long the step has been running.
-    public func runningDuration() -> TimeInterval {
-        return RSDClock.uptime() - startUptime - pauseCumulation
+    public func runningDuration(for uptime: TimeInterval = RSDClock.uptime()) -> TimeInterval {
+        return uptime - startUptime - pauseCumulation
     }
     
     /// Pause the clock.

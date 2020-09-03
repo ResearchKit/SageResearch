@@ -42,7 +42,8 @@
                                                   "identifier"              : "microphone",
                                                   "type"                    : "microphone",
                                                   "startStepIdentifier"     : "countdown",
-                                                  "requiresBackgroundAudio" : true
+                                                  "requiresBackgroundAudio" : true,
+                                                  "saveAudioFile"           : true
                                                   }
                                                   ],
                            "steps"          : [
