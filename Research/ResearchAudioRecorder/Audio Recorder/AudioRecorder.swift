@@ -36,7 +36,7 @@ import AVFoundation
 
 extension AudioRecorderConfiguration : RSDAsyncActionVendor {
     
-    /// Instantiate a `AudioRecorder`.
+    /// Instantiate an `AudioRecorder`.
     /// - parameter taskViewModel: The current task path to use to initialize the controller.
     /// - returns: A new instance of `AudioRecorder`.
     public func instantiateController(with taskViewModel: RSDPathComponent) -> RSDAsyncAction? {
