@@ -46,7 +46,7 @@ public final class AudioRecorderAudioSessionController : NSObject, RSDAudioSessi
     
     /// The audio session is a shared pointer to the current audio session (if running). This is used to
     /// allow background audio. Background audio is required in order for an active step to play sound
-    /// such as voice commands to a participant who make not be looking at their screen.
+    /// such as voice commands to a participant who may not be looking at their screen.
     ///
     /// - note: The application settings will need to include setting capabilities appropriate for
     /// background audio if this feature is used.

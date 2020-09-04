@@ -45,7 +45,7 @@ extension AudioRecorderConfiguration : RSDAsyncActionVendor {
 }
 
 extension Notification.Name {
-    /// Notification name posted by a `AudioRecorder` instance when it is starting. If you intend to
+    /// Notification name posted by an `AudioRecorder` instance when it is starting. If you intend to
     /// listen for this notification in order to shut down passive recorders, you must pass
     /// nil for the operation queue so it gets handled synchronously on the calling queue.
     public static let AudioRecorderWillStart = Notification.Name(rawValue: "AudioRecorderWillStart")
@@ -92,7 +92,7 @@ public class AudioRecorder : RSDSampleRecorder, AVAudioRecorderDelegate {
     private var audioFileHandle: AudioFileHandle?
     private var audioRecorder: AVAudioRecorder?
     
-    /// Override to implement requesting permission to access the participant's motion sensors.
+    /// Override to implement requesting permission to access the participant's microphone.
     override public func requestPermissions(on viewController: Any, _ completion: @escaping RSDAsyncActionCompletionHandler) {
         self.updateStatus(to: .requestingPermission , error: nil)
         AudioRecorderAudioSessionController.shared.startAudioSessionIfNeeded()
@@ -109,7 +109,7 @@ public class AudioRecorder : RSDSampleRecorder, AVAudioRecorderDelegate {
         }
     }
     
-    /// Override to start the motion sensor updates.
+    /// Override to start recording audio.
     override public func startRecorder(_ completion: @escaping ((RSDAsyncActionStatus, Error?) -> Void)) {
         guard self.audioRecorder == nil, self.audioFileHandle == nil else {
             completion(.failed, RecorderError.alreadyRunning)
@@ -160,7 +160,7 @@ public class AudioRecorder : RSDSampleRecorder, AVAudioRecorderDelegate {
         }
     }
 
-    /// Override to stop updating the motion sensors.
+    /// Override to stop recording audio.
     override public func stopRecorder(_ completion: @escaping ((RSDAsyncActionStatus) -> Void)) {
         
         updateStatus(to: .processingResults, error: nil)
