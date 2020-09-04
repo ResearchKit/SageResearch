@@ -39,7 +39,7 @@ extension RSDTaskType {
 
 /// This is a background task for recording audio in the background. If your task requires *both*
 /// background audio recording and motion sensor data, use this background task rather than
-/// subclassing from `ResearchMotion.RSDMotionTaskObject` since that version will playback a silent
+/// subclassing from `ResearchMotion.RSDMotionTaskObject` since that version will play back a silent
 /// audio file rather than setting up the audio session for playback and recording.
 open class AudioRecorderTaskObject: AssessmentTaskObject, RSDBackgroundTask {
     open override class func defaultType() -> RSDTaskType {
