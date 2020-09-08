@@ -85,15 +85,16 @@ open class RSDTaskState : NSObject {
     
     /// Create an output directory.
     public func createOutputDirectory() -> URL? {
+        let fileManager = RSDStudyConfiguration.shared.fileManager!
         let tempDir = NSTemporaryDirectory()
         let dir = ((self.taskResult as? AssessmentResult)?.taskRunUUID ?? UUID()).uuidString
         let path = (tempDir as NSString).appendingPathComponent(dir)
-        if !FileManager.default.fileExists(atPath: path) {
+        if !fileManager.fileExists(atPath: path) {
             do {
                 #if os(macOS)
-                try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [:])
+                try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [:])
                 #else
-                try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [ .protectionKey : FileProtectionType.completeUntilFirstUserAuthentication ])
+                try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [ .protectionKey : FileProtectionType.completeUntilFirstUserAuthentication ])
                 #endif
             } catch let error as NSError {
                 print ("Error creating file: \(error)")
@@ -126,11 +127,11 @@ open class RSDTaskState : NSObject {
     /// discarded.
     public func deleteOutputDirectory(error: Error? = nil, completion:((_ error: Error?) -> Void)? = nil) {
         fileManagementQueue.async {
-            
             guard let outputDirectory = self._outputDirectory else { return }
+            let fileManager = RSDStudyConfiguration.shared.fileManager!
             var fileError: Error? = nil
             do {
-                try FileManager.default.removeItem(at: outputDirectory)
+                try fileManager.removeItem(at: outputDirectory)
             } catch let error {
                 print("Error removing output directory: \(error.localizedDescription)")
                 debugPrint("\tat: \(outputDirectory)")

@@ -94,6 +94,14 @@ open class RSDStudyConfiguration {
     
     /// A flag for whether or not tasks that support "remind me later" should show that action. (Default = `false`)
     open var shouldShowRemindMe: Bool = false
+    
+    /// `FileManager` is not fully implemented for non-Apple platforms. This allows for setting
+    /// this property.
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    open var fileManager: RSDFileManager! = FileManager.default
+    #else
+    open var fileManager: RSDFileManager!
+    #endif
 }
 
 /// The platform context info contains information about the current platform context that needs
