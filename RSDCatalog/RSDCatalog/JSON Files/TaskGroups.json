@@ -58,7 +58,15 @@
                 "detail": "This is an example task for recording motion sensor data using the RSDMotionRecorder. This task also includes using the voice synthesizer to include spoken instructions.",
                 "icon": "activityIcon",
                 "taskTransformer" : { "resourceName": "Recorder_Motion" }
-                }]
+                },
+                  {
+                 "identifier": "microphone",
+                 "title": "Audio and Motion Recorder",
+                 "subtitle": "Activity for recording audio and motion sensor data.",
+                 "detail": "This is an example task for recording audio and motion sensor data using the RSDMotionRecorder and AudioRecorder. This task also includes using the voice synthesizer to include spoken instructions.",
+                 "icon": "activityIcon",
+                 "taskTransformer" : { "resourceName": "Recorder_Microphone" }
+                 }]
  },
  {
  "identifier": "colorExamples",

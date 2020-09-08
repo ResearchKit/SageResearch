@@ -503,6 +503,13 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
         return (self.configuration as? RSDJSONRecorderConfiguration)?.usesRootDictionary ?? false
     }
     
+    /// Should the log file include step transition markers? Default = `true`
+    /// If `false`, then the a transition between steps will *not* add a marker record.
+    /// - seealso: `instantiateMarker()`
+    open var shouldIncludeMarkers: Bool {
+        true
+    }
+    
     /// instantiate a marker for recording step transitions as well as start and stop points.
     /// The default implementation will instantiate a `RSDRecordMarker`.
     ///
@@ -607,7 +614,11 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
             let stepPath = self.currentStepPath
             
             // Only write to the file if the recorder status indicates that the logging file is open
-            guard self.status >= RSDAsyncActionStatus.starting && self.status <= RSDAsyncActionStatus.running else { return }
+            guard self.shouldIncludeMarkers,
+                self.status >= RSDAsyncActionStatus.starting && self.status <= RSDAsyncActionStatus.running
+                else {
+                    return
+            }
             
             do {
                 for (identifier, dataLogger) in self.loggers {
@@ -632,11 +643,24 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
                 continue
             }
             loggers[identifier] = dataLogger
-            if let logger = dataLogger as? RSDRecordSampleLogger {
+            if let logger = dataLogger as? RSDRecordSampleLogger, self.shouldIncludeMarkers {
                 let marker = instantiateMarker(uptime: self.clock.startUptime, timestamp: 0, date: self.clock.startDate, stepPath: currentStepPath, loggerIdentifier: identifier)
                 try logger.writeSample(marker)
             }
         }
+    }
+    
+    open func instantiateFileResult(for fileHandle: RSDFileHandle) -> RSDFileResult {
+        // The result identifier is the logger identifer without the section identifier prefix
+        let identifier = fileHandle.identifier.hasPrefix(sectionIdentifier) ?
+            String(fileHandle.identifier.dropFirst(sectionIdentifier.count)) : fileHandle.identifier
+        var fileResult = RSDFileResultObject(identifier: identifier)
+        fileResult.startDate = self.startDate
+        fileResult.endDate = Date()
+        fileResult.url = fileHandle.url
+        fileResult.startUptime = self.clock.startSystemUptime
+        fileResult.contentType = fileHandle.contentType
+        return fileResult
     }
     
     /// Close log files. This method should be called on the `loggerQueue`.
@@ -647,12 +671,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
                 try logger.close()
                 
                 // Create and add the result
-                var fileResult = RSDFileResultObject(identifier: self.configuration.identifier)
-                fileResult.startDate = self.startDate
-                fileResult.endDate = Date()
-                fileResult.url = logger.url
-                fileResult.startUptime = self.clock.startSystemUptime
-                fileResult.contentType = logger.contentType
+                let fileResult = instantiateFileResult(for: logger)
                 self.appendResults(fileResult)
             }
             catch let err {

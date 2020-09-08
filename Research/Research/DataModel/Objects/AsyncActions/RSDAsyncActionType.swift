@@ -52,6 +52,7 @@ public final class AsyncActionConfigurationSerializer : IdentifiableInterfaceSer
         let examples: [SerializableAsyncActionConfiguration] = [
             RSDMotionRecorderConfiguration.examples().first!,
             RSDDistanceRecorderConfiguration.examples().first!,
+            AudioRecorderConfiguration.examples().first!,
         ]
         self.examples = examples
     }
@@ -96,8 +97,11 @@ public struct RSDAsyncActionType : RSDFactoryTypeRepresentable, Codable, Hashabl
     /// Defaults to `RSDDistanceRecorderConfiguration`.
     public static let distance: RSDAsyncActionType = "distance"
     
+    /// Defaults to `AudioRecorderConfiguration`.
+    public static let microphone: RSDAsyncActionType = "microphone"
+    
     fileprivate static func allBaseTypes() -> [RSDAsyncActionType] {
-        return [.motion, .distance]
+        return [.motion, .distance, .microphone]
     }
 }
 

@@ -104,7 +104,6 @@ public class RSDFileResultUtility {
             }
         }
         
-        assertionFailure("A file already exists at \(filename).")
         let uuidCode = UUID().uuidString.prefix(4)
         return URL(fileURLWithPath: "\(filename)-\(uuidCode).\(ext)", relativeTo: outputDirectory)
     }

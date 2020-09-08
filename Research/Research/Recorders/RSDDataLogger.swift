@@ -33,10 +33,22 @@
 
 import Foundation
 
+public protocol RSDFileHandle : class {
+    
+    /// A unique identifier for the logger.
+    var identifier: String { get }
+    
+    /// The url to the file.
+    var url: URL { get }
+    
+    /// The content type of the data file (if known).
+    var contentType: String? { get }
+}
+
 /// `RSDDataLogger` is used to write data samples using a custom encoding to a logging file.
 /// - note: This class does **not** use a serial queue to process the samples. It is assumed that the
 /// recorder that is using this file will handle that implementation.
-open class RSDDataLogger {
+open class RSDDataLogger : RSDFileHandle {
     
     /// A unique identifier for the logger.
     public let identifier: String
