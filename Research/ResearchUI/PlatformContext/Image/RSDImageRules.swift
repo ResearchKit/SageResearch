@@ -96,7 +96,7 @@ open class RSDImageRules {
         
         // If on iOS, first check to see if the image has a dark mode version and exit early if
         // a path to the dark version is found.
-        if #available(iOSApplicationExtension 13.0, *),
+        if #available(iOS 13.0, *),
             let style = traitCollection?.imageConfiguration.traitCollection?.userInterfaceStyle,
             style == .dark {
             let imageName = "\(resourceName)-dark@\(scale)x"
@@ -172,11 +172,11 @@ open class RSDImageRules {
     /// Get an SF system image if the OS supports this feature.
     private func _getSystemImage(_ resourceName:String, _ traitCollection: UITraitCollection?) -> RSDImage? {
         #if os(tvOS)
-        if #available(tvOSApplicationExtension 13.0, *) {
+        if #available(tvOS 13.0, *) {
             return RSDImage(systemName: resourceName, compatibleWith: traitCollection)
         }
         #elseif os(iOS)
-        if #available(iOSApplicationExtension 13.0, *) {
+        if #available(iOS 13.0, *) {
             return RSDImage(systemName: resourceName, compatibleWith: traitCollection)
         }
         #endif

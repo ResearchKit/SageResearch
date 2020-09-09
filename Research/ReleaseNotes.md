@@ -78,3 +78,15 @@ Assorted minor fixes to better support using the newer protocols and objects fro
 ## Version 3.10
 
 Added `ResearchAudioRecorder` framework for recording audio and full scale decibel level.
+
+## Version 3.11
+
+No migration should be required.
+
+The focus of this version is to move the code related to resources, file management, and bundles so that the 
+Research framework can be built for other platforms that do not use some version of Apple OS.
+
+* Moved `FileManager` references to use a protocol so that this framework could be used for platforms that do 
+not support `FileManager`.
+
+* Move platform context into the ResearchUI framework.

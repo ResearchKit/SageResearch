@@ -72,28 +72,16 @@ open class RSDStudyConfiguration {
     /// as part of a Phase 1 or Preclinical trial? (Default = `true`)
     open var isParticipantDevice : Bool = true
     
-    /// The default color palette to use for this app.
-    @available(*, deprecated, message: "Use `RSDDesignSystem.shared` directly")
-    open var colorPalette: RSDColorPalette {
-        get {
-            return RSDDesignSystem.shared.colorRules.palette
-        }
-        set {
-            RSDDesignSystem.shared.colorRules.palette = newValue
-        }
-    }
-    
-    /// The default font rules for this app.
-    @available(*, deprecated, message: "Use `RSDDesignSystem.shared` directly")
-    open var fontRules: RSDFontRules {
-        get { return RSDDesignSystem.shared.fontRules }
-        set {
-            RSDDesignSystem.shared.fontRules = newValue
-        }
-    }
-    
     /// A flag for whether or not tasks that support "remind me later" should show that action. (Default = `false`)
     open var shouldShowRemindMe: Bool = false
+    
+    /// `FileManager` is not fully implemented for non-Apple platforms. This allows for setting
+    /// this property.
+    #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    open var fileManager: RSDFileManager! = FileManager.default
+    #else
+    open var fileManager: RSDFileManager!
+    #endif
 }
 
 /// The platform context info contains information about the current platform context that needs

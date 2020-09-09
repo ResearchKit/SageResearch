@@ -33,6 +33,19 @@
 
 import Foundation
 
+public protocol RSDFileManager : NSObjectProtocol {
+    func fileExists(atPath path: String) -> Bool
+    func isDeletableFile(atPath path: String) -> Bool
+    func removeItem(at URL: URL) throws
+    func createDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey : Any]?) throws
+    func createDirectory(atPath path: String, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey : Any]?) throws
+}
+
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+extension FileManager : RSDFileManager {
+}
+#endif
+
 /// `RSDFileResultUtility` is a utility for naming temporary files used to save task results.
 public class RSDFileResultUtility {
     
@@ -77,8 +90,10 @@ public class RSDFileResultUtility {
     /// - throws: An exception if the file directory cannot be created.
     public static func createFileURL(identifier: String, ext: String, outputDirectory: URL, shouldDeletePrevious: Bool = false) throws -> URL {
         
+        let fileManager = RSDStudyConfiguration.shared.fileManager!
+        
         // create the directory if needed
-        try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true, attributes: nil)
+        try fileManager.createDirectory(at: outputDirectory, withIntermediateDirectories: true, attributes: nil)
         
         // Check the file name.
         var filename = self.filename(for: identifier)
@@ -91,12 +106,12 @@ public class RSDFileResultUtility {
         // Check the url.
         let relativePath = (filename as NSString).appendingPathExtension(ext)!
         let url = URL(fileURLWithPath: relativePath, relativeTo: outputDirectory)
-        if !FileManager.default.fileExists(atPath: url.path) {
+        if !fileManager.fileExists(atPath: url.path) {
             return url
         }
-        else if shouldDeletePrevious, FileManager.default.isDeletableFile(atPath: url.path) {
+        else if shouldDeletePrevious, fileManager.isDeletableFile(atPath: url.path) {
             do {
-                try FileManager.default.removeItem(at: url)
+                try fileManager.removeItem(at: url)
                 return url
             }
             catch let err {

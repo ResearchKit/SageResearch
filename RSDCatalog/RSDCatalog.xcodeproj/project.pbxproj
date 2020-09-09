@@ -149,6 +149,8 @@
 		FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchAudioRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Silver_Cat_01_Videvo.mov; sourceTree = "<group>"; };
 		FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Theme_Image.json; sourceTree = "<group>"; };
+		FFDDD63D25094001003DB15C /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFDDD6532509419F003DB15C /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFE39AEE249D55B500446A8B /* SimpleSurvey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SimpleSurvey.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -275,6 +277,8 @@
 		F8D42AAE209554BD00C6A4BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FFDDD6532509419F003DB15C /* Research_UnitTest.framework */,
+				FFDDD63D25094001003DB15C /* Research_UnitTest.framework */,
 				FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */,
 				F8D42AB52095550C00C6A4BC /* Research.framework */,
 				F8D42AB72095550C00C6A4BC /* ResearchUI.framework */,

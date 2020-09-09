@@ -33,12 +33,15 @@
 
 import XCTest
 @testable import Research
+@testable import Research_UnitTest
+
 
 class TrackingTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        setupPlatformContext()
     }
     
     override func tearDown() {
