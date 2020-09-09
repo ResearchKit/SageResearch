@@ -1065,6 +1065,14 @@
 		FFD4C7AC243E43780027CE6C /* TableDataSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C7A9243E43780027CE6C /* TableDataSourceImpl.swift */; };
 		FFD4C7AD243E43780027CE6C /* TableDataSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C7A9243E43780027CE6C /* TableDataSourceImpl.swift */; };
 		FFDAFF3D23A835AB004B5291 /* RSDStudyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCB9862229E9620011F27F /* RSDStudyConfiguration.swift */; };
+		FFDDD64025094069003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
+		FFDDD6412509407A003DB15C /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
+		FFDDD64225094081003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
+		FFDDD6432509408B003DB15C /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
+		FFDDD64F25094177003DB15C /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
+		FFDDD65025094177003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
+		FFDDD65125094183003DB15C /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
+		FFDDD65225094183003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
 		FFE39AEA249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */; };
 		FFE39AEB249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */; };
 		FFE39AEC249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */; };
@@ -1117,10 +1125,10 @@
 		FFF4340A244645D300C5F466 /* KeyboardOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF43407244645D300C5F466 /* KeyboardOptionsObject.swift */; };
 		FFF4340B244645D300C5F466 /* KeyboardOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF43407244645D300C5F466 /* KeyboardOptionsObject.swift */; };
 		FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */; };
-		FFFBE9DE23AD6A8800650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
+		FFFBE9DE23AD6A8800650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; platformFilter = ios; };
 		FFFBE9E123AD6A9700650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
-		FFFBE9E423AD6A9C00650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
-		FFFBE9E723AD6A9E00650F11 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; };
+		FFFBE9E423AD6A9C00650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; platformFilter = ios; };
+		FFFBE9E723AD6A9E00650F11 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; platformFilter = ios; };
 		FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -1633,6 +1641,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFDDD64F25094177003DB15C /* Research_UnitTest.framework in Frameworks */,
+				FFDDD65025094177003DB15C /* ResearchUI.framework in Frameworks */,
 				F82A4AA922960BF700BEBE3C /* ResearchLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1649,6 +1659,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFDDD6432509408B003DB15C /* Research_UnitTest.framework in Frameworks */,
 				F87061A9227390120056F70E /* ResearchUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1675,6 +1686,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFDDD64225094081003DB15C /* ResearchUI.framework in Frameworks */,
+				FFDDD6412509407A003DB15C /* Research_UnitTest.framework in Frameworks */,
 				F891DD1C228CFCD4001B2A57 /* ResearchMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1699,6 +1712,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFDDD65125094183003DB15C /* Research_UnitTest.framework in Frameworks */,
+				FFDDD65225094183003DB15C /* ResearchUI.framework in Frameworks */,
 				FF4A22E624FDB20200944009 /* ResearchAudioRecorder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1715,6 +1730,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFDDD64025094069003DB15C /* ResearchUI.framework in Frameworks */,
 				F830841621F2A97A0055F9B8 /* Research_UnitTest.framework in Frameworks */,
 				FF8B531D1FCE678E006B6937 /* Research.framework in Frameworks */,
 			);
@@ -5163,6 +5179,7 @@
 		FF4A22EE24FDB20200944009 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -5197,6 +5214,7 @@
 		FF4A22EF24FDB20200944009 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
