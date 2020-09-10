@@ -102,7 +102,7 @@ extension AssessmentTaskObject : SerializableTask {
 }
 
 /// This is an abstract implementation of `RSDTask` that handles much of the default properties
-/// and polymophism.
+/// and polymorphism.
 ///
 /// This class should *not* be instantiated directly. Subclass implementations are required to
 /// override `defaultType()` and `copy(with identifier: String)`.
