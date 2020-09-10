@@ -90,3 +90,10 @@ Research framework can be built for other platforms that do not use some version
 not support `FileManager`.
 
 * Move platform context into the ResearchUI framework.
+
+## Version 3.12
+
+No migration should be required.
+
+Added `AbstractTaskObject` that requires implementing the method `copy(with identifier: String)` and
+does *not* implement it as a public final method.
