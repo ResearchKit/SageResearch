@@ -101,7 +101,14 @@ public protocol SerializableTask : RSDTask, PolymorphicRepresentable {
 extension AssessmentTaskObject : SerializableTask {
 }
 
-open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Decodable {
+/// This is an abstract implementation of `RSDTask` that handles much of the default properties
+/// and polymophism.
+///
+/// This class should *not* be instantiated directly. Subclass implementations are required to
+/// override `defaultType()` and `copy(with identifier: String)`.
+///
+/// - seealso: `AssessmentTaskObject`
+open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Decodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case taskType = "type", identifier, steps, progressMarkers, asyncActions, resultIdentifier, versionString, estimatedMinutes, usesTrackedData
     }
@@ -112,16 +119,16 @@ open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrac
     
     /// The default decoding type.
     open class func defaultType() -> RSDTaskType {
-        return .assessment
+        fatalError("Abstract method. Subclass \(type(of: self)) does not override `defaultType()`.")
     }
     
-    public private(set) var taskType: RSDTaskType = .null
+    public fileprivate(set) var taskType: RSDTaskType = .null
     public var typeName: String { self.taskType.rawValue }
     
     public let identifier: String
     public let steps: [RSDStep]
-    open private(set) var progressMarkers : [String]?
-    open private(set) var asyncActions: [RSDAsyncActionConfiguration]?
+    open fileprivate(set) var progressMarkers : [String]?
+    open fileprivate(set) var asyncActions: [RSDAsyncActionConfiguration]?
 
     open var stepNavigator: RSDStepNavigator { _stepNavigator }
     lazy private var _stepNavigator: RSDStepNavigator = {
@@ -130,18 +137,18 @@ open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrac
         return navigator
     }()
     
-    open private(set) var resultIdentifier: String?
-    open private(set) var versionString: String?
+    open fileprivate(set) var resultIdentifier: String?
+    open fileprivate(set) var versionString: String?
     
     open var schemaInfo: RSDSchemaInfo? { _schemaInfo }
-    lazy private var _schemaInfo: RSDSchemaInfo? = {
+    lazy fileprivate var _schemaInfo: RSDSchemaInfo? = {
         guard let resultId = self.resultIdentifier else { return nil }
         let revision = self.versionString.map { ($0 as NSString).integerValue } ?? 1
         return RSDSchemaInfoObject(identifier: resultId, revision: revision)
     }()
     
     open var estimatedMinutes: Int { _estimatedMinutes ?? 2 }
-    private var _estimatedMinutes: Int?
+    fileprivate var _estimatedMinutes: Int?
     
     open func instantiateTaskResult() -> RSDTaskResult {
         RSDTaskResultObject(identifier: identifier, schemaInfo: schemaInfo)
@@ -164,24 +171,16 @@ open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrac
         self._initCompleted = true
     }
     
-    public required init(identifier: String, steps: [RSDStep]) {
-        self.identifier = identifier
-        self.steps = steps
-        
-        self._initCompleted = false
-        super.init()
-        self.commonInit()
-        self._initCompleted = true
-    }
-    
     public init(identifier: String,
                 steps: [RSDStep],
-                usesTrackedData: Bool,
+                usesTrackedData: Bool = false,
                 asyncActions: [RSDAsyncActionConfiguration]? = nil,
                 progressMarkers : [String]? = nil,
                 resultIdentifier: String? = nil,
                 versionString: String? = nil,
-                estimatedMinutes: Int? = nil) {
+                estimatedMinutes: Int? = nil,
+                actions: [RSDUIActionType : RSDUIAction]? = nil,
+                shouldHideActions: [RSDUIActionType]? = nil) {
         self.identifier = identifier
         self.steps = steps
         self.usesTrackedData = usesTrackedData
@@ -193,6 +192,8 @@ open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrac
         
         self._initCompleted = false
         super.init()
+        self.actions = actions
+        self.shouldHideActions = shouldHideActions
         self.commonInit()
         self._initCompleted = true
     }
@@ -270,8 +271,7 @@ open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrac
     
     /// Used to allow this object to "fetch" itself.
     public final func copy(with identifier: String, schemaInfo: RSDSchemaInfo?) -> Self {
-        let copy = type(of: self).init(identifier: identifier, steps: steps.deepCopy())
-        copyInto(copy as AssessmentTaskObject)
+        let copy = self.copy(with: identifier)
         if let schemaInfo = schemaInfo {
             copy._schemaInfo = schemaInfo
         }
@@ -279,31 +279,14 @@ open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrac
     }
 
     /// Used to allow transforming the identifier.
-    public final func copy(with identifier: String) -> Self {
-        let copy = type(of: self).init(identifier: identifier, steps: steps.deepCopy())
-        copyInto(copy as AssessmentTaskObject)
-        return copy
-    }
-    
-    /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)`
-    /// method. Swift does not nicely handle casting from `Self` to a class instance for non-final classes.
-    /// This is a work around.
-    open func copyInto(_ copy: AssessmentTaskObject) {
-        copy.actions = self.actions
-        copy.shouldHideActions = self.shouldHideActions
-        copy.asyncActions = self.asyncActions
-        copy.progressMarkers = self.progressMarkers
-        copy.resultIdentifier = self.resultIdentifier
-        copy.versionString = self.versionString
-        copy._estimatedMinutes = self.estimatedMinutes
-        copy._schemaInfo = self.schemaInfo
-        copy.usesTrackedData = self.usesTrackedData
+    open func copy(with identifier: String) -> Self {
+        fatalError("Abstract method. Subclass \(type(of: self)) does not implement `copy(with:, schemaInfo:)`")
     }
     
     // MARK:  RSDDataTracker
     
     /// Does this task use stored data and/or include a scoring at this level?
-    open private(set) var usesTrackedData: Bool = false
+    open fileprivate(set) var usesTrackedData: Bool = false
     
     /// Returns the task data for this task result.
     ///
@@ -439,6 +422,62 @@ open class AssessmentTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrac
             ]
         ]
         return [jsonA, jsonB]
+    }
+}
+
+/// Concrete implementation of the an `RSDTask`.
+open class AssessmentTaskObject : AbstractTaskObject {
+    override open class func defaultType() -> RSDTaskType {
+        .assessment
+    }
+    
+    fileprivate override init() {
+        super.init()
+    }
+    
+    public override init(identifier: String,
+                         steps: [RSDStep],
+                         usesTrackedData: Bool = false,
+                         asyncActions: [RSDAsyncActionConfiguration]? = nil,
+                         progressMarkers: [String]? = nil,
+                         resultIdentifier: String? = nil,
+                         versionString: String? = nil,
+                         estimatedMinutes: Int? = nil,
+                         actions: [RSDUIActionType : RSDUIAction]? = nil,
+                         shouldHideActions: [RSDUIActionType]? = nil) {
+        super.init(identifier: identifier, steps: steps, usesTrackedData: usesTrackedData, asyncActions: asyncActions, progressMarkers: progressMarkers, resultIdentifier: resultIdentifier, versionString: versionString, estimatedMinutes: estimatedMinutes, actions: actions, shouldHideActions: shouldHideActions)
+    }
+    
+    public required init(identifier: String, steps: [RSDStep]) {
+        super.init(identifier: identifier, steps: steps)
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+    }
+    
+    // MARK: Copy methods
+
+    /// Used to allow transforming the identifier.
+    override public final func copy(with identifier: String) -> Self {
+        let copy = type(of: self).init(identifier: identifier, steps: steps.deepCopy())
+        copyInto(copy as AssessmentTaskObject)
+        return copy
+    }
+    
+    /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)`
+    /// method. Swift does not nicely handle casting from `Self` to a class instance for non-final classes.
+    /// This is a work around.
+    open func copyInto(_ copy: AssessmentTaskObject) {
+        copy.actions = self.actions
+        copy.shouldHideActions = self.shouldHideActions
+        copy.asyncActions = self.asyncActions
+        copy.progressMarkers = self.progressMarkers
+        copy.resultIdentifier = self.resultIdentifier
+        copy.versionString = self.versionString
+        copy._estimatedMinutes = self.estimatedMinutes
+        copy._schemaInfo = self.schemaInfo
+        copy.usesTrackedData = self.usesTrackedData
     }
 }
 
