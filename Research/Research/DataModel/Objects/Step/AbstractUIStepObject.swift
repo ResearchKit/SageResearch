@@ -38,7 +38,7 @@ import Foundation
 /// that implements an expanding set of features provided by all the UI steps registered by
 /// default with the `StepSerializer`.
 ///
-/// Generally speaking, if you are interested in using a simplier class that only implemented the
+/// Generally speaking, if you are interested in using a simpler class that only implements the
 /// action handling and designable step protocols, you should consider writing your own
 /// implementation that does not inherit from this class. That way, you can more easily control
 /// which features you want to expose.
@@ -62,7 +62,7 @@ open class AbstractUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep,
     /// reproduced in the results of a step history.
     public let identifier: String
     
-    /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be
+    /// The type of the step. This is used to decode the step using an `RSDFactory`. It can also be
     /// used to customize the UI.
     public let stepType: RSDStepType
     
@@ -119,7 +119,7 @@ open class AbstractUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep,
 
     // MARK: Result management
     
-    /// Instantiate a step result that is appropriate for this step. Default implementation will return a `RSDResultObject`.
+    /// Instantiate a step result that is appropriate for this step. Default implementation will return an `RSDResultObject`.
     /// - returns: A result for this step.
     open func instantiateStepResult() -> RSDResult {
         return RSDResultObject(identifier: identifier)
