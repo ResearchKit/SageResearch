@@ -97,3 +97,9 @@ No migration should be required.
 
 Added `AbstractTaskObject` that requires implementing the method `copy(with identifier: String)` and
 does *not* implement it as a public final method.
+
+## Version 3.13
+
+No migration should be required.
+
+Added `AbstractUIStepObject`.

@@ -110,7 +110,7 @@ extension AssessmentTaskObject : SerializableTask {
 /// - seealso: `AssessmentTaskObject`
 open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Decodable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case taskType = "type", identifier, steps, progressMarkers, asyncActions, resultIdentifier, versionString, estimatedMinutes, usesTrackedData
+        case taskType = "type", identifier, steps, progressMarkers, asyncActions, schemaIdentifier, versionString, estimatedMinutes, usesTrackedData
     }
     
     private enum DeprecatedCodingKeys : String, CodingKey, CaseIterable {
@@ -137,12 +137,12 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
         return navigator
     }()
     
-    open fileprivate(set) var resultIdentifier: String?
+    open fileprivate(set) var schemaIdentifier: String?
     open fileprivate(set) var versionString: String?
     
     open var schemaInfo: RSDSchemaInfo? { _schemaInfo }
     lazy fileprivate var _schemaInfo: RSDSchemaInfo? = {
-        guard let resultId = self.resultIdentifier else { return nil }
+        guard let resultId = self.schemaIdentifier else { return nil }
         let revision = self.versionString.map { ($0 as NSString).integerValue } ?? 1
         return RSDSchemaInfoObject(identifier: resultId, revision: revision)
     }()
@@ -186,7 +186,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
         self.usesTrackedData = usesTrackedData
         self.asyncActions = asyncActions
         self.progressMarkers = progressMarkers
-        self.resultIdentifier = resultIdentifier
+        self.schemaIdentifier = resultIdentifier
         self.versionString = versionString
         self._estimatedMinutes = estimatedMinutes
         
@@ -223,7 +223,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
         }
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers) ?? self.progressMarkers
         self.usesTrackedData = try container.decodeIfPresent(Bool.self, forKey: .usesTrackedData) ?? self.usesTrackedData
-        self.resultIdentifier = try container.decodeIfPresent(String.self, forKey: .resultIdentifier) ?? self.resultIdentifier
+        self.schemaIdentifier = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier) ?? self.schemaIdentifier
         self.versionString = try container.decodeIfPresent(String.self, forKey: .versionString) ?? self.versionString
         self._estimatedMinutes = try container.decodeIfPresent(Int.self, forKey: .estimatedMinutes) ?? self._estimatedMinutes
         
@@ -232,7 +232,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
             debugPrint("WARNING!!! 'schemaInfo' is deprecated for decoding. Please use 'resultIdentifier' and 'versionString' instead.")
             let schemaInfo = try deprecatedContainer.decode(RSDSchemaInfoObject.self, forKey: .schemaInfo)
             self._schemaInfo = schemaInfo
-            self.resultIdentifier = schemaInfo.schemaIdentifier
+            self.schemaIdentifier = schemaInfo.schemaIdentifier
             self.versionString = "\(schemaInfo.schemaVersion)"
         }
         else if let schemaInfo = decoder.schemaInfo {
@@ -248,7 +248,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
         let stepContainer = container.nestedUnkeyedContainer(forKey: .steps)
         try encoder.factory.encode(self.steps, to: stepContainer)
         try container.encodeIfPresent(self.progressMarkers, forKey: .progressMarkers)
-        try container.encodeIfPresent(self.resultIdentifier, forKey: .resultIdentifier)
+        try container.encodeIfPresent(self.schemaIdentifier, forKey: .schemaIdentifier)
         try container.encodeIfPresent(self.versionString, forKey: .versionString)
         try container.encodeIfPresent(self._estimatedMinutes, forKey: .estimatedMinutes)
         try container.encodeIfPresent(self.usesTrackedData, forKey: .usesTrackedData)
@@ -372,7 +372,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
             return try super.documentProperty(for: codingKey)
         }
         switch key {
-        case .identifier, .resultIdentifier:
+        case .identifier, .schemaIdentifier:
             return .init(propertyType: .primitive(.string))
         case .taskType:
             return .init(constValue: defaultType())
@@ -408,7 +408,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
             "identifier": "baloo",
             "type": "assessment",
             "progressMarkers": [],
-            "resultIdentifier": "ragu",
+            "schemaIdentifier": "ragu",
             "versionString": "2.2.22",
             "estimatedMinutes": 3,
             "usesTrackedData": true,
@@ -473,7 +473,7 @@ open class AssessmentTaskObject : AbstractTaskObject {
         copy.shouldHideActions = self.shouldHideActions
         copy.asyncActions = self.asyncActions
         copy.progressMarkers = self.progressMarkers
-        copy.resultIdentifier = self.resultIdentifier
+        copy.schemaIdentifier = self.schemaIdentifier
         copy.versionString = self.versionString
         copy._estimatedMinutes = self.estimatedMinutes
         copy._schemaInfo = self.schemaInfo

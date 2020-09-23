@@ -128,6 +128,81 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    func testAbstractStepObject_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "type": "instruction",
+            "title": "Hello World!",
+            "subtitle": "Some text.",
+            "detail": "This is a test.",
+            "footnote": "This is a footnote.",
+            "image": {    "type": "fetchable",
+                          "imageName": "before",
+                          "placementType": "iconBefore" },
+            "actions": { "goForward": { "type" : "default",
+                                        "buttonTitle" : "Go, Dogs! Go!" },
+                         "cancel": { "type" : "default",
+                                     "iconName" : "closeX" },
+                         "learnMore": { "type" : "webView",
+                                        "iconName" : "infoIcon",
+                                        "url" : "fooInfo" },
+                         "skip": {  "type": "navigation",
+                                    "buttonTitle" : "not applicable",
+                                    "skipToIdentifier": "boo"},
+                         "moreInformation": {
+                                    "type": "videoView",
+                                    "buttonTitle" : "See this in action",
+                                    "url": "video.mp4"}
+                        },
+            "shouldHideActions": ["goBackward", "skip"],
+
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(AbstractUIStepObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.title, "Hello World!")
+            XCTAssertEqual(object.subtitle, "Some text.")
+            XCTAssertEqual(object.detail, "This is a test.")
+            XCTAssertEqual(object.footnote, "This is a footnote.")
+            XCTAssertEqual(object.imageTheme?.imageName, "before")
+            
+            let goForwardAction = object.action(for: .navigation(.goForward), on: object)
+            XCTAssertNotNil(goForwardAction)
+            XCTAssertEqual(goForwardAction?.buttonTitle, "Go, Dogs! Go!")
+            
+            let cancelAction = object.action(for: .navigation(.cancel), on: object)
+            XCTAssertNotNil(cancelAction)
+            XCTAssertEqual((cancelAction as? RSDUIActionObject)?.iconName, "closeX")
+            
+            let learnMoreAction = object.action(for: .navigation(.learnMore), on: object)
+            XCTAssertNotNil(learnMoreAction)
+            XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.iconName, "infoIcon")
+            XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.url, "fooInfo")
+            
+            let moreInformationAction = object.action(for: .custom("moreInformation"), on: object)
+            XCTAssertNotNil(moreInformationAction)
+            XCTAssertEqual((moreInformationAction as? RSDVideoViewUIActionObject)?.buttonTitle, "See this in action")
+            XCTAssertEqual((moreInformationAction as? RSDVideoViewUIActionObject)?.url, "video.mp4")
+            
+            let skipAction = object.action(for: .navigation(.skip), on: object)
+            XCTAssertNotNil(skipAction)
+            XCTAssertEqual((skipAction as? RSDNavigationUIActionObject)?.buttonTitle, "not applicable")
+            XCTAssertEqual((skipAction as? RSDNavigationUIActionObject)?.skipToIdentifier, "boo")
+            
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
     func testUIStepObject_DeviceType_Codable() {
         
         let json = """
