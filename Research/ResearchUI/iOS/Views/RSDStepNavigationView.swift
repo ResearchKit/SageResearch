@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 /// A protocol that UIView subclasses can use to standardize the color of their view properties.
 public protocol RSDViewDesignable : class {

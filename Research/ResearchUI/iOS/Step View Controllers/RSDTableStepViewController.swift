@@ -33,6 +33,7 @@
 //
 
 import UIKit
+import Research
 
 
 /// `RSDTableStepViewController` is a custom instance of `RSDStepViewController`. Its subviews include a

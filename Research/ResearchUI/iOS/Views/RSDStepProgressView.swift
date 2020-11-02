@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 /// `RSDStepProgressView` is a UI element that displays a progress bar drawn horizontally
 /// from left to right.

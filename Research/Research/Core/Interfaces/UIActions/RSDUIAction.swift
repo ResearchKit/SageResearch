@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import Foundation
 import JsonModel
 
 /// The `RSDUIAction` protocol can be used to customize the title and image displayed for a

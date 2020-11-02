@@ -34,6 +34,7 @@
 #if os(iOS) || os(tvOS)
 import UIKit
 #endif
+import Research
 
 public enum RSDControlState : UInt {
     case normal = 0, highlighted = 1, disabled = 2, selected = 4

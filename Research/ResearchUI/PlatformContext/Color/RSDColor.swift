@@ -39,6 +39,8 @@ import UIKit
 public typealias RSDColor = UIColor
 #endif
 
+import Research
+
 extension RSDColor {
     
     #if os(watchOS)

@@ -109,7 +109,7 @@ struct TestResult : RSDScoringResult {
     
     let score: Int
     
-    let type: RSDResultType = "test"
+    private(set) var type: RSDResultType = "test"
     
     var startDate: Date = Date()
     

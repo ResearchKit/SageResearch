@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 /// `RSDNavigationController` extends `UINavigationController` with a pass-through implementation of
 /// `RSDStepController`.

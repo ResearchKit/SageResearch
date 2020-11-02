@@ -33,7 +33,8 @@
 
 
 import XCTest
-@testable import Research
+import Research
+@testable import ResearchUI
 
 class ColorMappingThemeElementTests: XCTestCase {
 

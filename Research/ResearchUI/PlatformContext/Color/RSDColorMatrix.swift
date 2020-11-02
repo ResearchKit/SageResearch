@@ -75,7 +75,7 @@ public final class RSDColorMatrix {
     }
     
     private func _decodeLibraries() {
-        guard let url = Bundle(for: RSDColorMatrix.self).url(forResource: "ColorMatrix", withExtension: "json")
+        guard let url = Bundle.module.url(forResource: "ColorMatrix", withExtension: "json")
             else {
                 fatalError("Could not decode the color matrix. Something is very wrong.")
         }

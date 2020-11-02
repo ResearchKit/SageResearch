@@ -32,6 +32,8 @@
 //
 
 import Foundation
+import UIKit
+import Research
 
 /// `RSDLoadingViewControllerProtocol` is a convenience protocol to allow UIViewControllers that do
 /// not inherit from the same subclass to show and hide a loading indicator.

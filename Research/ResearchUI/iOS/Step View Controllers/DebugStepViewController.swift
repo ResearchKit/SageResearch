@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 /// `DebugStepViewController` is an internal class that is used to display a view controller for a step without any UI.
 /// This allows the developer to use a placeholder view controller when developing a new task.
@@ -45,7 +46,7 @@ class DebugStepViewController: RSDStepViewController {
     
     /// Default initializer used to display "DebugStepViewController.xib" for the given step.
     public override init(step: RSDStep, parent: RSDPathComponent?) {
-        super.init(nibName: "DebugStepViewController", bundle: Bundle(for: DebugStepViewController.self))
+        super.init(nibName: "DebugStepViewController", bundle: Bundle.module)
         self.stepViewModel = self.instantiateStepViewModel(for: step, with: parent)
     }
     

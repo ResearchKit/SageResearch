@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import Foundation
 
 /// `RSDAsyncActionVendor` is an extension of the configuration protocol for configurations that
 /// know how to vend a new controller.

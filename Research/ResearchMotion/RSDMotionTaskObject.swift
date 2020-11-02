@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import Research
 
 extension RSDTaskType {
     public static let motionTask: RSDTaskType = "motionTask"

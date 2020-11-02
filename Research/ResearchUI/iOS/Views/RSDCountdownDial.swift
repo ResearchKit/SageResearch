@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 /// `RSDProgressIndicator` is an animatable abstract view that marks progress. Override the `progressLayer` property
 /// to show progress using a shape layer. See `RSDCountdownDial` for an example implementation.

@@ -32,6 +32,8 @@
 //
 
 import Foundation
+import UIKit
+import Research
 
 internal let kTableSideMargin: CGFloat = 28.0
 internal let kTableSeparatorInsetMargin: CGFloat = 0.0

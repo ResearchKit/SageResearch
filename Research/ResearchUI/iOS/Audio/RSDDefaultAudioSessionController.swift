@@ -33,6 +33,7 @@
 
 import Foundation
 import AVFoundation
+import Research
 
 /// The default audio session controller for iOS applications that use background audio.
 public final class RSDDefaultAudioSessionController : NSObject, RSDAudioSessionController {

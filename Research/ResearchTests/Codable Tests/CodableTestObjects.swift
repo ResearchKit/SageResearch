@@ -38,7 +38,7 @@ import JsonModel
 
 class BundleWrapper {
     class var bundleIdentifier: String? {
-        return Bundle(for: BundleWrapper.self).bundleIdentifier
+        return Bundle.module.bundleIdentifier
     }
 }
 

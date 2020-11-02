@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "JsonModel",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
+        "state": {
+          "branch": null,
+          "revision": "9237442bd2ea208554e01041feaa2d4a065d61a4",
+          "version": "1.0.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

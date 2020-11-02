@@ -39,11 +39,3 @@ FOUNDATION_EXPORT double ResearchVersionNumber;
 //! Project version string for Research.
 FOUNDATION_EXPORT const unsigned char ResearchVersionString[];
 
-#import <Research/RSDExceptionHandler.h>
-#import <Research/NSUnit+RSDUnitConversion.h>
-#import <Research/RSDDurationFormatter.h>
-#import <Research/RSDFractionFormatter.h>
-#import <Research/RSDLengthFormatter.h>
-#import <Research/RSDMassFormatter.h>
-
-

@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import Formatters
 
 /// `RSDChoiceInputFieldObject` is a concrete implementation of `RSDChoiceInputField` that subclasses
 /// `RSDInputFieldObject` to include a list of choices for a multiple choice or single choice input field. It

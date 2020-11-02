@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import Formatters
 
 public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStringLiteral {
     var stringValue: String { get }

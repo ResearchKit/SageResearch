@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 /// `RSDTaskInfoStepViewController` is designed to be used to display a `RSDTaskInfoStep` either to give the user feedback
 /// when a task or survey is being fetched or else to provide a consistent UI for the introduction of all tasks.
@@ -147,7 +148,7 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
     
     /// The default bundle to use when instantiating the view controller using `init(step:)`.
     open class var bundle: Bundle {
-        return Bundle(for: RSDTaskInfoStepViewController.self)
+        return Bundle.module
     }
     
     /// Default initializer. This initializer will initialize using the `nibName` and `bundle` defined on this class.

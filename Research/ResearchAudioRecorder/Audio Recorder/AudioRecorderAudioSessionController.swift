@@ -33,6 +33,7 @@
 
 import Foundation
 import AVFoundation
+import Research
 
 /// The audio session controller to use when recording audio in the background with the phone
 /// screen locked.

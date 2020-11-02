@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import Formatters
 
 /// `RSDDurationRangeObject` extends the properties of an `RSDInputField` for a `.duration` data type.
 public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, Codable {

@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import Formatters
 
 /// `RSDMultipleComponentInputFieldObject` extends the properties of `RSDInputFieldObject` with information
 /// required to create a multiple component input field.

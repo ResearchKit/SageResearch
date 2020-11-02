@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import UIKit
 
 @IBDesignable
 open class RSDToggleConstraintView : UIView {

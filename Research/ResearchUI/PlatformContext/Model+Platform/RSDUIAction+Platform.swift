@@ -37,6 +37,8 @@ import AppKit
 import UIKit
 #endif
 
+import Research
+
 extension RSDUIAction {
     
     /// Convenience property for accessing the button icon.

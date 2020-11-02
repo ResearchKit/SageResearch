@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import ExceptionHandler
 
 public protocol RSDFileHandle : class {
     

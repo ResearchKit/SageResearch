@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import Formatters
 
 public struct PassThruValidator : TextInputValidator {
     public init() {}

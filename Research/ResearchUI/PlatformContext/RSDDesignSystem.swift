@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import Research
 
 /// A task that implements this module is expected to include a pointer to the design system UI/UX rules to
 /// use that are specific to the tasks within this module.

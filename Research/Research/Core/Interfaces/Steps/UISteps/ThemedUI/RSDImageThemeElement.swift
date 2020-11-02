@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import Foundation
 import JsonModel
 
 /// `RSDImageThemeElement` extends the UI step to include an image. 

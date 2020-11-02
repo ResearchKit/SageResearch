@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import Formatters
 
 extension RSDFraction : ExpressibleByStringLiteral {
     

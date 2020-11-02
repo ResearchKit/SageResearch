@@ -33,6 +33,8 @@
 
 import XCTest
 @testable import Research
+@testable import Formatters
+import NSLocaleSwizzle
 
 class FormatterTests: XCTestCase {
     

@@ -32,6 +32,8 @@
 //
 
 import Foundation
+import UIKit
+import Research
 
 /// `RSDImageViewCell` can be used to display images amongst the table cells.
 @IBDesignable open class RSDImageViewCell : RSDTableViewCell {

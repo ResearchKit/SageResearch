@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 /// `RSDInstructionStepViewController` is a custom step view controller that is intended to be used with the
 /// `RSDInstructionStepViewController.nib` file. This is the default view controller for steps that
@@ -205,7 +206,7 @@ open class RSDInstructionStepViewController: RSDPermissionStepViewController {
     
     /// The default bundle to use when instantiating the view controller using `init(step:)`.
     open class var bundle: Bundle {
-        return Bundle(for: RSDInstructionStepViewController.self)
+        return Bundle.module
     }
     
     /// Default initializer. This initializer will initialize using the `nibName` and `bundle` defined on this class.

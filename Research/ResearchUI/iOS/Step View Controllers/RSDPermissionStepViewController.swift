@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 open class RSDPermissionStepViewModel: RSDStepViewModel {
     

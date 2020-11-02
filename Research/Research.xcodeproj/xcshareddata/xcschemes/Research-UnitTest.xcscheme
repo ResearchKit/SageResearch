@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F875575520807E2300235078"
                BuildableName = "Research_UnitTest.framework"
-               BlueprintName = "Research-UnitTest"
+               BlueprintName = "Research_UnitTest"
                ReferencedContainer = "container:Research.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -52,7 +52,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F875575520807E2300235078"
             BuildableName = "Research_UnitTest.framework"
-            BlueprintName = "Research-UnitTest"
+            BlueprintName = "Research_UnitTest"
             ReferencedContainer = "container:Research.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

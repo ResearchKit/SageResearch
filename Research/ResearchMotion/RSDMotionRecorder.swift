@@ -34,6 +34,7 @@
 import UIKit
 import CoreMotion
 import AVFoundation
+import Research
 
 extension RSDMotionRecorderConfiguration : RSDAsyncActionVendor {
     

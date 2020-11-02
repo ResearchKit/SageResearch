@@ -32,6 +32,7 @@
 //
 
 import AVFoundation
+import UIKit
 
 /// A completion handler for the voice box.
 public typealias RSDVoiceBoxCompletionHandler = (_ text: String, _ finished: Bool) -> Void

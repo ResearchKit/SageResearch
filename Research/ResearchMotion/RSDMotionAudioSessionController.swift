@@ -33,6 +33,7 @@
 
 import Foundation
 import AVFoundation
+import Research
 
 /// The audio session controller to use when recording motion sensor data in the background with the phone
 /// screen locked.
@@ -47,7 +48,7 @@ public final class RSDMotionAudioSessionController : NSObject, RSDAudioSessionCo
         
         // Load the audio file.
         do {
-            let bundle = Bundle(for: RSDMotionAudioSessionController.self)
+            let bundle = Bundle.module
             let url = bundle.url(forResource: "Silence", withExtension: "wav")!
             self.audioPlayer = try AVAudioPlayer(contentsOf: url)
             self.audioPlayer.numberOfLoops = -1
