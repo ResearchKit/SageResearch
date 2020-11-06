@@ -30,9 +30,9 @@ let package = Package(
         .library(
             name: "ResearchLocation",
             targets: ["ResearchLocation"]),
-//        .library(
-//            name: "Research_UnitTest",
-//            targets: ["Research_UnitTest", "NSLocaleSwizzle"]),
+        .library(
+            name: "Research_UnitTest",
+            targets: ["Research_UnitTest", "NSLocaleSwizzle"]),
 
     ],
     dependencies: [
