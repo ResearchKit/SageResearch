@@ -103,3 +103,10 @@ does *not* implement it as a public final method.
 No migration should be required.
 
 Added `AbstractUIStepObject`.
+
+## Version 3.14
+
+Reorganized the SageResearch frameworks to allow using either the `Research.xcodeproj` structure *or* 
+SwiftPM. Because SwiftPM does not allow for mixing Obj-c and Swift code in the same module, the Obj-c code
+files were moved into a different framework. Therefore, if your application or dependant frameworks access 
+these classes directly, then you will need to import the frameworks for these. Otherwise, no migration is required.
