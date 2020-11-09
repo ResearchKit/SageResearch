@@ -32,6 +32,8 @@
 //
 
 import Foundation
+import UIKit
+import Research
 
 /// `RSDAppDelegate` is an optional class that can be used as the appDelegate for an application.
 ///

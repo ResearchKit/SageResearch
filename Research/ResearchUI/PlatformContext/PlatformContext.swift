@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import Research
 
 class PlatformContext : RSDPlatformContextInfo {
     
@@ -87,7 +88,7 @@ class PlatformContext : RSDPlatformContextInfo {
         
         self.appName = Bundle.main.executableName
         self.appVersion = Bundle.main.fullVersion
-        self.rsdFrameworkVersion = Bundle(for: RSDTaskViewModel.self).fullVersion
+        self.rsdFrameworkVersion = Bundle.module.fullVersion
         
         resourceLoader = ResourceLoader()
     }

@@ -790,7 +790,7 @@ class CodableStepObjectTests: XCTestCase {
             "resourceTransformer" : { "resourceName": "FactoryTest_StepTransform.json"}
         }
         """.data(using: .utf8)! // our data in native (JSON) format
-        let resourceInfo = FactoryResourceInfo(factoryBundle: Bundle(for: BundleWrapper.self),
+        let resourceInfo = FactoryResourceInfo(factoryBundle: Bundle.module,
                                                packageName: nil)
         let decoder = RSDFactory.shared.createJSONDecoder(resourceInfo: resourceInfo)
         

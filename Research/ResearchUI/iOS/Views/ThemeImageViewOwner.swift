@@ -32,6 +32,8 @@
 //
 
 import Foundation
+import Research
+import UIKit
 
 protocol ThemeImageViewOwner : class {
     func themeImageIdentifier(withKey key: String) -> String?

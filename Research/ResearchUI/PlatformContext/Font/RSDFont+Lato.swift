@@ -116,7 +116,7 @@ fileprivate class LatoFontWrapper {
     static let shared = LatoFontWrapper()
     
     private init() {
-        let bundle = Bundle(for: LatoFontWrapper.self)
+        let bundle = Bundle.module
         RSDFont.registerFont(filename: "lato_black.ttf", bundle: bundle)
         RSDFont.registerFont(filename: "lato_bold.ttf", bundle: bundle)
         RSDFont.registerFont(filename: "lato_bolditalic.ttf", bundle: bundle)

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// The template image button is designed as a button that shows a template image within a
 /// button. There are different supported style-types for the button that can be used with the

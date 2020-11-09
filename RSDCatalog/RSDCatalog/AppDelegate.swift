@@ -33,6 +33,7 @@
 
 import UIKit
 import ResearchUI
+import Research
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

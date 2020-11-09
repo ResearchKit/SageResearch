@@ -32,6 +32,8 @@
 //
 
 import Foundation
+import UIKit
+import Research
 
 @IBDesignable
 open class RSDRoundedToggleButton : UIButton, RSDViewDesignable {
@@ -128,7 +130,7 @@ open class RSDRoundedToggleButton : UIButton, RSDViewDesignable {
         widthConstraint.priority = .defaultLow
         widthConstraint.isActive = true
         
-        let image = UIImage(named: "checkmark", in: Bundle(for: RSDRoundedButton.self), compatibleWith: self.traitCollection)
+        let image = UIImage(named: "checkmark", in: Bundle.module, compatibleWith: self.traitCollection)
         setImage(image, for: .selected)
         
         self.imageEdgeInsets = UIEdgeInsets(top: 10, left: -10, bottom: 10, right: 10)

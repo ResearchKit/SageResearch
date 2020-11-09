@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import Research
 
 public final class ResourceLoader : RSDResourceLoader {
     

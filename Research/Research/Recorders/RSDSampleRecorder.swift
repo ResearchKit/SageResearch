@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import Foundation
 import JsonModel
 
 /// The `RSDSampleRecord` defines the properties that are included with all JSON logging samples.

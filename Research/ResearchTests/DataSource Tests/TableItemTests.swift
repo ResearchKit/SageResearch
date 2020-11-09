@@ -33,6 +33,7 @@
 
 import XCTest
 @testable import Research
+import Formatters
 
 @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
 class TableItemTests: XCTestCase {

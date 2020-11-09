@@ -33,6 +33,8 @@
 
 import Foundation
 import JsonModel
+import UIKit
+import Research
 
 /// `RSDPickerViewProtocol` is a protocol for an input view that can be used to pick an answer.
 @objc

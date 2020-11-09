@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import Research
 
 /// `LocalizationBundle` is a wrapper for returning a bundle along with a table name and target suffixes.
 /// This is used by the `Localization` class to return localized strings that are defined in a strings
@@ -39,7 +40,7 @@ import Foundation
 open class LocalizationBundle : NSObject, LocalizationResourceBundle {
     
     public static func registerDefaultBundlesIfNeeded() {
-        Localization.insertIfNeeded(bundle: LocalizationBundle(Bundle(for: LocalizationBundle.self)), at: 0)
+        Localization.insertIfNeeded(bundle: LocalizationBundle(Bundle.module), at: 0)
         Localization.insertIfNeeded(bundle: LocalizationBundle(Bundle.main), at: 0)
     }
     
@@ -76,6 +77,11 @@ open class LocalizationBundle : NSObject, LocalizationResourceBundle {
     /// - parameter key: The key into the `Strings` file.
     /// - returns: The localized string or `nil` if not found.
     open func findLocalizedString(for key: String) -> String? {
+        let nilTableStr = NSLocalizedString(key, tableName: nil, bundle: bundle, value: key, comment: "")
+        if nilTableStr != key {
+            // If something is found here then return
+            return nilTableStr
+        }
         let bundleStr = NSLocalizedString(key, tableName: tableName, bundle: bundle, value: key, comment: "")
         if bundleStr != key {
             // If something is found here then return

@@ -32,6 +32,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import Foundation
 import JsonModel
 
 /// The type of the image theme. This is used to decode a `RSDImageThemeElement` using a `RSDFactory`. It can also be used

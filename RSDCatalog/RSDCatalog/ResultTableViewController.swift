@@ -42,7 +42,7 @@ class ResultTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     func results(in section: Int) -> [RSDResult] {
-        if let collectionResult = result as? RSDCollectionResult {
+        if let collectionResult = result as? CollectionResult {
             return collectionResult.inputResults
         } else if let taskResult = result as? RSDTaskResult {
             if section == 0 {
@@ -56,7 +56,7 @@ class ResultTableViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if let _ = result as? RSDCollectionResult {
+        if let _ = result as? CollectionResult {
             return 1
         } else if let taskResult = result as? RSDTaskResult {
             return (taskResult.asyncResults?.count ?? 0) > 0 ? 2 : 1
@@ -88,7 +88,7 @@ class ResultTableViewController: UITableViewController {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.file.stringValue, for: indexPath) as! ImageTableViewCell
             cell.subtitleLabel?.text = fileResult.url != nil ? String(describing: fileResult.url!.lastPathComponent) : "nil"
         }
-        else if (result is RSDCollectionResult) || (result is RSDTaskResult) {
+        else if (result is CollectionResult) || (result is RSDTaskResult) {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.section.stringValue, for: indexPath) as! ImageTableViewCell
         }
         else if let errorResult = result as? RSDErrorResult {
@@ -103,7 +103,7 @@ class ResultTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let _ = result as? RSDCollectionResult {
+        if let _ = result as? CollectionResult {
             return result.identifier
         }
         else {

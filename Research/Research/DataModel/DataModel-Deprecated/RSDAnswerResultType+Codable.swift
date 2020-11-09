@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import Formatters
 
 // MARK: Value Decoding
 @available(*, deprecated, message: "Use `Question` and `InputItem` instead")

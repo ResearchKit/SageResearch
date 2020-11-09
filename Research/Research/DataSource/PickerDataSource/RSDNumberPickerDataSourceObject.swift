@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import Formatters
 
 /// A simple struct that can be used to implement the `RSDNumberPickerDataSource` protocol.
 public struct RSDNumberPickerDataSourceObject : RSDNumberPickerDataSource {

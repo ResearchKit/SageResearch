@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 
 /// `RSDSelectionTableViewCell` is the base implementation for a selection table view cell.

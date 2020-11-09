@@ -37,6 +37,7 @@ import AppKit
 import UIKit
 #endif
 import JsonModel
+import Research
 
 open class RSDImageRules {
     

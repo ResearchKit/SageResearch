@@ -37,6 +37,8 @@ import AppKit
 import UIKit
 #endif
 
+import Research
+
 extension RSDImageThemeElement {
     
     #if os(iOS) || os(tvOS)

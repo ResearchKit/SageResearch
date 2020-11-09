@@ -32,6 +32,8 @@
 //
 
 import Foundation
+import UIKit
+import Research
 
 /// A protocol for setting up a delegate for the button cell.
 public protocol RSDButtonCellDelegate : class {

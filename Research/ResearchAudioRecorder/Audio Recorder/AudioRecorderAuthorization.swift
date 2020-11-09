@@ -33,6 +33,7 @@
 
 import Foundation
 import AVFoundation
+import Research
 
 fileprivate let _userDefaultsKey = "rsd_AudioRecorderStatus"
 

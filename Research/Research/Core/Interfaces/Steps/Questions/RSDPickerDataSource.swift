@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import Foundation
 import JsonModel
 
 /// `RSDPickerDataSource` includes information that can be used to build a picker UI element.

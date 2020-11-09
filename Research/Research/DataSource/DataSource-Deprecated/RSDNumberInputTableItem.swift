@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import Formatters
 
 /// An table item for entering a number value.
 @available(*, deprecated, message: "Use `Question` and `InputItem` instead")

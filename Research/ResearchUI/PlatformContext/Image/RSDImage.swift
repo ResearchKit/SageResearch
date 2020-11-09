@@ -40,6 +40,7 @@ public typealias RSDImage = UIImage
 #endif
 
 import JsonModel
+import Research
 
 extension RSDImage : RSDImageData {
     

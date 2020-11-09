@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 extension CGFloat {
     

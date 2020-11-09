@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 /// `RSDStepTextFieldCell` is the base implementation of a text field used to enter answers in a

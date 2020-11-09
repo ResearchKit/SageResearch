@@ -33,6 +33,7 @@
 
 import Foundation
 import AVFoundation
+import Research
 
 extension AudioRecorderConfiguration : RSDAsyncActionVendor {
     

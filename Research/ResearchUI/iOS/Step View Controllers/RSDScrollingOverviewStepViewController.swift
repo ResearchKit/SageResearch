@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 /// The scrolling overview step view controller is a custom subclass of the overview step view controller
 /// that uses a scrollview to allow showing detailed overview instructions.
@@ -310,7 +311,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
     /// The default bundle to use when instantiating the view controller using `init(step:)`.
     override open class var bundle: Bundle {
-        return Bundle(for: RSDScrollingOverviewStepViewController.self)
+        return Bundle.module
     }
 }
 

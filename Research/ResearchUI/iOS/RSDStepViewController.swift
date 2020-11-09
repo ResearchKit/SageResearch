@@ -35,6 +35,8 @@ import Foundation
 import AudioToolbox
 import AVFoundation
 import AVKit
+import UIKit
+import Research
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
 /// UI architecture.
@@ -517,7 +519,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             // Otherwise, look at the action and show the default based on the type
             switch actionType {
             case .navigation(.cancel):
-                return RSDUIActionObject(iconName: "closeActivity", bundle: Bundle(for: RSDStepViewController.self))
+                return RSDUIActionObject(iconName: "closeActivity", bundle: Bundle.module)
             case .navigation(.goForward):
                 if self.step is RSDTaskInfoStep {
                     return RSDUIActionObject(buttonTitle: Localization.buttonGetStarted())

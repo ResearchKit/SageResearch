@@ -31,6 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import Foundation
+
 /// `RSDTextFieldOptionsObject` defines the options for a text field.
 ///
 /// - seealso: `RSDInputField` and `RSDFormStepDataSource`

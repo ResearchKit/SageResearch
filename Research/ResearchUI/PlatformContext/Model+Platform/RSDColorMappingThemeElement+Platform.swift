@@ -37,6 +37,8 @@ import AppKit
 import UIKit
 #endif
 
+import Research
+
 extension RSDColorMappingThemeElement {
     
     #if os(watchOS) || os(macOS)

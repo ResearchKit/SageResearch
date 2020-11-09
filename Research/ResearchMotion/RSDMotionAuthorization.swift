@@ -31,8 +31,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import UIKit
 import Foundation
 import CoreMotion
+import Research
 
 fileprivate let _userDefaultsKey = "rsd_MotionAuthorizationStatus"
 

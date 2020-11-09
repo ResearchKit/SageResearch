@@ -37,6 +37,9 @@ import AppKit
 import UIKit
 #endif
 
+import Foundation
+import Research
+
 extension RSDSize {
     
     /// The CGSize represented by this size.

@@ -33,6 +33,7 @@
 
 
 import Foundation
+import Formatters
 
 /// A custom implementation for inputing a person's height that can set up a picker for
 /// setting the height of an adult. Typically, US participants will report an adult height

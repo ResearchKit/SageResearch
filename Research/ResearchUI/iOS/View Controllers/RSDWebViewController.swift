@@ -33,6 +33,7 @@
 
 import UIKit
 import WebKit
+import Research
 
 /// `RSDWebViewController` is a simple view controller for showing a webview. The base-class implementation
 /// supports loading a web view from a URL, HTML string, or `RSDResourceTransformer`. It is assumed that
@@ -150,11 +151,11 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
         header.shouldShowProgress = false
         header.isStepLabelHidden = true
         if _usesBackButton {
-            let image = UIImage(named: "backArrowHeader", in: Bundle(for: RSDWebViewController.self), compatibleWith: self.view.traitCollection)
+            let image = UIImage(named: "backArrowHeader", in: Bundle.module, compatibleWith: self.view.traitCollection)
             header.cancelButton?.setImage(image, for: .normal)
         }
         else {
-            let image = UIImage(named: "closeActivity", in: Bundle(for: RSDWebViewController.self), compatibleWith: self.view.traitCollection)
+            let image = UIImage(named: "closeActivity", in: Bundle.module, compatibleWith: self.view.traitCollection)
             header.cancelButton?.setImage(image, for: .normal)
         }
         header.cancelButton?.addTarget(self, action: #selector(close), for: .touchUpInside)

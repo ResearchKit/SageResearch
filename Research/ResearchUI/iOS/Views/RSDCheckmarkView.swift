@@ -31,6 +31,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import Foundation
+import UIKit
+import Research
+
 fileprivate let defaultSize: CGFloat = 122
 
 /// A checkmark view is a simple view that draws a checkmark on a dark background.

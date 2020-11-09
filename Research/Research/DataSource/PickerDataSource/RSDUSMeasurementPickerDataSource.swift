@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import Formatters
 
 /// `RSDUSMeasurementPickerDataSource` is a generic protocol for converting US Customary
 /// units (multiple component) to metric units.

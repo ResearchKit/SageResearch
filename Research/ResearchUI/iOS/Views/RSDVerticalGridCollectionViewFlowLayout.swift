@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// The 'RSDVerticalGridCollectionViewFlowLayout' creates a centered grid layout.
 /// As the class name implies, this class only works currently in a vertical orientation.

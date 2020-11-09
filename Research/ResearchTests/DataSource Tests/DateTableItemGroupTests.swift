@@ -33,6 +33,7 @@
 
 import XCTest
 @testable import Research
+import NSLocaleSwizzle
 
 @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
 class DateTableItemGroupTests: XCTestCase {

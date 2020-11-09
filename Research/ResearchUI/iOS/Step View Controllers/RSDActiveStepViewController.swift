@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 /// `RSDActiveStepViewController` is a simple timer for displaying a longer activity where the user is doing an action while
 /// the countdown timer is running.
@@ -390,7 +391,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
     
     /// The default bundle to use when instantiating the view controller using `init(step:)`.
     open class var bundle: Bundle {
-        return Bundle(for: RSDActiveStepViewController.self)
+        return Bundle.module
     }
     
     /// Default initializer. This initializer will initialize using the `nibName` and `bundle` defined on this class.

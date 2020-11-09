@@ -33,6 +33,7 @@
 
 import UIKit
 import UserNotifications
+import Research
 
 /// `RSDOverviewStepViewController` is a customizable view controller that is designed to be the first view
 /// displayed for an active task that may require checking the user's permissions and allows the user to set
@@ -183,7 +184,7 @@ open class RSDOverviewStepViewController: RSDPermissionStepViewController {
     
     /// The default bundle to use when instantiating the view controller using `init(step:)`.
     open class var bundle: Bundle {
-        return Bundle(for: RSDOverviewStepViewController.self)
+        return Bundle.module
     }
     
     /// Default initializer. This initializer will initialize using the `nibName` and `bundle` defined on this class.
