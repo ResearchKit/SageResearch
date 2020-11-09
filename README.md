@@ -119,7 +119,7 @@ ResearchLocation contains the logic for recording CoreLocation GPS data to a fil
 These files are separated out into their own framework so that applications that use Research and ResearchUI are not required to set up capabilities and privacy keys in the info.plist that aren't used by the application.
 
 ## Research_UnitTest
-Research-UnitTest is a utility framework designed to allow for unit tests that test navigation and/or localization within a dependant framework that uses the navigation model supported by Research.
+Research-UnitTest is a utility framework designed to allow for unit tests that test navigation and/or localization within a dependent framework that uses the navigation model supported by Research.
 
 ## License
 
