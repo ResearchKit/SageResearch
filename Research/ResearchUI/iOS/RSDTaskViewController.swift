@@ -176,6 +176,16 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         self.modalPresentationStyle = .fullScreen
     }
     
+    // Status bar
+    
+    open override var prefersStatusBarHidden: Bool {
+        self.currentStepViewController?.prefersStatusBarHidden ?? false
+    }
+    
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        self.currentStepViewController?.preferredStatusBarStyle ?? .default
+    }
+    
     // MARK: View controller vending
     
     @available(*, unavailable)
