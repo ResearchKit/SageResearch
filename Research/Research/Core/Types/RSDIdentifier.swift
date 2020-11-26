@@ -46,7 +46,7 @@ public struct RSDIdentifier : RawRepresentable, Codable, Hashable {
     }
     
     enum RestrictedIdentifiers : String, Codable, CaseIterable {
-        case exit, nextSection, nextStep, abbreviatedInstructions, taskRunCount, taskExitReason
+        case exit, nextSection, nextStep, abbreviatedInstructions, taskRunCount, taskExitReason, abandonAssessment
     }
     
     /// Exit the activity.
@@ -63,6 +63,9 @@ public struct RSDIdentifier : RawRepresentable, Codable, Hashable {
     
     /// Identifier for a result that indicates the reason why a task was exited.
     public static let taskExitReason = RestrictedIdentifiers.taskRunCount.identifierValue
+    
+    /// Identifier for a special flag that indicates that the assessment should be abandoned.
+    public static let abandonAssessment = RestrictedIdentifiers.abandonAssessment.identifierValue
     
     public static func allGlobalIdentifiers() -> [RSDIdentifier] {
         return RestrictedIdentifiers.allCases.map { $0.identifierValue }

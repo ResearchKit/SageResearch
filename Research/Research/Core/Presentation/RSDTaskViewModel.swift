@@ -33,6 +33,15 @@
 
 import Foundation
 
+/// This is a hook to allow custom post-processing of the results. Typically, it is recommended that
+/// Assessment creators should processs results as a part of navigation, using a custom
+/// `RSDStepViewModel`, or as a part of the archiving process. That said, there was a special request
+/// to include this method call so here it is. This is called when a method is marked as completed
+/// and before the call to handle completed results. syoung 11/25/2020
+public protocol RSDResultProcessor {
+    func processResults(taskViewModel: RSDTaskViewModel, taskResult: inout RSDTaskResult)
+}
+
 /// The TaskViewModel is a base class implementation of the presentation layer for managing a task. It uses
 /// the [Model–view–viewmodel (MVVM)](https://en.wikipedia.org/wiki/Model-view-viewmodel) design pattern to
 /// separate out the UX functionality of running a task for a given device category from the UI and from the
@@ -187,13 +196,17 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
             self.goBack()
         case .navigation(.cancel):
             self.cancel()
+        case .navigation(.abandonAssessment):
+            self._abandonAssessment()
         default:
             debugPrint("WARNING! \(actionType) not handled")
         }
     }
     
-    
     // MARK: Path navigation
+    
+    /// Was the assessment abandoned?
+    public private(set) var didAbandon: Bool = false
     
     /// Should the step view controller confirm the cancel action? By default, this will return `false` if
     /// this is the first step in the task. Otherwise, this method will return `true`.
@@ -264,6 +277,10 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     /// Go forward to the next step. If the task is not loaded for the current point in the task path, then
     /// it will attempt to fetch it again.
     open func goForward() {
+        _goForwardFromLowest()
+    }
+    
+    private func _goForwardFromLowest() {
         guard let viewModel = self.currentTaskPath as? RSDTaskViewModel, viewModel == self
             else {
                 self.currentTaskPath.moveForwardToNextStep()
@@ -272,13 +289,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         _goForward()
     }
     
-    private func _goForward(_ direction: RSDStepDirection? = nil) {
-        
-        guard self.task != nil else {
-            _fetchTaskFromCurrentInfo()
-            return
-        }
-        
+    fileprivate func markEndDate() {
         // Add or update the result end date if there was previous step
         if let previousStep = self.currentChild {
             if let result = self.taskResult.stepHistory.last, result.identifier == previousStep.identifier {
@@ -291,6 +302,16 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
                 self.taskResult.appendStepHistory(with: result)
             }
         }
+    }
+    
+    private func _goForward(_ direction: RSDStepDirection? = nil) {
+        
+        guard self.task != nil else {
+            _fetchTaskFromCurrentInfo()
+            return
+        }
+        
+        markEndDate()
         
         // move to the next step
         _moveToNextStep(direction)
@@ -509,6 +530,11 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         return self.task as? RSDTrackingTask
     }
     
+    /// Default for the result processor is to check the task and navigator for conformance.
+    open var resultProcessor: RSDResultProcessor? {
+        (self.task as? RSDResultProcessor) ?? (self.task?.stepNavigator as? RSDResultProcessor)
+    }
+    
     /// The previous data queried during task set up from the data manager.
     public private(set) var previousTaskData: RSDTaskData?
     
@@ -536,6 +562,11 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
                 return
         }
         manager.saveTaskData(data, from: self.taskResult)
+    }
+    
+    /// Called when the task is finished to allow for any post-processing of the results.
+    open func processResults() {
+        self.resultProcessor?.processResults(taskViewModel: self, taskResult: &self.taskResult)
     }
     
     /// Called when the task fails.
@@ -588,8 +619,27 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     }
 }
 
+extension RSDTaskResult {
+    public var didAbandon: Bool {
+        self.asyncResults?.contains(where: {
+            $0.identifier == RSDIdentifier.abandonAssessment.rawValue &&
+                ($0 as? AnswerResult)?.jsonValue == .boolean(true)
+        }) ?? false
+    }
+}
+
 // Private navigation methods.
 extension RSDTaskViewModel {
+    
+    private func _abandonAssessment() {
+        
+        // Mark as abondoned both with the flag and by adding to the results.
+        self.didAbandon = true
+        self.taskResult.appendAsyncResult(with:
+                                            AnswerResultObject(identifier: RSDIdentifier.abandonAssessment.rawValue, value: .boolean(true)))
+        markEndDate()
+        _finishStoppingTaskPart1(previousStep: self.currentStep)
+    }
 
     private func _fetchTaskFromCurrentInfo() {
         guard !self.isLoading else {
@@ -873,7 +923,7 @@ extension RSDTaskViewModel {
             return
         }
         
-        let shouldExit = task.stepNavigator.shouldExit(after: previousStep, with: taskResult)
+        let shouldExit = self.didAbandon || task.stepNavigator.shouldExit(after: previousStep, with: taskResult)
         
         // Look to see if there is a task path parent to go up to
         if !shouldExit, let parent = self.parent as? RSDTaskPathComponent {
@@ -925,9 +975,14 @@ extension RSDTaskViewModel {
             assertionFailure("This task path does not have a root task view model. Cannot complete.")
             return
         }
-        root.didExitEarly = didExitEarly
-        root._handleTaskReady()
-        let reason: RSDTaskFinishReason = didExitEarly ? .earlyExit : .completed
+        self.didExitEarly = didExitEarly
+        self._handleTaskReady()
+        if self != root {
+            root.didExitEarly = didExitEarly
+            root.didAbandon = self.didAbandon
+            root._handleTaskReady()
+        }
+        let reason: RSDTaskFinishReason = (didExitEarly && !didAbandon) ? .earlyExit : .completed
         root.taskController?.handleTaskDidFinish(with: reason, error: nil)
     }
     
@@ -937,6 +992,7 @@ extension RSDTaskViewModel {
         self.taskResult.endDate = Date()
         self.isCompleted = true
         self.saveDataTracking()
+        self.processResults()
         if self.parent == nil, let taskController = self.taskController {
             // ONLY send the message to save the results if this is the end of the task.
             taskController.handleTaskResultReady(with: self)
