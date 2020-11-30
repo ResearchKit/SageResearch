@@ -62,7 +62,7 @@ public enum RSDUIActionType {
         /// Go back in the navigation to review the instructions.
         case reviewInstructions
         
-        /// Abandon running the Assessment. This is similar to a "cancel" action, but where a
+        /// Abandon running the Assessment. This is similar to a "cancel" action, but where that
         /// action assumes that the participant will "come back and do it later", the "abandon"
         /// action suggests that Assessment should be considered "done" for the purposes of the
         /// protocol.

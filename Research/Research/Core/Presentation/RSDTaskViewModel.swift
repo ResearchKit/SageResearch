@@ -633,7 +633,7 @@ extension RSDTaskViewModel {
     
     private func _abandonAssessment() {
         
-        // Mark as abondoned both with the flag and by adding to the results.
+        // Mark as abandoned both with the flag and by adding to the results.
         self.didAbandon = true
         self.taskResult.appendAsyncResult(with:
                                             AnswerResultObject(identifier: RSDIdentifier.abandonAssessment.rawValue, value: .boolean(true)))
@@ -1044,4 +1044,3 @@ extension RSDTaskViewModel {
         return controllers.count > 0 ? controllers : nil
     }
 }
-
