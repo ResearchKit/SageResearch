@@ -393,6 +393,7 @@
 		FFDDD65025094177003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
 		FFDDD65125094183003DB15C /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
 		FFDDD65225094183003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
+		FFE274FE2575827700FA621A /* RSDResultProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE274FD2575827700FA621A /* RSDResultProcessor.swift */; };
 		FFE39AEA249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */; };
 		FFEA2F5124366C18008695D6 /* ContentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F5024366C18008695D6 /* ContentNode.swift */; };
 		FFEA2F572436763B008695D6 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F562436763B008695D6 /* Question.swift */; };
@@ -935,6 +936,7 @@
 		FFDFF5DB1FC4F9B9009713E8 /* Date+ISO8601.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ISO8601.swift"; sourceTree = "<group>"; };
 		FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextFieldOptionsObject.swift; sourceTree = "<group>"; };
 		FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIStepObject.swift; sourceTree = "<group>"; };
+		FFE274FD2575827700FA621A /* RSDResultProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultProcessor.swift; sourceTree = "<group>"; };
 		FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableInterfaceSerializer.swift; sourceTree = "<group>"; };
 		FFEA2F5024366C18008695D6 /* ContentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentNode.swift; sourceTree = "<group>"; };
 		FFEA2F562436763B008695D6 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
@@ -1137,6 +1139,7 @@
 				F82D111E212602A700EA1A33 /* RSDNavigationResult.swift */,
 				F8112E6F2230B4A3005BCC93 /* RSDScoringResult.swift */,
 				F82D111A2125EB2500EA1A33 /* RSDTaskResult.swift */,
+				FFE274FD2575827700FA621A /* RSDResultProcessor.swift */,
 			);
 			path = Results;
 			sourceTree = "<group>";
@@ -3183,6 +3186,7 @@
 				F82D11172125EAF300EA1A33 /* RSDCollectionResult.swift in Sources */,
 				F8BE11212136023A000AAB1E /* RSDDecodableReplacement.swift in Sources */,
 				FF8B54581FCE6CB1006B6937 /* RSDUIActionHandlerObject.swift in Sources */,
+				FFE274FE2575827700FA621A /* RSDResultProcessor.swift in Sources */,
 				FF81E0B5244A4FF90081644B /* RSDTaskInfoObject.swift in Sources */,
 				FF8B53841FCE6C6F006B6937 /* RSDPermissionType.swift in Sources */,
 				FF8B54611FCE6CB8006B6937 /* RSDViewThemeElementObject.swift in Sources */,

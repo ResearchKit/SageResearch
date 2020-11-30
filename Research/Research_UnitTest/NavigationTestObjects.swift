@@ -315,6 +315,7 @@ public class TestTaskController: NSObject, RSDTaskController {
     public var hideLoadingIfNeeded_called = false
     public var handleTaskFailure_calledWith: Error?
     public var handleTaskResultReady_calledWith: RSDTaskViewModel?
+    public var handleTaskResultReady_result: RSDTaskResult?
     public var addAsyncActions_called = false
     public var addAsyncActions_calledWith: [RSDAsyncActionConfiguration]?
     public var startAsyncActions_called = false
@@ -367,6 +368,7 @@ public class TestTaskController: NSObject, RSDTaskController {
     
     public func handleTaskResultReady(with taskViewModel: RSDTaskViewModel) {
         handleTaskResultReady_calledWith = taskViewModel
+        handleTaskResultReady_result = taskViewModel.taskResult
         handleTaskResultReady_completionBlock?()
         handleTaskResultReady_completionBlock = nil
     }

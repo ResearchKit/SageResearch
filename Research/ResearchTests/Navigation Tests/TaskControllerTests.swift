@@ -612,6 +612,52 @@ class TaskControllerTests: XCTestCase {
         XCTAssertNotNil(taskController.handleTaskResultReady_calledWith)
     }
     
+    func testAbandonTaskNavigation() {
+        var steps: [RSDStep] = []
+        let beforeSteps: [RSDStep] = TestStep.steps(from: ["introduction", "step1", "step2", "step3"])
+        steps.append(contentsOf: beforeSteps)
+        steps.append(RSDSectionStepObject(identifier: "step4", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        steps.append(RSDSectionStepObject(identifier: "step5", steps: TestStep.steps(from: ["stepX", "stepY", "stepZ"])))
+        steps.append(RSDSectionStepObject(identifier: "step6", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        steps.append(TestStep(identifier: "step7"))
+        var completionStep = TestStep(identifier: "completion")
+        completionStep.stepType = .completion
+        steps.append(completionStep)
+        
+        let navigator = TestConditionalNavigator(steps: steps)
+        let task = TestTask(identifier: "test", stepNavigator: navigator)
+        
+        let taskController = TestTaskController()
+        taskController.task = task
+        
+        // Step to "step5.stepY"
+        let _ = taskController.test_stepTo("stepY")
+        
+        let expect = expectation(description: "Task ready to save")
+        taskController.handleTaskDidFinish_completionBlock = {
+            expect.fulfill()
+        }
+        
+        var child: RSDPathComponent = taskController.taskViewModel
+        while let lowerChild = (child as? RSDTaskPathComponent)?.currentChild {
+            child = lowerChild
+        }
+        child.perform(actionType: .navigation(.abandonAssessment))
+        
+        waitForExpectations(timeout: 2) { (err) in
+            XCTAssertNil(err)
+        }
+        
+        XCTAssertNotNil(taskController.handleTaskResultReady_calledWith)
+        XCTAssertNotNil(taskController.handleTaskDidFinish_calledWith)
+        
+        let taskResult = taskController.handleTaskResultReady_result
+        XCTAssertTrue(taskResult?.asyncResults?.contains(where: {
+                                                            $0.identifier == "processResultsTest"}) ?? false,
+                      "Missing processed results for \(String(describing: taskResult))")
+    }
+    
+    
     func testAbbreviatedInstructions_ToCompletion() {
         
         var steps: [RSDStep] = []
@@ -811,5 +857,11 @@ class TestTrackingRule : RSDTrackingRule {
         else {
             return nextAfterNil
         }
+    }
+}
+
+extension TestTask : RSDResultProcessor {
+    public func processResults(taskViewModel: RSDTaskViewModel, taskResult: inout RSDTaskResult) {
+        taskResult.appendAsyncResult(with: AnswerResultObject(identifier: "processResultsTest", value: .boolean(true)))
     }
 }
