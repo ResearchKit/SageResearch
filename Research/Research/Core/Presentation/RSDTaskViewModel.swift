@@ -2,7 +2,7 @@
 //  RSDTaskViewModel.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -32,15 +32,6 @@
 //
 
 import Foundation
-
-/// This is a hook to allow custom post-processing of the results. Typically, it is recommended that
-/// Assessment creators should processs results as a part of navigation, using a custom
-/// `RSDStepViewModel`, or as a part of the archiving process. That said, there was a special request
-/// to include this method call so here it is. This is called when a method is marked as completed
-/// and before the call to handle completed results. syoung 11/25/2020
-public protocol RSDResultProcessor {
-    func processResults(taskViewModel: RSDTaskViewModel, taskResult: inout RSDTaskResult)
-}
 
 /// The TaskViewModel is a base class implementation of the presentation layer for managing a task. It uses
 /// the [Model–view–viewmodel (MVVM)](https://en.wikipedia.org/wiki/Model-view-viewmodel) design pattern to
