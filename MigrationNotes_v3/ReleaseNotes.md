@@ -110,3 +110,7 @@ Reorganized the SageResearch frameworks to allow using either the `Research.xcod
 SwiftPM. Because SwiftPM does not allow for mixing Obj-c and Swift code in the same module, the Obj-c code
 files were moved into a different framework. Therefore, if your application or dependent frameworks access 
 these classes directly, then you will need to import the frameworks for these. Otherwise, no migration is required.
+
+## Version 3.15
+
+Added `UIActionType.navigation(.abandonAssessment)` and `RSDResultProcessor`. No migration required.
