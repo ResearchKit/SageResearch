@@ -114,3 +114,7 @@ these classes directly, then you will need to import the frameworks for these. O
 ## Version 3.15
 
 Added `UIActionType.navigation(.abandonAssessment)` and `RSDResultProcessor`. No migration required.
+
+## Version 3.16
+
+Fix code signing.
