@@ -118,3 +118,9 @@ Added `UIActionType.navigation(.abandonAssessment)` and `RSDResultProcessor`. No
 ## Version 3.16
 
 Fix code signing.
+
+## Version 3.17
+
+Do not embed frameworks. This means that if you are using the `Research.xcodeproj` to build dynamic 
+frameworks rather than using the swift package, that you will *also* need to embed `Formatters.framework` 
+and `ExceptionHandler.framework` in applications that reference this dylib.
