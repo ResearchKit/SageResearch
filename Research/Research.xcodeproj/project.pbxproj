@@ -396,7 +396,6 @@
 		FFDDD65125094183003DB15C /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
 		FFDDD65225094183003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
 		FFE274FE2575827700FA621A /* RSDResultProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE274FD2575827700FA621A /* RSDResultProcessor.swift */; };
-		FFE39AEA249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */; };
 		FFEA2F5124366C18008695D6 /* ContentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F5024366C18008695D6 /* ContentNode.swift */; };
 		FFEA2F572436763B008695D6 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F562436763B008695D6 /* Question.swift */; };
 		FFEA2F6224368B53008695D6 /* AnswerTypeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F6124368B53008695D6 /* AnswerTypeObjects.swift */; };
@@ -923,7 +922,6 @@
 		FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextFieldOptionsObject.swift; sourceTree = "<group>"; };
 		FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIStepObject.swift; sourceTree = "<group>"; };
 		FFE274FD2575827700FA621A /* RSDResultProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultProcessor.swift; sourceTree = "<group>"; };
-		FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableInterfaceSerializer.swift; sourceTree = "<group>"; };
 		FFEA2F5024366C18008695D6 /* ContentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentNode.swift; sourceTree = "<group>"; };
 		FFEA2F562436763B008695D6 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		FFEA2F6124368B53008695D6 /* AnswerTypeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerTypeObjects.swift; sourceTree = "<group>"; };
@@ -1966,7 +1964,6 @@
 				F8A695082135CE920052EB82 /* README.md */,
 				FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */,
 				FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */,
-				FFE39AE9249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift */,
 				FFEA2F752436BE07008695D6 /* Deprecated */,
 				FF2B54FD1F68AE8000663289 /* Serialization */,
 				F8BE10F02135EF8B000AAB1E /* Transformers */,
@@ -3139,7 +3136,6 @@
 				F8C0A8D420FC127900EC758A /* RSDDetailInputFieldObject.swift in Sources */,
 				FF8B53AF1FCE6C7A006B6937 /* RSDSurveyRule.swift in Sources */,
 				F8C28F30204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift in Sources */,
-				FFE39AEA249D3D1D00446A8B /* IdentifiableInterfaceSerializer.swift in Sources */,
 				FF8B549F1FCE6CF6006B6937 /* RSDFormStepDataSourceObject.swift in Sources */,
 				F8EB48C5228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */,
 				FFD4C7AA243E43780027CE6C /* TableDataSourceImpl.swift in Sources */,
@@ -4481,8 +4477,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Sage-Bionetworks/JsonModel-Swift.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.2;
+				branch = "move-methods";
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

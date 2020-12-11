@@ -45,7 +45,7 @@ import JsonModel
 /// ResearchKit.ORKResult objects, these objected are now defined as `PolymorphicRepresentable`
 /// and `Encodable`.
 ///
-public protocol RSDResult : PolymorphicRepresentable, Encodable {
+public protocol RSDResult : SerializableResultData {
     
     /// The identifier associated with the task, step, or asynchronous action.
     var identifier: String { get }
@@ -62,8 +62,8 @@ public protocol RSDResult : PolymorphicRepresentable, Encodable {
 
 extension RSDResult {
     
-    public var typeName: String {
-        type.rawValue
+    public var serializableResultType: SerializableResultType {
+        SerializableResultType(rawValue: self.type.stringValue)
     }
     
     func shortDescription() -> String {

@@ -85,17 +85,11 @@ extension RSDResultType : DocumentableStringLiteral {
     }
 }
 
-public final class RSDResultSerializer : IdentifiableInterfaceSerializer, PolymorphicSerializer {
-    public var documentDescription: String? {
-        """
-        `Result` is the base implementation for a result associated with a task, step, or
-        asynchronous action. When running a task, there will be a result of some variety used to
-        mark each step in the task.
-        """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
-    }
-    
-    override init() {
-        self.examples = [
+// List of the serialization examples included in this library.
+
+extension ResultDataSerializer {
+    func libraryExamples() -> [RSDResult] {
+        [
             RSDTaskResultObject.examples().first!,
             SectionResultObject.examples().first!,
             RSDResultObject.examples().first!,
@@ -106,16 +100,46 @@ public final class RSDResultSerializer : IdentifiableInterfaceSerializer, Polymo
         ]
     }
     
-    public private(set) var examples: [RSDResult]
-    
-    public override class func typeDocumentProperty() -> DocumentProperty {
-        .init(propertyType: .reference(RSDResultType.documentableType()))
-    }
-    
-    public func add(_ example: RSDResult) {
-        if let idx = examples.firstIndex(where: { $0.typeName == example.typeName }) {
-            examples.remove(at: idx)
-        }
-        examples.append(example)
+    func registerLibraryExamples(with factory: RSDFactory) {
+        self.add(contentsOf: libraryExamples())
+        factory.registerSerializer(self, for: RSDResult.self)
     }
 }
+
+// Wrap the ResultData implementations from JsonModel to conform to matching RSDResult subprotocol.
+
+extension JsonElementResultObject : AnswerResult {
+    public var jsonAnswerType: AnswerType? { nil }
+    public var questionText: String? { nil }
+    public var type: RSDResultType {
+        RSDResultType(rawValue: self.serializableResultType.rawValue)
+    }
+}
+
+extension ErrorResultObject : RSDErrorResult {
+    public var type: RSDResultType {
+        RSDResultType(rawValue: self.serializableResultType.rawValue)
+    }
+}
+
+extension FileResultObject : RSDFileResult {
+    public var type: RSDResultType {
+        RSDResultType(rawValue: self.serializableResultType.rawValue)
+    }
+}
+
+extension CollectionResultObject : CollectionResult {
+    public var inputResults: [RSDResult] {
+        get {
+            children.compactMap{ $0 as? RSDResult }
+        }
+        set {
+            children = newValue
+        }
+    }
+    
+    public var type: RSDResultType {
+        RSDResultType(rawValue: self.serializableResultType.rawValue)
+    }
+}
+
