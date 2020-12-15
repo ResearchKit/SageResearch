@@ -124,3 +124,9 @@ Fix code signing.
 Do not embed frameworks. This means that if you are using the `Research.xcodeproj` to build dynamic 
 frameworks rather than using the swift package, that you will *also* need to embed `Formatters.framework` 
 and `ExceptionHandler.framework` in applications that reference this dylib.
+
+## Version 3.18
+
+Inherit `RSDResult` from `JsonModel.ResultData` and use the result serializer included in that module. This is
+intended to allow for encoding results that do not conform to the `Codable` protocol. In most cases, no migration
+will be needed, though the `import JsonModel` statement may need to be included in some code files.

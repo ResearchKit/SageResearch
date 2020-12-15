@@ -39,8 +39,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(name: "JsonModel",
                  url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-                 from: "1.0.2"),
-        
+                 from: "1.1.0"),
     ],
     targets: [
 
