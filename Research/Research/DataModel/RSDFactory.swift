@@ -41,7 +41,7 @@ public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStr
 
 /// `RSDFactory` handles customization of decoding the elements of a task. Applications should
 /// override this factory to add custom elements required to run their task modules.
-open class RSDFactory : SerializationFactory {
+open class RSDFactory : ResultDataFactory {
     
     public static var shared = RSDFactory.defaultFactory
     
@@ -51,7 +51,6 @@ open class RSDFactory : SerializationFactory {
     public let colorMappingSerializer = ColorMappingSerializer()
     public let imageThemeSerializer = ImageThemeSerializer()
     public let inputItemSerializer = InputItemSerializer()
-    public let resultSerializer = RSDResultSerializer()
     public let resultNodeSerializer = ResultNodeSerializer()
     public let stepSerializer = StepSerializer()
     public let taskSerializer = TaskSerializer()
@@ -65,11 +64,13 @@ open class RSDFactory : SerializationFactory {
         self.registerSerializer(colorMappingSerializer)
         self.registerSerializer(imageThemeSerializer)
         self.registerSerializer(inputItemSerializer)
-        self.registerSerializer(resultSerializer)
         self.registerSerializer(resultNodeSerializer)
         self.registerSerializer(stepSerializer)
         self.registerSerializer(taskSerializer)
         self.registerSerializer(viewThemeSerializer)
+        
+        // Add results from this factory
+        self.resultSerializer.registerLibraryExamples(with: self)
     }
     
     /// The type of device to point use when decoding different text depending upon the target

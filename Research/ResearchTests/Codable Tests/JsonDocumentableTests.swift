@@ -77,7 +77,7 @@ class JsonDocumentableTests: XCTestCase {
         XCTAssertTrue(checkPolymorphicExamples(for: factory.inputItemSerializer.examples,
                                                 using: factory, protocolType: InputItemBuilder.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.resultSerializer.examples,
-                                                using: factory, protocolType: RSDResult.self))
+                                                using: factory, protocolType: ResultData.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.resultNodeSerializer.examples,
                                                 using: factory, protocolType: ResultNode.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.stepSerializer.examples,
