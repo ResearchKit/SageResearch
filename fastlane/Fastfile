@@ -132,7 +132,7 @@ platform :ios do
     project = "Research/Research.xcodeproj"
     version_number = get_version_number(xcodeproj: "#{project}", target: "Research (iOS)")
     next_build_number = increment_build_number(xcodeproj: "#{project}")
-    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Bump build for Research #{version_number} (#{next_build_number})")
+    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Bump build for Research #{version_number} (#{next_build_number})", force: true)
 
     # TODO: young 10/24/2019 FIXME! Jazzy documentation does not appear to work with Xcode 11
     #doc_framework(framework: "Research")
