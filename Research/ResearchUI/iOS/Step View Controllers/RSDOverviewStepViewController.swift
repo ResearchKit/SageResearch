@@ -38,7 +38,7 @@ import Research
 /// `RSDOverviewStepViewController` is a customizable view controller that is designed to be the first view
 /// displayed for an active task that may require checking the user's permissions and allows the user to set
 /// a notification reminder to perform the task at a later time.
-open class RSDOverviewStepViewController: RSDPermissionStepViewController {
+open class RSDOverviewStepViewController: PermissionStepViewController {
     
     /// Override viewDidAppear to set up notification handling.
     open override func viewDidAppear(_ animated: Bool) {

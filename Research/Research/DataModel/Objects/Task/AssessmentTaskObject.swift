@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import MobilePassiveData
 
 
 /// The serialization "type" key for decoding of the task. This is used to decode the task using a
@@ -128,7 +129,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
     public let identifier: String
     public let steps: [RSDStep]
     open fileprivate(set) var progressMarkers : [String]?
-    open fileprivate(set) var asyncActions: [RSDAsyncActionConfiguration]?
+    open fileprivate(set) var asyncActions: [AsyncActionConfiguration]?
 
     open var stepNavigator: RSDStepNavigator { _stepNavigator }
     lazy private var _stepNavigator: RSDStepNavigator = {
@@ -177,7 +178,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
     public init(identifier: String,
                 steps: [RSDStep],
                 usesTrackedData: Bool = false,
-                asyncActions: [RSDAsyncActionConfiguration]? = nil,
+                asyncActions: [AsyncActionConfiguration]? = nil,
                 progressMarkers : [String]? = nil,
                 resultIdentifier: String? = nil,
                 versionString: String? = nil,
@@ -222,7 +223,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
         // Decode optional properties.
         if container.contains(.asyncActions) {
             let asyncActionsContainer = try container.nestedUnkeyedContainer(forKey: .asyncActions)
-            self.asyncActions = try decoder.factory.decodePolymorphicArray(RSDAsyncActionConfiguration.self, from: asyncActionsContainer)
+            self.asyncActions = try decoder.factory.decodePolymorphicArray(AsyncActionConfiguration.self, from: asyncActionsContainer)
         }
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers) ?? self.progressMarkers
         self.usesTrackedData = try container.decodeIfPresent(Bool.self, forKey: .usesTrackedData) ?? self.usesTrackedData
@@ -384,7 +385,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
         case .progressMarkers:
             return .init(propertyType: .primitiveArray(.string))
         case .asyncActions:
-            return .init(propertyType: .interfaceArray("\(RSDAsyncActionConfiguration.self)"))
+            return .init(propertyType: .interfaceArray("\(AsyncActionConfiguration.self)"))
         case .versionString:
             return .init(propertyType: .primitive(.string))
         case .estimatedMinutes:
@@ -429,7 +430,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
 }
 
 /// Concrete implementation of the an `RSDTask`.
-open class AssessmentTaskObject : AbstractTaskObject {
+open class AssessmentTaskObject : AbstractTaskObject, RSDActiveTask {
     override open class func defaultType() -> RSDTaskType {
         .assessment
     }
@@ -438,17 +439,21 @@ open class AssessmentTaskObject : AbstractTaskObject {
         super.init()
     }
     
-    public override init(identifier: String,
+    public init(identifier: String,
                          steps: [RSDStep],
                          usesTrackedData: Bool = false,
-                         asyncActions: [RSDAsyncActionConfiguration]? = nil,
+                         asyncActions: [AsyncActionConfiguration]? = nil,
                          progressMarkers: [String]? = nil,
                          resultIdentifier: String? = nil,
                          versionString: String? = nil,
                          estimatedMinutes: Int? = nil,
                          actions: [RSDUIActionType : RSDUIAction]? = nil,
-                         shouldHideActions: [RSDUIActionType]? = nil) {
+                         shouldHideActions: [RSDUIActionType]? = nil,
+                         shouldEndOnInterrupt: Bool = false,
+                         audioSessionSettings: AudioSessionSettings? = nil) {
         super.init(identifier: identifier, steps: steps, usesTrackedData: usesTrackedData, asyncActions: asyncActions, progressMarkers: progressMarkers, resultIdentifier: resultIdentifier, versionString: versionString, estimatedMinutes: estimatedMinutes, actions: actions, shouldHideActions: shouldHideActions)
+        self.shouldEndOnInterrupt = shouldEndOnInterrupt
+        self.audioSessionSettings = audioSessionSettings
     }
     
     public required init(identifier: String, steps: [RSDStep]) {
@@ -457,7 +462,19 @@ open class AssessmentTaskObject : AbstractTaskObject {
     
     public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.shouldEndOnInterrupt = try container.decodeIfPresent(Bool.self, forKey: .shouldEndOnInterrupt) ?? self.shouldEndOnInterrupt
+        self.audioSessionSettings = try container.decodeIfPresent(AudioSessionSettings.self, forKey: .audioSessionSettings)
     }
+    
+    // MARK: RSDActiveTask
+    
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case shouldEndOnInterrupt, audioSessionSettings
+    }
+    
+    open fileprivate(set) var shouldEndOnInterrupt: Bool = false
+    open fileprivate(set) var audioSessionSettings: AudioSessionSettings?
     
     // MARK: Copy methods
 
@@ -481,6 +498,26 @@ open class AssessmentTaskObject : AbstractTaskObject {
         copy._estimatedMinutes = self.estimatedMinutes
         copy._schemaInfo = self.schemaInfo
         copy.usesTrackedData = self.usesTrackedData
+        copy.shouldEndOnInterrupt = self.shouldEndOnInterrupt
+        copy.audioSessionSettings = self.audioSessionSettings
+    }
+    
+    override open class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        keys.append(contentsOf: CodingKeys.allCases)
+        return keys
+    }
+    
+    override open class func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            return try super.documentProperty(for: codingKey)
+        }
+        switch key {
+        case .shouldEndOnInterrupt:
+            return .init(propertyType: .primitive(.boolean), propertyDescription: "Should the task end early if the task is interrupted by a phone call?")
+        case .audioSessionSettings:
+            return .init(propertyType: .reference(AudioSessionSettings.documentableType()))
+        }
     }
 }
 

@@ -33,6 +33,7 @@
 
 import UIKit
 import Research
+import MobilePassiveData
 
 /// `RSDActiveStepViewController` is a simple timer for displaying a longer activity where the user is doing an action while
 /// the countdown timer is running.
@@ -135,7 +136,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
 
     /// This class overrides the speak instruction method and will set the `instructionLabel` to the same text that the voice
     /// synthesizer speaks.
-    open override func speakInstruction(_ instruction: String, at timeInterval: TimeInterval, completion: RSDVoiceBoxCompletionHandler?) {
+    open override func speakInstruction(_ instruction: String, at timeInterval: TimeInterval, completion: VoicePrompterCompletionHandler?) {
         instructionLabel?.text = instruction
         super.speakInstruction(instruction, at: timeInterval, completion: completion)
     }

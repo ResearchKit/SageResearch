@@ -31,6 +31,6 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "RSDExceptionHandler.h"
+// Deprecated: syoung 02/03/2021 Use MobilePassiveData.ExceptionHandler instead.
 
 

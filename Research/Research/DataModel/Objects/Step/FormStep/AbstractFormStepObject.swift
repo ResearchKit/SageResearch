@@ -53,7 +53,7 @@ open class AbstractFormStepObject : RSDUIStepObject {
     public private(set) var children: [ResultNode]
     
     open func instantiateCollectionResult() -> CollectionResult {
-        RSDCollectionResultObject(identifier: self.identifier)
+        CollectionResultObject(identifier: self.identifier)
     }
     
     open override func instantiateStepResult() -> ResultData {

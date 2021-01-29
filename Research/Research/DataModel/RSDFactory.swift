@@ -2,7 +2,7 @@
 //  RSDFactory.swift
 //  Research
 //
-//  Copyright © 2017-2020 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2021 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -34,6 +34,7 @@
 import Foundation
 import JsonModel
 import Formatters
+import MobilePassiveData
 
 public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStringLiteral {
     var stringValue: String { get }
@@ -41,11 +42,10 @@ public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStr
 
 /// `RSDFactory` handles customization of decoding the elements of a task. Applications should
 /// override this factory to add custom elements required to run their task modules.
-open class RSDFactory : ResultDataFactory {
+open class RSDFactory : MobilePassiveDataFactory {
     
     public static var shared = RSDFactory.defaultFactory
     
-    public let asyncActionSerializer = AsyncActionConfigurationSerializer()
     public let buttonActionSerializer = ButtonActionSerializer()
     public let colorMappingSerializer = ColorMappingSerializer()
     public let imageThemeSerializer = ImageThemeSerializer()
@@ -57,7 +57,6 @@ open class RSDFactory : ResultDataFactory {
     
     public required init() {
         super.init()
-        self.registerSerializer(asyncActionSerializer)
         self.registerSerializer(buttonActionSerializer)
         self.registerSerializer(colorMappingSerializer)
         self.registerSerializer(imageThemeSerializer)
@@ -284,6 +283,7 @@ open class RSDFactory : ResultDataFactory {
         resource.factoryBundle = decoder.bundle
         return resource
     }
+    
 
     // MARK: Decoder
     

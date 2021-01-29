@@ -38,6 +38,7 @@ import AVKit
 import UIKit
 import JsonModel
 import Research
+import MobilePassiveData
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
 /// UI architecture.
@@ -669,8 +670,8 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// which requires custom navigation because the step has not "ended" normally. For example, this method
     /// is called when a user taps the "skip" button.
     open func jumpForward() {
-        if RSDSpeechSynthesizer.shared.isSpeaking {
-            RSDSpeechSynthesizer.shared.stopTalking()
+        if voicePrompter.isSpeaking {
+            voicePrompter.stopTalking()
         }
         self.stop()
         self.stepViewModel.perform(actionType: .navigation(.goForward))
@@ -812,7 +813,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     // MARK: Permission handling
     
     /// Show an alert to the user to let them know that authorization has failed.
-    open func handleAuthorizationFailed(status: RSDAuthorizationStatus, permission: RSDStandardPermission) {
+    open func handleAuthorizationFailed(status: PermissionAuthorizationStatus, permission: StandardPermission) {
 
         let settingsMessage = (status == .restricted) ? permission.restrictedMessage : permission.deniedMessage
         let message: String = {
@@ -840,7 +841,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     
     /// The authorization status for this view controller.
-    open func checkAuthorizationStatus() -> (status: RSDAuthorizationStatus, permission: RSDStandardPermission?)  {
+    open func checkAuthorizationStatus() -> (status: PermissionAuthorizationStatus, permission: StandardPermission?)  {
         guard let permissions = self.requiredPermissions(), permissions.count > 0 else {
             return (.authorized, nil)
         }
@@ -854,18 +855,18 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     
     /// Check the authorization status for a given permission type.
-    open func authorizationStatus(for permissionType: RSDStandardPermissionType) -> RSDAuthorizationStatus {
-        return RSDAuthorizationHandler.authorizationStatus(for: permissionType.identifier)
+    open func authorizationStatus(for permissionType: StandardPermissionType) -> PermissionAuthorizationStatus {
+        return PermissionAuthorizationHandler.authorizationStatus(for: permissionType.identifier)
     }
     
     /// The permissions required for this step.
-    open func requiredPermissions() -> [RSDStandardPermission]? {
-        return (self.step as? RSDStandardPermissionsStep)?.standardPermissions?.filter { !$0.isOptional }
+    open func requiredPermissions() -> [StandardPermission]? {
+        return (self.step as? StandardPermissionsStep)?.standardPermissions?.filter { !$0.isOptional }
     }
     
     /// The permissions that are requested as a part of this step.
-    open func requestedPermissions() -> [RSDStandardPermission]? {
-        return (self.step as? RSDStandardPermissionsStep)?.standardPermissions?.filter { $0.requestIfNeeded }
+    open func requestedPermissions() -> [StandardPermission]? {
+        return (self.step as? StandardPermissionsStep)?.standardPermissions?.filter { $0.requestIfNeeded }
     }
     
     
@@ -893,10 +894,13 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     /// The clock uptime for when the step was started. This is used by the timer to determine when to
     /// speak the next instruction and to set the value of the countdown.
-    public var clock: RSDClock?
+    public var clock: SystemClock?
     
     /// The clock uptime for when the step was finished.
     public private(set) var completedUptime: TimeInterval?
+    
+    lazy open private(set) var soundPlayer: SoundPlayer = AudioFileSoundPlayer()
+    open var voicePrompter: VoicePrompter { TextToSpeechSynthesizer.shared }
     
     private var timer: Timer?
     private var lastInstruction: Int = -1
@@ -940,12 +944,11 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         // Always run the stop command
         stop()
     }
-
     
     /// Play a sound. The default method will use the shared instance of `RSDAudioSoundPlayer`.
     /// - parameter sound: The sound to play.
-    open func playSound(_ sound: RSDSound = .short_low_high) {
-        RSDAudioSoundPlayer.shared.playSound(sound)
+    open func playSound(_ sound: SoundFile = .short_low_high) {
+        soundPlayer.playSound(sound)
     }
     
     /// Vibrate the device (if applicable).
@@ -953,17 +956,17 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
     }
     
-    /// Speak the given instruction. The default method will use the shared `RSDSpeechSynthesizer`.
+    /// Speak the given instruction. The default method will use the shared `TextToSpeechSynthesizer`.
     /// - parameters:
     ///     - instruction: The instruction to speak.
     ///     - timeInterval: The time interval marker (ignored by default implementation).
     ///     - completion: A completion handler to call when the instruction has finished.
-    open func speakInstruction(_ instruction: String, at timeInterval: TimeInterval, completion: RSDVoiceBoxCompletionHandler?) {
+    open func speakInstruction(_ instruction: String, at timeInterval: TimeInterval, completion: VoicePrompterCompletionHandler?) {
         if self.activeStep?.requiresBackgroundAudio ?? false,
             let taskController = self.stepViewModel.rootPathComponent.taskController as? RSDTaskViewController {
             taskController.startBackgroundAudioSessionIfNeeded()
         }
-        RSDSpeechSynthesizer.shared.speak(text: instruction, completion: completion)
+        voicePrompter.speak(text: instruction, completion: completion)
     }
     
     /// Speak the instruction that is included at the given time marker (if any).
@@ -1013,7 +1016,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     private func _startTimer() {
         if clock == nil {
-            clock = RSDClock()
+            clock = SystemClock()
         }
         timer?.invalidate()
         if usesTimer {
@@ -1049,7 +1052,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         if let commands = self.activeStep?.commands,
             commands.contains(.speakWarningOnPause) {
             let instruction = Localization.localizedString("STEP_PAUSED")
-            RSDSpeechSynthesizer.shared.speak(text: instruction, completion: nil)
+            voicePrompter.speak(text: instruction, completion: nil)
         }
     }
     
@@ -1094,7 +1097,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     private func stepCompleted() {
         guard completedUptime == nil else { return }
-        completedUptime = RSDClock.uptime()
+        completedUptime = SystemClock.uptime()
         goForward()
     }
     
@@ -1114,7 +1117,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             switch type {
             case .began:
                 if self?.activeStep?.shouldEndOnInterrupt ?? false {
-                    self?.taskController?.handleTaskFailure(with: RSDSampleRecorder.RecorderError.interrupted)
+                    self?.taskController?.handleTaskFailure(with: SampleRecorder.RecorderError.interrupted)
                 }
                 else {
                     // pause when the interruption starts
@@ -1128,7 +1131,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
                     self?.resume()
                 }
                 else {
-                    self?.taskController?.handleTaskFailure(with: RSDSampleRecorder.RecorderError.interrupted)
+                    self?.taskController?.handleTaskFailure(with: SampleRecorder.RecorderError.interrupted)
                 }
                 
             @unknown default:

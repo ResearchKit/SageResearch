@@ -7,16 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F82A4AC022960D2500BEBE3C /* ResearchLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */; };
-		F82A4AC122960D2500BEBE3C /* ResearchLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F82A4AC322960DD400BEBE3C /* Recorder_Distance.json in Resources */ = {isa = PBXBuildFile; fileRef = F82A4AC222960DD400BEBE3C /* Recorder_Distance.json */; };
 		F836460B2265281400CCA0EF /* TaskPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */; };
 		F836460D22652E6100CCA0EF /* TaskArchivesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */; };
 		F8373C9320964F60004DD4E1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8373C9220964F60004DD4E1 /* README.md */; };
 		F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */ = {isa = PBXBuildFile; fileRef = F871AA5022610D2F00C0F657 /* ColorPalettes.json */; };
 		F871AA5322610E8900C0F657 /* PaletteSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */; };
-		F891DD32228CFDE2001B2A57 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */; };
-		F891DD33228CFDE2001B2A57 /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42A532095518400C6A4BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A522095518400C6A4BC /* AppDelegate.swift */; };
 		F8D42A5A2095518400C6A4BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A592095518400C6A4BC /* Assets.xcassets */; };
 		F8D42A732095518400C6A4BC /* RSDCatalogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A722095518400C6A4BC /* RSDCatalogUITests.swift */; };
@@ -54,11 +50,7 @@
 		FF432A3723A303BB0027288F /* topMarginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3523A303BA0027288F /* topMarginBackground@2x.png */; };
 		FF432A3823A303BB0027288F /* topMarginBackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF432A3623A303BB0027288F /* topMarginBackground@3x.png */; };
 		FF4A231925001F9500944009 /* Recorder_Microphone.json in Resources */ = {isa = PBXBuildFile; fileRef = FF4A231825001F9500944009 /* Recorder_Microphone.json */; };
-		FF4A231B2500263600944009 /* ResearchAudioRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */; };
-		FF4A231C2500263600944009 /* ResearchAudioRecorder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF61FA2E23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov in Resources */ = {isa = PBXBuildFile; fileRef = FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */; };
-		FF8A191A257AC68D00F96875 /* ExceptionHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A1919257AC68D00F96875 /* ExceptionHandler.framework */; };
-		FF8A191B257AC68D00F96875 /* ExceptionHandler.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A1919257AC68D00F96875 /* ExceptionHandler.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF8A191D257AC69400F96875 /* Formatters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A191C257AC69400F96875 /* Formatters.framework */; };
 		FF8A191E257AC69400F96875 /* Formatters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF8A191C257AC69400F96875 /* Formatters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF8FC21922F3A0AF00FA6DAF /* Theme_Image.json in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */; };
@@ -89,11 +81,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F82A4AC122960D2500BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
-				FF4A231C2500263600944009 /* ResearchAudioRecorder.framework in Embed Frameworks */,
-				F891DD33228CFDE2001B2A57 /* ResearchMotion.framework in Embed Frameworks */,
 				FF8A191E257AC69400F96875 /* Formatters.framework in Embed Frameworks */,
-				FF8A191B257AC68D00F96875 /* ExceptionHandler.framework in Embed Frameworks */,
 				F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */,
 				F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */,
 			);
@@ -103,14 +91,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F82A4AC222960DD400BEBE3C /* Recorder_Distance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Recorder_Distance.json; sourceTree = "<group>"; };
 		F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPresentationViewController.swift; sourceTree = "<group>"; };
 		F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskArchivesTableViewController.swift; sourceTree = "<group>"; };
 		F8373C9220964F60004DD4E1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F871AA5022610D2F00C0F657 /* ColorPalettes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ColorPalettes.json; sourceTree = "<group>"; };
 		F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteSelectionViewController.swift; sourceTree = "<group>"; };
-		F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchMotion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42A4F2095518400C6A4BC /* RSDCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSDCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42A522095518400C6A4BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8D42A592095518400C6A4BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -152,7 +138,6 @@
 		FF432A3523A303BA0027288F /* topMarginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topMarginBackground@2x.png"; sourceTree = "<group>"; };
 		FF432A3623A303BB0027288F /* topMarginBackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topMarginBackground@3x.png"; sourceTree = "<group>"; };
 		FF4A231825001F9500944009 /* Recorder_Microphone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Recorder_Microphone.json; sourceTree = "<group>"; };
-		FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchAudioRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF61FA2D23A43ADD006B36C5 /* Silver_Cat_01_Videvo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Silver_Cat_01_Videvo.mov; sourceTree = "<group>"; };
 		FF8A1919257AC68D00F96875 /* ExceptionHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ExceptionHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8A191C257AC69400F96875 /* Formatters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Formatters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,11 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F82A4AC022960D2500BEBE3C /* ResearchLocation.framework in Frameworks */,
-				FF4A231B2500263600944009 /* ResearchAudioRecorder.framework in Frameworks */,
-				F891DD32228CFDE2001B2A57 /* ResearchMotion.framework in Frameworks */,
 				FF8A191D257AC69400F96875 /* Formatters.framework in Frameworks */,
-				FF8A191A257AC68D00F96875 /* ExceptionHandler.framework in Frameworks */,
 				F8D42AB62095550C00C6A4BC /* Research.framework in Frameworks */,
 				F8D42AB82095550C00C6A4BC /* ResearchUI.framework in Frameworks */,
 			);
@@ -291,11 +272,8 @@
 				FF8A1919257AC68D00F96875 /* ExceptionHandler.framework */,
 				FFDDD6532509419F003DB15C /* Research_UnitTest.framework */,
 				FFDDD63D25094001003DB15C /* Research_UnitTest.framework */,
-				FF4A231A2500263600944009 /* ResearchAudioRecorder.framework */,
 				F8D42AB52095550C00C6A4BC /* Research.framework */,
 				F8D42AB72095550C00C6A4BC /* ResearchUI.framework */,
-				F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */,
-				F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

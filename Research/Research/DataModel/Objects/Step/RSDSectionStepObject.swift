@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import MobilePassiveData
 
 /// `RSDSectionStepObject` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
 /// step that includes an instruction step, countdown step, and activity step.
@@ -56,15 +57,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
     public var progressMarkers: [String]?
     
     /// A list of asynchronous actions to run on the task.
-    public var asyncActions: [RSDAsyncActionConfiguration]?
-    
-
-    @available(*, deprecated, message: "Kotlin serialzation requires a one-to-one mapping of 'type' to a class.")
-    public init(identifier: String, steps: [RSDStep], type: RSDStepType?) {
-        self.identifier = identifier
-        self.steps = steps
-        self.stepType = type ?? .section
-    }
+    public var asyncActions: [AsyncActionConfiguration]?
     
     /// Default initializer.
     /// - parameters:
@@ -172,16 +165,16 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
         self.asyncActions = try self.decodeAsyncActions(from: decoder, initialActions: nil)
     }
     
-    private func decodeAsyncActions(from decoder: Decoder, initialActions: [RSDAsyncActionConfiguration]?) throws -> [RSDAsyncActionConfiguration]? {
+    private func decodeAsyncActions(from decoder: Decoder, initialActions: [AsyncActionConfiguration]?) throws -> [AsyncActionConfiguration]? {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard container.contains(.asyncActions) else { return initialActions }
         
         let factory = decoder.factory
         var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .asyncActions)
-        var decodedActions : [RSDAsyncActionConfiguration] = initialActions ?? []
+        var decodedActions : [AsyncActionConfiguration] = initialActions ?? []
         while !nestedContainer.isAtEnd {
             let actionDecoder = try nestedContainer.superDecoder()
-            let action = try factory.decodePolymorphicObject(RSDAsyncActionConfiguration.self,
+            let action = try factory.decodePolymorphicObject(AsyncActionConfiguration.self,
                                                              from: actionDecoder)
             if let idx = decodedActions.firstIndex(where: { $0.identifier == action.identifier}) {
                 decodedActions.remove(at: idx)
@@ -235,7 +228,7 @@ extension RSDSectionStepObject : DocumentableObject {
         case .progressMarkers:
             return .init(propertyType: .primitiveArray(.string))
         case .asyncActions:
-            return .init(propertyType: .interfaceArray("\(RSDAsyncActionConfiguration.self)"))
+            return .init(propertyType: .interfaceArray("\(AsyncActionConfiguration.self)"))
         }
     }
     

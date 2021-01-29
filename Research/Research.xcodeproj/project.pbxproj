@@ -27,19 +27,7 @@
 		F825BA64207FD75300D29F60 /* RSDWeekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = F825BA63207FD75300D29F60 /* RSDWeekday.swift */; };
 		F829F0DF1FF887C3001B0680 /* UnitConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0DE1FF887C3001B0680 /* UnitConversionTests.swift */; };
 		F829F0EA1FFB4620001B0680 /* PickerDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0E91FFB4620001B0680 /* PickerDataSourceTests.swift */; };
-		F82A49F622947C9B00BEBE3C /* RSDBackgroundTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82A49F522947C9B00BEBE3C /* RSDBackgroundTask.swift */; };
-		F82A4A022294971B00BEBE3C /* RSDDefaultAudioSessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82A49FD2294971500BEBE3C /* RSDDefaultAudioSessionController.swift */; };
-		F82A4A0522949A5200BEBE3C /* RSDMotionRecorderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F810CF35202E2811009C49C9 /* RSDMotionRecorderConfiguration.swift */; };
-		F82A4A0922949A6100BEBE3C /* RSDDistanceRecorderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B17854202E1AB100B62416 /* RSDDistanceRecorderConfiguration.swift */; };
-		F82A4A1022949B9000BEBE3C /* RSDMotionTaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82A4A0F22949B9000BEBE3C /* RSDMotionTaskObject.swift */; };
-		F82A4A132294A37200BEBE3C /* RSDMotionAudioSessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82A4A122294A37100BEBE3C /* RSDMotionAudioSessionController.swift */; };
-		F82A4A192294B35800BEBE3C /* Silence.wav in Resources */ = {isa = PBXBuildFile; fileRef = F82A4A162294B07E00BEBE3C /* Silence.wav */; };
-		F82A4AA922960BF700BEBE3C /* ResearchLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4AA022960BF700BEBE3C /* ResearchLocation.framework */; };
-		F82A4AB022960BF700BEBE3C /* ResearchLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = F82A4AA222960BF700BEBE3C /* ResearchLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F82A4ABB22960C3100BEBE3C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ABA22960C3100BEBE3C /* CoreLocation.framework */; };
-		F82A4ABC22960C7500BEBE3C /* CodableDistanceRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F810CF39202E34C6009C49C9 /* CodableDistanceRecorderTests.swift */; };
-		F82A4ABD22960C8000BEBE3C /* RSDDistanceRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */; };
-		F82A4ABE22960C8500BEBE3C /* RSDLocationAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FF020585ED100752B7B /* RSDLocationAuthorization.swift */; };
+		F82A49F622947C9B00BEBE3C /* RSDActiveTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82A49F522947C9B00BEBE3C /* RSDActiveTask.swift */; };
 		F82D11132125EA9F00EA1A33 /* ResultData+RSDExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82D11122125EA9F00EA1A33 /* ResultData+RSDExtensions.swift */; };
 		F82D111B2125EB2500EA1A33 /* RSDTaskResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82D111A2125EB2500EA1A33 /* RSDTaskResult.swift */; };
 		F82D111F212602A700EA1A33 /* RSDNavigationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82D111E212602A700EA1A33 /* RSDNavigationResult.swift */; };
@@ -81,8 +69,6 @@
 		F84496592273A23100EAA3E0 /* UIAlertController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84496222273A23100EAA3E0 /* UIAlertController+Utilities.swift */; };
 		F844965A2273A23100EAA3E0 /* UIImage+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84496232273A23100EAA3E0 /* UIImage+Utilities.swift */; };
 		F844965B2273A23100EAA3E0 /* NSLayoutConstraint+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84496242273A23100EAA3E0 /* NSLayoutConstraint+Layout.swift */; };
-		F844965C2273A23100EAA3E0 /* RSDUISoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84496262273A23100EAA3E0 /* RSDUISoundPlayer.swift */; };
-		F844965D2273A23100EAA3E0 /* RSDVoiceBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84496272273A23100EAA3E0 /* RSDVoiceBox.swift */; };
 		F844965E2273A23100EAA3E0 /* RSDButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84496292273A23100EAA3E0 /* RSDButtonCell.swift */; };
 		F844965F2273A23100EAA3E0 /* RSDTableSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F844962A2273A23100EAA3E0 /* RSDTableSectionHeader.swift */; };
 		F84496602273A23100EAA3E0 /* RSDTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F844962B2273A23100EAA3E0 /* RSDTableViewCell.swift */; };
@@ -105,8 +91,6 @@
 		F8458EDD22456CE40094D7B0 /* TaskViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8458EDC22456CE40094D7B0 /* TaskViewModelTests.swift */; };
 		F8475BB62125E5E30031D802 /* RSDUIActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8475BB52125E5E30031D802 /* RSDUIActionHandler.swift */; };
 		F8485C49203EA761007CE2B6 /* RSDSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8485C48203EA761007CE2B6 /* RSDSchedule.swift */; };
-		F84A2F4521779A640079C92C /* RSDClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84A2F4421779A640079C92C /* RSDClock.swift */; };
-		F84A2F782178FABB0079C92C /* ClockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84A2F772178FABB0079C92C /* ClockTests.swift */; };
 		F84E54561FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */; };
 		F853828E214C447100C3B774 /* StepViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F853828D214C447100C3B774 /* StepViewModelTests.swift */; };
 		F858D14B201BA67B00132325 /* MeasurementDurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */; };
@@ -121,23 +105,13 @@
 		F8864ADC2163FE3100DF57CF /* RSDResultSummaryStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8864ADB2163FE3100DF57CF /* RSDResultSummaryStepObject.swift */; };
 		F8864AEC2164406700DF57CF /* RSDResultSummaryStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8864AEB2164406700DF57CF /* RSDResultSummaryStepViewModel.swift */; };
 		F8904D491FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
-		F891DD1C228CFCD4001B2A57 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; };
-		F891DD23228CFCD4001B2A57 /* ResearchMotion.h in Headers */ = {isa = PBXBuildFile; fileRef = F891DD15228CFCD3001B2A57 /* ResearchMotion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F891DD2D228CFD64001B2A57 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD2C228CFD63001B2A57 /* CoreMotion.framework */; };
-		F891DD2E228CFD88001B2A57 /* RSDMotionAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FF42058602F00752B7B /* RSDMotionAuthorization.swift */; };
-		F891DD2F228CFD91001B2A57 /* RSDMotionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0922750899004579EF /* RSDMotionRecorder.swift */; };
-		F891DD30228CFD9E001B2A57 /* CodableMotionRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */; };
 		F8981A4F2279214B008DD5D0 /* RSDTemplateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8981A4E2279214B008DD5D0 /* RSDTemplateImageView.swift */; };
 		F89BEA30202B9550007BD2DD /* CopyStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89BEA2F202B9550007BD2DD /* CopyStepTests.swift */; };
 		F89E6E072043CB4A003D9E34 /* RSDTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E6E062043CB4A003D9E34 /* RSDTableDataSource.swift */; };
 		F8A204D420671F4D004E2B5D /* RSDModalStepTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A204D320671F4D004E2B5D /* RSDModalStepTableItem.swift */; };
 		F8A33491224069A700390601 /* RSDColorMappingThemeElementObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A33490224069A700390601 /* RSDColorMappingThemeElementObject.swift */; };
-		F8B17861202E22CC00B62416 /* RSDStandardAsyncActionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B17860202E22CC00B62416 /* RSDStandardAsyncActionConfiguration.swift */; };
 		F8B42BE31FE9ABE200E23783 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
 		F8BAF41F2048DD35004B9406 /* RSDStepNavigatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BAF41E2048DD35004B9406 /* RSDStepNavigatorType.swift */; };
-		F8BE10AD2135DABE000AAB1E /* RSDPermissionsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE10AC2135DABE000AAB1E /* RSDPermissionsConfiguration.swift */; };
-		F8BE10B12135DBD5000AAB1E /* RSDRecorderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE10B02135DBD5000AAB1E /* RSDRecorderConfiguration.swift */; };
-		F8BE10B52135DC0D000AAB1E /* RSDRequestConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE10B42135DC0D000AAB1E /* RSDRequestConfiguration.swift */; };
 		F8BE10C12135E19B000AAB1E /* RSDValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE10C02135E19B000AAB1E /* RSDValidationError.swift */; };
 		F8BE10DD2135E662000AAB1E /* RSDNavigationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE10DC2135E662000AAB1E /* RSDNavigationRule.swift */; };
 		F8BE10E92135E6C5000AAB1E /* RSDTrackingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE10E82135E6C5000AAB1E /* RSDTrackingRule.swift */; };
@@ -163,11 +137,6 @@
 		F8C7D40B2092876B007490BC /* CodableTrackedDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C7D40A2092876B007490BC /* CodableTrackedDataTests.swift */; };
 		F8D074B1204FBD0D006CDABB /* DataArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D074B0204FBD0D006CDABB /* DataArchiveTests.swift */; };
 		F8E94FE02058308B00752B7B /* RSDOverviewStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FDF2058308B00752B7B /* RSDOverviewStepObject.swift */; };
-		F8EB48C1228CDBB3000A2F69 /* RSDDataLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EB48BF228CDBB3000A2F69 /* RSDDataLogger.swift */; };
-		F8EB48C5228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EB48C0228CDBB3000A2F69 /* RSDSampleRecorder.swift */; };
-		F8EB48CA228CDBD9000A2F69 /* RecordSampleLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EB48C9228CDBD9000A2F69 /* RecordSampleLoggerTests.swift */; };
-		F8EB48CD228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EB48CC228CDC51000A2F69 /* RSDStandardPermission.swift */; };
-		F8EB48D2228CDCBD000A2F69 /* RSDAuthorizationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EB48D1228CDCBD000A2F69 /* RSDAuthorizationHandler.swift */; };
 		F8F367E5215B404A00A49F89 /* RSDTaskState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F367E4215B404A00A49F89 /* RSDTaskState.swift */; };
 		F8F561E72023C2A8000EEA8C /* RSDDurationPickerDataSourceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8321EB7201AB7F900074DFA /* RSDDurationPickerDataSourceObject.swift */; };
 		F8F72435203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F72434203DF20E00AC0E5B /* RSDCohortTrackingRule.swift */; };
@@ -179,8 +148,6 @@
 		F8FD563A2141BDE000BA2FA6 /* RSDFileManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD56392141BDE000BA2FA6 /* RSDFileManifest.swift */; };
 		F8FD563F2141BE4700BA2FA6 /* RSDDataArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD563E2141BE4700BA2FA6 /* RSDDataArchive.swift */; };
 		F8FD56AD21475D2F00BA2FA6 /* RSDModalStepDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD56AC21475D2F00BA2FA6 /* RSDModalStepDataSource.swift */; };
-		FF0ADC982555299200FDFCBF /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0ADC972555299200FDFCBF /* CodableTestObjects.swift */; };
-		FF0ADCB2255529A200FDFCBF /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0ADCB1255529A200FDFCBF /* CodableTestObjects.swift */; };
 		FF225DF8243A56B000AD2461 /* CodableQuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF225DF7243A56B000AD2461 /* CodableQuestionTests.swift */; };
 		FF225E00243B969C00AD2461 /* JsonSurveyRuleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF225DFF243B969C00AD2461 /* JsonSurveyRuleObject.swift */; };
 		FF225E05243BC2FC00AD2461 /* JsonChoiceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF225E04243BC2FC00AD2461 /* JsonChoiceObject.swift */; };
@@ -198,21 +165,10 @@
 		FF4329E223A044A20027288F /* RSDResourceImageDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4329E123A044A20027288F /* RSDResourceImageDataObject.swift */; };
 		FF432A0C23A05BA20027288F /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF432A0B23A05BA20027288F /* Geometry.swift */; };
 		FF432A1C23A2FBE90027288F /* ThemeImageViewOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF432A1B23A2FBE80027288F /* ThemeImageViewOwner.swift */; };
-		FF48F16E255507CC00F74582 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F16D255507CC00F74582 /* Bundle+module.swift */; };
-		FF48F16F255507CC00F74582 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F16D255507CC00F74582 /* Bundle+module.swift */; };
-		FF48F17C25550BB200F74582 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F16D255507CC00F74582 /* Bundle+module.swift */; };
-		FF48F19525550BB800F74582 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F16D255507CC00F74582 /* Bundle+module.swift */; };
-		FF48F1A225550BB900F74582 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F16D255507CC00F74582 /* Bundle+module.swift */; };
-		FF48F1AF25550BC300F74582 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F16D255507CC00F74582 /* Bundle+module.swift */; };
-		FF4A22E624FDB20200944009 /* ResearchAudioRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4A22DD24FDB20200944009 /* ResearchAudioRecorder.framework */; };
-		FF4A22EB24FDB20200944009 /* ResearchAudioRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A22EA24FDB20200944009 /* ResearchAudioRecorderTests.swift */; };
-		FF4A22ED24FDB20200944009 /* ResearchAudioRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4A22DF24FDB20200944009 /* ResearchAudioRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FF4A22F624FEB6E900944009 /* AudioRecorderAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A22F524FEB6E900944009 /* AudioRecorderAuthorization.swift */; };
-		FF4A22F724FEB82A00944009 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; platformFilter = ios; };
-		FF4A22FD24FEBB3C00944009 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A22FC24FEBB3C00944009 /* AudioRecorder.swift */; };
-		FF4A22FF24FEBC5E00944009 /* AudioRecorderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A22FE24FEBC5E00944009 /* AudioRecorderConfiguration.swift */; };
-		FF4A230924FEC47600944009 /* AudioRecorderAudioSessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A230424FEC47600944009 /* AudioRecorderAudioSessionController.swift */; };
-		FF4A230B24FEC4FF00944009 /* AudioRecorderTaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A230A24FEC4FF00944009 /* AudioRecorderTaskObject.swift */; };
+		FF45881D25C47F40003472F6 /* MobilePassiveData in Frameworks */ = {isa = PBXBuildFile; productRef = FF45881C25C47F40003472F6 /* MobilePassiveData */; };
+		FF48F16E255507CC00F74582 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		FF48F17C25550BB200F74582 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		FF48F1AF25550BC300F74582 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		FF5D2C4D24B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */; };
 		FF633D6D1FCE7A6000CF2267 /* FactoryTest_TaskGroup.json in Resources */ = {isa = PBXBuildFile; fileRef = FF74A7D91F7D8B7F0064A634 /* FactoryTest_TaskGroup.json */; };
 		FF633D6E1FCE7A6000CF2267 /* FactoryTest_TaskFoo.json in Resources */ = {isa = PBXBuildFile; fileRef = FF87CD841F84130400084426 /* FactoryTest_TaskFoo.json */; };
@@ -229,7 +185,6 @@
 		FF6489D2244A29AF00CA27FC /* RSDInstructionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6489D1244A29AF00CA27FC /* RSDInstructionStepObject.swift */; };
 		FF81E0B5244A4FF90081644B /* RSDTaskInfoObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF81E0B4244A4FF90081644B /* RSDTaskInfoObject.swift */; };
 		FF81E0BA244A5C490081644B /* FactoryTest_StepTransform.json in Resources */ = {isa = PBXBuildFile; fileRef = FF81E0B9244A5C490081644B /* FactoryTest_StepTransform.json */; };
-		FF8A18DC257AB59500F96875 /* ExceptionHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF4FD242550B7D3006F6EA2 /* ExceptionHandler.framework */; };
 		FF8A18DF257AB59700F96875 /* Formatters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF4FBFF2550B322006F6EA2 /* Formatters.framework */; };
 		FF8B531D1FCE678E006B6937 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
 		FF8B53711FCE6940006B6937 /* Research.h in Headers */ = {isa = PBXBuildFile; fileRef = FF72B2341F6859D3004C6F15 /* Research.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -238,10 +193,8 @@
 		FF8B53801FCE6C6F006B6937 /* RSDDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2601F68845A004C6F15 /* RSDDeviceType.swift */; };
 		FF8B53821FCE6C6F006B6937 /* RSDFormUIHint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF87CD8B1F844CE400084426 /* RSDFormUIHint.swift */; };
 		FF8B53831FCE6C6F006B6937 /* RSDIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B1381F7C244200582849 /* RSDIdentifier.swift */; };
-		FF8B53841FCE6C6F006B6937 /* RSDPermissionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB015DF1F8C081200AC209B /* RSDPermissionType.swift */; };
 		FF8B53851FCE6C6F006B6937 /* RSDResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF53EAC1FBF9562004211D2 /* RSDResultType.swift */; };
 		FF8B53861FCE6C6F006B6937 /* RSDStepType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD38DE61FBF805F004203D8 /* RSDStepType.swift */; };
-		FF8B53A21FCE6C7A006B6937 /* RSDAsyncActionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B25E1F688168004C6F15 /* RSDAsyncActionConfiguration.swift */; };
 		FF8B53A31FCE6C7A006B6937 /* RSDConditionalStepNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B12D1F7C12D400582849 /* RSDConditionalStepNavigator.swift */; };
 		FF8B53A41FCE6C7A006B6937 /* RSDDateCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1A28B1F882A0100ECD730 /* RSDDateCoder.swift */; };
 		FF8B53A61FCE6C7A006B6937 /* RSDRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB015C91F8BE62E00AC209B /* RSDRange.swift */; };
@@ -267,7 +220,6 @@
 		FF8B54271FCE6CA2006B6937 /* RSDUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF74A7DB1F7DA2BF0064A634 /* RSDUIStepObject.swift */; };
 		FF8B54281FCE6CA2006B6937 /* RSDStepTransformerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBD07371FAA46CD000CB34F /* RSDStepTransformerObject.swift */; };
 		FF8B543B1FCE6CA9006B6937 /* RSDChoiceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBA00031F85657C0079A404 /* RSDChoiceObject.swift */; };
-		FF8B543D1FCE6CA9006B6937 /* RSDComparableSurveyRuleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63E83C1FBAE5C80060DD98 /* RSDComparableSurveyRuleObject.swift */; };
 		FF8B54401FCE6CA9006B6937 /* RSDDurationRangeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB6A4B81F8607C300E37752 /* RSDDurationRangeObject.swift */; };
 		FF8B54571FCE6CB1006B6937 /* RSDUIActionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF269B711F7E128700C9289E /* RSDUIActionObject.swift */; };
 		FF8B54581FCE6CB1006B6937 /* RSDUIActionHandlerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF427CE71FA3B247005A5AD2 /* RSDUIActionHandlerObject.swift */; };
@@ -340,21 +292,23 @@
 		FFB14BA624EC52ED00D0637D /* ColorMappingThemeElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2023A36F7200677D62 /* ColorMappingThemeElementTests.swift */; };
 		FFB14BA724EC52ED00D0637D /* ColorPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF287A2123A36F7200677D62 /* ColorPaletteTests.swift */; };
 		FFB14BA824EC536E00D0637D /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
-		FFBD07D724491B49006A39E0 /* RSDAsyncActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBD07D624491B49006A39E0 /* RSDAsyncActionType.swift */; };
+		FFCC3C672602724500063592 /* RSDComparableSurveyRuleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63E83C1FBAE5C80060DD98 /* RSDComparableSurveyRuleObject.swift */; };
+		FFCC3C7B260272E700063592 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC3C7A260272E700063592 /* Bundle+module.swift */; };
+		FFCC3C7C260272E700063592 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC3C7A260272E700063592 /* Bundle+module.swift */; };
+		FFCC3C7D260272E700063592 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC3C7A260272E700063592 /* Bundle+module.swift */; };
 		FFD4C790243D07660027CE6C /* SurveyRuleNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C78F243D07660027CE6C /* SurveyRuleNavigation.swift */; };
 		FFD4C79B243D51C60027CE6C /* InputItemTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C79A243D51C60027CE6C /* InputItemTableItem.swift */; };
 		FFD4C7A0243D5E010027CE6C /* QuestionTableItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C79F243D5E010027CE6C /* QuestionTableItemGroup.swift */; };
 		FFD4C7A5243D630D0027CE6C /* QuestionStepDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C7A4243D630D0027CE6C /* QuestionStepDataSource.swift */; };
 		FFD4C7AA243E43780027CE6C /* TableDataSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C7A9243E43780027CE6C /* TableDataSourceImpl.swift */; };
 		FFD765C325140505003CD2F1 /* AbstractUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD765C225140505003CD2F1 /* AbstractUIStepObject.swift */; };
+		FFDB9C4925CB395A009AB86E /* AudioRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = FFDB9C4825CB395A009AB86E /* AudioRecorder */; };
+		FFDB9C4B25CB395A009AB86E /* DistanceRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = FFDB9C4A25CB395A009AB86E /* DistanceRecorder */; };
+		FFDB9C4D25CB395A009AB86E /* LocationAuthorization in Frameworks */ = {isa = PBXBuildFile; productRef = FFDB9C4C25CB395A009AB86E /* LocationAuthorization */; };
+		FFDB9C4F25CB395A009AB86E /* MotionSensor in Frameworks */ = {isa = PBXBuildFile; productRef = FFDB9C4E25CB395A009AB86E /* MotionSensor */; };
+		FFDB9C5125CB395A009AB86E /* WeatherRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = FFDB9C5025CB395A009AB86E /* WeatherRecorder */; };
 		FFDDD64025094069003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
-		FFDDD6412509407A003DB15C /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
-		FFDDD64225094081003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
 		FFDDD6432509408B003DB15C /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
-		FFDDD64F25094177003DB15C /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
-		FFDDD65025094177003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
-		FFDDD65125094183003DB15C /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
-		FFDDD65225094183003DB15C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
 		FFE274FE2575827700FA621A /* RSDResultProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE274FD2575827700FA621A /* RSDResultProcessor.swift */; };
 		FFEA2F5124366C18008695D6 /* ContentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F5024366C18008695D6 /* ContentNode.swift */; };
 		FFEA2F572436763B008695D6 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F562436763B008695D6 /* Question.swift */; };
@@ -365,7 +319,6 @@
 		FFEA2F7C2436C21C008695D6 /* InputItemObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F7B2436C21C008695D6 /* InputItemObjects.swift */; };
 		FFEA2F812437DACF008695D6 /* CodableInputItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEA2F802437DACF008695D6 /* CodableInputItemTests.swift */; };
 		FFF20D002329A59700F501C3 /* AnswerResultTypeJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */; };
-		FFF434002446446100C5F466 /* JsonModel in Frameworks */ = {isa = PBXBuildFile; productRef = FFF433FF2446446100C5F466 /* JsonModel */; };
 		FFF43408244645D300C5F466 /* KeyboardOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF43407244645D300C5F466 /* KeyboardOptionsObject.swift */; };
 		FFF4FC302550B349006F6EA2 /* RSDMassFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F829F0D71FF86DA4001B0680 /* RSDMassFormatter.m */; };
 		FFF4FC312550B349006F6EA2 /* RSDMeasurementWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */; };
@@ -381,52 +334,18 @@
 		FFF4FC622550B36A006F6EA2 /* RSDFractionFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFF4FC8A2550B378006F6EA2 /* Formatters.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9D241F2550A9B60051F2F0 /* Formatters.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFF4FCF22550B533006F6EA2 /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF4FCF12550B533006F6EA2 /* FormatterTests.swift */; };
-		FFF4FD282550B7D3006F6EA2 /* ExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF4FD262550B7D3006F6EA2 /* ExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FFF4FD382550B7FE006F6EA2 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
-		FFF4FD512550B815006F6EA2 /* RSDExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */; };
 		FFFBE9DE23AD6A8800650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; platformFilter = ios; };
-		FFFBE9E123AD6A9700650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
-		FFFBE9E423AD6A9C00650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; platformFilter = ios; };
-		FFFBE9E723AD6A9E00650F11 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; platformFilter = ios; };
 		FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F82A4AAA22960BF700BEBE3C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F82A4A9F22960BF700BEBE3C;
-			remoteInfo = ResearchLocation;
-		};
 		F87061AA227390120056F70E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = F870619F227390110056F70E;
 			remoteInfo = "ResearchUI-iOS";
-		};
-		F891DD1D228CFCD4001B2A57 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F891DD12228CFCD3001B2A57;
-			remoteInfo = ResearchMotion;
-		};
-		FF4A22E724FDB20200944009 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FF4A22DC24FDB20200944009;
-			remoteInfo = ResearchAudioRecorder;
-		};
-		FF4A22F924FEB82A00944009 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FF8B53131FCE678E006B6937;
-			remoteInfo = "Research (iOS)";
 		};
 		FF8B531E1FCE678E006B6937 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -456,13 +375,6 @@
 			remoteGlobalIDString = FFF4FBFE2550B322006F6EA2;
 			remoteInfo = Formatters;
 		};
-		FFF4FD782550B834006F6EA2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FFF4FD232550B7D3006F6EA2;
-			remoteInfo = ExceptionHandler;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -489,16 +401,12 @@
 		F80CA50D1FFEAB8D00E89C06 /* RSDDatePickerDataSourceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDatePickerDataSourceObject.swift; sourceTree = "<group>"; };
 		F80CA51A1FFEAD1F00E89C06 /* RSDUSMeasurementPickerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUSMeasurementPickerDataSource.swift; sourceTree = "<group>"; };
 		F80CA51E1FFEB04B00E89C06 /* RSDChoiceOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDChoiceOptionsObject.swift; sourceTree = "<group>"; };
-		F810CF35202E2811009C49C9 /* RSDMotionRecorderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDMotionRecorderConfiguration.swift; sourceTree = "<group>"; };
-		F810CF39202E34C6009C49C9 /* CodableDistanceRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDistanceRecorderTests.swift; sourceTree = "<group>"; };
 		F8112E4B222F2D44005BCC93 /* RSDTaskData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskData.swift; sourceTree = "<group>"; };
 		F8112E5B222F4F36005BCC93 /* RSDDataStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDataStorageManager.swift; sourceTree = "<group>"; };
 		F8112E60222F600A005BCC93 /* RSDTrackingTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTrackingTask.swift; sourceTree = "<group>"; };
 		F8112E6A2230B110005BCC93 /* RSDScoreBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDScoreBuilder.swift; sourceTree = "<group>"; };
 		F8112E6F2230B4A3005BCC93 /* RSDScoringResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDScoringResult.swift; sourceTree = "<group>"; };
 		F814DD0222750809004579EF /* RSDFileResultUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileResultUtility.swift; sourceTree = "<group>"; };
-		F814DD0922750899004579EF /* RSDMotionRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDMotionRecorder.swift; sourceTree = "<group>"; };
-		F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDDistanceRecorder.swift; sourceTree = "<group>"; };
 		F814DD1E227509D3004579EF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F82115FE2231D39A00EA0D9F /* RecursiveScoreBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecursiveScoreBuilderTests.swift; sourceTree = "<group>"; };
 		F825BA5F207FD70000D29F60 /* RSDWeeklyScheduleObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDWeeklyScheduleObject.swift; sourceTree = "<group>"; };
@@ -513,17 +421,7 @@
 		F829F0E91FFB4620001B0680 /* PickerDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerDataSourceTests.swift; sourceTree = "<group>"; };
 		F829F0F41FFC0B2B001B0680 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F829F0F51FFC0B2B001B0680 /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
-		F82A49F522947C9B00BEBE3C /* RSDBackgroundTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDBackgroundTask.swift; sourceTree = "<group>"; };
-		F82A49FD2294971500BEBE3C /* RSDDefaultAudioSessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDefaultAudioSessionController.swift; sourceTree = "<group>"; };
-		F82A4A0F22949B9000BEBE3C /* RSDMotionTaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDMotionTaskObject.swift; sourceTree = "<group>"; };
-		F82A4A122294A37100BEBE3C /* RSDMotionAudioSessionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDMotionAudioSessionController.swift; sourceTree = "<group>"; };
-		F82A4A162294B07E00BEBE3C /* Silence.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Silence.wav; sourceTree = "<group>"; };
-		F82A4AA022960BF700BEBE3C /* ResearchLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F82A4AA222960BF700BEBE3C /* ResearchLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchLocation.h; sourceTree = "<group>"; };
-		F82A4AA322960BF700BEBE3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F82A4AA822960BF700BEBE3C /* ResearchLocationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchLocationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F82A4AAF22960BF700BEBE3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F82A4ABA22960C3100BEBE3C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F82A49F522947C9B00BEBE3C /* RSDActiveTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveTask.swift; sourceTree = "<group>"; };
 		F82D11122125EA9F00EA1A33 /* ResultData+RSDExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultData+RSDExtensions.swift"; sourceTree = "<group>"; };
 		F82D111A2125EB2500EA1A33 /* RSDTaskResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskResult.swift; sourceTree = "<group>"; };
 		F82D111E212602A700EA1A33 /* RSDNavigationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDNavigationResult.swift; sourceTree = "<group>"; };
@@ -565,8 +463,6 @@
 		F84496222273A23100EAA3E0 /* UIAlertController+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Utilities.swift"; sourceTree = "<group>"; };
 		F84496232273A23100EAA3E0 /* UIImage+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Utilities.swift"; sourceTree = "<group>"; };
 		F84496242273A23100EAA3E0 /* NSLayoutConstraint+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Layout.swift"; sourceTree = "<group>"; };
-		F84496262273A23100EAA3E0 /* RSDUISoundPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDUISoundPlayer.swift; sourceTree = "<group>"; };
-		F84496272273A23100EAA3E0 /* RSDVoiceBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDVoiceBox.swift; sourceTree = "<group>"; };
 		F84496292273A23100EAA3E0 /* RSDButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDButtonCell.swift; sourceTree = "<group>"; };
 		F844962A2273A23100EAA3E0 /* RSDTableSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDTableSectionHeader.swift; sourceTree = "<group>"; };
 		F844962B2273A23100EAA3E0 /* RSDTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDTableViewCell.swift; sourceTree = "<group>"; };
@@ -589,14 +485,11 @@
 		F8458EDC22456CE40094D7B0 /* TaskViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModelTests.swift; sourceTree = "<group>"; };
 		F8475BB52125E5E30031D802 /* RSDUIActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionHandler.swift; sourceTree = "<group>"; };
 		F8485C48203EA761007CE2B6 /* RSDSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSchedule.swift; sourceTree = "<group>"; };
-		F84A2F4421779A640079C92C /* RSDClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDClock.swift; sourceTree = "<group>"; };
-		F84A2F772178FABB0079C92C /* ClockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockTests.swift; sourceTree = "<group>"; };
 		F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
 		F853828D214C447100C3B774 /* StepViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepViewModelTests.swift; sourceTree = "<group>"; };
 		F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDFractionFormatter.h; sourceTree = "<group>"; };
 		F8586AE52011697700B2DF65 /* RSDFractionFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDFractionFormatter.m; sourceTree = "<group>"; };
 		F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementDurationTests.swift; sourceTree = "<group>"; };
-		F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableMotionRecorderTests.swift; sourceTree = "<group>"; };
 		F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCohortNavigationStep.swift; sourceTree = "<group>"; };
 		F87061A0227390110056F70E /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87061A2227390110056F70E /* ResearchUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchUI.h; sourceTree = "<group>"; };
@@ -611,12 +504,6 @@
 		F8864ADB2163FE3100DF57CF /* RSDResultSummaryStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultSummaryStepObject.swift; sourceTree = "<group>"; };
 		F8864AEB2164406700DF57CF /* RSDResultSummaryStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultSummaryStepViewModel.swift; sourceTree = "<group>"; };
 		F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnitConverter.swift; sourceTree = "<group>"; };
-		F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchMotion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F891DD15228CFCD3001B2A57 /* ResearchMotion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchMotion.h; sourceTree = "<group>"; };
-		F891DD16228CFCD3001B2A57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F891DD1B228CFCD3001B2A57 /* ResearchMotionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchMotionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F891DD22228CFCD4001B2A57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F891DD2C228CFD63001B2A57 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		F8981A4E2279214B008DD5D0 /* RSDTemplateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTemplateImageView.swift; sourceTree = "<group>"; };
 		F89BEA2F202B9550007BD2DD /* CopyStepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyStepTests.swift; sourceTree = "<group>"; };
 		F89CA1EF2023EF9C00C5EB86 /* RSDDurationFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDDurationFormatter.h; sourceTree = "<group>"; };
@@ -627,13 +514,8 @@
 		F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDMeasurementWrapper.h; sourceTree = "<group>"; };
 		F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDMeasurementWrapper.m; sourceTree = "<group>"; };
 		F8A695082135CE920052EB82 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		F8B17854202E1AB100B62416 /* RSDDistanceRecorderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDistanceRecorderConfiguration.swift; sourceTree = "<group>"; };
-		F8B17860202E22CC00B62416 /* RSDStandardAsyncActionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStandardAsyncActionConfiguration.swift; sourceTree = "<group>"; };
 		F8B42BE21FE9ABE200E23783 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		F8BAF41E2048DD35004B9406 /* RSDStepNavigatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepNavigatorType.swift; sourceTree = "<group>"; };
-		F8BE10AC2135DABE000AAB1E /* RSDPermissionsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPermissionsConfiguration.swift; sourceTree = "<group>"; };
-		F8BE10B02135DBD5000AAB1E /* RSDRecorderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRecorderConfiguration.swift; sourceTree = "<group>"; };
-		F8BE10B42135DC0D000AAB1E /* RSDRequestConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRequestConfiguration.swift; sourceTree = "<group>"; };
 		F8BE10C02135E19B000AAB1E /* RSDValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDValidationError.swift; sourceTree = "<group>"; };
 		F8BE10DC2135E662000AAB1E /* RSDNavigationRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDNavigationRule.swift; sourceTree = "<group>"; };
 		F8BE10E82135E6C5000AAB1E /* RSDTrackingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTrackingRule.swift; sourceTree = "<group>"; };
@@ -659,13 +541,6 @@
 		F8C7D40A2092876B007490BC /* CodableTrackedDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTrackedDataTests.swift; sourceTree = "<group>"; };
 		F8D074B0204FBD0D006CDABB /* DataArchiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataArchiveTests.swift; sourceTree = "<group>"; };
 		F8E94FDF2058308B00752B7B /* RSDOverviewStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDOverviewStepObject.swift; sourceTree = "<group>"; };
-		F8E94FF020585ED100752B7B /* RSDLocationAuthorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDLocationAuthorization.swift; sourceTree = "<group>"; };
-		F8E94FF42058602F00752B7B /* RSDMotionAuthorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDMotionAuthorization.swift; sourceTree = "<group>"; };
-		F8EB48BF228CDBB3000A2F69 /* RSDDataLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDDataLogger.swift; sourceTree = "<group>"; };
-		F8EB48C0228CDBB3000A2F69 /* RSDSampleRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDSampleRecorder.swift; sourceTree = "<group>"; };
-		F8EB48C9228CDBD9000A2F69 /* RecordSampleLoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordSampleLoggerTests.swift; sourceTree = "<group>"; };
-		F8EB48CC228CDC51000A2F69 /* RSDStandardPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStandardPermission.swift; sourceTree = "<group>"; };
-		F8EB48D1228CDCBD000A2F69 /* RSDAuthorizationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDAuthorizationHandler.swift; sourceTree = "<group>"; };
 		F8F367E4215B404A00A49F89 /* RSDTaskState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskState.swift; sourceTree = "<group>"; };
 		F8F72434203DF20E00AC0E5B /* RSDCohortTrackingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCohortTrackingRule.swift; sourceTree = "<group>"; };
 		F8F9544120239E8F00347940 /* RSDDateRangeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDateRangeObject.swift; sourceTree = "<group>"; };
@@ -679,8 +554,6 @@
 		FF0920BE1FCE310500C9E031 /* RSDTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableSection.swift; sourceTree = "<group>"; };
 		FF0920C01FCE37AD00C9E031 /* RSDTableItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableItemGroup.swift; sourceTree = "<group>"; };
 		FF0920C21FCE3F0300C9E031 /* RSDTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableItem.swift; sourceTree = "<group>"; };
-		FF0ADC972555299200FDFCBF /* CodableTestObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodableTestObjects.swift; path = ResearchMotionTests/CodableTestObjects.swift; sourceTree = SOURCE_ROOT; };
-		FF0ADCB1255529A200FDFCBF /* CodableTestObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodableTestObjects.swift; path = ResearchLocationTests/CodableTestObjects.swift; sourceTree = SOURCE_ROOT; };
 		FF1561F81F91AF580036998E /* RSDCollectionResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCollectionResultObject.swift; sourceTree = "<group>"; };
 		FF177D7C1F82E4F600C2D4D7 /* RSDStepValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepValidator.swift; sourceTree = "<group>"; };
 		FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTestObjects.swift; sourceTree = "<group>"; };
@@ -740,18 +613,7 @@
 		FF4329E123A044A20027288F /* RSDResourceImageDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResourceImageDataObject.swift; sourceTree = "<group>"; };
 		FF432A0B23A05BA20027288F /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		FF432A1B23A2FBE80027288F /* ThemeImageViewOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeImageViewOwner.swift; sourceTree = "<group>"; };
-		FF48F16D255507CC00F74582 /* Bundle+module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+module.swift"; sourceTree = "<group>"; };
-		FF4A22DD24FDB20200944009 /* ResearchAudioRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchAudioRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF4A22DF24FDB20200944009 /* ResearchAudioRecorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchAudioRecorder.h; sourceTree = "<group>"; };
-		FF4A22E024FDB20200944009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF4A22E524FDB20200944009 /* ResearchAudioRecorderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchAudioRecorderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF4A22EA24FDB20200944009 /* ResearchAudioRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResearchAudioRecorderTests.swift; sourceTree = "<group>"; };
-		FF4A22EC24FDB20200944009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF4A22F524FEB6E900944009 /* AudioRecorderAuthorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderAuthorization.swift; sourceTree = "<group>"; };
-		FF4A22FC24FEBB3C00944009 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
-		FF4A22FE24FEBC5E00944009 /* AudioRecorderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderConfiguration.swift; sourceTree = "<group>"; };
-		FF4A230424FEC47600944009 /* AudioRecorderAudioSessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderAudioSessionController.swift; sourceTree = "<group>"; };
-		FF4A230A24FEC4FF00944009 /* AudioRecorderTaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderTaskObject.swift; sourceTree = "<group>"; };
+		FF4589DA25C4C9BE003472F6 /* MigrationNotes_v4.0.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v4.0.md; path = ../MigrationNotes/MigrationNotes_v4.0.md; sourceTree = "<group>"; };
 		FF518F8024AC089B003E9DAB /* ReleaseNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ReleaseNotes.md; path = ../MigrationNotes/ReleaseNotes.md; sourceTree = "<group>"; };
 		FF580BF31F7E3764009B3EE9 /* RSDActiveUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveUIStepObject.swift; sourceTree = "<group>"; };
 		FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
@@ -769,7 +631,6 @@
 		FF72B2531F685F49004C6F15 /* RSDTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDTask.swift; sourceTree = "<group>"; };
 		FF72B2561F68646B004C6F15 /* RSDStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStep.swift; sourceTree = "<group>"; };
 		FF72B2581F6867F8004C6F15 /* RSDUIAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDUIAction.swift; sourceTree = "<group>"; };
-		FF72B25E1F688168004C6F15 /* RSDAsyncActionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDAsyncActionConfiguration.swift; sourceTree = "<group>"; };
 		FF72B2601F68845A004C6F15 /* RSDDeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDDeviceType.swift; sourceTree = "<group>"; };
 		FF74A7CC1F7CC7750064A634 /* RSDSchemaInfoObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSchemaInfoObject.swift; sourceTree = "<group>"; };
 		FF74A7D91F7D8B7F0064A634 /* FactoryTest_TaskGroup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FactoryTest_TaskGroup.json; sourceTree = "<group>"; };
@@ -814,17 +675,15 @@
 		FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownUIStepObject.swift; sourceTree = "<group>"; };
 		FFAEE7D2243C007300F18BCB /* Result-KotlinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result-KotlinModel.swift"; sourceTree = "<group>"; };
 		FFB015C91F8BE62E00AC209B /* RSDRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRange.swift; sourceTree = "<group>"; };
-		FFB015DF1F8C081200AC209B /* RSDPermissionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPermissionType.swift; sourceTree = "<group>"; };
 		FFB6A4B81F8607C300E37752 /* RSDDurationRangeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDurationRangeObject.swift; sourceTree = "<group>"; };
 		FFBA00031F85657C0079A404 /* RSDChoiceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDChoiceObject.swift; sourceTree = "<group>"; };
 		FFBD07351FAA3E4B000CB34F /* RSDSectionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSectionStep.swift; sourceTree = "<group>"; };
 		FFBD07371FAA46CD000CB34F /* RSDStepTransformerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepTransformerObject.swift; sourceTree = "<group>"; };
 		FFBD073E1FAA603E000CB34F /* RSDImageThemeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImageThemeObject.swift; sourceTree = "<group>"; };
-		FFBD07D624491B49006A39E0 /* RSDAsyncActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAsyncActionType.swift; sourceTree = "<group>"; };
-		FFBE9AA125F1BD2C0097B9D2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		FFBE9AA325F1BD2C0097B9D2 /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = Library/Frameworks/XcodeKit.framework; sourceTree = DEVELOPER_DIR; };
 		FFC7DE5D1F992EA800851C95 /* RSDMultipleComponentOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDMultipleComponentOptionsObject.swift; sourceTree = "<group>"; };
 		FFCA183F1F8F326B006ADAF3 /* RSDActiveUIStepCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveUIStepCommand.swift; sourceTree = "<group>"; };
+		FFCC3C60260270FD00063592 /* MigrationNotes_v4.1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v4.1.md; path = ../MigrationNotes/MigrationNotes_v4.1.md; sourceTree = "<group>"; };
+		FFCC3C7A260272E700063592 /* Bundle+module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+module.swift"; sourceTree = "<group>"; };
 		FFCCA7051F9FAD67009BC24C /* RSDInputFieldError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDInputFieldError.swift; sourceTree = "<group>"; };
 		FFD1A2891F8818A700ECD730 /* RSDDateCoderObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDateCoderObject.swift; sourceTree = "<group>"; };
 		FFD1A28B1F882A0100ECD730 /* RSDDateCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDateCoder.swift; sourceTree = "<group>"; };
@@ -838,7 +697,6 @@
 		FFD765C225140505003CD2F1 /* AbstractUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractUIStepObject.swift; sourceTree = "<group>"; };
 		FFDAE9E21F9082E4001D0CC0 /* CodableTaskObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTaskObjectTests.swift; sourceTree = "<group>"; };
 		FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableStepObjectTests.swift; sourceTree = "<group>"; };
-		FFDE53F325F1A3C900387C65 /* MigrationNotes_v4.0.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v4.0.md; path = ../MigrationNotes/MigrationNotes_v4.0.md; sourceTree = "<group>"; };
 		FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDocumentable.swift; sourceTree = "<group>"; };
 		FFDFF5C41FC38150009713E8 /* ExampleDecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleDecodableTests.swift; sourceTree = "<group>"; };
 		FFDFF5DB1FC4F9B9009713E8 /* Date+ISO8601.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ISO8601.swift"; sourceTree = "<group>"; };
@@ -851,8 +709,6 @@
 		FFEA2F762436C1C5008695D6 /* QuestionObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionObjects.swift; sourceTree = "<group>"; };
 		FFEA2F7B2436C21C008695D6 /* InputItemObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputItemObjects.swift; sourceTree = "<group>"; };
 		FFEA2F802437DACF008695D6 /* CodableInputItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableInputItemTests.swift; sourceTree = "<group>"; };
-		FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDExceptionHandler.h; sourceTree = "<group>"; };
-		FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDExceptionHandler.m; sourceTree = "<group>"; };
 		FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerResultTypeJSONTests.swift; sourceTree = "<group>"; };
 		FFF433FD2446428B00C5F466 /* MigrationNotes_v3.2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v3.2.md; path = ../MigrationNotes/MigrationNotes_v3.2.md; sourceTree = "<group>"; };
 		FFF43407244645D300C5F466 /* KeyboardOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardOptionsObject.swift; sourceTree = "<group>"; };
@@ -861,9 +717,6 @@
 		FFF4FBFF2550B322006F6EA2 /* Formatters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Formatters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFF4FC022550B322006F6EA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFF4FCF12550B533006F6EA2 /* FormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterTests.swift; sourceTree = "<group>"; };
-		FFF4FD242550B7D3006F6EA2 /* ExceptionHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ExceptionHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FFF4FD262550B7D3006F6EA2 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
-		FFF4FD272550B7D3006F6EA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFF53EAA1FBF9495004211D2 /* RSDStringLiteralOptionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStringLiteralOptionSet.swift; sourceTree = "<group>"; };
 		FFF53EAC1FBF9562004211D2 /* RSDResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultType.swift; sourceTree = "<group>"; };
 		FFF8A64624EB1FDC00D2AD5D /* ResourceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoader.swift; sourceTree = "<group>"; };
@@ -874,26 +727,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		F82A4A9D22960BF700BEBE3C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FFFBE9E723AD6A9E00650F11 /* ResearchMotion.framework in Frameworks */,
-				FFFBE9E423AD6A9C00650F11 /* Research.framework in Frameworks */,
-				F82A4ABB22960C3100BEBE3C /* CoreLocation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F82A4AA522960BF700BEBE3C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FFDDD64F25094177003DB15C /* Research_UnitTest.framework in Frameworks */,
-				FFDDD65025094177003DB15C /* ResearchUI.framework in Frameworks */,
-				F82A4AA922960BF700BEBE3C /* ResearchLocation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F870619D227390110056F70E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -921,50 +754,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F891DD10228CFCD3001B2A57 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F891DD2D228CFD64001B2A57 /* CoreMotion.framework in Frameworks */,
-				FFFBE9E123AD6A9700650F11 /* Research.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DD18228CFCD3001B2A57 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FFDDD64225094081003DB15C /* ResearchUI.framework in Frameworks */,
-				FFDDD6412509407A003DB15C /* Research_UnitTest.framework in Frameworks */,
-				F891DD1C228CFCD4001B2A57 /* ResearchMotion.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF4A22DA24FDB20200944009 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FF4A22F724FEB82A00944009 /* Research.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF4A22E224FDB20200944009 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FFDDD65125094183003DB15C /* Research_UnitTest.framework in Frameworks */,
-				FFDDD65225094183003DB15C /* ResearchUI.framework in Frameworks */,
-				FF4A22E624FDB20200944009 /* ResearchAudioRecorder.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FF8B53101FCE678E006B6937 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF8A18DC257AB59500F96875 /* ExceptionHandler.framework in Frameworks */,
+				FFDB9C4925CB395A009AB86E /* AudioRecorder in Frameworks */,
+				FFDB9C4B25CB395A009AB86E /* DistanceRecorder in Frameworks */,
+				FFDB9C4F25CB395A009AB86E /* MotionSensor in Frameworks */,
 				FF8A18DF257AB59700F96875 /* Formatters.framework in Frameworks */,
-				FFF434002446446100C5F466 /* JsonModel in Frameworks */,
+				FFDB9C4D25CB395A009AB86E /* LocationAuthorization in Frameworks */,
+				FF45881D25C47F40003472F6 /* MobilePassiveData in Frameworks */,
+				FFDB9C5125CB395A009AB86E /* WeatherRecorder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -986,13 +786,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FFF4FBFC2550B322006F6EA2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FFF4FD212550B7D3006F6EA2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1026,7 +819,7 @@
 				FF74A7E41F7DA5560064A634 /* RSDTaskGroup.swift */,
 				FF2DD5041FA114F200ECD614 /* RSDTaskTransformer.swift */,
 				F8112E60222F600A005BCC93 /* RSDTrackingTask.swift */,
-				F82A49F522947C9B00BEBE3C /* RSDBackgroundTask.swift */,
+				F82A49F522947C9B00BEBE3C /* RSDActiveTask.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -1101,49 +894,10 @@
 			path = "DataSource Tests";
 			sourceTree = "<group>";
 		};
-		F82A49F32294733D00BEBE3C /* Motion Sensors */ = {
-			isa = PBXGroup;
-			children = (
-				F8E94FF42058602F00752B7B /* RSDMotionAuthorization.swift */,
-				F814DD0922750899004579EF /* RSDMotionRecorder.swift */,
-			);
-			name = "Motion Sensors";
-			sourceTree = "<group>";
-		};
-		F82A4A032294992300BEBE3C /* Background */ = {
-			isa = PBXGroup;
-			children = (
-				F82A4A122294A37100BEBE3C /* RSDMotionAudioSessionController.swift */,
-				F82A4A0F22949B9000BEBE3C /* RSDMotionTaskObject.swift */,
-			);
-			name = Background;
-			sourceTree = "<group>";
-		};
-		F82A4AA122960BF700BEBE3C /* ResearchLocation */ = {
-			isa = PBXGroup;
-			children = (
-				F82A4AA222960BF700BEBE3C /* ResearchLocation.h */,
-				FF48F1482555071700F74582 /* Location Sensor */,
-				F82A4AA322960BF700BEBE3C /* Info.plist */,
-			);
-			path = ResearchLocation;
-			sourceTree = "<group>";
-		};
-		F82A4AAC22960BF700BEBE3C /* ResearchLocationTests */ = {
-			isa = PBXGroup;
-			children = (
-				FF0ADCB1255529A200FDFCBF /* CodableTestObjects.swift */,
-				F810CF39202E34C6009C49C9 /* CodableDistanceRecorderTests.swift */,
-				F82A4AAF22960BF700BEBE3C /* Info.plist */,
-			);
-			path = ResearchLocationTests;
-			sourceTree = "<group>";
-		};
 		F82D1122212603C800EA1A33 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				FFD1A28B1F882A0100ECD730 /* RSDDateCoder.swift */,
-				F8BE10AC2135DABE000AAB1E /* RSDPermissionsConfiguration.swift */,
 				F8BE11242136027A000AAB1E /* RSDCopyWithIdentifier.swift */,
 				F8BE11352136049A000AAB1E /* RSDComparable.swift */,
 			);
@@ -1168,7 +922,6 @@
 				F84496152273A23100EAA3E0 /* Resources */,
 				F84496082273A23100EAA3E0 /* Step View Controllers */,
 				F84496052273A23100EAA3E0 /* View Controllers */,
-				F84496252273A23100EAA3E0 /* Audio */,
 				F84496282273A23100EAA3E0 /* Views */,
 				F84496202273A23100EAA3E0 /* Utilities */,
 			);
@@ -1228,16 +981,6 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		F84496252273A23100EAA3E0 /* Audio */ = {
-			isa = PBXGroup;
-			children = (
-				F84496262273A23100EAA3E0 /* RSDUISoundPlayer.swift */,
-				F84496272273A23100EAA3E0 /* RSDVoiceBox.swift */,
-				F82A49FD2294971500BEBE3C /* RSDDefaultAudioSessionController.swift */,
-			);
-			path = Audio;
-			sourceTree = "<group>";
-		};
 		F84496282273A23100EAA3E0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1269,16 +1012,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		F8475BB32125E57A0031D802 /* AsyncAction */ = {
-			isa = PBXGroup;
-			children = (
-				FF72B25E1F688168004C6F15 /* RSDAsyncActionConfiguration.swift */,
-				F8BE10B02135DBD5000AAB1E /* RSDRecorderConfiguration.swift */,
-				F8BE10B42135DC0D000AAB1E /* RSDRequestConfiguration.swift */,
-			);
-			path = AsyncAction;
-			sourceTree = "<group>";
-		};
 		F8475BB42125E5AC0031D802 /* UIActions */ = {
 			isa = PBXGroup;
 			children = (
@@ -1295,8 +1028,6 @@
 		F858D149201BA61A00132325 /* ModelObject Tests */ = {
 			isa = PBXGroup;
 			children = (
-				F8EB48C9228CDBD9000A2F69 /* RecordSampleLoggerTests.swift */,
-				F84A2F772178FABB0079C92C /* ClockTests.swift */,
 				F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */,
 				F8FCE05E203F46EC00616CE8 /* ScheduleTests.swift */,
 				F89BEA2F202B9550007BD2DD /* CopyStepTests.swift */,
@@ -1316,7 +1047,6 @@
 				FFF53EA71FBF8F86004211D2 /* Types */,
 				FF432997239EDAFD0027288F /* Resource Handling */,
 				FF72B2551F685F6D004C6F15 /* Interfaces */,
-				F8EB48CB228CDBF5000A2F69 /* Authorization */,
 				F8BE10AA2135D3D6000AAB1E /* Presentation */,
 				F8FD56332141BD2200BA2FA6 /* Data Archiving */,
 			);
@@ -1356,34 +1086,8 @@
 		F875575F20807E8B00235078 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F82A4ABA22960C3100BEBE3C /* CoreLocation.framework */,
-				F891DD2C228CFD63001B2A57 /* CoreMotion.framework */,
-				FFBE9AA125F1BD2C0097B9D2 /* Cocoa.framework */,
-				FFBE9AA325F1BD2C0097B9D2 /* XcodeKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F891DD14228CFCD3001B2A57 /* ResearchMotion */ = {
-			isa = PBXGroup;
-			children = (
-				F891DD15228CFCD3001B2A57 /* ResearchMotion.h */,
-				F891DD16228CFCD3001B2A57 /* Info.plist */,
-				FFC03C032550998400B6EA41 /* Resources */,
-				F82A49F32294733D00BEBE3C /* Motion Sensors */,
-				F82A4A032294992300BEBE3C /* Background */,
-			);
-			path = ResearchMotion;
-			sourceTree = "<group>";
-		};
-		F891DD1F228CFCD4001B2A57 /* ResearchMotionTests */ = {
-			isa = PBXGroup;
-			children = (
-				FF0ADC972555299200FDFCBF /* CodableTestObjects.swift */,
-				F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */,
-				F891DD22228CFCD4001B2A57 /* Info.plist */,
-			);
-			path = ResearchMotionTests;
 			sourceTree = "<group>";
 		};
 		F8BE10AA2135D3D6000AAB1E /* Presentation */ = {
@@ -1443,7 +1147,6 @@
 			isa = PBXGroup;
 			children = (
 				FFF53EA91FBF90AC004211D2 /* Common */,
-				FFB015CD1F8BF0A900AC209B /* AsyncAction */,
 				F8BE110F2135FA20000AAB1E /* Navigation */,
 				FF5C4C301F8C9D9600F311BA /* Result */,
 				FF74A7DA1F7DA2890064A634 /* Step */,
@@ -1452,25 +1155,6 @@
 				FFE0DE501F87FA2F00BB1BDF /* UIAction */,
 			);
 			path = Objects;
-			sourceTree = "<group>";
-		};
-		F8EB48BE228CDB56000A2F69 /* Recorders */ = {
-			isa = PBXGroup;
-			children = (
-				F8EB48BF228CDBB3000A2F69 /* RSDDataLogger.swift */,
-				F8EB48C0228CDBB3000A2F69 /* RSDSampleRecorder.swift */,
-			);
-			path = Recorders;
-			sourceTree = "<group>";
-		};
-		F8EB48CB228CDBF5000A2F69 /* Authorization */ = {
-			isa = PBXGroup;
-			children = (
-				F8EB48D1228CDCBD000A2F69 /* RSDAuthorizationHandler.swift */,
-				FFB015DF1F8C081200AC209B /* RSDPermissionType.swift */,
-				F8EB48CC228CDC51000A2F69 /* RSDStandardPermission.swift */,
-			);
-			path = Authorization;
 			sourceTree = "<group>";
 		};
 		F8F72433203DF1CD00AC0E5B /* Tracking */ = {
@@ -1601,7 +1285,6 @@
 				FFDFF5DB1FC4F9B9009713E8 /* Date+ISO8601.swift */,
 				FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */,
 				FF8A21531F7CB17D00C7B27F /* SequenceType+Utilities.swift */,
-				F84A2F4421779A640079C92C /* RSDClock.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1659,45 +1342,6 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
-		FF48F1482555071700F74582 /* Location Sensor */ = {
-			isa = PBXGroup;
-			children = (
-				F8E94FF020585ED100752B7B /* RSDLocationAuthorization.swift */,
-				F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */,
-			);
-			path = "Location Sensor";
-			sourceTree = "<group>";
-		};
-		FF4A22DE24FDB20200944009 /* ResearchAudioRecorder */ = {
-			isa = PBXGroup;
-			children = (
-				FF4A22DF24FDB20200944009 /* ResearchAudioRecorder.h */,
-				FF4A22E024FDB20200944009 /* Info.plist */,
-				FF4A22F424FEB6A500944009 /* Audio Recorder */,
-			);
-			path = ResearchAudioRecorder;
-			sourceTree = "<group>";
-		};
-		FF4A22E924FDB20200944009 /* ResearchAudioRecorderTests */ = {
-			isa = PBXGroup;
-			children = (
-				FF4A22EA24FDB20200944009 /* ResearchAudioRecorderTests.swift */,
-				FF4A22EC24FDB20200944009 /* Info.plist */,
-			);
-			path = ResearchAudioRecorderTests;
-			sourceTree = "<group>";
-		};
-		FF4A22F424FEB6A500944009 /* Audio Recorder */ = {
-			isa = PBXGroup;
-			children = (
-				FF4A22F524FEB6E900944009 /* AudioRecorderAuthorization.swift */,
-				FF4A22FC24FEBB3C00944009 /* AudioRecorder.swift */,
-				FF4A230424FEC47600944009 /* AudioRecorderAudioSessionController.swift */,
-				FF4A230A24FEC4FF00944009 /* AudioRecorderTaskObject.swift */,
-			);
-			path = "Audio Recorder";
-			sourceTree = "<group>";
-		};
 		FF5C4C301F8C9D9600F311BA /* Result */ = {
 			isa = PBXGroup;
 			children = (
@@ -1728,22 +1372,16 @@
 				FFF4FBCD2550B0B3006F6EA2 /* MigrationNotes_v3.1.md */,
 				FFF433FD2446428B00C5F466 /* MigrationNotes_v3.2.md */,
 				FFA94E58244E35DB00A706F2 /* MigrationNotes_v3.3.md */,
-				FFDE53F325F1A3C900387C65 /* MigrationNotes_v4.0.md */,
+				FF4589DA25C4C9BE003472F6 /* MigrationNotes_v4.0.md */,
+				FFCC3C60260270FD00063592 /* MigrationNotes_v4.1.md */,
 				FF518F8024AC089B003E9DAB /* ReleaseNotes.md */,
-				FF48F16D255507CC00F74582 /* Bundle+module.swift */,
+				FFCC3C7A260272E700063592 /* Bundle+module.swift */,
 				FF72B2331F6859D3004C6F15 /* Research */,
 				F875575720807E2300235078 /* Research_UnitTest */,
 				FF72B23E1F6859D3004C6F15 /* ResearchTests */,
 				F87061A1227390110056F70E /* ResearchUI */,
 				F87061AC227390120056F70E /* ResearchUITests */,
-				F891DD14228CFCD3001B2A57 /* ResearchMotion */,
-				F891DD1F228CFCD4001B2A57 /* ResearchMotionTests */,
-				F82A4AA122960BF700BEBE3C /* ResearchLocation */,
-				F82A4AAC22960BF700BEBE3C /* ResearchLocationTests */,
-				FF4A22DE24FDB20200944009 /* ResearchAudioRecorder */,
-				FF4A22E924FDB20200944009 /* ResearchAudioRecorderTests */,
 				FFF4FC002550B322006F6EA2 /* Formatters */,
-				FFF4FD252550B7D3006F6EA2 /* ExceptionHandler */,
 				FF92964B255526B500C2B93F /* NSLocaleSwizzle */,
 				FF72B2321F6859D3004C6F15 /* Products */,
 				F875575F20807E8B00235078 /* Frameworks */,
@@ -1758,14 +1396,7 @@
 				F875575620807E2300235078 /* Research_UnitTest.framework */,
 				F87061A0227390110056F70E /* ResearchUI.framework */,
 				F87061A8227390110056F70E /* ResearchUITests_iOS.xctest */,
-				F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */,
-				F891DD1B228CFCD3001B2A57 /* ResearchMotionTests.xctest */,
-				F82A4AA022960BF700BEBE3C /* ResearchLocation.framework */,
-				F82A4AA822960BF700BEBE3C /* ResearchLocationTests.xctest */,
-				FF4A22DD24FDB20200944009 /* ResearchAudioRecorder.framework */,
-				FF4A22E524FDB20200944009 /* ResearchAudioRecorderTests.xctest */,
 				FFF4FBFF2550B322006F6EA2 /* Formatters.framework */,
-				FFF4FD242550B7D3006F6EA2 /* ExceptionHandler.framework */,
 				FF92964A255526B500C2B93F /* NSLocaleSwizzle.framework */,
 			);
 			name = Products;
@@ -1779,7 +1410,6 @@
 				F861B6C52135C2620077D43A /* Core */,
 				FF80B12C1F7C0D1300582849 /* Data Model */,
 				FF74A7E81F7DCE630064A634 /* DataSource */,
-				F8EB48BE228CDB56000A2F69 /* Recorders */,
 				FFFDB9591F99802C00BA1348 /* Localization */,
 				FF2B55021F69077200663289 /* Utilities */,
 			);
@@ -1804,7 +1434,6 @@
 			isa = PBXGroup;
 			children = (
 				F82D1122212603C800EA1A33 /* Common */,
-				F8475BB32125E57A0031D802 /* AsyncAction */,
 				F8BE10BA2135DE85000AAB1E /* Navigation */,
 				F802F3E1204DF1D40027CB00 /* Results */,
 				F802F3DF204DF0F20027CB00 /* Steps */,
@@ -1819,7 +1448,6 @@
 			children = (
 				FFD38DE61FBF805F004203D8 /* RSDStepType.swift */,
 				FFD765C225140505003CD2F1 /* AbstractUIStepObject.swift */,
-				FF63E83C1FBAE5C80060DD98 /* RSDComparableSurveyRuleObject.swift */,
 				FF74A7DB1F7DA2BF0064A634 /* RSDUIStepObject.swift */,
 				FF6489D1244A29AF00CA27FC /* RSDInstructionStepObject.swift */,
 				FF580BF31F7E3764009B3EE9 /* RSDActiveUIStepObject.swift */,
@@ -1926,27 +1554,6 @@
 			path = include;
 			sourceTree = "<group>";
 		};
-		FFA3424425508BF400F6D602 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		FFB015CD1F8BF0A900AC209B /* AsyncAction */ = {
-			isa = PBXGroup;
-			children = (
-				FFBD07D624491B49006A39E0 /* RSDAsyncActionType.swift */,
-				F8B17860202E22CC00B62416 /* RSDStandardAsyncActionConfiguration.swift */,
-				F810CF35202E2811009C49C9 /* RSDMotionRecorderConfiguration.swift */,
-				F8B17854202E1AB100B62416 /* RSDDistanceRecorderConfiguration.swift */,
-				FF4A22FE24FEBC5E00944009 /* AudioRecorderConfiguration.swift */,
-			);
-			name = AsyncAction;
-			path = AsyncActions;
-			sourceTree = "<group>";
-		};
 		FFBD073B1FAA5B76000CB34F /* UIThemeElement */ = {
 			isa = PBXGroup;
 			children = (
@@ -1955,14 +1562,6 @@
 				FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */,
 			);
 			path = UIThemeElement;
-			sourceTree = "<group>";
-		};
-		FFC03C032550998400B6EA41 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				F82A4A162294B07E00BEBE3C /* Silence.wav */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		FFE0DE501F87FA2F00BB1BDF /* UIAction */ = {
@@ -1995,6 +1594,7 @@
 				FF225DFF243B969C00AD2461 /* JsonSurveyRuleObject.swift */,
 				FFF43407244645D300C5F466 /* KeyboardOptionsObject.swift */,
 				FFEA2F702436A9C0008695D6 /* TextInputValidatorObjects.swift */,
+				FF63E83C1FBAE5C80060DD98 /* RSDComparableSurveyRuleObject.swift */,
 				FFD4C78F243D07660027CE6C /* SurveyRuleNavigation.swift */,
 				F8F9544120239E8F00347940 /* RSDDateRangeObject.swift */,
 				FFB6A4B81F8607C300E37752 /* RSDDurationRangeObject.swift */,
@@ -2016,17 +1616,6 @@
 				F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */,
 			);
 			path = Formatters;
-			sourceTree = "<group>";
-		};
-		FFF4FD252550B7D3006F6EA2 /* ExceptionHandler */ = {
-			isa = PBXGroup;
-			children = (
-				FFF4FD262550B7D3006F6EA2 /* ExceptionHandler.h */,
-				FFF4FD272550B7D3006F6EA2 /* Info.plist */,
-				FFA3424425508BF400F6D602 /* include */,
-				FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */,
-			);
-			path = ExceptionHandler;
 			sourceTree = "<group>";
 		};
 		FFF53EA71FBF8F86004211D2 /* Types */ = {
@@ -2097,14 +1686,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		F82A4A9B22960BF700BEBE3C /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F82A4AB022960BF700BEBE3C /* ResearchLocation.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F870619B227390110056F70E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2118,22 +1699,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F875575A20807E2300235078 /* Research_UnitTest.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DD0E228CFCD3001B2A57 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F891DD23228CFCD4001B2A57 /* ResearchMotion.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF4A22D824FDB20200944009 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FF4A22ED24FDB20200944009 /* ResearchAudioRecorder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2168,54 +1733,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FFF4FD1F2550B7D3006F6EA2 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FFF4FD282550B7D3006F6EA2 /* ExceptionHandler.h in Headers */,
-				FFF4FD512550B815006F6EA2 /* RSDExceptionHandler.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		F82A4A9F22960BF700BEBE3C /* ResearchLocation */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F82A4AB522960BF700BEBE3C /* Build configuration list for PBXNativeTarget "ResearchLocation" */;
-			buildPhases = (
-				F82A4A9B22960BF700BEBE3C /* Headers */,
-				F82A4A9C22960BF700BEBE3C /* Sources */,
-				F82A4A9D22960BF700BEBE3C /* Frameworks */,
-				F82A4A9E22960BF700BEBE3C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ResearchLocation;
-			productName = ResearchLocation;
-			productReference = F82A4AA022960BF700BEBE3C /* ResearchLocation.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		F82A4AA722960BF700BEBE3C /* ResearchLocationTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F82A4AB622960BF700BEBE3C /* Build configuration list for PBXNativeTarget "ResearchLocationTests" */;
-			buildPhases = (
-				F82A4AA422960BF700BEBE3C /* Sources */,
-				F82A4AA522960BF700BEBE3C /* Frameworks */,
-				F82A4AA622960BF700BEBE3C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F82A4AAB22960BF700BEBE3C /* PBXTargetDependency */,
-			);
-			name = ResearchLocationTests;
-			productName = ResearchLocationTests;
-			productReference = F82A4AA822960BF700BEBE3C /* ResearchLocationTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		F870619F227390110056F70E /* ResearchUI (iOS) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F87061B5227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI (iOS)" */;
@@ -2230,6 +1750,8 @@
 			dependencies = (
 			);
 			name = "ResearchUI (iOS)";
+			packageProductDependencies = (
+			);
 			productName = "ResearchUI-iOS";
 			productReference = F87061A0227390110056F70E /* ResearchUI.framework */;
 			productType = "com.apple.product-type.framework";
@@ -2273,79 +1795,6 @@
 			productReference = F875575620807E2300235078 /* Research_UnitTest.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		F891DD12228CFCD3001B2A57 /* ResearchMotion */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F891DD24228CFCD4001B2A57 /* Build configuration list for PBXNativeTarget "ResearchMotion" */;
-			buildPhases = (
-				F891DD0E228CFCD3001B2A57 /* Headers */,
-				F891DD0F228CFCD3001B2A57 /* Sources */,
-				F891DD10228CFCD3001B2A57 /* Frameworks */,
-				F891DD11228CFCD3001B2A57 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ResearchMotion;
-			productName = ResearchMotion;
-			productReference = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		F891DD1A228CFCD3001B2A57 /* ResearchMotionTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F891DD27228CFCD4001B2A57 /* Build configuration list for PBXNativeTarget "ResearchMotionTests" */;
-			buildPhases = (
-				F891DD17228CFCD3001B2A57 /* Sources */,
-				F891DD18228CFCD3001B2A57 /* Frameworks */,
-				F891DD19228CFCD3001B2A57 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F891DD1E228CFCD4001B2A57 /* PBXTargetDependency */,
-			);
-			name = ResearchMotionTests;
-			productName = ResearchMotionTests;
-			productReference = F891DD1B228CFCD3001B2A57 /* ResearchMotionTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		FF4A22DC24FDB20200944009 /* ResearchAudioRecorder */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FF4A22F224FDB20200944009 /* Build configuration list for PBXNativeTarget "ResearchAudioRecorder" */;
-			buildPhases = (
-				FF4A22D824FDB20200944009 /* Headers */,
-				FF4A22D924FDB20200944009 /* Sources */,
-				FF4A22DA24FDB20200944009 /* Frameworks */,
-				FF4A22DB24FDB20200944009 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FF4A22FA24FEB82A00944009 /* PBXTargetDependency */,
-			);
-			name = ResearchAudioRecorder;
-			productName = ResearchAudioRecorder;
-			productReference = FF4A22DD24FDB20200944009 /* ResearchAudioRecorder.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		FF4A22E424FDB20200944009 /* ResearchAudioRecorderTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FF4A22F324FDB20200944009 /* Build configuration list for PBXNativeTarget "ResearchAudioRecorderTests" */;
-			buildPhases = (
-				FF4A22E124FDB20200944009 /* Sources */,
-				FF4A22E224FDB20200944009 /* Frameworks */,
-				FF4A22E324FDB20200944009 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FF4A22E824FDB20200944009 /* PBXTargetDependency */,
-			);
-			name = ResearchAudioRecorderTests;
-			productName = ResearchAudioRecorderTests;
-			productReference = FF4A22E524FDB20200944009 /* ResearchAudioRecorderTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		FF8B53131FCE678E006B6937 /* Research (iOS) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF8B53291FCE678E006B6937 /* Build configuration list for PBXNativeTarget "Research (iOS)" */;
@@ -2359,11 +1808,15 @@
 			);
 			dependencies = (
 				FFF4FCA82550B394006F6EA2 /* PBXTargetDependency */,
-				FFF4FD792550B834006F6EA2 /* PBXTargetDependency */,
 			);
 			name = "Research (iOS)";
 			packageProductDependencies = (
-				FFF433FF2446446100C5F466 /* JsonModel */,
+				FF45881C25C47F40003472F6 /* MobilePassiveData */,
+				FFDB9C4825CB395A009AB86E /* AudioRecorder */,
+				FFDB9C4A25CB395A009AB86E /* DistanceRecorder */,
+				FFDB9C4C25CB395A009AB86E /* LocationAuthorization */,
+				FFDB9C4E25CB395A009AB86E /* MotionSensor */,
+				FFDB9C5025CB395A009AB86E /* WeatherRecorder */,
 			);
 			productName = Research_iOS;
 			productReference = FF8B53141FCE678E006B6937 /* Research.framework */;
@@ -2383,6 +1836,8 @@
 				FF8B531F1FCE678E006B6937 /* PBXTargetDependency */,
 			);
 			name = ResearchTests_iOS;
+			packageProductDependencies = (
+			);
 			productName = Research_iOSTests;
 			productReference = FF8B531C1FCE678E006B6937 /* ResearchTests_iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -2423,24 +1878,6 @@
 			productReference = FFF4FBFF2550B322006F6EA2 /* Formatters.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		FFF4FD232550B7D3006F6EA2 /* ExceptionHandler */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FFF4FD292550B7D3006F6EA2 /* Build configuration list for PBXNativeTarget "ExceptionHandler" */;
-			buildPhases = (
-				FFF4FD1F2550B7D3006F6EA2 /* Headers */,
-				FFF4FD202550B7D3006F6EA2 /* Sources */,
-				FFF4FD212550B7D3006F6EA2 /* Frameworks */,
-				FFF4FD222550B7D3006F6EA2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ExceptionHandler;
-			productName = ExceptionHandler;
-			productReference = FFF4FD242550B7D3006F6EA2 /* ExceptionHandler.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2451,15 +1888,6 @@
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
-					F82A4A9F22960BF700BEBE3C = {
-						CreatedOnToolsVersion = 10.2;
-						ProvisioningStyle = Automatic;
-					};
-					F82A4AA722960BF700BEBE3C = {
-						CreatedOnToolsVersion = 10.2;
-						DevelopmentTeam = KA9Z8R6M6K;
-						ProvisioningStyle = Automatic;
-					};
 					F870619F227390110056F70E = {
 						CreatedOnToolsVersion = 10.2;
 						ProvisioningStyle = Automatic;
@@ -2473,22 +1901,6 @@
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
-					};
-					F891DD12228CFCD3001B2A57 = {
-						CreatedOnToolsVersion = 10.2;
-						ProvisioningStyle = Automatic;
-					};
-					F891DD1A228CFCD3001B2A57 = {
-						CreatedOnToolsVersion = 10.2;
-						DevelopmentTeam = KA9Z8R6M6K;
-						ProvisioningStyle = Automatic;
-					};
-					FF4A22DC24FDB20200944009 = {
-						CreatedOnToolsVersion = 11.6;
-						LastSwiftMigration = 1160;
-					};
-					FF4A22E424FDB20200944009 = {
-						CreatedOnToolsVersion = 11.6;
 					};
 					FF8B53131FCE678E006B6937 = {
 						CreatedOnToolsVersion = 9.1;
@@ -2507,9 +1919,6 @@
 					FFF4FBFE2550B322006F6EA2 = {
 						CreatedOnToolsVersion = 12.1;
 					};
-					FFF4FD232550B7D3006F6EA2 = {
-						CreatedOnToolsVersion = 12.1;
-					};
 				};
 			};
 			buildConfigurationList = FF72B22B1F6859D2004C6F15 /* Build configuration list for PBXProject "Research" */;
@@ -2522,7 +1931,7 @@
 			);
 			mainGroup = FF72B2271F6859D2004C6F15;
 			packageReferences = (
-				FFF433FE2446446100C5F466 /* XCRemoteSwiftPackageReference "JsonModel-Swift" */,
+				FF45881B25C47F40003472F6 /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */,
 			);
 			productRefGroup = FF72B2321F6859D3004C6F15 /* Products */;
 			projectDirPath = "";
@@ -2533,34 +1942,13 @@
 				F875575520807E2300235078 /* Research_UnitTest */,
 				F870619F227390110056F70E /* ResearchUI (iOS) */,
 				F87061A7227390110056F70E /* ResearchUITests_iOS */,
-				F891DD12228CFCD3001B2A57 /* ResearchMotion */,
-				F891DD1A228CFCD3001B2A57 /* ResearchMotionTests */,
-				F82A4A9F22960BF700BEBE3C /* ResearchLocation */,
-				F82A4AA722960BF700BEBE3C /* ResearchLocationTests */,
-				FF4A22DC24FDB20200944009 /* ResearchAudioRecorder */,
-				FF4A22E424FDB20200944009 /* ResearchAudioRecorderTests */,
 				FFF4FBFE2550B322006F6EA2 /* Formatters */,
-				FFF4FD232550B7D3006F6EA2 /* ExceptionHandler */,
 				FF929649255526B500C2B93F /* NSLocaleSwizzle */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		F82A4A9E22960BF700BEBE3C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F82A4AA622960BF700BEBE3C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F870619E227390110056F70E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2600,35 +1988,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F891DD11228CFCD3001B2A57 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F82A4A192294B35800BEBE3C /* Silence.wav in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DD19228CFCD3001B2A57 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF4A22DB24FDB20200944009 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF4A22E324FDB20200944009 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FF8B53121FCE678E006B6937 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2660,35 +2019,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FFF4FD222550B7D3006F6EA2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F82A4A9C22960BF700BEBE3C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F82A4ABE22960C8500BEBE3C /* RSDLocationAuthorization.swift in Sources */,
-				F82A4ABD22960C8000BEBE3C /* RSDDistanceRecorder.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F82A4AA422960BF700BEBE3C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F82A4ABC22960C7500BEBE3C /* CodableDistanceRecorderTests.swift in Sources */,
-				FF0ADCB2255529A200FDFCBF /* CodableTestObjects.swift in Sources */,
-				FF48F1A225550BB900F74582 /* Bundle+module.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F870619C227390110056F70E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2703,12 +2036,10 @@
 				FFB14B9624EC502900D0637D /* RSDFontRules.swift in Sources */,
 				F84496442273A23100EAA3E0 /* RSDResultSummaryStepViewController.swift in Sources */,
 				FFB14B9A24EC503A00D0637D /* ResourceLoader.swift in Sources */,
-				F82A4A022294971B00BEBE3C /* RSDDefaultAudioSessionController.swift in Sources */,
 				F84496722273A23100EAA3E0 /* RSDLoadingView.swift in Sources */,
 				F844964A2273A23100EAA3E0 /* RSDActiveStepViewController.swift in Sources */,
 				FF432A1C23A2FBE90027288F /* ThemeImageViewOwner.swift in Sources */,
 				F844965B2273A23100EAA3E0 /* NSLayoutConstraint+Layout.swift in Sources */,
-				F844965D2273A23100EAA3E0 /* RSDVoiceBox.swift in Sources */,
 				F844966C2273A23100EAA3E0 /* RSDCheckmarkView.swift in Sources */,
 				F84496592273A23100EAA3E0 /* UIAlertController+Utilities.swift in Sources */,
 				FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */,
@@ -2721,7 +2052,7 @@
 				FFB14B8924EC500300D0637D /* RSDImageThemeElement+Platform.swift in Sources */,
 				FFB14B8C24EC500300D0637D /* RSDUIAction+Platform.swift in Sources */,
 				F844964D2273A23100EAA3E0 /* RSDTaskInfoStepViewController.swift in Sources */,
-				FF48F16E255507CC00F74582 /* Bundle+module.swift in Sources */,
+				FF48F16E255507CC00F74582 /* (null) in Sources */,
 				F844966F2273A23100EAA3E0 /* RSDPickerViewProtocol.swift in Sources */,
 				FFB14B9324EC502000D0637D /* RSDColorSwatch.swift in Sources */,
 				F84496692273A23100EAA3E0 /* RSDToggleConstraintView.swift in Sources */,
@@ -2730,6 +2061,7 @@
 				FFB14B8724EC500300D0637D /* RSDColorMappingThemeElement+Platform.swift in Sources */,
 				F84496712273A23100EAA3E0 /* RSDCountdownDial.swift in Sources */,
 				F84496412273A23100EAA3E0 /* RSDShowViewUIAction.swift in Sources */,
+				FFCC3C7D260272E700063592 /* Bundle+module.swift in Sources */,
 				F8981A4F2279214B008DD5D0 /* RSDTemplateImageView.swift in Sources */,
 				F84496462273A23100EAA3E0 /* RSDOverviewStepViewController.swift in Sources */,
 				F844965F2273A23100EAA3E0 /* RSDTableSectionHeader.swift in Sources */,
@@ -2748,7 +2080,6 @@
 				FFB14B8824EC500300D0637D /* RSDImageData+Platform.swift in Sources */,
 				F84496572273A23100EAA3E0 /* RSDStepViewController.swift in Sources */,
 				FFB14B8F24EC501000D0637D /* RSDImage.swift in Sources */,
-				F844965C2273A23100EAA3E0 /* RSDUISoundPlayer.swift in Sources */,
 				F84496602273A23100EAA3E0 /* RSDTableViewCell.swift in Sources */,
 				F84496492273A23100EAA3E0 /* RSDNavigationController.swift in Sources */,
 				F84496682273A23100EAA3E0 /* RSDImageViewCell.swift in Sources */,
@@ -2770,7 +2101,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFB14BA524EC52ED00D0637D /* ColorRulesTests.swift in Sources */,
-				FF48F17C25550BB200F74582 /* Bundle+module.swift in Sources */,
+				FF48F17C25550BB200F74582 /* (null) in Sources */,
 				FFB14BA624EC52ED00D0637D /* ColorMappingThemeElementTests.swift in Sources */,
 				FFB14BA724EC52ED00D0637D /* ColorPaletteTests.swift in Sources */,
 			);
@@ -2781,47 +2112,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F875576120807F4800235078 /* NavigationTestObjects.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DD0F228CFCD3001B2A57 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FF48F16F255507CC00F74582 /* Bundle+module.swift in Sources */,
-				F82A4A1022949B9000BEBE3C /* RSDMotionTaskObject.swift in Sources */,
-				F82A4A132294A37200BEBE3C /* RSDMotionAudioSessionController.swift in Sources */,
-				F891DD2E228CFD88001B2A57 /* RSDMotionAuthorization.swift in Sources */,
-				F891DD2F228CFD91001B2A57 /* RSDMotionRecorder.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DD17228CFCD3001B2A57 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F891DD30228CFD9E001B2A57 /* CodableMotionRecorderTests.swift in Sources */,
-				FF0ADC982555299200FDFCBF /* CodableTestObjects.swift in Sources */,
-				FF48F19525550BB800F74582 /* Bundle+module.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF4A22D924FDB20200944009 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FF4A230B24FEC4FF00944009 /* AudioRecorderTaskObject.swift in Sources */,
-				FF4A22FD24FEBB3C00944009 /* AudioRecorder.swift in Sources */,
-				FF4A230924FEC47600944009 /* AudioRecorderAudioSessionController.swift in Sources */,
-				FF4A22F624FEB6E900944009 /* AudioRecorderAuthorization.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF4A22E124FDB20200944009 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FF4A22EB24FDB20200944009 /* ResearchAudioRecorderTests.swift in Sources */,
+				FFCC3C7C260272E700063592 /* Bundle+module.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2844,23 +2135,19 @@
 				FF8B53A91FCE6C7A006B6937 /* RSDSchemaInfo.swift in Sources */,
 				FF6489D2244A29AF00CA27FC /* RSDInstructionStepObject.swift in Sources */,
 				FF432A0C23A05BA20027288F /* Geometry.swift in Sources */,
-				F82A4A0522949A5200BEBE3C /* RSDMotionRecorderConfiguration.swift in Sources */,
 				FF8B54EB1FCE6D15006B6937 /* SequenceType+Utilities.swift in Sources */,
-				F8BE10B52135DC0D000AAB1E /* RSDRequestConfiguration.swift in Sources */,
 				F8BE11252136027A000AAB1E /* RSDCopyWithIdentifier.swift in Sources */,
 				FF4329B0239EFC250027288F /* RSDViewThemeElement.swift in Sources */,
 				F8F9544220239E8F00347940 /* RSDDateRangeObject.swift in Sources */,
 				F8366DB021418C6700EBA88D /* RSDSubtaskStep.swift in Sources */,
 				FF8B54941FCE6CEC006B6937 /* RSDPickerDataSource.swift in Sources */,
 				F8FD56AD21475D2F00BA2FA6 /* RSDModalStepDataSource.swift in Sources */,
-				F82A49F622947C9B00BEBE3C /* RSDBackgroundTask.swift in Sources */,
+				F82A49F622947C9B00BEBE3C /* RSDActiveTask.swift in Sources */,
 				F8BE111D21360158000AAB1E /* RSDStepTransformer.swift in Sources */,
 				F8BE10DD2135E662000AAB1E /* RSDNavigationRule.swift in Sources */,
-				F8EB48C1228CDBB3000A2F69 /* RSDDataLogger.swift in Sources */,
 				FF8B54601FCE6CB8006B6937 /* RSDImageThemeObject.swift in Sources */,
 				FF5D2C4D24B3A7D5000EA4E5 /* SectionResultObject.swift in Sources */,
 				F8904D491FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */,
-				FF4A22FF24FEBC5E00944009 /* AudioRecorderConfiguration.swift in Sources */,
 				FF8B53AA1FCE6C7A006B6937 /* RSDSectionStep.swift in Sources */,
 				FFEA2F6C2436A878008695D6 /* KeyboardOptions.swift in Sources */,
 				F80CA51F1FFEB04B00E89C06 /* RSDChoiceOptionsObject.swift in Sources */,
@@ -2870,7 +2157,6 @@
 				FF8B54C01FCE6D09006B6937 /* RSDStringLiteralOptionSet.swift in Sources */,
 				F8475BB62125E5E30031D802 /* RSDUIActionHandler.swift in Sources */,
 				F80CA50A1FFEAB2100E89C06 /* RSDNumberPickerDataSourceObject.swift in Sources */,
-				FFBD07D724491B49006A39E0 /* RSDAsyncActionType.swift in Sources */,
 				FF8B54231FCE6CA2006B6937 /* RSDActiveUIStepObject.swift in Sources */,
 				FF8B54A31FCE6CF6006B6937 /* RSDTableItem.swift in Sources */,
 				FF4329BD239F20DA0027288F /* RSDColorStyle.swift in Sources */,
@@ -2888,7 +2174,6 @@
 				FFD4C7A5243D630D0027CE6C /* QuestionStepDataSource.swift in Sources */,
 				FFAEE7D3243C007300F18BCB /* Result-KotlinModel.swift in Sources */,
 				FF225E00243B969C00AD2461 /* JsonSurveyRuleObject.swift in Sources */,
-				FF8B53A21FCE6C7A006B6937 /* RSDAsyncActionConfiguration.swift in Sources */,
 				FF639616245223C00002B1D1 /* ResultNodeSerializer.swift in Sources */,
 				FF8B548C1FCE6CDD006B6937 /* RSDAsyncAction.swift in Sources */,
 				F814DD0322750809004579EF /* RSDFileResultUtility.swift in Sources */,
@@ -2909,8 +2194,8 @@
 				FF8B53801FCE6C6F006B6937 /* RSDDeviceType.swift in Sources */,
 				F8BE10C12135E19B000AAB1E /* RSDValidationError.swift in Sources */,
 				FFD4C790243D07660027CE6C /* SurveyRuleNavigation.swift in Sources */,
+				FFCC3C672602724500063592 /* RSDComparableSurveyRuleObject.swift in Sources */,
 				F80CA50E1FFEAB8D00E89C06 /* RSDDatePickerDataSourceObject.swift in Sources */,
-				F8EB48D2228CDCBD000A2F69 /* RSDAuthorizationHandler.swift in Sources */,
 				F8864ADC2163FE3100DF57CF /* RSDResultSummaryStepObject.swift in Sources */,
 				FF8B53A31FCE6C7A006B6937 /* RSDConditionalStepNavigator.swift in Sources */,
 				F8BE10ED2135EBD0000AAB1E /* RSDOrderedStepNavigator.swift in Sources */,
@@ -2932,13 +2217,10 @@
 				FFF43408244645D300C5F466 /* KeyboardOptionsObject.swift in Sources */,
 				F82D111F212602A700EA1A33 /* RSDNavigationResult.swift in Sources */,
 				F8FCB9872229E9620011F27F /* RSDStudyConfiguration.swift in Sources */,
-				F82A4A0922949A6100BEBE3C /* RSDDistanceRecorderConfiguration.swift in Sources */,
 				FF8B546C1FCE6CC5006B6937 /* RSDSchemaInfoObject.swift in Sources */,
 				FF8B537A1FCE6C62006B6937 /* RSDFactory.swift in Sources */,
 				F86A5F1421251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */,
 				FF4329E223A044A20027288F /* RSDResourceImageDataObject.swift in Sources */,
-				F8BE10B12135DBD5000AAB1E /* RSDRecorderConfiguration.swift in Sources */,
-				F8EB48CD228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
 				F8366D952140677600EBA88D /* RSDTaskStepNode.swift in Sources */,
 				FF8B54E91FCE6D15006B6937 /* Date+ISO8601.swift in Sources */,
 				F8BF134F213F97B0009505E5 /* RSDPathComponent.swift in Sources */,
@@ -2948,10 +2230,8 @@
 				FF8B54A21FCE6CF6006B6937 /* RSDTableSection.swift in Sources */,
 				F825BA64207FD75300D29F60 /* RSDWeekday.swift in Sources */,
 				FF8B54BD1FCE6D09006B6937 /* RSDDocumentable.swift in Sources */,
-				F8BE10AD2135DABE000AAB1E /* RSDPermissionsConfiguration.swift in Sources */,
 				F8BE112E21360358000AAB1E /* RSDTableStep.swift in Sources */,
 				F8BAF41F2048DD35004B9406 /* RSDStepNavigatorType.swift in Sources */,
-				F84A2F4521779A640079C92C /* RSDClock.swift in Sources */,
 				FF8B54A11FCE6CF6006B6937 /* RSDMultipleComponentOptionsObject.swift in Sources */,
 				F825BA60207FD70000D29F60 /* RSDWeeklyScheduleObject.swift in Sources */,
 				FF225E05243BC2FC00AD2461 /* JsonChoiceObject.swift in Sources */,
@@ -2964,7 +2244,6 @@
 				FF4329A3239EEFEA0027288F /* RSDColorData.swift in Sources */,
 				FF8B53AF1FCE6C7A006B6937 /* RSDSurveyRule.swift in Sources */,
 				F8C28F30204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift in Sources */,
-				F8EB48C5228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */,
 				FFD4C7AA243E43780027CE6C /* TableDataSourceImpl.swift in Sources */,
 				F837224622331DBE00C9A2EA /* RSDOverviewStep.swift in Sources */,
 				B59FC2A82073439F002BFDB9 /* RSDImagePlacementType.swift in Sources */,
@@ -2980,20 +2259,18 @@
 				FF8B53A61FCE6C7A006B6937 /* RSDRange.swift in Sources */,
 				F802F3E3204DF2B80027CB00 /* RSDUIStep.swift in Sources */,
 				F8FD56352141BD5100BA2FA6 /* RSDTaskMetadata.swift in Sources */,
-				F8B17861202E22CC00B62416 /* RSDStandardAsyncActionConfiguration.swift in Sources */,
 				FF8B54EA1FCE6D15006B6937 /* Dictionary+Utilities.swift in Sources */,
 				FF43297E239B178B0027288F /* RSDColorPlacement.swift in Sources */,
 				F8BE11212136023A000AAB1E /* RSDDecodableReplacement.swift in Sources */,
 				FF8B54581FCE6CB1006B6937 /* RSDUIActionHandlerObject.swift in Sources */,
 				FFE274FE2575827700FA621A /* RSDResultProcessor.swift in Sources */,
 				FF81E0B5244A4FF90081644B /* RSDTaskInfoObject.swift in Sources */,
-				FF8B53841FCE6C6F006B6937 /* RSDPermissionType.swift in Sources */,
+				FFCC3C7B260272E700063592 /* Bundle+module.swift in Sources */,
 				FF8B54611FCE6CB8006B6937 /* RSDViewThemeElementObject.swift in Sources */,
 				F8B42BE31FE9ABE200E23783 /* Localization.swift in Sources */,
 				F8BF1323213A3210009505E5 /* RSDTaskRepository.swift in Sources */,
 				F8366D90214042F800EBA88D /* RSDStepViewModel.swift in Sources */,
 				F8864AD72163F96500DF57CF /* RSDResultSummaryStep.swift in Sources */,
-				FF8B543D1FCE6CA9006B6937 /* RSDComparableSurveyRuleObject.swift in Sources */,
 				FF8B540C1FCE6C97006B6937 /* RSDResultObject.swift in Sources */,
 				F8BE11362136049A000AAB1E /* RSDComparable.swift in Sources */,
 				F8BE10FA2135F172000AAB1E /* RSDTaskInfo.swift in Sources */,
@@ -3019,7 +2296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8C7D40B2092876B007490BC /* CodableTrackedDataTests.swift in Sources */,
-				FF48F1AF25550BC300F74582 /* Bundle+module.swift in Sources */,
+				FF48F1AF25550BC300F74582 /* (null) in Sources */,
 				F8C7D39D20915E67007490BC /* CodableUIActionObjectTests.swift in Sources */,
 				F83E44032249E8EF00E13207 /* ArrayExtensionTests.swift in Sources */,
 				FFA94E4C244A8A2D00A706F2 /* JsonDocumentableTests.swift in Sources */,
@@ -3036,9 +2313,7 @@
 				FF9C264B243FA48B00241202 /* QuestionTableDataSourceTests.swift in Sources */,
 				FF225DF8243A56B000AD2461 /* CodableQuestionTests.swift in Sources */,
 				FF633D771FCE7A6900CF2267 /* CodableTaskObjectTests.swift in Sources */,
-				F8EB48CA228CDBD9000A2F69 /* RecordSampleLoggerTests.swift in Sources */,
 				F83E44072249F5FA00E13207 /* ResultTests.swift in Sources */,
-				F84A2F782178FABB0079C92C /* ClockTests.swift in Sources */,
 				F83E44052249EA0B00E13207 /* CodableExtensionTests.swift in Sources */,
 				F8458EDD22456CE40094D7B0 /* TaskViewModelTests.swift in Sources */,
 				F89BEA30202B9550007BD2DD /* CopyStepTests.swift in Sources */,
@@ -3076,42 +2351,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FFF4FD202550B7D3006F6EA2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FFF4FD382550B7FE006F6EA2 /* RSDExceptionHandler.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F82A4AAB22960BF700BEBE3C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F82A4A9F22960BF700BEBE3C /* ResearchLocation */;
-			targetProxy = F82A4AAA22960BF700BEBE3C /* PBXContainerItemProxy */;
-		};
 		F87061AB227390120056F70E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F870619F227390110056F70E /* ResearchUI (iOS) */;
 			targetProxy = F87061AA227390120056F70E /* PBXContainerItemProxy */;
-		};
-		F891DD1E228CFCD4001B2A57 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F891DD12228CFCD3001B2A57 /* ResearchMotion */;
-			targetProxy = F891DD1D228CFCD4001B2A57 /* PBXContainerItemProxy */;
-		};
-		FF4A22E824FDB20200944009 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FF4A22DC24FDB20200944009 /* ResearchAudioRecorder */;
-			targetProxy = FF4A22E724FDB20200944009 /* PBXContainerItemProxy */;
-		};
-		FF4A22FA24FEB82A00944009 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			platformFilter = ios;
-			target = FF8B53131FCE678E006B6937 /* Research (iOS) */;
-			targetProxy = FF4A22F924FEB82A00944009 /* PBXContainerItemProxy */;
 		};
 		FF8B531F1FCE678E006B6937 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3133,11 +2379,6 @@
 			target = FFF4FBFE2550B322006F6EA2 /* Formatters */;
 			targetProxy = FFF4FCA72550B394006F6EA2 /* PBXContainerItemProxy */;
 		};
-		FFF4FD792550B834006F6EA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FFF4FD232550B7D3006F6EA2 /* ExceptionHandler */;
-			targetProxy = FFF4FD782550B834006F6EA2 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -3152,128 +2393,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		F82A4AB122960BF700BEBE3C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchLocation/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchLocation;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		F82A4AB222960BF700BEBE3C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchLocation/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchLocation;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		F82A4AB322960BF700BEBE3C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchLocationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchLocationTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		F82A4AB422960BF700BEBE3C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchLocationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchLocationTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		F87061B1227390120056F70E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3452,247 +2571,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		F891DD25228CFCD4001B2A57 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchMotion/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchMotion;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		F891DD26228CFCD4001B2A57 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchMotion/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchMotion;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		F891DD28228CFCD4001B2A57 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchMotionTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchMotionTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		F891DD29228CFCD4001B2A57 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchMotionTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchMotionTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		FF4A22EE24FDB20200944009 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchAudioRecorder/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchAudioRecorder;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		FF4A22EF24FDB20200944009 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchAudioRecorder/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchAudioRecorder;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		FF4A22F024FDB20200944009 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchAudioRecorderTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchAudioRecorderTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		FF4A22F124FDB20200944009 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchAudioRecorderTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchAudioRecorderTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -4078,92 +2956,9 @@
 			};
 			name = Release;
 		};
-		FFF4FD2A2550B7D3006F6EA2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ExceptionHandler/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ExceptionHandler;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		FFF4FD2B2550B7D3006F6EA2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ExceptionHandler/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ExceptionHandler;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F82A4AB522960BF700BEBE3C /* Build configuration list for PBXNativeTarget "ResearchLocation" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F82A4AB122960BF700BEBE3C /* Debug */,
-				F82A4AB222960BF700BEBE3C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F82A4AB622960BF700BEBE3C /* Build configuration list for PBXNativeTarget "ResearchLocationTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F82A4AB322960BF700BEBE3C /* Debug */,
-				F82A4AB422960BF700BEBE3C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		F87061B5227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -4187,42 +2982,6 @@
 			buildConfigurations = (
 				F875575B20807E2300235078 /* Debug */,
 				F875575C20807E2300235078 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F891DD24228CFCD4001B2A57 /* Build configuration list for PBXNativeTarget "ResearchMotion" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F891DD25228CFCD4001B2A57 /* Debug */,
-				F891DD26228CFCD4001B2A57 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F891DD27228CFCD4001B2A57 /* Build configuration list for PBXNativeTarget "ResearchMotionTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F891DD28228CFCD4001B2A57 /* Debug */,
-				F891DD29228CFCD4001B2A57 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF4A22F224FDB20200944009 /* Build configuration list for PBXNativeTarget "ResearchAudioRecorder" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FF4A22EE24FDB20200944009 /* Debug */,
-				FF4A22EF24FDB20200944009 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF4A22F324FDB20200944009 /* Build configuration list for PBXNativeTarget "ResearchAudioRecorderTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FF4A22F024FDB20200944009 /* Debug */,
-				FF4A22F124FDB20200944009 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -4272,33 +3031,49 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FFF4FD292550B7D3006F6EA2 /* Build configuration list for PBXNativeTarget "ExceptionHandler" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FFF4FD2A2550B7D3006F6EA2 /* Debug */,
-				FFF4FD2B2550B7D3006F6EA2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		FFF433FE2446446100C5F466 /* XCRemoteSwiftPackageReference "JsonModel-Swift" */ = {
+		FF45881B25C47F40003472F6 /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Sage-Bionetworks/JsonModel-Swift.git";
+			repositoryURL = "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.2.0;
+				branch = "research-compatibility";
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FFF433FF2446446100C5F466 /* JsonModel */ = {
+		FF45881C25C47F40003472F6 /* MobilePassiveData */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FFF433FE2446446100C5F466 /* XCRemoteSwiftPackageReference "JsonModel-Swift" */;
-			productName = JsonModel;
+			package = FF45881B25C47F40003472F6 /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */;
+			productName = MobilePassiveData;
+		};
+		FFDB9C4825CB395A009AB86E /* AudioRecorder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF45881B25C47F40003472F6 /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */;
+			productName = AudioRecorder;
+		};
+		FFDB9C4A25CB395A009AB86E /* DistanceRecorder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF45881B25C47F40003472F6 /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */;
+			productName = DistanceRecorder;
+		};
+		FFDB9C4C25CB395A009AB86E /* LocationAuthorization */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF45881B25C47F40003472F6 /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */;
+			productName = LocationAuthorization;
+		};
+		FFDB9C4E25CB395A009AB86E /* MotionSensor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF45881B25C47F40003472F6 /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */;
+			productName = MotionSensor;
+		};
+		FFDB9C5025CB395A009AB86E /* WeatherRecorder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF45881B25C47F40003472F6 /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */;
+			productName = WeatherRecorder;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,8 +1,8 @@
 //
-//  CodableObjectTests.swift
-//  ResearchTests
+//  RSDBackgroundTask.swift
+//  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,16 +31,17 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import XCTest
-import Research
-import JsonModel
-@testable import Research_UnitTest
+import Foundation
+import MobilePassiveData
 
-var decoder: JSONDecoder {
-    setupPlatformContext()
-    return RSDFactory.shared.createJSONDecoder()
+/// An active task is a task that has timing considerations, runs in the background, and/or includes
+/// speech-to-text as a part of the task flow where the `AVAudioSession` may need to be active.
+public protocol RSDActiveTask : RSDTask {
+    
+    /// Should the task end early if the task is interrupted by a phone call?
+    var shouldEndOnInterrupt: Bool { get }
+    
+    /// The audio session settings (if any) required by this task to run properly.
+    var audioSessionSettings: AudioSessionSettings? { get }
 }
 
-var encoder: JSONEncoder {
-    return RSDFactory.shared.createJSONEncoder()
-}

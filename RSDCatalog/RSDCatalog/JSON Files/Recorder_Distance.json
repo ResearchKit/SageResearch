@@ -1,6 +1,6 @@
 {
     "identifier"        : "distance",
-    "type": "motionTask",
+    "type": "assessment",
     "resultIdentifier": "Distance Recorder",
     "versionString": "1",
     "actions"           : { "cancel": { "type": "default", "iconName": "closeActivity" }},

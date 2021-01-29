@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import MobilePassiveData
 
 extension RSDStepType {
     fileprivate static let nullStepType: RSDStepType = "null"
@@ -43,7 +44,7 @@ extension RSDStepType {
 /// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, RSDStandardPermissionsStep, RSDOptionalStep {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, StandardPermissionsStep, RSDOptionalStep {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier
@@ -95,7 +96,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     open var footnote: String?
     
     /// The permissions used by this task that are described by this step.
-    open var standardPermissions: [RSDStandardPermission]?
+    open var standardPermissions: [StandardPermission]?
     
     /// Should this step be displayed if and only if the flag has been set for displaying the full
     /// instructions?
@@ -357,7 +358,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
 
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
-        self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
+        self.standardPermissions = try container.decodeIfPresent([StandardPermission].self, forKey: .permissions) ?? self.standardPermissions
         self._fullInstructionsOnly = try container.decodeIfPresent(Bool.self, forKey: .fullInstructionsOnly) ?? self._fullInstructionsOnly
     
         self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
@@ -467,7 +468,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         case .nextStepIdentifier:
             return .init(propertyType: .primitive(.string))
         case .permissions:
-            return .init(propertyType: .referenceArray(RSDStandardPermission.documentableType()))
+            return .init(propertyType: .referenceArray(StandardPermission.documentableType()))
         case .viewTheme:
             return .init(propertyType: .interface("\(RSDViewThemeElement.self)"))
         case .colorMapping:

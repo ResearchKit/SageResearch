@@ -35,6 +35,7 @@ import UIKit
 import AVFoundation
 import JsonModel
 import Research
+import MobilePassiveData
 
 /// `RSDPageViewControllerProtocol` allows replacing the `UIPageViewController` in the base class with a different
 /// view controller implementation. It is assumed that the implementation is for a view controller appropriate to
@@ -123,7 +124,7 @@ public protocol RSDStepViewControllerVendor : RSDStep {
 /// `RSDTaskViewController` is the default implementation of task view controller that is suitable to the iPhone or iPad.
 /// The default implementation will display a series of steps using a `UIPageViewController`. This controller will also handle
 /// starting and stoping async actions and vending the appropriate step view controller for each step.
-open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, RSDAsyncActionDelegate, RSDLoadingViewControllerProtocol {
+open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, AsyncActionControllerDelegate, RSDLoadingViewControllerProtocol {
 
     /// The delegate for the task view controller.
     ///
@@ -305,16 +306,18 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// This method will look for an async action controller in the following order:
     /// 1. Call the delegate method `taskViewController(:, asyncActionFor configuration:)` and
     ///    return the controller supplied by that method.
-    /// 2. If the given configuration implements the `RSDAsyncActionVendor` protocol and returns
+    /// 2. If the given configuration implements the `AsyncActionVendor` protocol and returns
     ///    a non-nil instance of a controller, then that will be returned.
     /// 3. Otherwise, return the controller instantiated by calling `vendDefaultAsyncActionController(for step:)`.
     ///
     /// - parameter configuration: The configuration for this async action.
     /// - returns: The async action controller for this confguration, or `nil` if the action is not supported
     ///            by this platform.
-    open func asyncAction(for configuration: RSDAsyncActionConfiguration, path: RSDPathComponent) -> RSDAsyncAction? {
-        if let vender = configuration as? RSDAsyncActionVendor {
-            return vender.instantiateController(with: path)
+    open func asyncAction(for configuration: AsyncActionConfiguration, path: RSDPathComponent) -> AsyncActionController? {
+        if let vender = configuration as? AsyncActionVendor {
+            return vender.instantiateController(outputDirectory: path.outputDirectory,
+                                                initialStepPath: path.fullPath,
+                                                sectionIdentifier: (path as? RSDStepViewPathComponent)?.sectionIdentifier())
         } else {
             return vendDefaultAsyncActionController(for: configuration)
         }
@@ -329,7 +332,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// - parameter configuration: The configuration for this async action.
     /// - returns: The async action controller for this confguration, or `nil` if the action is not supported
     ///            by this platform.
-    open func vendDefaultAsyncActionController(for configuration: RSDAsyncActionConfiguration) -> RSDAsyncAction? {
+    open func vendDefaultAsyncActionController(for configuration: AsyncActionConfiguration) -> AsyncActionController? {
         return nil
     }
     
@@ -343,12 +346,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// - parameters:
     ///     - controller: The controller that has failed.
     ///     - error: The failure error.
-    open func asyncAction(_ controller: RSDAsyncAction, didFailWith error: Error) {
+    open func asyncAction(_ controller: AsyncActionController, didFailWith error: Error) {
         DispatchQueue.main.async {
             self._addErrorResult(for: controller, error: error)
             self._removeAsyncActionController(controller)
-            if let recorderError = error as? RSDSampleRecorder.RecorderError, recorderError == .interrupted,
-                (self.backgroundTask?.shouldEndOnInterrupt ?? false) {
+            if let recorderError = error as? SampleRecorder.RecorderError, recorderError == .interrupted,
+                (self.activeTask?.shouldEndOnInterrupt ?? false) {
                 self.handleTaskFailure(with: error)
             }
         }
@@ -364,6 +367,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
 
     // MARK: `RSDTaskController` protocol implementation
     
+    
+    open var audioSessionIdentifier: String {
+        "org.sagebase.RSDTaskViewController.\(taskViewModel.identifier)"
+    }
+    
     /// A mutable path object used to track the current state of a running task.
     public var taskViewModel: RSDTaskViewModel! {
         didSet {
@@ -373,8 +381,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     /// Returns a list of the async action controllers that are currently active. This includes controllers
     /// that are requesting permissions, starting, running, *and* stopping.
-    public var currentAsyncControllers: [RSDAsyncAction] {
-        var ret: [RSDAsyncAction]!
+    public var currentAsyncControllers: [AsyncActionController] {
+        var ret: [AsyncActionController]!
         controllerQueue.sync {
             ret = _asyncControllers.map { $0.controller }
         }
@@ -467,7 +475,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         let completion: (() -> Void) = {
             self.delegate?.taskController(self, didFinishWith: .failed, error: error)
         }
-        if let recorderError = error as? RSDSampleRecorder.RecorderError, recorderError == .interrupted {
+        if let recorderError = error as? SampleRecorder.RecorderError, recorderError == .interrupted {
             self.presentAlertWithOk(title: nil, message: Localization.localizedString("TASK_INTERRUPTION_MESSAGE")) { (_) in
                 completion()
             }
@@ -506,9 +514,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///     - configurations: The configurations to start.
     ///     - path: The path component that is currently being navigated.
     ///     - completion: The completion to call with the instantiated controllers.
-    public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([RSDAsyncAction]) -> Void)) {
+    public func addAsyncActions(with configurations: [AsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([AsyncActionController]) -> Void)) {
         // Get the controller for each configuration
-        let controllers = configurations.compactMap { (configuration) -> RSDAsyncAction? in
+        let controllers = configurations.compactMap { (configuration) -> AsyncActionController? in
             guard let asyncController = self.asyncAction(for: configuration, path: path) else {
                 debugPrint("Did not create controller for async config \(configuration)")
                 return nil
@@ -516,12 +524,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             return asyncController
         }
         DispatchQueue.main.async {
-            self._addAsyncActionControllersIfNeeded(controllers, requestedState: .idle)
+            self._addAsyncActionControllersIfNeeded(path, controllers, requestedState: .idle)
             completion(controllers)
         }
     }
     
-    public func requestPermission(for controllers: [RSDAsyncAction], completion: @escaping (() -> Void)) {
+    public func requestPermission(for controllers: [AsyncActionController], path: RSDPathComponent, completion: @escaping (() -> Void)) {
         _setupAsyncActions(for: controllers, shouldStart: false, showLoading: false, completion: completion)
     }
     
@@ -544,20 +552,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             }
         }
     }
-
-    /// Start the async action controllers. The protocol extension calls this method when an async action
-    /// should be started directly *after* the step is presented.
-    ///
-    /// The task controller needs to handle blocking any navigation changes until the async controllers are
-    /// ready to proceed. Otherwise, the modal popup alert can be swallowed by the step change.
-    ///
-    public func startAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void)) {
-        _setupAsyncActions(for: controllers, shouldStart: true, showLoading: showLoading, completion: completion)
-    }
     
-    private func _setupAsyncActions(for controllers:[RSDAsyncAction], shouldStart: Bool, showLoading: Bool, completion: @escaping (() -> Void)) {
+    private func _setupAsyncActions(for controllers:[AsyncActionController], shouldStart: Bool, showLoading: Bool, completion: @escaping (() -> Void)) {
         // Return if nothing to start
-        guard controllers.count > 0 else {
+        guard controllers.count > 0, let path = self.taskViewModel else {
             DispatchQueue.main.async  {
                 completion()
             }
@@ -565,8 +563,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         }
         
         // Add the controllers if needed.
-        let state: RSDAsyncActionStatus = shouldStart ? .starting : .permissionGranted
-        self._addAsyncActionControllersIfNeeded(controllers, requestedState: state)
+        let state: AsyncActionStatus = shouldStart ? .starting : .permissionGranted
+        self._addAsyncActionControllersIfNeeded(path, controllers, requestedState: state)
 
         // Start on the main queue
         DispatchQueue.main.async {
@@ -583,7 +581,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
                 
                 // request permission for each controller.
                 for controller in controllers {
-                    guard controller.status == RSDAsyncActionStatus.idle else { continue }
+                    guard controller.status == AsyncActionStatus.idle else { continue }
                     dispatchGroup.enter()
                     self._requestPermission(for: controller) {
                         dispatchGroup.leave()
@@ -608,7 +606,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// forward navigation should be blocked until the completion handler is called. When the stop action
     /// is called, the view controller needs to handle stopping the controllers, adding the results, and
     /// showing a loading state until ready to move forward in the task navigation.
-    public func stopAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void)) {
+    public func stopAsyncActions(for controllers: [AsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
     
         // Start on the main queue
         DispatchQueue.main.async {
@@ -626,26 +624,30 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
                 let dispatchGroup = DispatchGroup()
                 
                 // Stop each controller and add the result
-                for controller in controllers {
-                    if (controller.status <= RSDAsyncActionStatus.running) {
-                        let requestedStatus = self._findInflight(for: controller)?.moveTo(state: .stopping) ?? .running
-                        if requestedStatus < .stopping {
-                            dispatchGroup.enter()
-                            DispatchQueue.main.async {
-                                controller.stop({ [weak self] (controller, result, error) in
-                                    self?._removeAsyncActionController(controller)
-                                    if let asyncResult = result {
-                                        controller.taskViewModel.taskResult.appendAsyncResult(with: asyncResult)
-                                    }
-                                    else if error == nil {
-                                        print("WARNING! NULL result for async action \(controller.configuration.identifier)")
-                                    }
-                                    if error != nil {
-                                        self?._addErrorResult(for: controller, error: error!)
-                                    }
-                                    dispatchGroup.leave()
-                                })
+                controllers.forEach { controller in
+                    guard controller.status <= AsyncActionStatus.running,
+                          let inflight = self._findInflight(for: controller),
+                          inflight.moveTo(state: .stopping) < .stopping
+                    else {
+                        debugPrint("Exiting early from stopping controller with controller.status=\(controller.status)")
+                        return
+                    }
+
+                    dispatchGroup.enter()
+                    DispatchQueue.main.async {
+                        controller.stop { [weak self] (controller, result, error) in
+                            if let asyncResult = result,
+                               let path = inflight.path {
+                                path.taskResult.appendAsyncResult(with: asyncResult)
                             }
+                            else if error == nil {
+                                print("WARNING! NULL result for async action \(controller.configuration.identifier)")
+                            }
+                            if error != nil {
+                                self?._addErrorResult(for: controller, error: error!)
+                            }
+                            self?._removeAsyncActionController(controller)
+                            dispatchGroup.leave()
                         }
                     }
                 }
@@ -768,37 +770,23 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     
     // MARK: Audio session management
-    
-    public private(set) var audioSessionController : RSDAudioSessionController?
-    
+        
     /// The current background task may be a subtask for the case where a group of tasks are being
     /// run together as a flow that combines other tasks.
-    public var backgroundTask: RSDBackgroundTask? {
-        return (self.task as? RSDBackgroundTask) ??
-            ((self.taskViewModel.currentChild as? RSDTaskPathComponent)?.task as? RSDBackgroundTask)
+    public var activeTask: RSDActiveTask? {
+        return (self.task as? RSDActiveTask) ??
+            ((self.taskViewModel.currentChild as? RSDTaskPathComponent)?.task as? RSDActiveTask)
     }
     
     /// Start the background audio session if needed.
     public final func startBackgroundAudioSessionIfNeeded() {
-        if audioSessionController == nil {
-            audioSessionController = backgroundTask?.audioSessionController ?? RSDDefaultAudioSessionController()
-        }
-        audioSessionController!.startAudioSessionIfNeeded()
-    }
-    
-    /// Start a background audio session.
-    private func _startBackgroundAudioSessionIfNeeded(for controller: RSDAsyncAction) {
-        guard let recorder = controller.configuration as? RSDRecorderConfiguration, recorder.requiresBackgroundAudio
-            else {
-                return
-        }
-        startBackgroundAudioSessionIfNeeded()
+        let settings = activeTask?.audioSessionSettings ?? .backgroundVoicePrompt
+        AudioSessionController.shared.startAudioSessionIfNeeded(on: self.audioSessionIdentifier, with: settings)
     }
     
     /// Stop the audio session.
     private func _stopAudioSession() {
-        audioSessionController?.stopAudioSession()
-        audioSessionController = nil
+        AudioSessionController.shared.stopAudioSession(on: self.audioSessionIdentifier)
     }
     
     
@@ -809,11 +797,13 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     class InflightController {
         
-        let controller: RSDAsyncAction
+        let controller: AsyncActionController
         
-        var requestedState: RSDAsyncActionStatus {
+        weak var path: RSDPathComponent!
+        
+        var requestedState: AsyncActionStatus {
             get {
-                var ret: RSDAsyncActionStatus!
+                var ret: AsyncActionStatus!
                 stateQueue.sync {
                     ret = self._requestedState
                 }
@@ -827,16 +817,17 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
                 }
             }
         }
-        private var _requestedState: RSDAsyncActionStatus
+        private var _requestedState: AsyncActionStatus
         private let stateQueue = DispatchQueue(label: "org.sagebase.Research.InflightState.\(UUID())")
         
-        init(controller: RSDAsyncAction, requestedState: RSDAsyncActionStatus) {
+        init(controller: AsyncActionController, path: RSDPathComponent, requestedState: AsyncActionStatus) {
             self.controller = controller
+            self.path = path
             self._requestedState = requestedState
         }
         
-        func moveTo(state newValue: RSDAsyncActionStatus) -> RSDAsyncActionStatus {
-            var ret: RSDAsyncActionStatus!
+        func moveTo(state newValue: AsyncActionStatus) -> AsyncActionStatus {
+            var ret: AsyncActionStatus!
             stateQueue.sync {
                 ret = self._requestedState
                 if newValue > self._requestedState {
@@ -848,7 +839,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     /// Part 1 of starting an async action controller.
-    private func _requestPermission(for controller: RSDAsyncAction, completion: @escaping (() -> Void)) {
+    private func _requestPermission(for controller: AsyncActionController, completion: @escaping (() -> Void)) {
         DispatchQueue.main.async {
             if controller.delegate == nil {
                 controller.delegate = self
@@ -879,7 +870,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     /// Part 2 of starting an async action controller.
-    private func _startAsyncActionControllerPart2(_ controller: RSDAsyncAction, completion: @escaping (() -> Void)) {
+    private func _startAsyncActionControllerPart2(_ controller: AsyncActionController, completion: @escaping (() -> Void)) {
         controller.start() { [weak self] (controller, result, error) in
 
             if error != nil {
@@ -887,10 +878,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
                 print("WARNING! Failed to start recorder \(controller.configuration.identifier). status=\(controller.status) error=\(String(describing: error)) ")
                 self?._addErrorResult(for: controller, error: error!)
             }
-            else if (controller.status == .finished), let asyncResult = result {
+            else if (controller.status == .finished),
+                    let asyncResult = result,
+                    let path = self?._findInflight(for: controller)?.path {
                 // If the async has returned with a result and the status is finished then add the result
                 // to the result set.
-                controller.taskViewModel.taskResult.appendAsyncResult(with: asyncResult)
+                path.taskResult.appendAsyncResult(with: asyncResult)
             }
             
             // If not running then remove from the managed list.
@@ -900,15 +893,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             }
             
             DispatchQueue.main.async {
-                if started {
-                    self?._startBackgroundAudioSessionIfNeeded(for: controller)
-                }
                 completion()
             }
         }
     }
     
-    private func _findInflight(for controller: RSDAsyncAction) -> InflightController? {
+    private func _findInflight(for controller: AsyncActionController) -> InflightController? {
         var ret: InflightController?
         controllerQueue.sync {
             ret = self._asyncControllers.first(where: { $0.controller.isEqual(controller) })
@@ -917,21 +907,21 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     /// Add an async action controller to the controllers list on the controller queue.
-    private func _addAsyncActionControllersIfNeeded(_ controllers: [RSDAsyncAction], requestedState: RSDAsyncActionStatus) {
+    private func _addAsyncActionControllersIfNeeded(_ path: RSDPathComponent, _ controllers: [AsyncActionController], requestedState: AsyncActionStatus) {
         controllerQueue.async {
             controllers.forEach { (controller) in
                 if let inflight = self._asyncControllers.first(where: { $0.controller.isEqual(controller) }) {
                     inflight.requestedState = requestedState
                 }
                 else {
-                    self._asyncControllers.append(InflightController(controller: controller, requestedState: requestedState))
+                    self._asyncControllers.append(InflightController(controller: controller, path: path, requestedState: requestedState))
                 }
             }
         }
     }
     
     /// Remove an async action controller from the managed list on the controller queue.
-    private func _removeAsyncActionController(_ controller: RSDAsyncAction) {
+    private func _removeAsyncActionController(_ controller: AsyncActionController) {
         controllerQueue.async {
             if controller.status < .stopping {
                 print("WARNING! Removing controller with a status less than finished.")
@@ -941,11 +931,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     /// Add an error result for the given async action controller.
-    private func _addErrorResult(for controller: RSDAsyncAction, error: Error) {
+    private func _addErrorResult(for controller: AsyncActionController, error: Error) {
         // Add error result to the task results.
         let identifier = "\(controller.configuration.identifier)_error"
         let errorResult = ErrorResultObject(identifier: identifier, error: error)
-        controller.taskViewModel.taskResult.appendAsyncResult(with: errorResult)
+        let path = self._findInflight(for: controller)?.path ?? self.taskViewModel
+        path!.taskResult.appendAsyncResult(with: errorResult)
     }
 }
 

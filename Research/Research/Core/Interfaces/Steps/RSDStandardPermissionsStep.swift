@@ -1,5 +1,5 @@
 //
-//  RSDStandardPermissionsStep.swift
+//  StandardPermissionsStep.swift
 //  Research
 //
 //  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
@@ -32,20 +32,21 @@
 //
 
 import Foundation
+import MobilePassiveData
 
-/// `RSDPermissionsStep` extends the `RSDUIStep` to include information about an activity including
+/// `PermissionsStep` extends the `RSDUIStep` to include information about an activity including
 /// what permissions are required by this step or task. Without these preconditions, the task cannot
 /// measure or collect the data needed for this task.
-public protocol RSDStandardPermissionsStep : RSDStep, RSDPermissionsConfiguration {
+public protocol StandardPermissionsStep : RSDStep, PermissionsConfiguration {
     
     /// The permissions used by this task.
-    var standardPermissions: [RSDStandardPermission]? { get }
+    var standardPermissions: [StandardPermission]? { get }
 }
 
-extension RSDStandardPermissionsStep {
+extension StandardPermissionsStep {
     
     /// List of the permissions required for this action.
-    public var permissionTypes: [RSDPermissionType] {
+    public var permissionTypes: [PermissionType] {
         return standardPermissions?.map { $0.permissionType } ?? []
     }
 }

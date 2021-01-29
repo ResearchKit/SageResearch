@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 @testable import Research_UnitTest
+import MobilePassiveData
 
 class CopyStepTests: XCTestCase {
     
@@ -217,7 +218,7 @@ class CopyStepTests: XCTestCase {
 
         var step = RSDSectionStepObject(identifier: "foo", steps: [uiStep])
         step.progressMarkers = ["goo"]
-        step.asyncActions = [RSDStandardAsyncActionConfiguration(identifier: "location", type: .distance, startStepIdentifier: nil, stopStepIdentifier: nil)]
+        step.asyncActions = [MotionRecorderConfigurationObject(identifier: "motion")]
 
         let copy = step.copy(with: "bar")
         XCTAssertEqual(copy.identifier, "bar")
@@ -229,7 +230,7 @@ class CopyStepTests: XCTestCase {
         } else {
             XCTAssertNotNil(copy.progressMarkers)
         }
-        XCTAssertEqual((copy.asyncActions?.first as? RSDStandardAsyncActionConfiguration)?.identifier, "location")
+        XCTAssertEqual((copy.asyncActions?.first as? MotionRecorderConfiguration)?.identifier, "motion")
     }
     
     func testCopyDefaultDecodable_SectionStepObject() {
@@ -237,7 +238,7 @@ class CopyStepTests: XCTestCase {
         
         var step = RSDSectionStepObject(identifier: "foo", steps: [uiStep])
         step.progressMarkers = ["goo"]
-        step.asyncActions = [RSDStandardAsyncActionConfiguration(identifier: "location", type: .distance, startStepIdentifier: nil, stopStepIdentifier: nil)]
+        step.asyncActions = [MotionRecorderConfigurationObject(identifier: "motion")]
         
         let json = """
         {
@@ -258,7 +259,7 @@ class CopyStepTests: XCTestCase {
         } else {
             XCTAssertNotNil(copy.progressMarkers)
         }
-        XCTAssertEqual((copy.asyncActions?.first as? RSDStandardAsyncActionConfiguration)?.identifier, "location")
+        XCTAssertEqual((copy.asyncActions?.first as? MotionRecorderConfigurationObject)?.identifier, "motion")
     }
     
     func testCopy_UIStepObject() {

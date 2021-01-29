@@ -41,8 +41,6 @@ public struct RSDDocumentCreator {
         var allEnums: [DocumentableStringEnum.Type] = [
         RSDCohortRuleOperator.self,
         RSDKeyboardType.self,
-        RSDMotionRecorderType.self,
-        RSDStandardPermissionType.self,
         RSDSurveyRuleOperator.self,
         RSDTextAutocapitalizationType.self,
         RSDTextAutocorrectionType.self,
@@ -58,7 +56,6 @@ public struct RSDDocumentCreator {
         ]
     
     let allStringLiterals: [DocumentableStringLiteral.Type] = [
-        RSDAsyncActionType.self,
         RSDDateCoderObject.self,
         RSDDeviceType.self,
         RSDFormUIHint.self,
@@ -71,9 +68,6 @@ public struct RSDDocumentCreator {
         RSDCohortNavigationRuleObject.self,
         RSDCollectionResultObject.self,
         RSDDateRangeObject.self,
-        RSDDistanceRecorderConfiguration.self,
-        FileResultObject.self,
-        RSDMotionRecorderConfiguration.self,
         RSDNavigationUIActionObject.self,
         RSDResourceTransformerObject.self,
         RSDResultObject.self,

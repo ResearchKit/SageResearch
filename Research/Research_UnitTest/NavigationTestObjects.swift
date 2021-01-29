@@ -36,6 +36,7 @@ import Foundation
 import JsonModel
 import UIKit
 import ResearchUI
+import MobilePassiveData
 
 func setupPlatformContext() {
     resourceLoader = ResourceLoader()
@@ -177,7 +178,7 @@ public struct TestTask : RSDTask, RSDTrackingTask {
     public let identifier: String
     public let stepNavigator: RSDStepNavigator
     public var schemaInfo: RSDSchemaInfo?
-    public var asyncActions: [RSDAsyncActionConfiguration]?
+    public var asyncActions: [AsyncActionConfiguration]?
     
     public var taskResult: RSDTaskResult?
     public var validationError: Error?
@@ -238,23 +239,24 @@ public class TestStepController: NSObject, RSDStepController {
     }
 }
 
-public class TestAsyncActionController: NSObject, RSDAsyncAction {
-
-    public var delegate: RSDAsyncActionDelegate?
-    public var status: RSDAsyncActionStatus = .idle
+public class TestAsyncActionController: NSObject, AsyncActionController {
+    
+    public var delegate: AsyncActionControllerDelegate?
+    public var status: AsyncActionStatus = .idle
     public var isPaused: Bool = false
     public var result: ResultData?
     public var error: Error?
-    public let configuration: RSDAsyncActionConfiguration
+    public var currentStepPath: String
+    public let configuration: AsyncActionConfiguration
     public let taskViewModel: RSDPathComponent
     
     public var moveTo_called = false
-    public var moveTo_step: RSDStep?
-    public var moveTo_taskPath: RSDPathComponent?
+    public var moveTo_stepPath: String?
     
-    public init(with configuration: RSDAsyncActionConfiguration, at taskViewModel: RSDPathComponent) {
+    public init(with configuration: AsyncActionConfiguration, at taskViewModel: RSDPathComponent) {
         self.configuration = configuration
         self.taskViewModel = taskViewModel
+        self.currentStepPath = ""
         super.init()
     }
     
@@ -262,11 +264,11 @@ public class TestAsyncActionController: NSObject, RSDAsyncAction {
         status = .permissionGranted
     }
 
-    public func requestPermissions(on viewController: Any, _ completion: @escaping RSDAsyncActionCompletionHandler) {
+    public func requestPermissions(on viewController: Any, _ completion: @escaping AsyncActionCompletionHandler) {
         status = .permissionGranted
     }
     
-    public func start(_ completion: RSDAsyncActionCompletionHandler?) {
+    public func start(_ completion: AsyncActionCompletionHandler?) {
         status = .running
         completion?(self, nil, nil)
     }
@@ -279,7 +281,7 @@ public class TestAsyncActionController: NSObject, RSDAsyncAction {
         isPaused = false
     }
     
-    public func stop(_ completion: RSDAsyncActionCompletionHandler?) {
+    public func stop(_ completion: AsyncActionCompletionHandler?) {
         status = .finished
         completion?(self, nil, nil)
     }
@@ -288,10 +290,10 @@ public class TestAsyncActionController: NSObject, RSDAsyncAction {
         status = .cancelled
     }
     
-    public func moveTo(step: RSDStep, taskViewModel: RSDPathComponent) {
+    public func moveTo(stepPath: String) {
         moveTo_called = true
-        moveTo_step = step
-        moveTo_taskPath = taskViewModel
+        moveTo_stepPath = stepPath
+        currentStepPath = stepPath
     }
 }
 
@@ -303,7 +305,7 @@ public class TestTaskController: NSObject, RSDTaskController {
         }
     }
     
-    public var currentAsyncControllers: [RSDAsyncAction] = []
+    public var currentAsyncControllers: [AsyncActionController] = []
     
     public var show_calledTo: RSDStepController?
     public var show_calledFrom: RSDStep?
@@ -317,13 +319,13 @@ public class TestTaskController: NSObject, RSDTaskController {
     public var handleTaskResultReady_calledWith: RSDTaskViewModel?
     public var handleTaskResultReady_result: RSDTaskResult?
     public var addAsyncActions_called = false
-    public var addAsyncActions_calledWith: [RSDAsyncActionConfiguration]?
+    public var addAsyncActions_calledWith: [AsyncActionConfiguration]?
     public var startAsyncActions_called = false
-    public var startAsyncActions_calledWith: [RSDAsyncAction]?
+    public var startAsyncActions_calledWith: [AsyncActionController]?
     public var requestPermissionsForAsyncActions_called = false
-    public var requestPermissionsForAsyncActions_calledWith: [RSDAsyncAction]?
+    public var requestPermissionsForAsyncActions_calledWith: [AsyncActionController]?
     public var stopAsyncActions_called = false
-    public var stopAsyncActions_calledWith: [RSDAsyncAction]?
+    public var stopAsyncActions_calledWith: [AsyncActionController]?
     
     public var handleTaskDidFinish_completionBlock: (() -> Void)?
     public var handleTaskResultReady_completionBlock: (() -> Void)?
@@ -373,11 +375,11 @@ public class TestTaskController: NSObject, RSDTaskController {
         handleTaskResultReady_completionBlock = nil
     }
 
-    public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([RSDAsyncAction]) -> Void)) {
+    public func addAsyncActions(with configurations: [AsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([AsyncActionController]) -> Void)) {
         addAsyncActions_called = true
         addAsyncActions_calledWith = configurations
         DispatchQueue.main.async {
-            let controllers: [RSDAsyncAction] = configurations.map {
+            let controllers: [AsyncActionController] = configurations.map {
                 return TestAsyncActionController(with: $0, at: path)
             }
             self.currentAsyncControllers.append(contentsOf: controllers)
@@ -385,7 +387,7 @@ public class TestTaskController: NSObject, RSDTaskController {
         }
     }
     
-    public func requestPermission(for controllers: [RSDAsyncAction], completion: @escaping (() -> Void)) {
+    public func requestPermission(for controllers: [AsyncActionController], path: RSDPathComponent, completion: @escaping (() -> Void)) {
         requestPermissionsForAsyncActions_called = true
         requestPermissionsForAsyncActions_calledWith = controllers
         DispatchQueue.main.async {
@@ -403,21 +405,7 @@ public class TestTaskController: NSObject, RSDTaskController {
         assertionFailure("Not implemented")
     }
     
-    public func startAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void)) {
-        startAsyncActions_called = true
-        startAsyncActions_calledWith = controllers
-        DispatchQueue.main.async {
-            for controller in controllers {
-                controller.start(nil)
-            }
-            let set = NSMutableSet(array: self.currentAsyncControllers)
-            set.union(Set(controllers as! [TestAsyncActionController]))
-            self.currentAsyncControllers = set.allObjects as! [TestAsyncActionController]
-            completion()
-        }
-    }
-    
-    public func stopAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void)) {
+    public func stopAsyncActions(for controllers: [AsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
         stopAsyncActions_called = true
         stopAsyncActions_calledWith = controllers
         DispatchQueue.main.async {

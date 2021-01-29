@@ -1,5 +1,5 @@
 //
-//  RSDPermissionStepViewController.swift
+//  PermissionStepViewController.swift
 //  ResearchUI (iOS)
 //
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
@@ -33,11 +33,12 @@
 
 import UIKit
 import Research
+import MobilePassiveData
 
-open class RSDPermissionStepViewModel: RSDStepViewModel {
+open class PermissionStepViewModel: RSDStepViewModel {
     
     /// Flag indicating the authorization status for this step.
-    public fileprivate(set) var authorizationStatus: RSDAuthorizationStatus?
+    public fileprivate(set) var authorizationStatus: PermissionAuthorizationStatus?
     
     /// Override the forward button to disable until the status is checked.
     override open var isForwardEnabled: Bool {
@@ -45,12 +46,12 @@ open class RSDPermissionStepViewModel: RSDStepViewModel {
     }
 }
 
-/// `RSDPermissionStepViewController` is a customizable view controller that is designed to be used to
+/// `PermissionStepViewController` is a customizable view controller that is designed to be used to
 /// request and/or check the permission status for this view.
-open class RSDPermissionStepViewController: RSDStepViewController {
+open class PermissionStepViewController: RSDStepViewController {
     
     override open func instantiateStepViewModel(for step: RSDStep, with parent: RSDPathComponent?) -> RSDStepViewPathComponent {
-        return RSDPermissionStepViewModel(step: step, parent: parent)
+        return PermissionStepViewModel(step: step, parent: parent)
     }
     
     /// Override viewDidAppear to set up notification handling.
@@ -63,12 +64,12 @@ open class RSDPermissionStepViewController: RSDStepViewController {
     
     // MARK: Permission handling
     
-    private var _authStatus: RSDAuthorizationStatus? {
+    private var _authStatus: PermissionAuthorizationStatus? {
         get {
-            return (self.stepViewModel as? RSDPermissionStepViewModel)?.authorizationStatus
+            return (self.stepViewModel as? PermissionStepViewModel)?.authorizationStatus
         }
         set {
-            (self.stepViewModel as? RSDPermissionStepViewModel)?.authorizationStatus = newValue
+            (self.stepViewModel as? PermissionStepViewModel)?.authorizationStatus = newValue
         }
     }
     
@@ -87,7 +88,7 @@ open class RSDPermissionStepViewController: RSDStepViewController {
             if (permission.permissionType == .motion) && (status == .previouslyDenied) {
                 // If this is a motion permission which was previously denied, then query the status to see
                 // if this the forward enabled state should be changed.
-                RSDAuthorizationHandler.requestAuthorization(for: permission) { [weak self] (status, _) in
+                PermissionAuthorizationHandler.requestAuthorization(for: permission) { [weak self] (status, _) in
                     self?._authStatus = status
                     if status.isDenied() {
                         self?.handleAuthorizationFailed(status: status, permission: permission)
@@ -107,7 +108,7 @@ open class RSDPermissionStepViewController: RSDStepViewController {
     
     /// Present an alert letting the user know that they do not have authorizations that are required to run
     /// this task.
-    override open func handleAuthorizationFailed(status: RSDAuthorizationStatus, permission: RSDStandardPermission) {
+    override open func handleAuthorizationFailed(status: PermissionAuthorizationStatus, permission: StandardPermission) {
         _authStatus = status
         super.handleAuthorizationFailed(status: status, permission: permission)
     }
@@ -119,7 +120,7 @@ open class RSDPermissionStepViewController: RSDStepViewController {
             return
         }
         
-        let requests = permissions.compactMap { (permission) -> RSDStandardPermission? in
+        let requests = permissions.compactMap { (permission) -> StandardPermission? in
             let status = self.authorizationStatus(for: permission.permissionType)
             return (status == .notDetermined) ? permission : nil
         }
@@ -144,7 +145,7 @@ open class RSDPermissionStepViewController: RSDStepViewController {
     /// - parameters:
     ///     - permissions: The permissions to be requested.
     ///     - completion: The completion handler to call when finished.
-    open func requestPermissions(_ permissions: [RSDStandardPermission], _ completion: @escaping ((RSDAuthorizationStatus, RSDStandardPermission?) -> Void)) {
+    open func requestPermissions(_ permissions: [StandardPermission], _ completion: @escaping ((PermissionAuthorizationStatus, StandardPermission?) -> Void)) {
         guard permissions.count <= 1 else {
             assertionFailure("This step view controller is intended to be able to handle requesting a single permission. Handling multiple permissions requires managing the alerts serially.")
             completion(.authorized, nil)
@@ -156,7 +157,7 @@ open class RSDPermissionStepViewController: RSDStepViewController {
             return
         }
         
-        RSDAuthorizationHandler.requestAuthorization(for: permission) { (status, _) in
+        PermissionAuthorizationHandler.requestAuthorization(for: permission) { (status, _) in
             completion(status, permission)
         }
     }

@@ -37,7 +37,7 @@ The structure of the task protocol is as follows:
     - `RSDStepNavigator` is the interface for step navigation. This protocol defines methods for vending steps as appropriate.
         - `RSDStep` is the interface that defines a given step in a clinical research protocol.
         - `progress()` returns the progress through the task for a given step with the current result.
-    - `RSDAsyncActionConfiguration` is an array of configurations for defining asynchronous actions that run in the background and can continue across step boundaries.
+    - `AsyncActionConfiguration` is an array of configurations for defining asynchronous actions that run in the background and can continue across step boundaries.
     - `RSDTaskResult` is a sub-protocol of `RSDResult` that includes the results of a given task run.
     
 ####  `RSDStep`
@@ -71,9 +71,9 @@ For the conditional step navigator, navigation is handled by querying both a lis
 
 The step results of navigating the task are added to the `RSDTaskResult` on the `stepHistory`. Results added to the step history are intended to be added sequentially in the order the steps were displayed to the user. A step result can be any result that conforms to the `RSDResult` protocol. These results should be uniquely defined by their `identifier` which matches the `identifier` for the step.
 
-#### `RSDAsyncActionConfiguration`
+#### `AsyncActionConfiguration`
 
-`RSDAsyncActionConfiguration` objects define any configuration required for running a background action -- for example, recording motion sensor information or pinging a weather service. Most of the work of setting up and running async actions is left to the specific application.
+`AsyncActionConfiguration` objects define any configuration required for running a background action -- for example, recording motion sensor information or pinging a weather service. Most of the work of setting up and running async actions is left to the specific application.
 
 #### `RSDResult`
 
