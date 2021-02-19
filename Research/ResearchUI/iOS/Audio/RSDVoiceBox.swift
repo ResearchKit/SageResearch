@@ -97,6 +97,13 @@ open class RSDSpeechSynthesizer : NSObject, RSDVoiceBox, AVSpeechSynthesizerDele
         
         let utterance = AVSpeechUtterance(string: text)
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        
+        // syoung 02/05/2021 in iOS 14.4, the enhanced voice which is default for the US is broken
+        // for some devices so this is a work-around for that bug.
+        if AVSpeechSynthesisVoice.currentLanguageCode() == "en-US" {
+            utterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.ttsbundle.siri_female_en-US_compact")
+        }
+
         _completionHandlers[text] = completion
         
         speechSynthesizer.speak(utterance)
