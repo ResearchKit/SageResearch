@@ -65,7 +65,7 @@ public final class ViewThemeSerializer : AbstractPolymorphicSerializer, Polymorp
     override public func typeName(from decoder: Decoder) throws -> String {
         do {
             return try super.typeName(from: decoder)
-        } catch DecodingError.keyNotFound(_, _) {
+        } catch {
             // The kotlin implementation for decoding the viewTheme is *not* polymorphic, but this
             // implementation pre-dated that implementation and JsonModel factory serialization
             // used here allows for a default type. syoung 04/23/2020
