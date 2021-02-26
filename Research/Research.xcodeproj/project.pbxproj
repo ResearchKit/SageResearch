@@ -4477,7 +4477,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Sage-Bionetworks/JsonModel-Swift.git";
 			requirement = {
-				kind = upToNextMajorVersion;
+				kind = upToNextMinorVersion;
 				minimumVersion = 1.1.0;
 			};
 		};
