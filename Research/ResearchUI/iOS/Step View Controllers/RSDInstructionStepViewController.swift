@@ -184,11 +184,6 @@ open class RSDInstructionStepViewController: RSDPermissionStepViewController {
             return false
         }
         
-        // Form input fields are not supported.
-        if let formStep = step as? RSDFormUIStep, formStep.inputFields.count > 0 {
-            return false
-        }
-        
         // Footnotes and review instructions buttons are not supported.
         guard (themedStep.footnote == nil),
             (themedStep.shouldHideAction(for: .navigation(.reviewInstructions), on: step) ?? true)

@@ -60,9 +60,6 @@ extension RSDResultSummaryStep {
         if let answerResult = (cResult as? AnswerFinder)?.findAnswer(with: resultIdentifier) {
             return (answerResult.value, answerResult.jsonAnswerType)
         }
-        else if let answerResult = (cResult as? RSDAnswerResultFinder)?.findAnswerResult(with: resultIdentifier) {
-            return (answerResult.value, answerResult.answerType.answerType)
-        }
         else {
             return nil
         }

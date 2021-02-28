@@ -46,46 +46,6 @@ class PickerDataSourceTests: XCTestCase {
         super.tearDown()
     }
     
-    @available(*, deprecated, message: "These tests are for the deprecated RSDInputField objects")
-    func testMultipleComponentPicker() {
-        
-        let json = """
-        {
-            "identifier": "foo",
-            "type": "multipleComponent",
-            "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat"]]
-        }
-        """.data(using: .utf8)!
-        do {
-            let picker = try decoder.decode(RSDMultipleComponentInputFieldObject.self, from: json)
-
-            XCTAssertEqual(picker.numberOfComponents, 2)
-            XCTAssertEqual(picker.numberOfRows(in: 0), 4)
-            XCTAssertEqual(picker.numberOfRows(in: 1), 3)
-
-            let choice = picker.choice(forRow: 2, forComponent: 0)
-            XCTAssertEqual(choice?.text, "green")
-            
-            if let answer = picker.selectedAnswer(with: [2, 1]) as? [String] {
-                XCTAssertEqual(answer, ["green", "cat"])
-            } else {
-                XCTFail("Failed to decode the answer from the selected rows")
-            }
-            
-            if let rows = picker.selectedRows(from: ["green", "cat"]) {
-                XCTAssertEqual(rows, [2, 1])
-            } else {
-                XCTFail("Failed to decode the selected rows from the answer")
-            }
-            
-            let text = picker.textAnswer(from: ["green", "cat"])
-            XCTAssertEqual(text, "green cat")
-
-        } catch let error {
-            XCTFail("Failed to decode object. \(error)")
-        }
-    }
-    
     func testHeightPicker() {
         NSLocale.setCurrentTest(Locale(identifier: "en_US"))
         

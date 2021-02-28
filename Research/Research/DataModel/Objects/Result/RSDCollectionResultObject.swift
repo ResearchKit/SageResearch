@@ -36,7 +36,7 @@ import JsonModel
 
 /// `RSDCollectionResultObject` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
-public struct RSDCollectionResultObject : RSDCollectionResult, RSDNavigationResult, Codable, RSDCopyWithIdentifier {
+public struct RSDCollectionResultObject : CollectionResult, RSDNavigationResult, Codable, RSDCopyWithIdentifier {
     
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String

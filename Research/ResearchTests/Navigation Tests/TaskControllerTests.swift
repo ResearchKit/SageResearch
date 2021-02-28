@@ -765,14 +765,14 @@ class TaskControllerTests: XCTestCase {
         let order = taskResult.stepHistory.map { $0.identifier }
         XCTAssertEqual(order, ["introduction", "step1", "step2", "step3", "step4", "step5", "completion"])
         
-        if let answer = taskResult.findAnswerResult(with: "step2") {
+        if let answer = taskResult.findAnswer(with: "step2") {
             XCTAssertEqual(answer.value as? String, "foo")
         }
         else {
             XCTFail("Failed to set an answer")
         }
         
-        if let answer = taskResult.findAnswerResult(with: "step4") {
+        if let answer = taskResult.findAnswer(with: "step4") {
             XCTAssertEqual(answer.value as? String, "foo")
         }
         else {

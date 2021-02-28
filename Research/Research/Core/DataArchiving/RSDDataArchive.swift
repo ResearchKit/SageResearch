@@ -219,13 +219,6 @@ internal class TaskArchiver : NSObject {
                 answerMap[answerIdentifier] = answer
             }
         }
-        else if let answerResult = result as? RSDAnswerResult {
-            if let answer = answerResult.value, !(answer is NSNull) {
-                let answerIdentifier = self.answerIdentifier(for: result.identifier, sectionIdentifier, collectionIdentifier)
-                let wrapper = AnswerResultWrapper(answerResult: answerResult)
-                answerMap[answerIdentifier] = try wrapper.jsonElement()
-            }
-        }
     }
     
     private func answerIdentifier(for resultIdentifier: String,
@@ -240,11 +233,3 @@ internal class TaskArchiver : NSObject {
     }
 }
 
-@available(*, deprecated)
-fileprivate struct AnswerResultWrapper : Encodable {
-    let answerResult : RSDAnswerResult
-    
-    func encode(to encoder: Encoder) throws {
-        try answerResult.answerType.encode(answerResult.value, to: encoder)
-    }
-}

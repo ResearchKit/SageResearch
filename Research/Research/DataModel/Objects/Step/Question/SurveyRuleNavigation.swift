@@ -67,12 +67,14 @@ extension SurveyRuleNavigation {
         guard !isPeeking else { return nil }
         // If the result is nil then return the skipToNil value
         guard let finder = result,
-            let answerResult = finder.findAnswerResult(with: identifier)
+            let answerResult = finder.findAnswer(with: identifier)
             else {
                 return skipToIfNil
         }
         // evaluate the rules
-        let skipTos = surveyRules.compactMap { $0.evaluateRule(with: answerResult) }
+        let skipTos = surveyRules.compactMap({ (rule) -> String? in
+            rule.evaluateRule(with: answerResult)
+        })
         return skipTos.count == 1 ? skipTos.first : nil
     }
     
@@ -90,7 +92,7 @@ extension SurveyRuleNavigation {
     public func evaluateCohortsToApply(with result: RSDTaskResult) -> (add: Set<String>, remove: Set<String>)? {
         var cohortsToAdd = Set<String>()
         var cohortsToRemove = Set<String>()
-        let answerResult = result.findAnswerResult(with: identifier)
+        let answerResult = result.findAnswer(with: identifier)
         surveyRules.forEach { rule in
             guard let cohorts = rule.evaluateCohorts(with: answerResult) else { return }
             cohortsToAdd.formUnion(cohorts.add)

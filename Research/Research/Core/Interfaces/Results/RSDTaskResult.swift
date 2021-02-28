@@ -36,7 +36,7 @@ import Foundation
 
 /// `RSDTaskResult` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
-public protocol RSDTaskResult : BranchNodeResult, RSDAnswerResultFinder {
+public protocol RSDTaskResult : BranchNodeResult {
 
     /// A list of all the asynchronous results for this task. The list should include uniquely identified results.
     /// The step history is used to describe the path you took to get to where you are going, whereas
@@ -135,32 +135,6 @@ extension RSDTaskResult  {
     }
 }
 
-public extension RSDTaskResult {
-    /// Find an *answer* result within this collection. This method will return `nil` if there is a result
-    /// but that result does **not** conform to to the `RSDAnswerResult` protocol.
-    ///
-    /// - seealso: `RSDAnswerResultFinder`
-    ///
-    /// - parameter identifier: The identifier associated with the result.
-    /// - returns: The result or `nil` if not found.
-    @available(*, deprecated, message: "Use `AnswerFinder.findAnswer` instead.")
-    func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
-        for result in stepHistory {
-            if let answerResult = (result as? RSDAnswerResultFinder)?.findAnswerResult(with: identifier) {
-                return answerResult
-            }
-        }
-        if let results = asyncResults {
-            for result in results {
-                if let answerResult = (result as? RSDAnswerResultFinder)?.findAnswerResult(with: identifier) {
-                    return answerResult
-                }
-            }
-        }
-        return nil
-    }
-    
-}
 
 public extension RSDTaskResult {
     func findAnswer(with identifier:String ) -> AnswerResult? {
