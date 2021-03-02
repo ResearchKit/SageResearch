@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /// `RSDStep` is the base protocol for the steps that can compose a task for presentation using a
@@ -61,7 +62,7 @@ public protocol RSDStep {
     
     /// Instantiate a step result that is appropriate for this step.
     /// - returns: A result for this step.
-    func instantiateStepResult() -> RSDResult
+    func instantiateStepResult() -> ResultData
     
     /// Validate the step to check for any configuration that should throw an error.
     /// - throws: An error if validation fails.

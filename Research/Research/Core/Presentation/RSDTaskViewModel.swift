@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /// The TaskViewModel is a base class implementation of the presentation layer for managing a task. It uses
@@ -124,7 +125,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         guard let parent = parentPath else { return }
         self.dataManager = (parent as? RSDHistoryPathComponent)?.dataManager
         self.previousResults = (parent.taskResult.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
-        var runResult = self.taskResult as? RSDTaskRunResult
+        var runResult = self.taskResult as? AssessmentResult
         if let uuid = (parent.taskResult as? AssessmentResult)?.taskRunUUID {
             runResult?.taskRunUUID = uuid
         }
@@ -174,7 +175,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     }
     
     /// The result to use to mark the step history for this path component.
-    open func pathResult() -> RSDResult {
+    open func pathResult() -> ResultData {
         return self.taskResult
     }
     
@@ -488,7 +489,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
                     results.append(contentsOf: previousResult.asyncResults!)
                     newResult.asyncResults = results
                 }
-                var runResult = newResult as? RSDTaskRunResult
+                var runResult = newResult as? AssessmentResult
                 if let uuid = (previousResult as? AssessmentResult)?.taskRunUUID {
                     runResult?.taskRunUUID = uuid
                 }
@@ -577,10 +578,10 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     
     /// A listing of step results that were removed from the task result. These results can be accessed
     /// by a step view controller to load a result that was previously selected.
-    public private(set) var previousResults: [RSDResult]?
+    public private(set) var previousResults: [ResultData]?
     
     /// Get the previous result for the given step.
-    open func previousResult(for step: RSDStep) -> RSDResult? {
+    open func previousResult(for step: RSDStep) -> ResultData? {
         return self.previousResults?.last { $0.identifier == step.identifier }
     }
     
@@ -598,7 +599,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     }
     
     /// Append the previous result set with the given result.
-    open func append(previousResult: RSDResult) {
+    open func append(previousResult: ResultData) {
         guard self.previousResults != nil else {
             self.previousResults = [previousResult]
             return

@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /// `RSDSurveyRule` defines an evaluation rule and returns a step identifier if appropriate.
@@ -40,13 +41,13 @@ public protocol RSDSurveyRule {
     ///
     /// - parameter results: The result to evaluate.
     /// - returns: The identifier to skip to if the result evaluates to `true`.
-    func evaluateRule(with result: RSDResult?) -> String?
+    func evaluateRule(with result: ResultData?) -> String?
     
     /// For a given result (if any), what are the cohorts to add or remove?
     ///
     /// - parameter results: The result to evaluate.
     /// - returns: The cohorts to add and remove.
-    func evaluateCohorts(with result: RSDResult?) -> (add: Set<String>, remove: Set<String>)?
+    func evaluateCohorts(with result: ResultData?) -> (add: Set<String>, remove: Set<String>)?
 }
 
 /// `RSDComparableSurveyRule` is a survey rule that matches an expected result to the answer and vends a skip
@@ -80,7 +81,7 @@ extension RSDComparableSurveyRule {
     ///
     /// - parameter results: The result to evaluate.
     /// - returns: The identifier to skip to if the result evaluates to `true`.
-    public func evaluateRule(with result: RSDResult?) -> String? {
+    public func evaluateRule(with result: ResultData?) -> String? {
         guard cohort == nil || skipToIdentifier != nil else { return nil }
         
         let skipTo: String = skipToIdentifier ?? RSDIdentifier.exit.rawValue
@@ -95,7 +96,7 @@ extension RSDComparableSurveyRule {
     ///
     /// - parameter results: The result to evaluate.
     /// - returns: The cohorts to add and remove.
-    public func evaluateCohorts(with result: RSDResult?) -> (add: Set<String>, remove: Set<String>)? {
+    public func evaluateCohorts(with result: ResultData?) -> (add: Set<String>, remove: Set<String>)? {
         guard let cohort = self.cohort else { return nil }
         return isMatching(to: result, op: _ruleOperator) ? ([cohort], []) : ([], [cohort])
     }

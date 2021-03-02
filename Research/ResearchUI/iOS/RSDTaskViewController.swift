@@ -33,6 +33,7 @@
 
 import UIKit
 import AVFoundation
+import JsonModel
 import Research
 
 /// `RSDPageViewControllerProtocol` allows replacing the `UIPageViewController` in the base class with a different
@@ -407,7 +408,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         var identifier: String { taskInfo.identifier }
         var stepType: RSDStepType { .taskInfo }
         
-        func instantiateStepResult() -> RSDResult {
+        func instantiateStepResult() -> ResultData {
             RSDTaskResultObject(identifier: identifier)
         }
          
@@ -943,7 +944,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     private func _addErrorResult(for controller: RSDAsyncAction, error: Error) {
         // Add error result to the task results.
         let identifier = "\(controller.configuration.identifier)_error"
-        let errorResult = RSDErrorResultObject(identifier: identifier, error: error)
+        let errorResult = ErrorResultObject(identifier: identifier, error: error)
         controller.taskViewModel.taskResult.appendAsyncResult(with: errorResult)
     }
 }

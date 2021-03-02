@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /**
@@ -72,7 +73,7 @@ public protocol ContentNode {
 }
 
 public protocol ResultNode : ContentNode {
-    func instantiateResult() -> RSDResult
+    func instantiateResult() -> ResultData
 }
 
 public protocol FormStep : ResultNode, RSDUIStep {
@@ -85,7 +86,7 @@ public protocol FormStep : ResultNode, RSDUIStep {
 public extension FormStep {
     
     /// A form step instantiates a step result.
-    func instantiateResult() -> RSDResult {
+    func instantiateResult() -> ResultData {
         instantiateStepResult()
     }
     

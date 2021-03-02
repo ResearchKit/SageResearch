@@ -206,10 +206,6 @@ class DataArchiveTests: XCTestCase {
                     }
                 }
             }
-            
-            
-            
-            
         } catch let err {
             XCTFail("Failed unexpectedly: \(err)")
             return
@@ -223,16 +219,13 @@ class DataArchiveTests: XCTestCase {
         return RSDTaskViewModel(task: task)
     }
     
-    func buildFileResult(identifier: String, outputDirectory: URL) throws -> RSDFileResultObject {
+    func buildFileResult(identifier: String, outputDirectory: URL) throws -> FileResultObject {
 
         let url = try RSDFileResultUtility.createFileURL(identifier: identifier, ext: "txt", outputDirectory: outputDirectory)
         let uuid = UUID().uuidString
         try uuid.write(to: url, atomically: true, encoding: .utf8)
         
-        var fileResult = RSDFileResultObject(identifier: identifier)
-        fileResult.contentType = "text/plain"
-        fileResult.url = url
-        return fileResult
+        return FileResultObject(identifier: identifier, url: url, contentType: "text/plain")
     }
     
     func buildCollectionResult(identifier: String) -> RSDCollectionResultObject {
@@ -320,7 +313,7 @@ class TestDataArchive: NSObject, RSDDataArchive {
         self.metadata = metadata
     }
     
-    func archivableData(for result: RSDResult, sectionIdentifier: String?, stepPath: String?) -> RSDArchivable? {
+    func archivableData(for result: ResultData, sectionIdentifier: String?, stepPath: String?) -> RSDArchivable? {
         return result as? RSDArchivable
     }
 }

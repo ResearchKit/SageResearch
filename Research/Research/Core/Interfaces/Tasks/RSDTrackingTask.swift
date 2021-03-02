@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /// The tracking task protocol is intended for tasks that use scoring data from a previous task run to
@@ -64,6 +65,6 @@ public protocol RSDTrackingTask {
     /// - returns:
     ///     - shouldSkip: Whether or not the step should be skipped.
     ///     - stepResult: The step to add to the task result for this step in lieu of showing it.
-    func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?)
+    func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: ResultData?)
 }
 

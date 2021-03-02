@@ -33,6 +33,7 @@
 
 import UIKit
 import ResearchUI
+import JsonModel
 import Research
 
 /// The data storage manager in this case is used to show a sample usage. As such, the data will not be
@@ -55,7 +56,7 @@ class DataStorageManager : NSObject, RSDDataStorageManager {
 class TaskPresentationViewController: UITableViewController, RSDTaskViewControllerDelegate {
     
     var taskInfo: RSDTaskInfo!
-    var result: RSDResult?
+    var result: ResultData?
     let archiveManager = ArchiveManager()
     var firstAppearance: Bool = true
     

@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import XCTest
 @testable import Research
 @testable import Research_UnitTest
@@ -827,7 +828,7 @@ class TestTracker : RSDTrackingTask {
         setupTask_called = (data, path)
     }
     
-    func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?) {
+    func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: ResultData?) {
         guard stepsToSkip.contains(step.identifier) else { return (false, nil) }
         let stepResult = AnswerResultObject(identifier: step.identifier, value: .string("foo"))
         return (true, stepResult)

@@ -1,8 +1,8 @@
 //
-//  RSDResult.swift
+//  ResultData+RSDExtensions.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2021 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,47 +31,64 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
 import JsonModel
+import Foundation
 
-/// `RSDResult` is the base implementation for a result associated with a task, step, or asynchronous action.
-///
-/// When running a task, there will be a result of some variety used to mark each step in the task. This is
-/// the base protocol. All the `RSDResult` objects are required to conform to the `Encodable` protocol to allow
-/// the app to store and upload results in a standardized way.
-///
-/// - note: syoung 04/16/2020 Since the purpose of the `Result` protocol is to support
-/// serialization of the result set, and since this framework is no longer reverse-compatible to
-/// ResearchKit.ORKResult objects, these objected are now defined as `PolymorphicRepresentable`
-/// and `Encodable`.
-///
-public protocol RSDResult : SerializableResultData {
+
+extension FileResultObject : RSDArchivable {
     
-    /// The identifier associated with the task, step, or asynchronous action.
-    var identifier: String { get }
-    
-    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    var type: RSDResultType { get }
-    
-    /// The start date timestamp for the result.
-    var startDate: Date { get set }
-    
-    /// The end date timestamp for the result.
-    var endDate: Date { get set }
+    /// Build the archiveable or uploadable data for this result.
+    public func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
+        let filename = self.relativePath
+        guard let url = self.url else { return nil }
+        let manifest = RSDFileManifest(filename: filename, timestamp: self.startDate, contentType: self.contentType, identifier: self.identifier, stepPath: stepPath)
+        let data = try Data(contentsOf: url)
+        return (manifest, data)
+    }
 }
 
-extension RSDResult {
+public extension AnswerResult {
     
-    public var serializableResultType: SerializableResultType {
-        SerializableResultType(rawValue: self.type.stringValue)
+    var value: Any? {
+        return jsonValue?.jsonObject()
     }
+}
+
+public extension CollectionResult {
+    
+    /// Append the result to the end of the input results, replacing the previous instance with the same identifier.
+    /// - parameter result: The result to add to the input results.
+    /// - returns: The previous result or `nil` if there wasn't one.
+    @discardableResult
+    mutating func appendInputResults(with result: ResultData) -> ResultData? {
+        var previousResult: ResultData?
+        if let idx = children.firstIndex(where: { $0.identifier == result.identifier }) {
+            previousResult = children.remove(at: idx)
+        }
+        children.append(result)
+        return previousResult
+    }
+    
+    /// Remove the result with the given identifier.
+    /// - parameter result: The result to remove from the input results.
+    /// - returns: The previous result or `nil` if there wasn't one.
+    @discardableResult
+    mutating func removeInputResult(with identifier: String) -> ResultData? {
+        guard let idx = children.firstIndex(where: { $0.identifier == identifier }) else {
+            return nil
+        }
+        return children.remove(at: idx)
+    }
+}
+
+extension ResultData {
     
     func shortDescription() -> String {
         if let answerResult = self as? AnswerResult {
             return "{\(self.identifier) : \(String(describing: answerResult.value)))}"
         }
         else if let collectionResult = self as? CollectionResult {
-            return "{\(self.identifier) : \(collectionResult.inputResults.map ({ $0.shortDescription() }))}"
+            return "{\(self.identifier) : \(collectionResult.children.map ({ $0.shortDescription() }))}"
         }
         else if let taskResult = self as? RSDTaskResult {
             return "{\(self.identifier) : \(taskResult.stepHistory.map ({ $0.shortDescription() }))}"

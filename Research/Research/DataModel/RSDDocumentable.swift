@@ -63,7 +63,6 @@ public struct RSDDocumentCreator {
         RSDDeviceType.self,
         RSDFormUIHint.self,
         RSDIdentifier.self,
-        RSDResultType.self,
         RSDStepType.self,
         ]
 
@@ -73,7 +72,7 @@ public struct RSDDocumentCreator {
         RSDCollectionResultObject.self,
         RSDDateRangeObject.self,
         RSDDistanceRecorderConfiguration.self,
-        RSDFileResultObject.self,
+        FileResultObject.self,
         RSDMotionRecorderConfiguration.self,
         RSDNavigationUIActionObject.self,
         RSDResourceTransformerObject.self,

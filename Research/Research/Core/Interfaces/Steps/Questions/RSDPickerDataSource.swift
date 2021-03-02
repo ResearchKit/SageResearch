@@ -178,7 +178,7 @@ public protocol RSDChoice {
     /// Is the choice value equal to the given result?
     /// - parameter result: A result to test for equality.
     /// - returns: `true` if the values are equal.
-    func isEqualToResult(_ result: RSDResult?) -> Bool
+    func isEqualToResult(_ result: ResultData?) -> Bool
 }
 
 /// `RSDMultipleComponentOptions` is a data source protocol that can be used to set up a picker.

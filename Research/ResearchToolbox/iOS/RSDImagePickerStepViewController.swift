@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import UIKit
 import Photos
 import AVFoundation
@@ -230,7 +231,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     func _addFileResult(_ url: URL?) {
         
         // Create the result and set it as the result for this step
-        var result: RSDFileResult = (self.stepViewModel.taskResult.findResult(for: self.step) as? RSDFileResult) ?? RSDFileResultObject(identifier: self.step.identifier)
+        var result: RSDFileResult = (self.stepViewModel.taskResult.findResult(for: self.step) as? RSDFileResult) ?? FileResultObject(identifier: self.step.identifier)
         result.url = url
         saveImageResult(result)
         

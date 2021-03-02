@@ -35,111 +35,36 @@ import JsonModel
 
 /// `RSDResultType` is an extendable string enum used by `RSDFactory` to create the appropriate
 /// result type.
-public struct RSDResultType : RSDFactoryTypeRepresentable, Codable, Hashable {
-    
-    public let rawValue: String
-    
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-    
+extension SerializableResultType {
+
     /// Defaults to creating a `RSDResult`.
-    public static let base: RSDResultType = "base"
-    
-    /// Defaults to creating a `RSDAnswerResult`.
-    public static let answer: RSDResultType = "answer"
-    
-    /// Defaults to creating a `RSDCollectionResult`.
-    public static let collection: RSDResultType = "collection"
+    public static let base: SerializableResultType = "base"
     
     /// Defaults to creating a `RSDTaskResult`.
-    public static let task: RSDResultType = "task"
+    public static let task: SerializableResultType = "task"
     
     /// Defaults to creating a `SectionResultObject`.
-    public static let section: RSDResultType = "section"
-    
-    /// Defaults to creating a `RSDFileResult`.
-    public static let file: RSDResultType = "file"
-    
-    /// Defaults to creating a `RSDErrorResult`.
-    public static let error: RSDResultType = "error"
+    public static let section: SerializableResultType = "section"
     
     /// Defaults to creating a `RSDNavigationResult`.
-    public static let navigation: RSDResultType = "navigation"
-    
-    /// List of all the standard types.
-    public static func allStandardTypes() -> [RSDResultType] {
-        return [.base, .answer, .collection, .task, .section, .file, .error, .navigation]
-    }
-}
-
-extension RSDResultType : ExpressibleByStringLiteral {    
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
-    }
-}
-
-extension RSDResultType : DocumentableStringLiteral {
-    public static func examples() -> [String] {
-        return allStandardTypes().map{ $0.rawValue }
-    }
+    public static let navigation: SerializableResultType = "navigation"
 }
 
 // List of the serialization examples included in this library.
 
 extension ResultDataSerializer {
-    func libraryExamples() -> [RSDResult] {
+    func libraryExamples() -> [SerializableResultData] {
         [
             RSDTaskResultObject.examples().first!,
             SectionResultObject.examples().first!,
             RSDResultObject.examples().first!,
-            AnswerResultObject.examples().first!,
             RSDCollectionResultObject.examples().first!,
-            RSDErrorResultObject.examples().first!,
-            RSDFileResultObject.examples().first!,
         ]
     }
     
     func registerLibraryExamples(with factory: RSDFactory) {
         self.add(contentsOf: libraryExamples())
-        factory.registerSerializer(self, for: RSDResult.self)
-    }
-}
-
-// Wrap the ResultData implementations from JsonModel to conform to matching RSDResult subprotocol.
-
-extension JsonElementResultObject : AnswerResult {
-    public var jsonAnswerType: AnswerType? { nil }
-    public var questionText: String? { nil }
-    public var type: RSDResultType {
-        RSDResultType(rawValue: self.serializableResultType.rawValue)
-    }
-}
-
-extension ErrorResultObject : RSDErrorResult {
-    public var type: RSDResultType {
-        RSDResultType(rawValue: self.serializableResultType.rawValue)
-    }
-}
-
-extension FileResultObject : RSDFileResult {
-    public var type: RSDResultType {
-        RSDResultType(rawValue: self.serializableResultType.rawValue)
-    }
-}
-
-extension CollectionResultObject : CollectionResult {
-    public var inputResults: [RSDResult] {
-        get {
-            children.compactMap{ $0 as? RSDResult }
-        }
-        set {
-            children = newValue
-        }
-    }
-    
-    public var type: RSDResultType {
-        RSDResultType(rawValue: self.serializableResultType.rawValue)
+        factory.registerSerializer(self, for: ResultData.self)
     }
 }
 

@@ -37,38 +37,6 @@ import JsonModel
 // TODO: syoung 04/02/2020 Add documentation for the Kotlin interfaces.
 
 
-/// The protocol for the answer type of a question.
-public protocol AnswerType : PolymorphicRepresentable, Encodable {
-    var objectType: AnswerTypeType { get }
-    static var defaultType: AnswerTypeType { get }
-    
-    var baseType: JsonType { get }
-    
-    /// Decode the JsonElement for this AnswerType from the given decoder.
-    ///
-    /// - parameter decoder: The nested decoder for this json element.
-    /// - returns: The decoded value or `nil` if the value is not present.
-    /// - throws: `DecodingError` if the encountered stored value cannot be decoded.
-    func decodeValue(from decoder: Decoder) throws -> JsonElement
-    
-    /// Decode a `JsonElement` into the expected class type.
-    ///
-    /// - parameter jsonValue: The JSON value (from an array or dictionary) with the answer.
-    /// - returns: The decoded value or `nil` if the value is not present.
-    /// - throws: `DecodingError` if the encountered stored value cannot be decoded.
-    func decodeAnswer(from jsonValue: JsonElement?) throws -> Any?
-    
-    /// Returns a `JsonElement` that is encoded for this answer type from the given value.
-    ///
-    /// - parameter value: The value to encode.
-    /// - returns: The JSON serializable object for this encodable.
-    func encodeAnswer(from value: Any?) throws -> JsonElement
-}
-
-public extension AnswerType {
-    var typeName: String { objectType.rawValue }
-}
-
 public protocol Question : ResultNode {
     var isOptional: Bool { get }
     var isSingleAnswer: Bool { get }
@@ -78,7 +46,7 @@ public protocol Question : ResultNode {
 }
 
 public extension Question {
-    func instantiateResult() -> RSDResult {
+    func instantiateResult() -> ResultData {
         instantiateAnswerResult()
     }
 }
@@ -205,7 +173,7 @@ public struct ChoiceItemWrapper : ChoiceInputItem {
         choice.imageData
     }
     
-    public func isEqualToResult(_ result: RSDResult?) -> Bool {
+    public func isEqualToResult(_ result: ResultData?) -> Bool {
         return choice.isEqualToResult(result)
     }
     

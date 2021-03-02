@@ -36,13 +36,13 @@ import JsonModel
 
 /// `RSDCollectionResultObject` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
-public struct RSDCollectionResultObject : CollectionResult, RSDNavigationResult, Codable, RSDCopyWithIdentifier {
+public struct RSDCollectionResultObject : SerializableResultData, CollectionResult, RSDNavigationResult, Codable, RSDCopyWithIdentifier {
     
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
     
     /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    public var type: RSDResultType
+    public let serializableType: SerializableResultType
     
     /// The start date timestamp for the result.
     public var startDate: Date = Date()
@@ -52,7 +52,7 @@ public struct RSDCollectionResultObject : CollectionResult, RSDNavigationResult,
     
     /// The list of input results associated with this step. These are generally assumed to be answers to
     /// field inputs, but they are not required to implement the `RSDAnswerResult` protocol.
-    public var inputResults: [RSDResult]
+    public var children: [ResultData]
     
     /// The identifier for the step to go to following this result. If non-nil, then this will be used in
     /// navigation handling.
@@ -62,18 +62,20 @@ public struct RSDCollectionResultObject : CollectionResult, RSDNavigationResult,
     ///
     /// - parameters:
     ///     - identifier: The identifier string.
-    public init(identifier: String) {
+    public init(identifier: String, children: [ResultData] = [], startDate: Date = Date(), endDate: Date = Date()) {
         self.identifier = identifier
-        self.type = .collection
-        self.inputResults = []
+        self.serializableType = .collection
+        self.children = children
+        self.startDate = startDate
+        self.endDate = endDate
     }
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, startDate, endDate, inputResults, skipToIdentifier
+        case identifier, serializableType = "type", startDate, endDate, children, skipToIdentifier
     }
     
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
-    /// with the decoder to decode the `inputResults`.
+    /// with the decoder to decode the `children`.
     ///
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - throws: `DecodingError`
@@ -83,10 +85,10 @@ public struct RSDCollectionResultObject : CollectionResult, RSDNavigationResult,
         self.skipToIdentifier = try container.decodeIfPresent(String.self, forKey: .skipToIdentifier)
         self.startDate = try container.decodeIfPresent(Date.self, forKey: .startDate) ?? Date()
         self.endDate = try container.decodeIfPresent(Date.self, forKey: .endDate) ?? Date()
-        self.type = try container.decode(RSDResultType.self, forKey: .type)
+        self.serializableType = try container.decode(SerializableResultType.self, forKey: .serializableType)
         
-        let resultsContainer = try container.nestedUnkeyedContainer(forKey: .inputResults)
-        self.inputResults = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: resultsContainer)
+        let resultsContainer = try container.nestedUnkeyedContainer(forKey: .children)
+        self.children = try decoder.factory.decodePolymorphicArray(ResultData.self, from: resultsContainer)
     }
     
     /// Encode the result to the given encoder.
@@ -95,26 +97,27 @@ public struct RSDCollectionResultObject : CollectionResult, RSDNavigationResult,
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)
-        try container.encode(type, forKey: .type)
+        try container.encode(serializableType, forKey: .serializableType)
         try container.encode(startDate, forKey: .startDate)
         try container.encode(endDate, forKey: .endDate)
         try container.encodeIfPresent(skipToIdentifier, forKey: .skipToIdentifier)
         
-        var nestedContainer = container.nestedUnkeyedContainer(forKey: .inputResults)
-        for result in inputResults {
+        var nestedContainer = container.nestedUnkeyedContainer(forKey: .children)
+        for result in children {
             let nestedEncoder = nestedContainer.superEncoder()
             try result.encode(to: nestedEncoder)
         }
     }
     
     public func copy(with identifier: String) -> RSDCollectionResultObject {
-        var copy = RSDCollectionResultObject(identifier: identifier)
-        copy.startDate = self.startDate
-        copy.endDate = self.endDate
-        copy.type = self.type
-        copy.inputResults = self.inputResults
-        copy.skipToIdentifier = self.skipToIdentifier
-        return copy
+        RSDCollectionResultObject(identifier: identifier,
+                                  children: self.children.map { $0.deepCopy() },
+                                  startDate: self.startDate,
+                                  endDate: self.endDate)
+    }
+    
+    public func deepCopy() -> RSDCollectionResultObject {
+        self.copy(with: self.identifier)
     }
 }
 
@@ -126,7 +129,7 @@ extension RSDCollectionResultObject : DocumentableStruct {
     public static func isRequired(_ codingKey: CodingKey) -> Bool {
         guard let key = codingKey as? CodingKeys else { return false }
         switch key {
-        case .type, .identifier, .startDate, .inputResults:
+        case .serializableType, .identifier, .startDate, .children:
             return true
         case .skipToIdentifier, .endDate:
             return false
@@ -138,16 +141,16 @@ extension RSDCollectionResultObject : DocumentableStruct {
             throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
         }
         switch key {
-        case .type:
-            return .init(constValue: RSDResultType.collection)
+        case .serializableType:
+            return .init(constValue: SerializableResultType.collection)
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case .startDate, .endDate:
             return .init(propertyType: .format(.dateTime))
         case .skipToIdentifier:
             return .init(propertyType: .primitive(.string))
-        case .inputResults:
-            return .init(propertyType: .interfaceArray("\(RSDResult.self)"))
+        case .children:
+            return .init(propertyType: .interfaceArray("\(ResultData.self)"))
         }
     }
     
@@ -155,7 +158,7 @@ extension RSDCollectionResultObject : DocumentableStruct {
         var result = RSDCollectionResultObject(identifier: "formStep")
         result.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         result.endDate = result.startDate.addingTimeInterval(5 * 60)
-        result.inputResults = AnswerResultObject.examples()
+        result.children = AnswerResultObject.examples()
         return [result]
     }
 }

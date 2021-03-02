@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /// Base class implementation for a step view model.
@@ -116,7 +117,7 @@ open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
     }
     
     /// Instantiates a step result for this step.
-    public func pathResult() -> RSDResult {
+    public func pathResult() -> ResultData {
         return self.step.instantiateStepResult()
     }
     
@@ -126,7 +127,7 @@ open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
     }
     
     /// Convenience method for accessing the step result associated with this step.
-    open func findStepResult() -> RSDResult? {
+    open func findStepResult() -> ResultData? {
         return self.taskResult.findResult(for: step)
     }
 

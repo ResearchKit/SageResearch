@@ -102,7 +102,7 @@ public struct RSDStepTransformerObject : RSDStepTransformer, RSDStep, Decodable 
         transformedStep.identifier
     }
     
-    public func instantiateStepResult() -> RSDResult {
+    public func instantiateStepResult() -> ResultData {
         transformedStep.instantiateStepResult()
     }
     
@@ -133,7 +133,7 @@ fileprivate struct _StepDecoder: Decodable {
 fileprivate struct PlaceholderStep: RSDStep {
     let identifier: String
     let stepType: RSDStepType = "placeholder"
-    func instantiateStepResult() -> RSDResult { RSDResultObject(identifier: identifier) }
+    func instantiateStepResult() -> ResultData { RSDResultObject(identifier: identifier) }
     func validate() throws { }
 }
 

@@ -35,36 +35,42 @@ import Foundation
 import JsonModel
 
 /// `RSDResultObject` is a concrete implementation of the base result associated with a task, step, or asynchronous action.
-public struct RSDResultObject : RSDNavigationResult, Codable {
+public struct RSDResultObject : SerializableResultData, RSDNavigationResult, Codable {
 
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
     
     /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    public let type: RSDResultType
+    public let serializableType: SerializableResultType
     
     /// The start date timestamp for the result.
-    public var startDate: Date = Date()
+    public var startDate: Date
     
     /// The end date timestamp for the result.
-    public var endDate: Date = Date()
+    public var endDate: Date
     
     /// The identifier for the step to go to following this result. If non-nil, then this will be used in
     /// navigation handling.
     public var skipToIdentifier: String?
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, startDate, endDate, skipToIdentifier
+        case identifier, serializableType = "type", startDate, endDate, skipToIdentifier
     }
     
     /// Default initializer for this object.
     ///
     /// - parameters:
     ///     - identifier: The identifier string.
-    ///     - type: The `RSDResultType` for this result. Default = `.base`.
-    public init(identifier: String, type: RSDResultType = .base) {
+    public init(identifier: String, startDate: Date = Date(), endDate: Date = Date(), skipToIdentifier: String? = nil) {
         self.identifier = identifier
-        self.type = type
+        self.serializableType = .base
+        self.startDate = startDate
+        self.endDate = endDate
+        self.skipToIdentifier = skipToIdentifier
+    }
+    
+    public func deepCopy() -> RSDResultObject {
+        self
     }
 }
 
@@ -76,7 +82,7 @@ extension RSDResultObject : DocumentableStruct {
     public static func isRequired(_ codingKey: CodingKey) -> Bool {
         guard let key = codingKey as? CodingKeys else { return false }
         switch key {
-        case .type, .identifier, .startDate, .endDate:
+        case .serializableType, .identifier, .startDate, .endDate:
             return true
         case .skipToIdentifier:
             return false
@@ -88,8 +94,8 @@ extension RSDResultObject : DocumentableStruct {
             throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
         }
         switch key {
-        case .type:
-            return .init(constValue: RSDResultType.file)
+        case .serializableType:
+            return .init(constValue: SerializableResultType.base)
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case .startDate, .endDate:

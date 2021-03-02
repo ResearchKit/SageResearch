@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import XCTest
 @testable import Research
 
@@ -192,11 +193,11 @@ class StepViewModelTests: XCTestCase {
 
         var result1 = RSDCollectionResultObject(identifier: "step1")
         let answerResult1 = AnswerResultObject(identifier: "foo", value: .string("magoo"))
-        result1.inputResults = [answerResult1, RSDResultObject(identifier: "roo")]
+        result1.children = [answerResult1, RSDResultObject(identifier: "roo")]
         
         var result2 = RSDCollectionResultObject(identifier: "step2")
         let answerResult2 = AnswerResultObject(identifier: "foo", value: .string("blu"))
-        result2.inputResults = [answerResult2, RSDResultObject(identifier: "roo")]
+        result2.children = [answerResult2, RSDResultObject(identifier: "roo")]
         
         var taskResult = RSDTaskResultObject(identifier: "magoo")
         taskResult.stepHistory = [result1, result2]

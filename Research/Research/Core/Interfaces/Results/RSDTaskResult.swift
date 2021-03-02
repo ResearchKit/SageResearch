@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 
@@ -41,17 +42,19 @@ public protocol RSDTaskResult : BranchNodeResult {
     /// A list of all the asynchronous results for this task. The list should include uniquely identified results.
     /// The step history is used to describe the path you took to get to where you are going, whereas
     /// the asynchronous results include any canonical results that are independent of path.
-    var asyncResults: [RSDResult]? { get set }
+    var asyncResults: [ResultData]? { get set }
 }
 
 /// The `RSDTaskRunResult` is a task result where the task run UUID can be set to allow for nested
 /// results that all use the same run UUID.
-public protocol RSDTaskRunResult : RSDTaskResult, AssessmentResult {
+@available(*, deprecated, message: "Implement `AssessmentResult` instead")
+public protocol RSDTaskRunResult : AssessmentResult {
     
     /// Schema info associated with this task.
     var schemaInfo: RSDSchemaInfo? { get set }
 }
 
+@available(*, deprecated, message: "Implement `AssessmentResult` instead")
 extension RSDTaskRunResult {
     public var versionString: String? {
         guard let revision = schemaInfo?.schemaVersion else { return nil }
@@ -69,7 +72,7 @@ extension RSDTaskRunResult {
 
 extension RSDTaskResult  {
     
-    public var inputResults: [RSDResult] {
+    public var children: [ResultData] {
         get { asyncResults ?? [] }
         set { asyncResults = newValue }
     }
@@ -77,14 +80,14 @@ extension RSDTaskResult  {
     /// Find a result within the step history.
     /// - parameter step: The step associated with the result.
     /// - returns: The result or `nil` if not found.
-    public func findResult(for step: RSDStep) -> RSDResult? {
+    public func findResult(for step: RSDStep) -> ResultData? {
         return self.stepHistory.first(where: { $0.identifier == step.identifier })
     }
     
     /// Find a result within the step history.
     /// - parameter identifier: The identifier associated with the result.
     /// - returns: The result or `nil` if not found.
-    public func findResult(with identifier: String) -> RSDResult? {
+    public func findResult(with identifier: String) -> ResultData? {
         return self.stepHistory.first(where: { $0.identifier == identifier })
     }
     
@@ -94,8 +97,8 @@ extension RSDTaskResult  {
     /// - parameter result:  The result to add to the step history.
     /// - returns: The previous result or `nil` if there wasn't one.
     @discardableResult
-    mutating public func appendStepHistory(with result: RSDResult) -> RSDResult? {
-        var previousResult: RSDResult?
+    mutating public func appendStepHistory(with result: ResultData) -> ResultData? {
+        var previousResult: ResultData?
         if let idx = stepHistory.lastIndex(where: { $0.identifier == result.identifier }) {
             previousResult = (idx == stepHistory.count - 1) ? stepHistory.remove(at: idx) : stepHistory[idx]
         }
@@ -110,7 +113,7 @@ extension RSDTaskResult  {
     /// - parameter stepIdentifier:  The identifier of the result associated with the given step.
     /// - returns: The previous results or `nil` if there weren't any.
     @discardableResult
-    mutating public func removeStepHistory(from stepIdentifier: String) -> Array<RSDResult>? {
+    mutating public func removeStepHistory(from stepIdentifier: String) -> Array<ResultData>? {
         if let idx = nodePath.lastIndex(of: stepIdentifier) {
             nodePath.removeSubrange(idx...)
         }
@@ -122,7 +125,7 @@ extension RSDTaskResult  {
     /// The step history is used to describe the path you took to get to where you are going, whereas
     /// the asynchronous results include any canonical results that are independent of path.
     /// - parameter result:  The result to add to the async results.
-    mutating public func appendAsyncResult(with result: RSDResult) {
+    mutating public func appendAsyncResult(with result: ResultData) {
         if let idx = asyncResults?.firstIndex(where: { $0.identifier == result.identifier }) {
             asyncResults?.remove(at: idx)
         }

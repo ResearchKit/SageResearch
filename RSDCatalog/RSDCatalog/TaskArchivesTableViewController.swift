@@ -35,6 +35,7 @@ import UIKit
 import ResearchUI
 import Research
 
+import JsonModel
 import UIKit
 
 class TaskArchivesTableViewController: UITableViewController {
@@ -73,12 +74,10 @@ class TaskArchivesTableViewController: UITableViewController {
         let archive = self.archiveManager.dataArchives[indexPath.section]
         let file = archive.files[indexPath.item]
         if let vc = segue.destination as? FileResultViewController {
-            var result = RSDFileResultObject(identifier: file.lastPathComponent)
-            result.url = file
+            let result = FileResultObject(identifier: file.lastPathComponent, url: file)
             vc.result = result
             vc.title = vc.result!.identifier
             vc.navigationItem.title = vc.title
         }
     }
-
 }

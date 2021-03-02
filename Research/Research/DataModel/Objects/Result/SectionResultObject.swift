@@ -35,40 +35,45 @@
 import Foundation
 import JsonModel
 
-public struct SectionResultObject : RSDTaskResult, Codable {
+public struct SectionResultObject : SerializableResultData, RSDTaskResult, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, startDate, endDate, stepHistory, asyncResults, nodePath
+        case identifier, serializableType = "type", startDate, endDate, stepHistory, asyncResults, nodePath
     }
     
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
     
     /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    public let type: RSDResultType
+    public let serializableType: SerializableResultType
     
     /// The start date timestamp for the result.
-    public var startDate: Date = Date()
+    public var startDate: Date
     
     /// The end date timestamp for the result.
-    public var endDate: Date = Date()
+    public var endDate: Date
     
     /// A listing of the step history for this task or section. The listed step results should *only* include the
     /// last result for any given step.
-    public var stepHistory: [RSDResult] = []
+    public var stepHistory: [ResultData]
     
     /// A list of all the asynchronous results for this task. The list should include uniquely identified results.
-    public var asyncResults: [RSDResult]?
+    public var asyncResults: [ResultData]?
     
     /// The path to the current result.
-    public var nodePath: [String] = []
+    public var nodePath: [String]
     
     /// Default initializer for this object.
     ///
     /// - parameters:
     ///     - identifier: The identifier string.
-    public init(identifier: String) {
+    public init(identifier: String, startDate: Date = Date(), endDate: Date = Date(), stepHistory: [ResultData] = [], asyncResults: [ResultData]? = nil, nodePath: [String] = []) {
         self.identifier = identifier
-        self.type = .section
+        self.serializableType = .section
+        self.startDate = startDate
+        self.endDate = endDate
+        self.stepHistory = stepHistory
+        self.asyncResults = asyncResults
+        self.nodePath = nodePath
     }
     
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
@@ -79,17 +84,17 @@ public struct SectionResultObject : RSDTaskResult, Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decode(RSDResultType.self, forKey: .type)
+        self.serializableType = try container.decode(SerializableResultType.self, forKey: .serializableType)
         self.startDate = try container.decode(Date.self, forKey: .startDate)
         self.endDate = try container.decode(Date.self, forKey: .endDate)
         self.nodePath = try container.decodeIfPresent([String].self, forKey: .nodePath) ?? []
         
         let resultsContainer = try container.nestedUnkeyedContainer(forKey: .stepHistory)
-        self.stepHistory = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: resultsContainer)
+        self.stepHistory = try decoder.factory.decodePolymorphicArray(ResultData.self, from: resultsContainer)
         
         if container.contains(.asyncResults) {
             let asyncResultsContainer = try container.nestedUnkeyedContainer(forKey: .asyncResults)
-            self.asyncResults = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: asyncResultsContainer)
+            self.asyncResults = try decoder.factory.decodePolymorphicArray(ResultData.self, from: asyncResultsContainer)
         }
     }
     
@@ -99,7 +104,7 @@ public struct SectionResultObject : RSDTaskResult, Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)
-        try container.encode(type, forKey: .type)
+        try container.encode(serializableType, forKey: .serializableType)
         try container.encode(startDate, forKey: .startDate)
         try container.encode(endDate, forKey: .endDate)
         try container.encode(nodePath, forKey: .nodePath)
@@ -118,6 +123,15 @@ public struct SectionResultObject : RSDTaskResult, Codable {
             }
         }
     }
+    
+    public func deepCopy() -> SectionResultObject {
+        SectionResultObject(identifier: identifier,
+                            startDate: startDate,
+                            endDate: endDate,
+                            stepHistory: stepHistory.map { $0.deepCopy() },
+                            asyncResults: asyncResults?.map { $0.deepCopy() },
+                            nodePath: nodePath)
+    }
 }
 
 extension SectionResultObject : DocumentableStruct {
@@ -128,7 +142,7 @@ extension SectionResultObject : DocumentableStruct {
     public static func isRequired(_ codingKey: CodingKey) -> Bool {
         guard let key = codingKey as? CodingKeys else { return false }
         switch key {
-        case .type, .identifier, .startDate, .endDate, .stepHistory:
+        case .serializableType, .identifier, .startDate, .endDate, .stepHistory:
             return true
         default:
             return false
@@ -140,14 +154,14 @@ extension SectionResultObject : DocumentableStruct {
             throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
         }
         switch key {
-        case .type:
-            return .init(constValue: RSDResultType.task)
+        case .serializableType:
+            return .init(constValue: SerializableResultType.section)
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case .startDate, .endDate:
             return .init(propertyType: .format(.dateTime))
         case .stepHistory, .asyncResults:
-            return .init(propertyType: .interfaceArray("\(RSDResult.self)"))
+            return .init(propertyType: .interfaceArray("\(ResultData.self)"))
         case .nodePath:
             return .init(propertyType: .primitiveArray(.string))
         }
@@ -168,7 +182,7 @@ extension SectionResultObject : DocumentableStruct {
         conclusionStepResult.endDate = conclusionStepResult.startDate.addingTimeInterval(20)
         result.stepHistory = [introStepResult, collectionResult, conclusionStepResult]
         
-        var fileResult = RSDFileResultObject.examples().first!
+        var fileResult = FileResultObject.examples().first!
         fileResult.startDate = collectionResult.startDate
         fileResult.endDate = collectionResult.endDate
         result.asyncResults = [fileResult]

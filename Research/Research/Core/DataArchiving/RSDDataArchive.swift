@@ -70,7 +70,7 @@ public protocol RSDDataArchive : class {
     ///     - sectionIdentifier: The section identifier for the task.
     ///     - stepPath: The full step path to the given result.
     /// - returns: An archivable object or `nil` if the result should be skipped.
-    func archivableData(for result: RSDResult, sectionIdentifier: String?, stepPath: String?) -> RSDArchivable?
+    func archivableData(for result: ResultData, sectionIdentifier: String?, stepPath: String?) -> RSDArchivable?
 }
 
 /// An archivable result is an object wrapper for results that allows them to be transformed into
@@ -164,7 +164,7 @@ internal class TaskArchiver : NSObject {
         return archives
     }
     
-    func recursiveAddFunc(_ sectionIdentifier: String?, _ collectionIdentifier: String?, _ stepPath: String?, _ results: [RSDResult]) throws {
+    func recursiveAddFunc(_ sectionIdentifier: String?, _ collectionIdentifier: String?, _ stepPath: String?, _ results: [ResultData]) throws {
         for result in results {
             if let taskResult = result as? RSDTaskResult {
                 if let subArchiver = TaskArchiver(manager: manager, taskResult: taskResult, inputArchive: archive) {
@@ -187,7 +187,7 @@ internal class TaskArchiver : NSObject {
         }
     }
     
-    func addToArchive(_ sectionIdentifier: String?, _ collectionIdentifier: String?, _ stepPath: String?, _ result: RSDResult) throws {
+    func addToArchive(_ sectionIdentifier: String?, _ collectionIdentifier: String?, _ stepPath: String?, _ result: ResultData) throws {
         // If there is no archive for this level, then all the non-task results are ignored.
         guard let archive = self.archive else { return }
         
@@ -209,7 +209,7 @@ internal class TaskArchiver : NSObject {
         }
         else if let collection = result as? CollectionResult {
             let path = (stepPath != nil) ? "\(stepPath!)/\(collection.identifier)" : collection.identifier
-            try recursiveAddFunc(sectionIdentifier, collection.identifier, path, collection.inputResults)
+            try recursiveAddFunc(sectionIdentifier, collection.identifier, path, collection.children)
         }
         
         // If this result conforms to the answer result protocol then add it to the answer map

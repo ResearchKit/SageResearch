@@ -34,6 +34,7 @@
 #if os(macOS)
 import AppKit
 #else
+import JsonModel
 import UIKit
 #endif
 
@@ -57,8 +58,8 @@ public struct RSDImagePickerStepObject: RSDImagePickerStep, Codable {
     public var mediaTypes: [RSDImagePickerMediaType]?
     
     /// The step type for this step is a file.
-    public func instantiateStepResult() -> RSDResult {
-        return RSDFileResultObject(identifier: self.identifier)
+    public func instantiateStepResult() -> ResultData {
+        return FileResultObject(identifier: self.identifier)
     }
     
     /// Do nothing.

@@ -45,7 +45,6 @@ open class RSDFactory : ResultDataFactory {
     
     public static var shared = RSDFactory.defaultFactory
     
-    public let answerTypeSerializer = AnswerTypeSerializer()
     public let asyncActionSerializer = AsyncActionConfigurationSerializer()
     public let buttonActionSerializer = ButtonActionSerializer()
     public let colorMappingSerializer = ColorMappingSerializer()
@@ -58,7 +57,6 @@ open class RSDFactory : ResultDataFactory {
     
     public required init() {
         super.init()
-        self.registerSerializer(answerTypeSerializer)
         self.registerSerializer(asyncActionSerializer)
         self.registerSerializer(buttonActionSerializer)
         self.registerSerializer(colorMappingSerializer)
@@ -212,6 +210,7 @@ open class RSDFactory : ResultDataFactory {
     /// - returns: The schema info created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDTaskResultObject`
+    @available(*, deprecated, message: "Implement `AssessmentResult` instead")
     open func decodeSchemaInfo(from decoder: Decoder) throws -> RSDSchemaInfo {
         return try RSDSchemaInfoObject(from: decoder)
     }
@@ -223,6 +222,7 @@ open class RSDFactory : ResultDataFactory {
     /// - parameters:
     ///     - taskResult: The task result being encoded.
     ///     - encoder: The nested encoder to encode the schema info to.
+    @available(*, deprecated, message: "Implement `AssessmentResult` instead")
     open func encodeSchemaInfo(from taskResult: RSDTaskRunResult, to encoder: Encoder) throws {
         if let schema = taskResult.schemaInfo, let encodableSchema = schema as? Encodable {
             try encodableSchema.encode(to: encoder)
