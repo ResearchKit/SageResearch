@@ -752,14 +752,14 @@
 		FF4A22FE24FEBC5E00944009 /* AudioRecorderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderConfiguration.swift; sourceTree = "<group>"; };
 		FF4A230424FEC47600944009 /* AudioRecorderAudioSessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderAudioSessionController.swift; sourceTree = "<group>"; };
 		FF4A230A24FEC4FF00944009 /* AudioRecorderTaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderTaskObject.swift; sourceTree = "<group>"; };
-		FF518F8024AC089B003E9DAB /* ReleaseNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ReleaseNotes.md; path = ../MigrationNotes_v3/ReleaseNotes.md; sourceTree = "<group>"; };
+		FF518F8024AC089B003E9DAB /* ReleaseNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ReleaseNotes.md; path = ../MigrationNotes/ReleaseNotes.md; sourceTree = "<group>"; };
 		FF580BF31F7E3764009B3EE9 /* RSDActiveUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveUIStepObject.swift; sourceTree = "<group>"; };
 		FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FF5C4C1C1F8C872500F311BA /* RSDTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskController.swift; sourceTree = "<group>"; };
 		FF5C4C1E1F8C874300F311BA /* RSDStepController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepController.swift; sourceTree = "<group>"; };
 		FF5C4C311F8C9DC100F311BA /* RSDResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultObject.swift; sourceTree = "<group>"; };
 		FF5D2C4C24B3A7D5000EA4E5 /* SectionResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionResultObject.swift; sourceTree = "<group>"; };
-		FF61FA3023A447F5006B36C5 /* MigrationNotes_v3.0.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v3.0.md; path = ../MigrationNotes_v3/MigrationNotes_v3.0.md; sourceTree = "<group>"; };
+		FF61FA3023A447F5006B36C5 /* MigrationNotes_v3.0.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v3.0.md; path = ../MigrationNotes/MigrationNotes_v3.0.md; sourceTree = "<group>"; };
 		FF61FA3123A459AD006B36C5 /* RSDResourceImageDataObject+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSDResourceImageDataObject+Platform.swift"; sourceTree = "<group>"; };
 		FF639615245223C00002B1D1 /* ResultNodeSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultNodeSerializer.swift; sourceTree = "<group>"; };
 		FF63E8221FBABF560060DD98 /* RSDSurveyRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSurveyRule.swift; sourceTree = "<group>"; };
@@ -809,7 +809,7 @@
 		FFA94E4B244A8A2D00A706F2 /* JsonDocumentableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDocumentableTests.swift; sourceTree = "<group>"; };
 		FFA94E4D244E083100A706F2 /* AssessmentTaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssessmentTaskObject.swift; sourceTree = "<group>"; };
 		FFA94E52244E2F4300A706F2 /* CopyTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTaskTests.swift; sourceTree = "<group>"; };
-		FFA94E58244E35DB00A706F2 /* MigrationNotes_v3.3.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v3.3.md; path = ../MigrationNotes_v3/MigrationNotes_v3.3.md; sourceTree = "<group>"; };
+		FFA94E58244E35DB00A706F2 /* MigrationNotes_v3.3.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v3.3.md; path = ../MigrationNotes/MigrationNotes_v3.3.md; sourceTree = "<group>"; };
 		FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskControllerTests.swift; sourceTree = "<group>"; };
 		FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownUIStepObject.swift; sourceTree = "<group>"; };
 		FFAEE7D2243C007300F18BCB /* Result-KotlinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result-KotlinModel.swift"; sourceTree = "<group>"; };
@@ -838,7 +838,7 @@
 		FFD765C225140505003CD2F1 /* AbstractUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractUIStepObject.swift; sourceTree = "<group>"; };
 		FFDAE9E21F9082E4001D0CC0 /* CodableTaskObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTaskObjectTests.swift; sourceTree = "<group>"; };
 		FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableStepObjectTests.swift; sourceTree = "<group>"; };
-		FFDE53F325F1A3C900387C65 /* MigrationNotes_v4.0.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v4.0.md; path = ../MigrationNotes_v3/MigrationNotes_v4.0.md; sourceTree = "<group>"; };
+		FFDE53F325F1A3C900387C65 /* MigrationNotes_v4.0.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v4.0.md; path = ../MigrationNotes/MigrationNotes_v4.0.md; sourceTree = "<group>"; };
 		FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDocumentable.swift; sourceTree = "<group>"; };
 		FFDFF5C41FC38150009713E8 /* ExampleDecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleDecodableTests.swift; sourceTree = "<group>"; };
 		FFDFF5DB1FC4F9B9009713E8 /* Date+ISO8601.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ISO8601.swift"; sourceTree = "<group>"; };
@@ -854,10 +854,10 @@
 		FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDExceptionHandler.h; sourceTree = "<group>"; };
 		FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDExceptionHandler.m; sourceTree = "<group>"; };
 		FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerResultTypeJSONTests.swift; sourceTree = "<group>"; };
-		FFF433FD2446428B00C5F466 /* MigrationNotes_v3.2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v3.2.md; path = ../MigrationNotes_v3/MigrationNotes_v3.2.md; sourceTree = "<group>"; };
+		FFF433FD2446428B00C5F466 /* MigrationNotes_v3.2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v3.2.md; path = ../MigrationNotes/MigrationNotes_v3.2.md; sourceTree = "<group>"; };
 		FFF43407244645D300C5F466 /* KeyboardOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardOptionsObject.swift; sourceTree = "<group>"; };
 		FFF4931523AAB94F0037C54B /* RSDImageVendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImageVendor.swift; sourceTree = "<group>"; };
-		FFF4FBCD2550B0B3006F6EA2 /* MigrationNotes_v3.1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v3.1.md; path = ../MigrationNotes_v3/MigrationNotes_v3.1.md; sourceTree = "<group>"; };
+		FFF4FBCD2550B0B3006F6EA2 /* MigrationNotes_v3.1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = MigrationNotes_v3.1.md; path = ../MigrationNotes/MigrationNotes_v3.1.md; sourceTree = "<group>"; };
 		FFF4FBFF2550B322006F6EA2 /* Formatters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Formatters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFF4FC022550B322006F6EA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFF4FCF12550B533006F6EA2 /* FormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterTests.swift; sourceTree = "<group>"; };
@@ -4288,8 +4288,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Sage-Bionetworks/JsonModel-Swift.git";
 			requirement = {
-				branch = "beta-1.2";
-				kind = branch;
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

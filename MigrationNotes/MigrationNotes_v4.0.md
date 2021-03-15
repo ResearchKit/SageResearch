@@ -34,3 +34,7 @@ See `FileResultObject`, `AnswerResultObject`, and `CollectionResultObject` for e
 of appropriate implementions.
 
 ## Deprecated methods and classes have been deleted
+
+Any references to deprecated methods, classes, and protocols will fail. These need to be refactored
+before migrating to version 4.0.
+
