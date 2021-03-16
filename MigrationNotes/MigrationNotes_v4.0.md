@@ -1,7 +1,20 @@
 #  Migration Steps -> v4.0
 
 The first step in migrating your code is to run the migration tool. This will update *most* of the required 
-changes. Additionally, the following manual steps are also required:
+changes, though some manual migration will be required. The migration tool is run from the command
+line. I looked into using an Xcode extension, but for a one-time migration, the extension wasn't really
+suitable since it can only run on one file at a time. To run the tool:
+
+1. Create a git branch for your changes and check in any changes that are currently in-flight. 
+2. Update your Swift Package or Carthage to point to the new version of SageResearch.
+3. Run the tool from the command line either by going into the directory that should be migrated
+    or by including the directory as an argument. `~/` is recognized but no other special characters are.
+
+```
+/SageResearch/bin/rsd-migration-tool <directory>
+```
+
+Additionally, the following manual steps are also required:
 
 ## `RSDResult` protocols renamed and moved to `JsonModel`
 

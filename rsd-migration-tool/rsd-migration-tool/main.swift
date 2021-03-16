@@ -58,7 +58,7 @@ func run() {
 
         for case let fileURL as URL in enumerator {
             let resourceValues = try fileURL.resourceValues(forKeys: Set(resourceKeys))
-            if !resourceValues.isDirectory!, fileURL.pathExtension == "swift" {
+            if !resourceValues.isDirectory!, fileURL.pathExtension == "swift", !fileURL.pathComponents.contains("Carthage") {
                 try migrateFile(fileURL: fileURL)
             }
         }
