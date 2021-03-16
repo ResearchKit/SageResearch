@@ -36,6 +36,7 @@ import AudioToolbox
 import AVFoundation
 import AVKit
 import UIKit
+import JsonModel
 import Research
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
@@ -97,7 +98,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     /// Returns the current result associated with this step. This property uses a lazy initializer to instantiate
     /// the result and append it to the step history if not found in the step history.
-    lazy open var currentResult: RSDResult = {
+    lazy open var currentResult: ResultData = {
         if let lastResult = stepViewModel.taskResult.stepHistory.last, lastResult.identifier == self.step.identifier {
             return lastResult
         } else {

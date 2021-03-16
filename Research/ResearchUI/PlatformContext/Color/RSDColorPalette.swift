@@ -135,7 +135,7 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let version = try container.decodeIfPresent(Int.self, forKey: .version)
-        
+
         let codingInfo = decoder.codingInfo
         codingInfo?.userInfo[.paletteVersion] = version
         

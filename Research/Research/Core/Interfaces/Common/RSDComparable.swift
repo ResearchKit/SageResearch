@@ -56,12 +56,12 @@ extension RSDComparable {
     /// Is the choice value equal to the given result?
     /// - parameter result: A result to test for equality.
     /// - returns: `true` if the values are equal.
-    public func isEqualToResult(_ result: RSDResult?) -> Bool {
+    public func isEqualToResult(_ result: ResultData?) -> Bool {
         let op: RSDSurveyRuleOperator = (self.matchingAnswer == nil) ? .skip : .equal
         return isMatching(to: result, op: op)
     }
     
-    func isMatching(to result: RSDResult?, op: RSDSurveyRuleOperator) -> Bool {
+    func isMatching(to result: ResultData?, op: RSDSurveyRuleOperator) -> Bool {
         
         // If this is an `.always` operator, it should evaluate as a match.
         if op == .always {
@@ -72,9 +72,6 @@ extension RSDComparable {
             return isMatching(to: answerResult.jsonValue?.jsonObject(),
                               answerType: answerResult.jsonAnswerType ?? AnswerTypeString(),
                               op: op)
-        }
-        else if let answerResult = result as? RSDAnswerResult {
-            return isMatching(to: answerResult.value, answerType: answerResult.answerType.answerType, op: op)
         }
         else {
             return op == .skip ? true : false

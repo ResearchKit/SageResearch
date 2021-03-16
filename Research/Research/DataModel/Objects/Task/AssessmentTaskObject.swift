@@ -151,7 +151,10 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
     fileprivate var _estimatedMinutes: Int?
     
     open func instantiateTaskResult() -> RSDTaskResult {
-        RSDTaskResultObject(identifier: identifier, schemaInfo: schemaInfo)
+        RSDTaskResultObject(identifier: self.identifier,
+                            versionString: self.versionString,
+                            assessmentIdentifier: self.identifier,
+                            schemaIdentifier: self.schemaIdentifier)
     }
     
     open func validate() throws {
@@ -322,7 +325,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
     
     /// Should this step use a result from a previous run? In the default implementation, the task object
     /// acts only as a pass-through for the step navigator if that object implements the protocol.
-    open func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?) {
+    open func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: ResultData?) {
         if let tracker = self.stepNavigator as? RSDTrackingTask {
             return tracker.shouldSkipStep(step)
         }

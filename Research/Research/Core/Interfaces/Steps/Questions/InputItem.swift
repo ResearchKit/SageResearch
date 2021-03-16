@@ -82,7 +82,7 @@ public extension SkipCheckboxInputItem {
         selected ? (matchingValue ?? JsonElement.null) : nil
     }
     
-    func isEqualToResult(_ result: RSDResult?) -> Bool {
+    func isEqualToResult(_ result: ResultData?) -> Bool {
         guard let answerResult = result as? AnswerResult else { return false }
         let answer = answerResult.jsonValue ?? JsonElement.null
         let matching = self.matchingValue ?? JsonElement.null

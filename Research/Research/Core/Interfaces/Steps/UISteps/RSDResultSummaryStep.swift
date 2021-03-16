@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /// A result summary step is used to display a result that is calculated or measured earlier in the task.
@@ -59,9 +60,6 @@ extension RSDResultSummaryStep {
         let cResult = (self.stepResultIdentifier != nil) ? taskResult.findResult(with: self.stepResultIdentifier!) : taskResult
         if let answerResult = (cResult as? AnswerFinder)?.findAnswer(with: resultIdentifier) {
             return (answerResult.value, answerResult.jsonAnswerType)
-        }
-        else if let answerResult = (cResult as? RSDAnswerResultFinder)?.findAnswerResult(with: resultIdentifier) {
-            return (answerResult.value, answerResult.answerType.answerType)
         }
         else {
             return nil

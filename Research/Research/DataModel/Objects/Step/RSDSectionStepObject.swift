@@ -77,7 +77,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
     
     /// Instantiate a step result that is appropriate for this step. The default for this struct is a `RSDTaskResultObject`.
     /// - returns: A result for this step.
-    public func instantiateStepResult() -> RSDResult {
+    public func instantiateStepResult() -> ResultData {
         return SectionResultObject(identifier: identifier)
     }
     

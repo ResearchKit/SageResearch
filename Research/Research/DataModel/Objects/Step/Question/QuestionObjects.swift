@@ -76,7 +76,7 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
     
     /// Instantiate a step result that is appropriate for this step.
     /// - returns: A result for this step.
-    open override func instantiateStepResult() -> RSDResult {
+    open override func instantiateStepResult() -> ResultData {
         guard let question = self as? QuestionStep else {
             return RSDResultObject(identifier: self.identifier)
         }

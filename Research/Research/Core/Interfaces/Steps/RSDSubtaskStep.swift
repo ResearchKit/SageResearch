@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /// `RSDSubtaskStep` is a step that contains a task reference.
@@ -46,7 +47,7 @@ extension RSDSubtaskStep {
         return self.task.identifier
     }
     
-    public func instantiateStepResult() -> RSDResult {
+    public func instantiateStepResult() -> ResultData {
         return task.instantiateTaskResult()
     }
     

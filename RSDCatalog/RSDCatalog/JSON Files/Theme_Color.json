@@ -94,7 +94,6 @@
     },
     {
         "identifier": "selectOne_darkBackground",
-        "type": "form",
         "title": "Single choice selection",
         "subtitle": "Example with color styles of a primary header, white body, and a white footer.",
         "detail": "Select a single option",
@@ -106,15 +105,12 @@
                 "footer": "white"
             }
         },
-        "inputFields": [{
-            "uiHint": "list",
-            "type": "singleChoice",
-            "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
-        }]
+        "baseType": "string",
+        "type": "stringChoiceQuestion",
+        "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
     },
     {
         "identifier": "selectOne_whiteBackground",
-        "type": "form",
         "title": "Single choice selection",
         "subtitle": "Example with an all white background.",
         "detail": "Select a single option",
@@ -122,23 +118,18 @@
             "type": "singleColor",
             "colorStyle": "white"
         },
-        "inputFields": [{
-            "uiHint": "list",
-            "type": "singleChoice",
-            "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
-        }]
+        "baseType": "string",
+        "type": "stringChoiceQuestion",
+        "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
     },
     {
         "identifier": "selectOne_green",
-        "type": "form",
         "title": "Single choice selection",
         "subtitle": "Example with a custom color background.",
         "detail": "Select a single option",
-        "inputFields": [{
-            "uiHint": "list",
-            "type": "singleChoice",
-            "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
-        }],
+        "baseType": "string",
+        "type": "stringChoiceQuestion",
+        "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"],
         "colorMapping": {
             "type": "placementMapping",
             "customColor": {

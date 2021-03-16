@@ -71,6 +71,9 @@ public struct RSDTaskMetadata : Codable {
     /// The revision for the schema associated with this task result.
     public let schemaRevision: Int?
     
+    /// The version string associated with this task.
+    public let versionString: String?
+    
     /// A list of the files included in this package of results.
     public let files: [RSDFileManifest]
     
@@ -97,15 +100,17 @@ public struct RSDTaskMetadata : Codable {
         self.startDate = taskResult.startDate
         self.endDate = taskResult.endDate
         self.files = files
-        if let runResult = taskResult as? RSDTaskRunResult {
+        if let runResult = taskResult as? AssessmentResult {
             self.taskRunUUID = runResult.taskRunUUID
-            self.schemaIdentifier = runResult.schemaInfo?.schemaIdentifier
-            self.schemaRevision = runResult.schemaInfo?.schemaVersion
+            self.schemaIdentifier = runResult.schemaIdentifier
+            self.versionString = runResult.versionString
+            self.schemaRevision = Int(runResult.versionString ?? "null")
         }
         else {
             self.taskRunUUID = nil
             self.schemaIdentifier = nil
             self.schemaRevision = nil
+            self.versionString = nil
         }
     }
 }

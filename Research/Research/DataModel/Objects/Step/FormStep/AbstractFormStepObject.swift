@@ -56,7 +56,7 @@ open class AbstractFormStepObject : RSDUIStepObject {
         RSDCollectionResultObject(identifier: self.identifier)
     }
     
-    open override func instantiateStepResult() -> RSDResult {
+    open override func instantiateStepResult() -> ResultData {
         instantiateCollectionResult()
     }
     

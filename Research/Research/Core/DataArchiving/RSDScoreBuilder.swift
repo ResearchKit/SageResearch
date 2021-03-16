@@ -70,14 +70,14 @@ internal struct RecursiveScoreBuilder : RSDScoreBuilder {
     }
 
     private func _recursiveGetScoringData(from taskResult: RSDTaskResult) throws -> JsonSerializable? {
-        var dataResults: [RSDResult] = taskResult.stepHistory
+        var dataResults: [ResultData] = taskResult.stepHistory
         if let asyncResults = taskResult.asyncResults {
             dataResults.append(contentsOf: asyncResults)
         }
         return try _recursiveGetScoringData(from: dataResults)
     }
     
-    private func _scoringData(_ result: RSDResult) throws -> JsonSerializable? {
+    private func _scoringData(_ result: ResultData) throws -> JsonSerializable? {
         if let scoringResult = result as? RSDScoringResult,
             let scoringData = try scoringResult.dataScore() {
             return scoringData
@@ -86,21 +86,17 @@ internal struct RecursiveScoreBuilder : RSDScoreBuilder {
             return try self._recursiveGetScoringData(from: taskResult)
         }
         else if let collectionResult = result as? CollectionResult {
-            return try self._recursiveGetScoringData(from: collectionResult.inputResults)
+            return try self._recursiveGetScoringData(from: collectionResult.children)
         }
         else if let answerResult = result as? AnswerResult {
             return try answerResult.encodingValue()?.jsonObject()
-        }
-        else if let answerResult = result as? RSDAnswerResult {
-            print("WARNING!!! `RSDAnswerResult` is deprecated and will be deleted a future version.")
-            return try answerResult.answerType.jsonEncode(from: answerResult.value)
         }
         else {
             return nil
         }
     }
     
-    private func _recursiveGetScoringData(from results: [RSDResult]) throws -> JsonSerializable? {
+    private func _recursiveGetScoringData(from results: [ResultData]) throws -> JsonSerializable? {
 
         let dictionary = try results.reduce(into: [String : JsonSerializable]()) { (hashtable, result) in
             guard let data = try _scoringData(result) else { return }

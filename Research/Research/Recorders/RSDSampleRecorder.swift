@@ -206,10 +206,10 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
     /// is returned. Otherwise, the `collectionResult` is returned.
     ///
     /// - seealso: `collectionResult`
-    public var result: RSDResult? {
-        guard collectionResult.inputResults.count > 0 else { return nil }
-        if collectionResult.inputResults.count == 1 {
-            return collectionResult.inputResults.first
+    public var result: ResultData? {
+        guard collectionResult.children.count > 0 else { return nil }
+        if collectionResult.children.count == 1 {
+            return collectionResult.children.first
         } else {
             return collectionResult
         }
@@ -373,7 +373,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
     public private(set) var currentStepPath: String = ""
     
     /// A conveniece method for calling the result handler on the main thread asynchronously.
-    private func callOnMainThread(_ result: RSDResult?, _ error: Error?, _ completion: RSDAsyncActionCompletionHandler?) {
+    private func callOnMainThread(_ result: ResultData?, _ error: Error?, _ completion: RSDAsyncActionCompletionHandler?) {
         DispatchQueue.main.async {
             completion?(self, result, error)
         }
@@ -422,7 +422,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
 
     /// Append the `collectionResult` with the given result.
     /// - parameter result: The result to add to the collection.
-    public final func appendResults(_ result: RSDResult) {
+    public final func appendResults(_ result: ResultData) {
         guard self.status <= RSDAsyncActionStatus.processingResults else {
             debugPrint("WARNING: Attempting to append the result set after status has been locked. \(self.status)")
             return
@@ -651,16 +651,16 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
         }
     }
     
-    open func instantiateFileResult(for fileHandle: RSDFileHandle) -> RSDFileResult {
+    open func instantiateFileResult(for fileHandle: RSDFileHandle) -> FileResult {
         // The result identifier is the logger identifer without the section identifier prefix
         let identifier = fileHandle.identifier.hasPrefix(sectionIdentifier) ?
             String(fileHandle.identifier.dropFirst(sectionIdentifier.count)) : fileHandle.identifier
-        var fileResult = RSDFileResultObject(identifier: identifier)
+        var fileResult = FileResultObject(identifier: identifier,
+                                          url: fileHandle.url,
+                                          contentType: fileHandle.contentType,
+                                          startUptime: self.clock.startSystemUptime)
         fileResult.startDate = self.startDate
         fileResult.endDate = Date()
-        fileResult.url = fileHandle.url
-        fileResult.startUptime = self.clock.startSystemUptime
-        fileResult.contentType = fileHandle.contentType
         return fileResult
     }
     

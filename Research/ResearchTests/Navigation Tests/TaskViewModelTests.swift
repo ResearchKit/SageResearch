@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 @testable import Research_UnitTest
+import JsonModel
 
 class TaskViewModelTests: XCTestCase {
 

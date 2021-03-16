@@ -103,13 +103,13 @@ class RecursiveScoreBuilderTests: XCTestCase {
     }
 }
 
-struct TestResult : RSDScoringResult {
+struct TestResult : SerializableResultData, RSDScoringResult {
 
     let identifier: String
     
     let score: Int
     
-    private(set) var type: RSDResultType = "test"
+    private(set) var serializableType: SerializableResultType = "test"
     
     var startDate: Date = Date()
     
@@ -121,5 +121,9 @@ struct TestResult : RSDScoringResult {
     
     func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
         fatalError("not implemented for this test")
+    }
+    
+    func deepCopy() -> TestResult {
+        self
     }
 }

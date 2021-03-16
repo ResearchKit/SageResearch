@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /// `RSDDateCoder` is used to handle specifying date encoding/decoding. If the calendar components supported by

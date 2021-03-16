@@ -130,3 +130,7 @@ and `ExceptionHandler.framework` in applications that reference this dylib.
 Inherit `RSDResult` from `JsonModel.ResultData` and use the result serializer included in that module. This is
 intended to allow for encoding results that do not conform to the `Codable` protocol. In most cases, no migration
 will be needed, though the `import JsonModel` statement may need to be included in some code files.
+
+## Version 4.0
+
+See "MigrationNotes_v4.0.md". 

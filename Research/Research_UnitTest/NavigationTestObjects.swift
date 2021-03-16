@@ -46,7 +46,7 @@ public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDO
     
     public let identifier: String
     public var stepType: RSDStepType = .instruction
-    public var result: RSDResult?
+    public var result: ResultData?
     public var validationError: Error?
     public var nextStepIdentifier: String?
     public var showBeforeIdentifier: String?
@@ -80,7 +80,7 @@ public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDO
         return range.map { TestStep(identifier: "step\($0)") }
     }
     
-    public func instantiateStepResult() -> RSDResult {
+    public func instantiateStepResult() -> ResultData {
         guard result == nil else { return result! }
         return AnswerResultObject(identifier: identifier, answerType: AnswerTypeString())
     }
@@ -189,7 +189,7 @@ public struct TestTask : RSDTask, RSDTrackingTask {
     }
     
     public func instantiateTaskResult() -> RSDTaskResult {
-        return taskResult ?? RSDTaskResultObject(identifier: identifier, schemaInfo: schemaInfo)
+        return taskResult ?? RSDTaskResultObject(identifier: self.identifier)
     }
     
     public func validate() throws {
@@ -214,7 +214,7 @@ public struct TestTask : RSDTask, RSDTrackingTask {
         tracker?.setupTask(with: data, for: path)
     }
     
-    public func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?) {
+    public func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: ResultData?) {
         return tracker?.shouldSkipStep(step) ?? (false, nil)
     }
 }
@@ -243,7 +243,7 @@ public class TestAsyncActionController: NSObject, RSDAsyncAction {
     public var delegate: RSDAsyncActionDelegate?
     public var status: RSDAsyncActionStatus = .idle
     public var isPaused: Bool = false
-    public var result: RSDResult?
+    public var result: ResultData?
     public var error: Error?
     public let configuration: RSDAsyncActionConfiguration
     public let taskViewModel: RSDPathComponent

@@ -91,7 +91,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, Codable {
     
     /// Instantiate a step result that is appropriate for this step.
     /// - returns: `RSDTaskResultObject` with the `identifier` from this task reference.
-    public func instantiateStepResult() -> RSDResult {
+    public func instantiateStepResult() -> ResultData {
         return RSDTaskResultObject(identifier: identifier)
     }
     

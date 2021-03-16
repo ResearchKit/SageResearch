@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /// `RSDAsyncActionVendor` is an extension of the configuration protocol for configurations that
@@ -130,7 +131,7 @@ extension RSDAsyncActionStatus : CustomStringConvertible {
 }
 
 /// The completion handler for starting and stopping an async action.
-public typealias RSDAsyncActionCompletionHandler = (RSDAsyncAction, RSDResult?, Error?) -> Void
+public typealias RSDAsyncActionCompletionHandler = (RSDAsyncAction, ResultData?, Error?) -> Void
 
 /// A controller for an async action configuration.
 public protocol RSDAsyncAction : class {
@@ -154,7 +155,7 @@ public protocol RSDAsyncAction : class {
     var error: Error? { get }
     
     /// Results for this action controller.
-    var result: RSDResult? { get }
+    var result: ResultData? { get }
     
     /// The configuration used to set up the controller.
     var configuration: RSDAsyncActionConfiguration { get }

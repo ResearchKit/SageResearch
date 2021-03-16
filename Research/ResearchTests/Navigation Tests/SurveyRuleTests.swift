@@ -59,8 +59,12 @@ class SurveyRuleTests: XCTestCase {
         let step = MultipleInputQuestionStepObject(identifier: "foo", inputItems: [inputItem1, inputItem2])
         step.actions = [.navigation(.skip) : skipAction]
         
-        let (taskResult, answerResult) = createTaskResult(for: step, with: nil)
-        answerResult.skipToIdentifier = "bar"
+        var (taskResult, answerResult) = createTaskResult(for: step, with: nil)
+        let skipResult = RSDResultObject(identifier: answerResult.identifier,
+                                         startDate: answerResult.startDate,
+                                         endDate: answerResult.endDate,
+                                         skipToIdentifier: "bar")
+        taskResult.appendStepHistory(with: skipResult)
 
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
@@ -79,8 +83,12 @@ class SurveyRuleTests: XCTestCase {
         let step = MultipleInputQuestionStepObject(identifier: "foo", inputItems: [inputItem1, inputItem2])
         step.actions = [.navigation(.skip) : skipAction]
         
-        let (taskResult, answerResult) = createTaskResult(for: step, with: .object(["field1":"boo","field2":3]))
-        answerResult.skipToIdentifier = "bar"
+        var (taskResult, answerResult) = createTaskResult(for: step, with: .object(["field1":"boo","field2":3]))
+        let skipResult = RSDResultObject(identifier: answerResult.identifier,
+                                         startDate: answerResult.startDate,
+                                         endDate: answerResult.endDate,
+                                         skipToIdentifier: "bar")
+        taskResult.appendStepHistory(with: skipResult)
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)

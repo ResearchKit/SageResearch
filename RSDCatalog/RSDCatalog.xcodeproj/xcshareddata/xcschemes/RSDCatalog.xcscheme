@@ -98,6 +98,16 @@
                ReferencedContainer = "container:../Research/Research.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FF4A22E424FDB20200944009"
+               BuildableName = "ResearchAudioRecorderTests.xctest"
+               BlueprintName = "ResearchAudioRecorderTests"
+               ReferencedContainer = "container:../Research/Research.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

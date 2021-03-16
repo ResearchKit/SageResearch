@@ -36,38 +36,23 @@ import JsonModel
 
 /// `RSDTaskResultObject` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
-public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
+public struct RSDTaskResultObject : SerializableResultData, AssessmentResult, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, startDate, endDate, taskRunUUID, schemaInfo, stepHistory, asyncResults, nodePath
-        case assessmentIdentifier, schemaIdentifier, versionString
+        case identifier, serializableType = "type", startDate, endDate, taskRunUUID, assessmentIdentifier, schemaIdentifier, versionString, stepHistory, asyncResults, nodePath
     }
+    public private(set) var serializableType: SerializableResultType = .task
     
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
-    
-    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    public let type: RSDResultType
-    
-    /// The start date timestamp for the result.
+    public let versionString: String?
+    public let assessmentIdentifier: String?
+    public let schemaIdentifier: String?
+
     public var startDate: Date = Date()
-    
-    /// The end date timestamp for the result.
     public var endDate: Date = Date()
-    
-    /// A unique identifier for this task run.
-    public var taskRunUUID: UUID
-    
-    /// Schema info associated with this task.
-    public var schemaInfo: RSDSchemaInfo?
-    
-    /// A listing of the step history for this task or section. The listed step results should *only* include the
-    /// last result for any given step.
-    public var stepHistory: [RSDResult] = []
-    
-    /// A list of all the asynchronous results for this task. The list should include uniquely identified results.
-    public var asyncResults: [RSDResult]?
-    
-    /// The path to the current result.
+    public var taskRunUUID: UUID = UUID()
+    public var stepHistory: [ResultData] = []
+    public var asyncResults: [ResultData]?
     public var nodePath: [String] = []
     
     /// Default initializer for this object.
@@ -75,11 +60,14 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
     /// - parameters:
     ///     - identifier: The identifier string.
     ///     - schemaInfo: The schemaInfo associated with this task result. Default = `nil`.
-    public init(identifier: String, schemaInfo: RSDSchemaInfo? = nil) {
+    public init(identifier: String,
+                versionString: String? = nil,
+                assessmentIdentifier: String? = nil,
+                schemaIdentifier: String? = nil) {
         self.identifier = identifier
-        self.schemaInfo = schemaInfo
-        self.taskRunUUID = UUID()
-        self.type = .task
+        self.versionString = versionString
+        self.assessmentIdentifier = assessmentIdentifier
+        self.schemaIdentifier = schemaIdentifier
     }
     
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
@@ -90,28 +78,20 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decode(RSDResultType.self, forKey: .type)
         self.startDate = try container.decode(Date.self, forKey: .startDate)
         self.endDate = try container.decode(Date.self, forKey: .endDate)
         self.taskRunUUID = try container.decode(UUID.self, forKey: .taskRunUUID)
         self.nodePath = try container.decodeIfPresent([String].self, forKey: .nodePath) ?? []
-        
-        if container.contains(.schemaInfo) {
-            let nestedDecoder = try container.superDecoder(forKey: .schemaInfo)
-            self.schemaInfo = try decoder.factory.decodeSchemaInfo(from: nestedDecoder)
-        }
-        else if let schemaIdentifier = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier),
-            let versionString = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier) {
-            self.schemaInfo = RSDSchemaInfoObject(identifier: schemaIdentifier,
-                                                  revision: (versionString as NSString).integerValue)
-        }
+        self.versionString = try container.decodeIfPresent(String.self, forKey: .versionString)
+        self.assessmentIdentifier = try container.decodeIfPresent(String.self, forKey: .assessmentIdentifier)
+        self.schemaIdentifier = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier)
         
         let resultsContainer = try container.nestedUnkeyedContainer(forKey: .stepHistory)
-        self.stepHistory = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: resultsContainer)
+        self.stepHistory = try decoder.factory.decodePolymorphicArray(ResultData.self, from: resultsContainer)
         
         if container.contains(.asyncResults) {
             let asyncResultsContainer = try container.nestedUnkeyedContainer(forKey: .asyncResults)
-            self.asyncResults = try decoder.factory.decodePolymorphicArray(RSDResult.self, from: asyncResultsContainer)
+            self.asyncResults = try decoder.factory.decodePolymorphicArray(ResultData.self, from: asyncResultsContainer)
         }
     }
     
@@ -121,19 +101,15 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)
-        try container.encode(type, forKey: .type)
+        try container.encode(serializableType, forKey: .serializableType)
         try container.encode(startDate, forKey: .startDate)
         try container.encode(endDate, forKey: .endDate)
         try container.encode(taskRunUUID, forKey: .taskRunUUID)
         try container.encode(nodePath, forKey: .nodePath)
-        
-        // For now, include both the "old" schema info keys and the new ones.
         try container.encodeIfPresent(self.assessmentIdentifier, forKey: .assessmentIdentifier)
         try container.encodeIfPresent(self.schemaIdentifier, forKey: .schemaIdentifier)
-        try container.encodeIfPresent(self.versionString, forKey: .schemaIdentifier)
-        let nestedEncoder = container.superEncoder(forKey: .schemaInfo)
-        try encoder.factory.encodeSchemaInfo(from: self, to: nestedEncoder)
-        
+        try container.encodeIfPresent(self.versionString, forKey: .versionString)
+    
         var nestedContainer = container.nestedUnkeyedContainer(forKey: .stepHistory)
         for result in stepHistory {
             let nestedEncoder = nestedContainer.superEncoder()
@@ -148,6 +124,20 @@ public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
             }
         }
     }
+    
+    public func deepCopy() -> RSDTaskResultObject {
+        var copy = RSDTaskResultObject(identifier: self.identifier,
+                                       versionString: self.versionString,
+                                       assessmentIdentifier: self.assessmentIdentifier,
+                                       schemaIdentifier: self.schemaIdentifier)
+        copy.startDate = self.startDate
+        copy.endDate = self.endDate
+        copy.taskRunUUID = self.taskRunUUID
+        copy.stepHistory = self.stepHistory.map { $0.deepCopy() }
+        copy.asyncResults = self.asyncResults?.map { $0.deepCopy() }
+        copy.nodePath = self.nodePath
+        return copy
+    }
 }
 
 extension RSDTaskResultObject : DocumentableStruct {
@@ -158,7 +148,7 @@ extension RSDTaskResultObject : DocumentableStruct {
     public static func isRequired(_ codingKey: CodingKey) -> Bool {
         guard let key = codingKey as? CodingKeys else { return false }
         switch key {
-        case .type, .identifier, .startDate, .endDate, .taskRunUUID, .stepHistory:
+        case .serializableType, .identifier, .startDate, .endDate, .taskRunUUID, .stepHistory:
             return true
         default:
             return false
@@ -170,8 +160,8 @@ extension RSDTaskResultObject : DocumentableStruct {
             throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
         }
         switch key {
-        case .type:
-            return .init(constValue: RSDResultType.task)
+        case .serializableType:
+            return .init(constValue: SerializableResultType.task)
         case .identifier:
             return .init(propertyType: .primitive(.string))
         case .assessmentIdentifier, .schemaIdentifier, .versionString:
@@ -180,10 +170,8 @@ extension RSDTaskResultObject : DocumentableStruct {
             return .init(propertyType: .format(.dateTime))
         case .taskRunUUID:
             return .init(propertyType: .primitive(.string))
-        case .schemaInfo:
-            return .init(propertyType: .reference(RSDSchemaInfoObject.documentableType()))
         case .stepHistory, .asyncResults:
-            return .init(propertyType: .interfaceArray("\(RSDResult.self)"))
+            return .init(propertyType: .interfaceArray("\(ResultData.self)"))
         case .nodePath:
             return .init(propertyType: .primitiveArray(.string))
         }
@@ -192,7 +180,6 @@ extension RSDTaskResultObject : DocumentableStruct {
     public static func examples() -> [RSDTaskResultObject] {
         
         var result = RSDTaskResultObject(identifier: "example")
-        result.schemaInfo = RSDSchemaInfoObject(identifier: "example schema", revision: 3)
         
         var introStepResult = RSDResultObject(identifier: "introduction")
         introStepResult.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
@@ -205,7 +192,7 @@ extension RSDTaskResultObject : DocumentableStruct {
         conclusionStepResult.endDate = conclusionStepResult.startDate.addingTimeInterval(20)
         result.stepHistory = [introStepResult, collectionResult, conclusionStepResult]
         
-        var fileResult = RSDFileResultObject.examples().first!
+        var fileResult = FileResultObject.examples().first!
         fileResult.startDate = collectionResult.startDate
         fileResult.endDate = collectionResult.endDate
         result.asyncResults = [fileResult]

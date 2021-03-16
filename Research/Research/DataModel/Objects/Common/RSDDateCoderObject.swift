@@ -194,3 +194,10 @@ extension RSDDateCoderObject : DocumentableStringLiteral {
                 "HH:mm"]
     }
 }
+
+extension Date {
+    func yearComponent() -> Int {
+        Calendar.iso8601.component(.year, from: self)
+    }
+}
+

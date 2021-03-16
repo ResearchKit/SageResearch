@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 
@@ -64,7 +65,7 @@ public protocol RSDPathComponent : class {
     var outputDirectory : URL! { get }
     
     /// The result to use to mark the step history for this path component.
-    func pathResult() -> RSDResult
+    func pathResult() -> ResultData
     
     /// Go forward to the next step.
     func perform(actionType: RSDUIActionType)
@@ -95,7 +96,7 @@ public protocol RSDStepViewPathComponent : RSDNodePathComponent {
     func sectionIdentifier() -> String
     
     /// Convenience method for accessing the step result associated with this step.
-    func findStepResult() -> RSDResult?
+    func findStepResult() -> ResultData?
     
     /// Get the action for the given action type. 
     ///
@@ -117,7 +118,7 @@ public protocol RSDHistoryPathComponent : RSDPathComponent {
     var dataManager: RSDDataStorageManager? { get set }
     
     /// Get the previous result for the given step.
-    func previousResult(for step: RSDStep) -> RSDResult?
+    func previousResult(for step: RSDStep) -> ResultData?
     
     /// The previous data for this task.
     var previousTaskData: RSDTaskData? { get }

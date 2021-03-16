@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+import JsonModel
 import Foundation
 
 /// `AbstractUIStepObject` is an alternative pattern to `RSDUIStepObject`. This class is not used
@@ -121,7 +122,7 @@ open class AbstractUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep,
     
     /// Instantiate a step result that is appropriate for this step. Default implementation will return an `RSDResultObject`.
     /// - returns: A result for this step.
-    open func instantiateStepResult() -> RSDResult {
+    open func instantiateStepResult() -> ResultData {
         return RSDResultObject(identifier: identifier)
     }
     
