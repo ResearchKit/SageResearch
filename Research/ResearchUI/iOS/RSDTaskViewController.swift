@@ -336,6 +336,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         return nil
     }
     
+    /// Default implementation looks for the answer within the task result.
+    open func findAnswerValue(with identifier: String) -> JsonElement? {
+        self.taskViewModel.taskResult.findAnswer(with: identifier)?.jsonValue
+    }
+    
     /// Handle a failure of the async action controller.
     ///
     /// The default implementation will record an error result to the task results and then remove

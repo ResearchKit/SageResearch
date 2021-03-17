@@ -296,6 +296,8 @@
 		FFCC3C7B260272E700063592 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC3C7A260272E700063592 /* Bundle+module.swift */; };
 		FFCC3C7C260272E700063592 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC3C7A260272E700063592 /* Bundle+module.swift */; };
 		FFCC3C7D260272E700063592 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC3C7A260272E700063592 /* Bundle+module.swift */; };
+		FFCC3C8A26027EE500063592 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC3C7A260272E700063592 /* Bundle+module.swift */; };
+		FFCC3C9126027EE600063592 /* Bundle+module.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC3C7A260272E700063592 /* Bundle+module.swift */; };
 		FFD4C790243D07660027CE6C /* SurveyRuleNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C78F243D07660027CE6C /* SurveyRuleNavigation.swift */; };
 		FFD4C79B243D51C60027CE6C /* InputItemTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C79A243D51C60027CE6C /* InputItemTableItem.swift */; };
 		FFD4C7A0243D5E010027CE6C /* QuestionTableItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C79F243D5E010027CE6C /* QuestionTableItemGroup.swift */; };
@@ -2100,6 +2102,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFCC3C9126027EE600063592 /* Bundle+module.swift in Sources */,
 				FFB14BA524EC52ED00D0637D /* ColorRulesTests.swift in Sources */,
 				FF48F17C25550BB200F74582 /* (null) in Sources */,
 				FFB14BA624EC52ED00D0637D /* ColorMappingThemeElementTests.swift in Sources */,
@@ -2308,6 +2311,7 @@
 				FF633D731FCE7A6900CF2267 /* CodableTestObjects.swift in Sources */,
 				F853828E214C447100C3B774 /* StepViewModelTests.swift in Sources */,
 				F829F0EA1FFB4620001B0680 /* PickerDataSourceTests.swift in Sources */,
+				FFCC3C8A26027EE500063592 /* Bundle+module.swift in Sources */,
 				F8D074B1204FBD0D006CDABB /* DataArchiveTests.swift in Sources */,
 				FF633D891FCE7A7300CF2267 /* StepControllerTests.swift in Sources */,
 				FF9C264B243FA48B00241202 /* QuestionTableDataSourceTests.swift in Sources */,
@@ -3038,8 +3042,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git";
 			requirement = {
-				branch = "research-compatibility";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
