@@ -1,10 +1,10 @@
-#   Migration Steps -> v4.0
+#   Migration Steps -> v4.1
 
 Moved all the async action background recorders that are used by Sage Bionetworks and that were previously
 included in this repository to [MobilePassiveData](https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git).
 
 The rsd-migration-tool can be used to search/replace *most* of the required code migration. For details
-on how to use this tool, see MigrationNotes_v4.1.md
+on how to use this tool, see MigrationNotes_v4.0.md
 
 ## App-level framework embedding
 
