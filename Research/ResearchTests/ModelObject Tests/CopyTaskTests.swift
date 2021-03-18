@@ -33,6 +33,7 @@
 
 import XCTest
 @testable import Research
+import MobilePassiveData
 
 class CopyTaskTests: XCTestCase {
 
@@ -49,7 +50,7 @@ class CopyTaskTests: XCTestCase {
     func testCopyTask() {
         let step1 = RSDInstructionStepObject(identifier: "step1")
         step1.title = "Step 1"
-        let asyncAction = RSDMotionRecorderConfiguration(identifier: "motion", recorderTypes: nil)
+        let asyncAction = MotionRecorderConfigurationObject(identifier: "motion", recorderTypes: nil)
         let task = AssessmentTaskObject(identifier: "foo",
                                         steps: [step1],
                                         usesTrackedData: true,
@@ -75,7 +76,7 @@ class CopyTaskTests: XCTestCase {
     func testCopyTask_SchemaInfo() {
         let step1 = RSDInstructionStepObject(identifier: "step1")
         step1.title = "Step 1"
-        let asyncAction = RSDMotionRecorderConfiguration(identifier: "motion", recorderTypes: nil)
+        let asyncAction = MotionRecorderConfigurationObject(identifier: "motion", recorderTypes: nil)
         let task = AssessmentTaskObject(identifier: "foo",
                                         steps: [step1],
                                         usesTrackedData: true,

@@ -1,5 +1,9 @@
 #  Release Notes 
 
+## Version 3.0 - 3.3
+
+The initial migration was split into three minor releases. See migration notes specific to each release for details.
+
 ## Version 3.4
 
 This version changes the `RSDTaskResult.stepHistory` to include an instance 
@@ -134,3 +138,7 @@ will be needed, though the `import JsonModel` statement may need to be included 
 ## Version 4.0
 
 See "MigrationNotes_v4.0.md". 
+
+## Version 4.1
+
+See "MigrationNotes_v4.1.md". 

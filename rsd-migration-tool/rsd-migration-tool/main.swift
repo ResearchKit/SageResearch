@@ -69,6 +69,8 @@ func run() {
 
 enum Library : String, CaseIterable {
     case jsonModel = "JsonModel"
+    case mobilePassiveData = "MobilePassiveData"
+    case motionSensor = "MotionSensor"
 }
 
 struct Keyword {
@@ -137,6 +139,39 @@ let keywords = [
     Keyword(library: .jsonModel, find: "AnswerFinder", replace: nil),
     Keyword(library: .jsonModel, find: "CollectionResult", replace: nil),
     Keyword(library: .jsonModel, find: "inputResults", replace: "children"),
+    
+    Keyword(library: .mobilePassiveData, find: "RSDAsyncActionType", replace: "AsyncActionType"),
+    Keyword(library: .mobilePassiveData, find: "RSDMotionRecorderConfiguration", replace: "MotionRecorderConfigurationObject"),
+    Keyword(library: .mobilePassiveData, find: "RSDDistanceRecorderConfiguration", replace: "DistanceRecorderConfigurationObject"),
+    Keyword(library: .mobilePassiveData, find: "RSDDataLogger", replace: "DataLogger"),
+    Keyword(library: .mobilePassiveData, find: "RSDSampleRecorder", replace: "SampleRecorder"),
+    Keyword(library: .mobilePassiveData, find: "RSDAuthorizationStatus", replace: "PermissionAuthorizationStatus"),
+    Keyword(library: .mobilePassiveData, find: "RSDAuthorizationAdaptor", replace: "PermissionAuthorizationAdaptor"),
+    Keyword(library: .mobilePassiveData, find: "RSDAuthorizationHandler", replace: "PermissionAuthorizationHandler"),
+    Keyword(library: .mobilePassiveData, find: "RSDStandardPermissionType", replace: "StandardPermissionType"),
+    Keyword(library: .mobilePassiveData, find: "RSDStandardPermission", replace: "StandardPermission"),
+    Keyword(library: .mobilePassiveData, find: "RSDPermissionType", replace: "PermissionType"),
+    Keyword(library: .mobilePassiveData, find: "RSDPermission", replace: "Permission"),
+    Keyword(library: .mobilePassiveData, find: "RSDPermissionConfiguration", replace: "PermissionConfiguration"),
+    Keyword(library: .mobilePassiveData, find: "RSDAsyncActionConfiguration", replace: "AsyncActionConfiguration"),
+    Keyword(library: .mobilePassiveData, find: "RSDRecorderConfiguration", replace: "RecorderConfiguration"),
+    Keyword(library: .mobilePassiveData, find: "RSDRestartableRecorderConfiguration", replace: "RestartableRecorderConfiguration"),
+    Keyword(library: .mobilePassiveData, find: "RSDJSONRecorderConfiguration", replace: "JsonRecorderConfiguration"),
+    Keyword(library: .mobilePassiveData, find: "RSDAsyncActionVendor", replace: "AsyncActionVendor"),
+    Keyword(library: .mobilePassiveData, find: "RSDAsyncActionCompletionHandler", replace: "AsyncActionCompletionHandler"),
+    Keyword(library: .mobilePassiveData, find: "RSDAsyncActionDelegate", replace: "AsyncActionControllerDelegate"),
+    Keyword(library: .mobilePassiveData, find: "RSDAsyncActionStatus", replace: "AsyncActionStatus"),
+    Keyword(library: .mobilePassiveData, find: "RSDAsyncAction", replace: "AsyncActionController"),
+    Keyword(library: .mobilePassiveData, find: "RSDSoundPlayer", replace: "SoundPlayer"),
+    Keyword(library: .mobilePassiveData, find: "RSDSound", replace: "SoundFile"),
+    Keyword(library: .mobilePassiveData, find: "RSDAudioSoundPlayer", replace: "AudioFileSoundPlayer"),
+    Keyword(library: .mobilePassiveData, find: "RSDVoiceBoxCompletionHandler", replace: "VoicePrompterCompletionHandler"),
+    Keyword(library: .mobilePassiveData, find: "RSDVoiceBox", replace: "VoicePrompter"),
+    Keyword(library: .mobilePassiveData, find: "RSDSpeechSynthesizer", replace: "TextToSpeechSynthesizer"),
+    Keyword(library: .mobilePassiveData, find: "RSDClock", replace: "SystemClock"),
+    
+    Keyword(library: .motionSensor, find: "RSDMotionAuthorization", replace: "MotionAuthorization"),
+    Keyword(library: .motionSensor, find: "RSDMotionRecord", replace: "MotionRecord"),
 ]
 
 let classChanges = [
@@ -234,7 +269,7 @@ func migrateFile(fileURL: URL) throws {
 
     needsImport.forEach { library in
         guard !hasImport.contains(library), let idx = importIdx else { return }
-        lines.insert("import \(library.rawValue)", at: idx)
+        lines.insert("import \(library.rawValue)", at: idx + 1)
         importIdx = idx + 1
     }
     

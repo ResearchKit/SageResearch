@@ -36,7 +36,7 @@ import Foundation
 /// `RSDOverviewStep` extends the `RSDUIStep` to include general overview information about an activity
 /// including what permissions are required by this task. Without these preconditions, the task cannot
 /// measure or collect the data needed for this task.
-public protocol RSDOverviewStep : class, RSDUIStep, RSDStandardPermissionsStep {
+public protocol RSDOverviewStep : class, RSDUIStep, StandardPermissionsStep {
     
     /// For an overview step, the title is readwrite.
     var title: String? { get set }

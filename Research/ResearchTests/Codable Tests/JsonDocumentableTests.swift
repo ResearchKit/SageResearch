@@ -66,8 +66,6 @@ class JsonDocumentableTests: XCTestCase {
         
         XCTAssertTrue(checkPolymorphicExamples(for: factory.answerTypeSerializer.examples,
                                                 using: factory, protocolType: AnswerType.self))
-        XCTAssertTrue(checkPolymorphicExamples(for: factory.asyncActionSerializer.examples,
-                                                using: factory, protocolType: RSDAsyncActionConfiguration.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.buttonActionSerializer.examples,
                                                 using: factory, protocolType: RSDUIAction.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.colorMappingSerializer.examples,

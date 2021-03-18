@@ -33,6 +33,7 @@
 
 import JsonModel
 import Foundation
+import MobilePassiveData
 
 /// The TaskViewModel is a base class implementation of the presentation layer for managing a task. It uses
 /// the [Model–view–viewmodel (MVVM)](https://en.wikipedia.org/wiki/Model-view-viewmodel) design pattern to
@@ -856,8 +857,8 @@ extension RSDTaskViewModel {
         
         // Get which controllers should be stopped
         let isTaskComplete = self.isTaskComplete(with: step)
-        var excludedControllers: [RSDAsyncAction] = []
-        var controllersToStop: [RSDAsyncAction]?
+        var excludedControllers: [AsyncActionController] = []
+        var controllersToStop: [AsyncActionController]?
         if let stopStep = previousStep, let controllers = _asyncActionsToStop(after: stopStep, isTaskComplete: isTaskComplete) {
             controllersToStop = controllers
             excludedControllers.append(contentsOf: controllers)
@@ -884,24 +885,24 @@ extension RSDTaskViewModel {
         }
     }
     
-    private func _notifyAsyncControllers(to step: RSDStep, excludingControllers: [RSDAsyncAction]) {
+    private func _notifyAsyncControllers(to step: RSDStep, excludingControllers: [AsyncActionController]) {
         guard let currentControllers = self.taskController?.currentAsyncControllers else { return }
         let controllers = currentControllers.filter { (lhs) -> Bool in
             return (lhs.status <= .running) && !excludingControllers.contains(where: { $0.isEqual(lhs) })
         }
         for controller in controllers {
             // let any controllers know that the step has changed
-            controller.moveTo(step: step, taskViewModel: self)
+            controller.moveTo(stepPath: self.fullPath)
         }
     }
     
-    private func _requestPermissionForIdleAsyncControllers(excludingControllers: [RSDAsyncAction]) -> [RSDAsyncAction] {
+    private func _requestPermissionForIdleAsyncControllers(excludingControllers: [AsyncActionController]) -> [AsyncActionController] {
         guard let taskController = self.taskController else { return [] }
         let controllers = taskController.currentAsyncControllers.filter { (lhs) -> Bool in
             return (lhs.status == .idle) && !excludingControllers.contains(where: { $0.isEqual(lhs) })
         }
         guard controllers.count > 0 else { return [] }
-        taskController.requestPermission(for: controllers) {
+        taskController.requestPermission(for: controllers, path: self) {
             // Do nothing
         }
         return controllers
@@ -993,7 +994,7 @@ extension RSDTaskViewModel {
     
     // MARK: private methods for handling async actions
     
-    private func _asyncActionsToStart(at step: RSDStep, isFirstStep: Bool) -> [RSDAsyncActionConfiguration]? {
+    private func _asyncActionsToStart(at step: RSDStep, isFirstStep: Bool) -> [AsyncActionConfiguration]? {
         guard let taskController = self.taskController,
             let asyncActions = self.task?.asyncActionsToStart(at: step, isFirstStep: isFirstStep), asyncActions.count > 0
             else {
@@ -1005,7 +1006,7 @@ extension RSDTaskViewModel {
         return configs.count > 0 ? configs : nil
     }
     
-    private func _asyncActionsToStop(after step: RSDStep?, isTaskComplete: Bool) -> [RSDAsyncAction]? {
+    private func _asyncActionsToStop(after step: RSDStep?, isTaskComplete: Bool) -> [AsyncActionController]? {
         guard let currentControllers = self.taskController?.currentAsyncControllers
             else {
                 return nil
@@ -1016,14 +1017,14 @@ extension RSDTaskViewModel {
             guard controller.status <= .running else { return false }
             
             // verify that the controller task path is either the input path *or* a child of the current path.
-            let path = controller.taskViewModel.fullPath
+            let path = controller.currentStepPath
             guard path == self.fullPath || self.childPaths.contains(where: { $0.value.fullPath == path})
                 else {
                     return false
             }
             
             // If this is a recorder and the stop step matches then it should be stopped.
-            if let recorderConfig = controller.configuration as? RSDRecorderConfiguration,
+            if let recorderConfig = controller.configuration as? RecorderConfiguration,
                 step?.identifier == recorderConfig.stopStepIdentifier {
                 return true
             }

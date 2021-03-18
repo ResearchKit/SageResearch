@@ -73,14 +73,6 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
         }
     }
     
-    enum DeprecatedType : String, Codable, CaseIterable {
-        case demographics, form
-        
-        var type: RSDStepType {
-            return RSDStepType(rawValue: self.rawValue)
-        }
-    }
-    
     /// Defaults to creating a `RSDActiveUIStepObject`.
     public static let active = StandardType.active.type
     

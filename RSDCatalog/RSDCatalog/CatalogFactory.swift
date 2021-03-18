@@ -33,8 +33,6 @@
 
 import Foundation
 import Research
-import ResearchMotion
-import ResearchAudioRecorder
 import JsonModel
 
 /// Stub out a factory for this application. Any factory overrides that are used by the catalog
@@ -45,8 +43,6 @@ class CatalogFactory : RSDFactory {
     
     required init() {
         super.init()
-        self.taskSerializer.add(RSDMotionTaskObject(identifier: "motion", steps: []))
-        self.taskSerializer.add(AudioRecorderTaskObject(identifier: "microphone", steps: []))
     }
     
     func decodeTaskGroups(from jsonData: Data) throws -> [RSDTaskGroup] {

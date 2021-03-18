@@ -1,6 +1,6 @@
 {
     "identifier"        : "microphone",
-    "type": "audioRecorderTask",
+    "type": "assessment",
     "resultIdentifier": "Audio Recorder",
     "versionString": "1",
     "shouldHideActions" : ["goBackward", "skip"],
@@ -66,7 +66,7 @@
                                                {
                                                "identifier"         : "motion",
                                                "type"               : "active",
-                                               "duration"           : 30,
+                                               "duration"           : 10,
                                                "title"              : "Shake your phone",
                                                "image": {
                                                    "type": "fetchable",
@@ -89,7 +89,6 @@
                                                },
                                                "spokenInstructions" : { "start": "Start shaking your phone",
                                                                         "halfway": "Halfway there. Keep shaking!",
-                                                                        "countdown": "10",
                                                                         "end": "You're done!"}
                                                }
                                                ]

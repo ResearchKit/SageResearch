@@ -17,19 +17,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "Research",
-            targets: ["Research"]),
+            targets: ["Research",
+                      "Formatters",
+            ]),
         .library(
             name: "ResearchUI",
             targets: ["ResearchUI"]),
-        .library(
-            name: "ResearchAudioRecorder",
-            targets: ["ResearchAudioRecorder"]),
-        .library(
-            name: "ResearchMotion",
-            targets: ["ResearchMotion"]),
-        .library(
-            name: "ResearchLocation",
-            targets: ["ResearchLocation"]),
         .library(
             name: "Research_UnitTest",
             targets: ["Research_UnitTest", "NSLocaleSwizzle"]),
@@ -39,28 +32,27 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(name: "JsonModel",
                  url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-                 "1.2.0"..<"1.3.0"),
+                 from: "1.2.0"),
+        .package(name: "MobilePassiveData",
+                 url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
+                 from: "1.0.0"),
     ],
     targets: [
 
-        // Research is the main target included in this repo. The "Formatters" and
-        // "ExceptionHandler" targets are developed in Obj-c so they require a
-        // separate target.
+        // Research is the main target included in this repo. The "Formatters"
+        // target is developed in Obj-c so it requires a separate target.
         .target(
             name: "Research",
             dependencies: ["JsonModel",
-                           "ExceptionHandler",
                            "Formatters",
+                           .product(name: "MobilePassiveData",
+                                    package:  "MobilePassiveData"),
             ],
             path: "Research/Research/",
             exclude: ["Info-iOS.plist",
                       "Core/README.md",
                       "DataModel/README.md",
             ]),
-        .target(name: "ExceptionHandler",
-                dependencies: [],
-                path: "Research/ExceptionHandler/",
-                exclude: ["Info.plist"]),
         .target(name: "Formatters",
                 dependencies: [],
                 path: "Research/Formatters/",
@@ -79,38 +71,6 @@ let package = Package(
                 .process("PlatformContext/Resources"),
                 .process("iOS/Resources"),
             ]),
-
-        // ResearchAudioRecorder is used to allow recording dbFS level.
-        .target(
-            name: "ResearchAudioRecorder",
-            dependencies: [
-                "Research",
-            ],
-            path: "Research/ResearchAudioRecorder/",
-            exclude: ["Info.plist"]),
-
-        // ResearchMotion is used to allow recording motion sensors.
-        .target(
-            name: "ResearchMotion",
-            dependencies: [
-                "Research",
-            ],
-            path: "Research/ResearchMotion/",
-            exclude: ["Info.plist"],
-            resources: [
-                .process("Resources"),
-            ]),
-
-        // ResearchLocation is used to allow location authorization and record distance
-        // travelled.
-        .target(
-            name: "ResearchLocation",
-            dependencies: [
-                "Research",
-                "ResearchMotion",
-            ],
-            path: "Research/ResearchLocation/",
-            exclude: ["Info.plist"]),
         
         // The following targets are set up for unit testing.
         .target(
@@ -140,22 +100,6 @@ let package = Package(
             name: "ResearchUITests",
             dependencies: ["ResearchUI"],
             path: "Research/ResearchUITests/",
-            exclude: ["Info.plist"]),
-        .testTarget(
-            name: "ResearchMotionTests",
-            dependencies: [
-                "ResearchMotion",
-                "Research_UnitTest",
-            ],
-            path: "Research/ResearchMotionTests/",
-            exclude: ["Info.plist"]),
-        .testTarget(
-            name: "ResearchLocationTests",
-            dependencies: [
-                "ResearchLocation",
-                "Research_UnitTest",
-            ],
-            path: "Research/ResearchLocationTests/",
             exclude: ["Info.plist"]),
         
     ]

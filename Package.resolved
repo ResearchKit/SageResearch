@@ -9,6 +9,15 @@
           "revision": "f6a06486d32cadec6db7d66d492968fbc8090de6",
           "version": "1.2.0"
         }
+      },
+      {
+        "package": "MobilePassiveData",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
+        "state": {
+          "branch": null,
+          "revision": "6b8b0205e226ec25960f1369db107665334e0d34",
+          "version": "1.0.0"
+        }
       }
     ]
   },

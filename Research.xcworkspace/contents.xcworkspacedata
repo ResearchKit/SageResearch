@@ -7,7 +7,4 @@
    <FileRef
       location = "group:Research/Research.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:RK1Translator/../RSDTest/RSDTest.xcodeproj">
-   </FileRef>
 </Workspace>

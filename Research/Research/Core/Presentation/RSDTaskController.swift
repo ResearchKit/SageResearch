@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import MobilePassiveData
 
 /// The direction of navigation for the steps.
 public enum RSDStepDirection : Int, Codable {
@@ -107,7 +108,7 @@ public protocol RSDTaskController : class {
 
     /// Returns a list of the async action controllers that are currently active. This includes controllers
     /// that are requesting permissions, starting, running, *and* stopping.
-    var currentAsyncControllers: [RSDAsyncAction] { get }
+    var currentAsyncControllers: [AsyncActionController] { get }
     
     /// Navigate to the next step from the previous step in the given direction.
     ///
@@ -171,28 +172,25 @@ public protocol RSDTaskController : class {
     ///     - configurations: The configurations to start.
     ///     - path: The path component that is currently being navigated.
     ///     - completion: The completion to call with the instantiated controllers.
-    func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([RSDAsyncAction]) -> Void))
+    func addAsyncActions(with configurations: [AsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([AsyncActionController]) -> Void))
     
     /// Request permissions for controllers but do *not* start the controllers.
     ///
     /// - parameters:
     ///     - controllers: The controllers for which to request permissions.
+    ///     - path: The path component that is currently being navigated.
     ///     - completion: The completion to call with the instantiated controllers.
-    func requestPermission(for controllers: [RSDAsyncAction], completion: @escaping (() -> Void))
+    func requestPermission(for controllers: [AsyncActionController], path: RSDPathComponent, completion: @escaping (() -> Void))
     
     /// Start all async actions that are waiting to be started.
     func startAsyncActionsIfNeeded()
-
-    /// Start the async actions. The protocol extension calls this method when an async action should be
-    /// started directly *after* the step is presented.
-    func startAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void))
 
     /// Stop the async actions. The protocol extension does not directly implement stopping the async actions
     /// to allow customization of how the results are added to the task and whether or not forward navigation
     /// should be blocked until the completion handler is called. When the stop action is called, the view
     /// controller needs to handle stopping the controllers, adding the results, and showing a loading state
     /// until ready to move forward in the task navigation.
-    func stopAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void))
+    func stopAsyncActions(for controllers: [AsyncActionController], showLoading: Bool, completion: @escaping (() -> Void))
 }
 
 extension RSDTaskController {

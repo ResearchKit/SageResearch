@@ -1,6 +1,6 @@
 {
     "identifier"        : "motion",
-    "type": "motionTask",
+    "type": "assessment",
     "resultIdentifier": "Motion Recorder",
     "versionString": "1",
     "actions"           : { "cancel": { "type": "default", "iconName": "closeActivity" }},

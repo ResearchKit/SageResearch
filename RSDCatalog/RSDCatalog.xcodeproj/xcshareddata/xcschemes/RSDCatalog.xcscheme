@@ -72,26 +72,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F891DD1A228CFCD3001B2A57"
-               BuildableName = "ResearchMotionTests.xctest"
-               BlueprintName = "ResearchMotionTests"
-               ReferencedContainer = "container:../Research/Research.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F82A4AA722960BF700BEBE3C"
-               BuildableName = "ResearchLocationTests.xctest"
-               BlueprintName = "ResearchLocationTests"
-               ReferencedContainer = "container:../Research/Research.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "F87061A7227390110056F70E"
                BuildableName = "ResearchUITests_iOS.xctest"
                BlueprintName = "ResearchUITests_iOS"

@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import MobilePassiveData
 
 /// `RSDTask` is the interface for running a task. It includes information about how to calculate progress,
 /// validation, and the order of display for the steps.
@@ -49,7 +50,7 @@ public protocol RSDTask {
     var stepNavigator: RSDStepNavigator { get }
     
     /// A list of asynchronous actions to run on the task.
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
+    var asyncActions: [AsyncActionConfiguration]? { get }
     
     /// Instantiate a task result that is appropriate for this task.
     ///
@@ -71,7 +72,7 @@ extension RSDTask {
     ///     - step:         The step that is about to be displayed.
     ///     - isFirstStep:  `true` if this is the first step in the task, otherwise `false`.
     /// - returns: The array of async actions to start.
-    public func asyncActionsToStart(at step: RSDStep, isFirstStep: Bool) -> [RSDAsyncActionConfiguration] {
+    public func asyncActionsToStart(at step: RSDStep, isFirstStep: Bool) -> [AsyncActionConfiguration] {
         guard let actions = self.asyncActions else { return [] }
         return actions.filter {
             ($0.startStepIdentifier == step.identifier) || ($0.startStepIdentifier == nil && isFirstStep)

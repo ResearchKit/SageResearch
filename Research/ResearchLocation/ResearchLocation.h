@@ -31,6 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+// DEPRECATED: syoung 01/29/2021 - Use https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git
+
 @import UIKit;
 @import Research;
 

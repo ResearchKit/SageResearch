@@ -51,14 +51,6 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, Codable {
     /// The type of the step.
     public private(set) var stepType: RSDStepType = .taskInfo
     
-    /// Default initializer.
-    /// - parameter identifier: A short string that uniquely identifies the step.
-    @available(*, deprecated, message: "Kotlin serialization requires a one-to-one mapping of the 'type' keyword.")
-    public init(with taskInfo: RSDTaskInfo, stepType: RSDStepType = .taskInfo) {
-        self.taskInfo = taskInfo
-        self.stepType = stepType
-    }
-    
     public init(with taskInfo: RSDTaskInfoObject) {
         self.taskInfo = taskInfo
     }
