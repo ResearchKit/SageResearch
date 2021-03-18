@@ -178,6 +178,7 @@ public protocol RSDTaskController : class {
     ///
     /// - parameters:
     ///     - controllers: The controllers for which to request permissions.
+    ///     - path: The path component that is currently being navigated.
     ///     - completion: The completion to call with the instantiated controllers.
     func requestPermission(for controllers: [AsyncActionController], path: RSDPathComponent, completion: @escaping (() -> Void))
     
