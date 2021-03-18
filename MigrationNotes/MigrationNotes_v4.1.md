@@ -3,6 +3,9 @@
 Moved all the async action background recorders that are used by Sage Bionetworks and that were previously
 included in this repository to [MobilePassiveData](https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git).
 
+The rsd-migration-tool can be used to search/replace *most* of the required code migration. For details
+on how to use this tool, see MigrationNotes_v4.1.md
+
 ## App-level framework embedding
 
 1. Remove `ExceptionHandler.framework`; this will use the same implementation located in the
@@ -52,7 +55,7 @@ required to include permission strings in the app `Info.plist` file. - syoung 02
     - RSDPermissionConfiguration -> PermissionConfiguration
     - RSDAsyncActionConfiguration -> AsyncActionConfiguration
     - RSDRecorderConfiguration -> RecorderConfiguration
-    - RSDRestartableRecorderConfiguration -> RSDRestartableRecorderConfiguration
+    - RSDRestartableRecorderConfiguration -> RestartableRecorderConfiguration
     - RSDJSONRecorderConfiguration -> JsonRecorderConfiguration
 
 ## Async action controller state handling
