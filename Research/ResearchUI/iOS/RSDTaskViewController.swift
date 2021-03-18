@@ -310,7 +310,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///    a non-nil instance of a controller, then that will be returned.
     /// 3. Otherwise, return the controller instantiated by calling `vendDefaultAsyncActionController(for step:)`.
     ///
-    /// - parameter configuration: The configuration for this async action.
+    /// - parameters:
+    ///     - configuration: The configuration for this async action.
+    ///     - path: The path component that is currently being navigated.
     /// - returns: The async action controller for this confguration, or `nil` if the action is not supported
     ///            by this platform.
     open func asyncAction(for configuration: AsyncActionConfiguration, path: RSDPathComponent) -> AsyncActionController? {
