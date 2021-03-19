@@ -5,7 +5,7 @@ if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then     # on pull requests
 #    bundle exec fastlane build scheme:"Research-watchOS"
 #    bundle exec fastlane build scheme:"Research-tvOS"
 #    bundle exec fastlane build scheme:"Research-macOS"
-elif [[ -z "$TRAVIS_TAG" && "$TRAVIS_BRANCH" == "master" ]]; then  # non-tag commits to master branch
+elif [[ -z "$TRAVIS_TAG" && "$TRAVIS_BRANCH" == "main" ]]; then  # non-tag commits to main branch
     FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test scheme:"RSDCatalog"
 #   echo "n"|bundle exec fastlane env
     bundle exec fastlane keychains
