@@ -33,6 +33,13 @@
 
 import Foundation
 
+#if os(macOS)
+public struct IndexPath : Hashable {
+    let item: Int
+    let section: Int
+}
+#endif
+
 public enum RSDUIRowAnimation : Int {
     case fade, right, left, top, bottom, none, middle, automatic
 }
