@@ -167,6 +167,9 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         if isFirstAppearance {
             if self.designSystem == nil {
                 let designSystem = (self.stepViewModel.parentTaskPath as? RSDTaskDesign)?.designSystem ?? RSDDesignSystem.shared
+                // TODO: FIXME? syoung 04/23/2021 Bundle for class does not work with SwiftPM.
+                // I am not sure what, if any, subclasses use this to register bundles for images since
+                // the design system has fallen out of favor but worth noting that this is a point of failure.
                 let bundle = Bundle(for: type(of: self))
                 if !designSystem.imageRules.registeredBundles.contains(bundle) {
                     designSystem.imageRules.insert(bundle: bundle, at: .max)
