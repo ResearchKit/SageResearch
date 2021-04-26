@@ -78,7 +78,7 @@ open class RSDAppDelegate : UIResponder, RSDAppOrientationLock, RSDAlertPresente
             let cRules = colorRules ?? RSDColorRules(palette: .wireframe)
             let fRules = fontRules ?? RSDFontRules(version: version)
             let designSystem = RSDDesignSystem(version: version, colorRules: cRules, fontRules: fRules)
-            designSystem.imageRules.insert(bundle: Bundle.init(for: RSDAppDelegate.self), at: .max)
+            designSystem.imageRules.insert(bundle: Bundle.module, at: .max)
             RSDDesignSystem.shared = designSystem
         }
         
