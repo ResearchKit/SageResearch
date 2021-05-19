@@ -35,7 +35,7 @@ import Foundation
 
 
 /// `RSDStepController` handles default implementations for running a step in a task.
-public protocol RSDStepController : class {
+public protocol RSDStepController : AnyObject {
 
     /// A pointer to the step with the model information used to display and run the step. The
     /// implementation of the task controller should set this pointer before displaying the step controller

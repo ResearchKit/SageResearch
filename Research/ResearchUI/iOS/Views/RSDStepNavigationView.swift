@@ -35,7 +35,7 @@ import UIKit
 import Research
 
 /// A protocol that UIView subclasses can use to standardize the color of their view properties.
-public protocol RSDViewDesignable : class {
+public protocol RSDViewDesignable : AnyObject {
     
     /// The background color mapping that this view should use as its key. Typically, for all but the
     /// top-level views, this will be the background of the superview.

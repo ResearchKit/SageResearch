@@ -41,7 +41,7 @@ import Foundation
 public protocol RSDDataArchiveManager : RSDSwiftDataArchiveManager, RSDObjCDataArchiveManager {
 }
 
-public protocol RSDSwiftDataArchiveManager : class, NSObjectProtocol {
+public protocol RSDSwiftDataArchiveManager : NSObjectProtocol {
     
     /// Should the task result archiving be continued if there was an error adding data to the current
     /// archive?
@@ -74,7 +74,7 @@ public protocol RSDSwiftDataArchiveManager : class, NSObjectProtocol {
     
 }
 
-@objc public protocol RSDObjCDataArchiveManager : class, NSObjectProtocol {
+@objc public protocol RSDObjCDataArchiveManager : NSObjectProtocol {
     
     /// Returns the answer key for a given `RSDAnswerResult` to be included in the answer map. This allows
     /// the manager to return a different key mapping than the default key. If not implemented or if the

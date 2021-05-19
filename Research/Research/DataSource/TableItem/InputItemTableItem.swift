@@ -34,7 +34,7 @@
 import Foundation
 import JsonModel
 
-public protocol InputItemState : class {
+public protocol InputItemState : AnyObject {
     var identifier: String { get }
     var rowIndex: Int { get }
     var inputItem: InputItem { get }
