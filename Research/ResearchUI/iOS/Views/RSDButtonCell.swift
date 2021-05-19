@@ -36,7 +36,7 @@ import UIKit
 import Research
 
 /// A protocol for setting up a delegate for the button cell.
-public protocol RSDButtonCellDelegate : class {
+public protocol RSDButtonCellDelegate : AnyObject {
     
     /// Called by the button cell when it is tapped.
     func didTapButton(on cell: RSDButtonCell)

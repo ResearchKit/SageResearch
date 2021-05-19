@@ -41,7 +41,7 @@ import Foundation
 public protocol RSDDataStorageManager : RSDSwiftDataStorageManager, RSDObjCDataStorageManager {
 }
 
-public protocol RSDSwiftDataStorageManager : class, NSObjectProtocol {
+public protocol RSDSwiftDataStorageManager : NSObjectProtocol {
     
     /// Returns data associated with the previous task run for a given task identifier.
     func previousTaskData(for taskIdentifier: RSDIdentifier) -> RSDTaskData?
@@ -53,7 +53,7 @@ public protocol RSDSwiftDataStorageManager : class, NSObjectProtocol {
     func saveTaskData(_ data: RSDTaskData, from taskResult: RSDTaskResult?)
 }
 
-@objc public protocol RSDObjCDataStorageManager : class, NSObjectProtocol {
+@objc public protocol RSDObjCDataStorageManager : NSObjectProtocol {
     
     /// Optional. Should survey questions be shown in subsequent runs using the results from a
     /// previous run?

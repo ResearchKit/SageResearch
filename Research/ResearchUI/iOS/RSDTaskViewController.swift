@@ -65,7 +65,7 @@ extension UIPageViewController : RSDPageViewControllerProtocol {
 /// `RSDOptionalTaskViewControllerDelegate` is a delegate protocol defined as `@objc` to allow the methods to be optionally
 /// implemented. As such, these methods cannot take Swift protocols as their paramenters.
 @objc
-public protocol RSDOptionalTaskViewControllerDelegate : class, NSObjectProtocol {
+public protocol RSDOptionalTaskViewControllerDelegate : NSObjectProtocol {
     
     /// Asks the delegate for a custom view controller for the specified step.
     ///

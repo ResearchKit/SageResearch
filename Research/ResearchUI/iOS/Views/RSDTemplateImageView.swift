@@ -280,7 +280,7 @@ extension RSDTemplateImageView : TemplateView {
 
 /// Use a fileprivate extension to implement common behavior to the classes that do not have
 /// a common inheritance tree.
-fileprivate protocol TemplateView : class {
+fileprivate protocol TemplateView : AnyObject {
     var layer: CALayer { get }
     var bounds: CGRect { get }
     var _cornerRadius: CGFloat? { get set }

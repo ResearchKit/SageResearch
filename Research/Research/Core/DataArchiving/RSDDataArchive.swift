@@ -40,7 +40,7 @@ import JsonModel
 /// the results are sent individually. It is the responsibility of the developer who implements this protocol
 /// for their services to ensure that the data is cached (if offline) and to re-attempt upload of the
 /// encrypted results.
-public protocol RSDDataArchive : class {
+public protocol RSDDataArchive : AnyObject {
     
     /// A unique identifier for this archive.
     var identifier: String { get }

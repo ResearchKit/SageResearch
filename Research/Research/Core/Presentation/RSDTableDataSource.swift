@@ -45,7 +45,7 @@ public enum RSDUIRowAnimation : Int {
 }
 
 /// Delegate for the data source.
-public protocol RSDTableDataSourceDelegate: class {
+public protocol RSDTableDataSourceDelegate: AnyObject {
     
     /// Called when the answers tracked by the data source change.
     /// - parameters:
@@ -158,7 +158,7 @@ extension RSDTableDataSource {
     }
 }
 
-public protocol ItemState : class {
+public protocol ItemState : AnyObject {
     var identifier: String { get }
     var indexPath: IndexPath { get }
 }

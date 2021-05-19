@@ -37,7 +37,7 @@ import Foundation
 
 /// A path component holds state for navigating and displaying a task with a UX that is appropriate to a
 /// given platform.
-public protocol RSDPathComponent : class {
+public protocol RSDPathComponent : AnyObject {
     
     /// A unique identifier for this path component.
     var identifier : String { get }

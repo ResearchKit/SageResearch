@@ -38,7 +38,7 @@ import Research
 
 /// `RSDPickerViewProtocol` is a protocol for an input view that can be used to pick an answer.
 @objc
-public protocol RSDPickerViewProtocol : class, NSObjectProtocol {
+public protocol RSDPickerViewProtocol : NSObjectProtocol {
     
     /// The index path associated with this picker.
     @objc var indexPath: IndexPath! { get set }
@@ -52,7 +52,7 @@ public protocol RSDPickerViewProtocol : class, NSObjectProtocol {
 
 /// `RSDPickerObserver` is an observer of changes to the picker.
 @objc
-public protocol RSDPickerObserver : class, NSObjectProtocol {
+public protocol RSDPickerObserver : NSObjectProtocol {
     @objc func pickerValueChanged(_ sender: Any)
 }
 

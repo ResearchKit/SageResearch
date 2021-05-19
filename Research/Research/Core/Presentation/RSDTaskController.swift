@@ -61,7 +61,7 @@ public enum RSDTaskFinishReason : Int {
 /// `RSDTaskControllerDelegate` is responsible for processing the results of the task, providing some input into
 /// how the controller behaves, and providing additional content as needed. It's primary purpose is to handle
 /// processing the results of running the task.
-public protocol RSDTaskControllerDelegate : class {
+public protocol RSDTaskControllerDelegate : AnyObject {
     
     /// Tells the delegate that the task has finished.
     ///
@@ -97,7 +97,7 @@ public protocol RSDTaskControllerDelegate : class {
 ///
 /// To start a task, create an instance of a view controller that conforms to this protocol
 /// and set the `task`, `taskInfo`, or `taskViewModel`.
-public protocol RSDTaskController : class {
+public protocol RSDTaskController : AnyObject {
     
     /// A path object used to track the current state of a running task.
     var taskViewModel: RSDTaskViewModel! { get set }

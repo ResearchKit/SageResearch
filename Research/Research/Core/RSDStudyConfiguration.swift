@@ -88,7 +88,7 @@ open class RSDStudyConfiguration {
 /// to be accessed via a single entry point.
 ///
 /// - seealso: `currentPlatformContext`.
-public protocol RSDPlatformContextInfo : class {
+public protocol RSDPlatformContextInfo : AnyObject {
     
     /// Information about the specific device.
     var deviceInfo: String { get }
@@ -124,7 +124,7 @@ public var currentPlatformContext: RSDPlatformContextInfo! {
 private var _currentPlatformContext: RSDPlatformContextInfo?
 
 /// The resource loader protocol is used to allow loading resources
-public protocol RSDResourceLoader : class {
+public protocol RSDResourceLoader : AnyObject {
     
     /// Get the URL for the given resource.
     func url(for resourceInfo: RSDResourceTransformer, ofType defaultExtension: String?, using bundle: ResourceBundle?) throws -> (url: URL, resourceType: RSDResourceType)

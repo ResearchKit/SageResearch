@@ -360,7 +360,7 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
 
 /// `RSDStepTextInputView` defines custom properties associated with a 'UITextView' or 'UITextField'
 /// and provides read only access to other common properties.
-public protocol RSDStepTextInputView: class {
+public protocol RSDStepTextInputView: AnyObject {
     var inputAccessoryView: UIView? { get }
     var inputView: UIView? { get }
     var currentText: String? { get set }
