@@ -38,10 +38,6 @@ extension ResourceInfo {
     
     /// The bundle returned for the given `bundleIdentifier` or `factoryBundle` if `nil`.
     public var bundle: Bundle? {
-        guard let identifier = bundleIdentifier
-            else {
-                return self.factoryBundle as? Bundle
-        }
-        return Bundle(identifier: identifier)
+        return bundleIdentifier.flatMap { Bundle(identifier: $0) } ?? (self.factoryBundle as? Bundle)
     }
 }
