@@ -84,6 +84,9 @@ open class RSDAppDelegate : UIResponder, RSDAppOrientationLock, RSDAlertPresente
         
         // Set the tint color.
         self.window?.tintColor = RSDDesignSystem.shared.colorRules.palette.primary.normal.color
+        
+        // Set the default orientation lock equal to the lock defined by this app.
+        AppOrientationLockUtility.defaultOrientationLock = self.defaultOrientationLock
                     
         return true
     }
@@ -121,17 +124,75 @@ open class RSDAppDelegate : UIResponder, RSDAppOrientationLock, RSDAlertPresente
     /// this property to return those orientations only.
     ///
     open var defaultOrientationLock: UIInterfaceOrientationMask {
-        return .all
+        return .portrait
     }
     
     /// The `orientationLock` property is used to override the default allowed orientations.
     ///
     /// - seealso: `defaultOrientationLock`
-    open var orientationLock: UIInterfaceOrientationMask?
+    open var orientationLock: UIInterfaceOrientationMask? {
+        get { AppOrientationLockUtility.orientationLock }
+        set { AppOrientationLockUtility.setOrientationLock(newValue) }
+    }
     
     /// - returns: The `orientationLock` or the `defaultOrientationLock` if nil.
     open func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return orientationLock ?? defaultOrientationLock
+        return AppOrientationLockUtility.currentOrientationLock
+    }
+}
+
+/// With SwiftUI, the `UIApplication.shared.delegate` returns nil but the delegate can still be set
+/// and still requires using the method
+/// `application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?)`
+/// to set up orientation properly. Overriding `supportedInterfaceOrientations` in the UIViewController is not enough.
+///
+/// syoung 09/28/2021
+public class AppOrientationLockUtility {
+    
+    /// The current supported interface orientations.
+    static public var currentOrientationLock: UIInterfaceOrientationMask {
+        orientationLock ?? defaultOrientationLock
+    }
+    
+    /// The default orientation lock if not overridden by setting the `orientationLock` property.
+    ///
+    /// An application that requires the *default* to be either portrait or landscape, while still
+    /// setting the app allowed orientations to allow some view controllers to rotate must set
+    /// this property to return those orientations only.
+    ///
+    static public var defaultOrientationLock: UIInterfaceOrientationMask = .portrait
+    
+    /// The `orientationLock` property is used to override the default allowed orientations.
+    ///
+    /// - seealso: `defaultOrientationLock`
+    static public private(set) var orientationLock: UIInterfaceOrientationMask?
+    
+    static public func setOrientationLock(_ newValue: UIInterfaceOrientationMask?, rotateIfNeeded: Bool = true) {
+        orientationLock = newValue
+        guard rotateIfNeeded else { return }
+        
+        let device = UIDevice.current
+        var orientation = device.orientation
+        switch currentOrientationLock {
+        case .portrait:
+            orientation = .portrait
+        case .landscapeLeft:
+            orientation = .landscapeLeft
+        case .landscapeRight:
+            orientation = .landscapeRight
+        case .portraitUpsideDown:
+            orientation = .portraitUpsideDown
+        case .landscape:
+            if orientation != .landscapeRight && orientation != .landscapeLeft {
+                orientation = .landscapeRight
+            }
+        default:
+            break
+        }
+        if orientation != device.orientation {
+            device.setValue(orientation.rawValue, forKey: "orientation")
+            UIViewController.attemptRotationToDeviceOrientation()
+        }
     }
 }
 
