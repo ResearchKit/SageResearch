@@ -121,6 +121,10 @@ public protocol RSDStepViewControllerVendor : RSDStep {
     func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)?
 }
 
+public protocol RSDOrientationTask : RSDTask {
+    var taskOrientation: UIInterfaceOrientationMask { get }
+}
+
 /// `RSDTaskViewController` is the default implementation of task view controller that is suitable to the iPhone or iPad.
 /// The default implementation will display a series of steps using a `UIPageViewController`. This controller will also handle
 /// starting and stoping async actions and vending the appropriate step view controller for each step.
@@ -186,6 +190,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         self.currentStepViewController?.preferredStatusBarStyle ?? .default
+    }
+    
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        (self.task as? RSDOrientationTask)?.taskOrientation ?? .portrait
     }
     
     // MARK: View controller vending
@@ -743,6 +751,16 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         
         // Start the task if needed.
         self.taskViewModel.startTaskIfNeeded()
+        
+        // Set the orientation
+        AppOrientationLockUtility.setOrientationLock(self.supportedInterfaceOrientations)
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Reset the orientation
+        AppOrientationLockUtility.setOrientationLock(nil)
     }
     
     
