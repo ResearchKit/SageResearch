@@ -157,7 +157,7 @@ public class AppOrientationLockUtility {
     /// The default orientation lock if not overridden by setting the `orientationLock` property.
     ///
     /// An application that requires the *default* to be either portrait or landscape, while still
-    /// setting the app allowed orientations to allow some view controllers to rotate must set
+    /// setting the app allowed orientations to allow some view controllers to rotate, must set
     /// this property to return those orientations only.
     ///
     static public var defaultOrientationLock: UIInterfaceOrientationMask = .portrait
