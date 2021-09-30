@@ -767,7 +767,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        // Allow *both* this view controller and the view controller to be displayed.
+        // Allow *both* this view controller and the view controller to be displayed
+        // without crashing b/c of unsupported orientations.
         let orientations = AppOrientationLockUtility.defaultOrientationLock.union(self.supportedInterfaceOrientations)
         AppOrientationLockUtility.setOrientationLock(orientations, rotateIfNeeded: false)
     }
