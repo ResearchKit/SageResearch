@@ -193,7 +193,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        (self.task as? RSDOrientationTask)?.taskOrientation ?? .portrait
+        (self.task as? RSDOrientationTask)?.taskOrientation ?? AppOrientationLockUtility.defaultOrientationLock
     }
     
     // MARK: View controller vending
@@ -391,6 +391,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     public var taskViewModel: RSDTaskViewModel! {
         didSet {
             self.taskViewModel.taskController = self
+            // Allow *both* this view controller and the view controller to be displayed
+            let orientations = AppOrientationLockUtility.defaultOrientationLock.union(self.supportedInterfaceOrientations)
+            AppOrientationLockUtility.setOrientationLock(orientations, rotateIfNeeded: false)
         }
     }
     
@@ -739,6 +742,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Allow *both* this view controller and the view controller to be displayed
+        let orientations = AppOrientationLockUtility.defaultOrientationLock.union(self.supportedInterfaceOrientations)
+        AppOrientationLockUtility.setOrientationLock(orientations, rotateIfNeeded: false)
+        
         // Set up the page view controller. By default, this will load a UIPageViewController if it does not
         // find one amongst its children.
         self.pageViewController = findPageViewController() ?? addPageViewController()
@@ -753,14 +760,24 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         self.taskViewModel.startTaskIfNeeded()
         
         // Set the orientation
-        AppOrientationLockUtility.setOrientationLock(self.supportedInterfaceOrientations)
+        AppOrientationLockUtility.setOrientationLock(self.supportedInterfaceOrientations,
+                                                     rotateIfNeeded: self.shouldAutorotate && AppOrientationLockUtility.shouldAutorotate)
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        // Allow *both* this view controller and the view controller to be displayed
+        // without crashing b/c of unsupported orientations.
+        let orientations = AppOrientationLockUtility.defaultOrientationLock.union(self.supportedInterfaceOrientations)
+        AppOrientationLockUtility.setOrientationLock(orientations, rotateIfNeeded: false)
+    }
+    
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         // Reset the orientation
-        AppOrientationLockUtility.setOrientationLock(nil)
+        AppOrientationLockUtility.reset()
     }
     
     
