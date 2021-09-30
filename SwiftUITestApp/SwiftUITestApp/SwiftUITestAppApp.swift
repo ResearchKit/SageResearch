@@ -1,0 +1,22 @@
+//
+//  SwiftUITestAppApp.swift
+//  SwiftUITestApp
+//
+//  Created by Shannon Young on 9/30/21.
+//
+
+import SwiftUI
+import ResearchUI
+
+class AppDelegate: RSDSwiftUIAppDelegate {
+}
+
+@main
+struct SwiftUITestAppApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
