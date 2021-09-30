@@ -39,7 +39,7 @@ import Research
 ///
 /// Using this class as the base class of your app delegate is not required, but is included as a
 /// possible solution to certain common issues with setting up an app.
-open class RSDAppDelegate : UIResponder, RSDAppOrientationLock, RSDAlertPresenter  {
+open class RSDAppDelegate : UIResponder, UIApplicationDelegate, RSDAlertPresenter  {
     
     open var window: UIWindow?
     
@@ -127,12 +127,20 @@ open class RSDAppDelegate : UIResponder, RSDAppOrientationLock, RSDAlertPresente
         return .portrait
     }
     
-    /// The `orientationLock` property is used to override the default allowed orientations.
-    ///
-    /// - seealso: `defaultOrientationLock`
+    @available(*, deprecated, message: "Use `AppOrientationLockUtility.setOrientationLock()` instead.")
     open var orientationLock: UIInterfaceOrientationMask? {
         get { AppOrientationLockUtility.orientationLock }
         set { AppOrientationLockUtility.setOrientationLock(newValue) }
+    }
+}
+
+/// A SwiftUI app doesn't honor the `supportedInterfaceOrientations` property on a UIViewController so this work-around
+/// allows those apps to use the app lock in conjunction with the app-level `supportedInterfaceOrientations` instead.
+open class RSDSwiftUIAppDelegate : RSDAppDelegate {
+    
+    open override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
+        AppOrientationLockUtility.shouldAutorotate = true
+        return super.application(application, willFinishLaunchingWithOptions: launchOptions)
     }
     
     /// - returns: The `orientationLock` or the `defaultOrientationLock` if nil.
@@ -154,6 +162,17 @@ public class AppOrientationLockUtility {
         orientationLock ?? defaultOrientationLock
     }
     
+    /// By default, should the device rotate using forced device rotation when setting the orientation lock?
+    /// For apps that use a Storyboard and view controllers, this shouldn't be necessary b/c the view controllers will
+    /// honor the `UIViewController.supportedInterfaceOrientations` property and the
+    /// `UIViewController.shouldAutorotate`.
+    ///
+    /// As of this writing (syoung 09/30/2021) SwiftUI does not honor that property even when showing a
+    /// view controller. Or more specfically, some OS versions and devices do and some do not. Therefore,
+    /// if using SwiftUI as the main entry to the app, this must be set == `true` to force rotation changes.
+    ///
+    public static var shouldAutorotate: Bool = false
+    
     /// The default orientation lock if not overridden by setting the `orientationLock` property.
     ///
     /// An application that requires the *default* to be either portrait or landscape, while still
@@ -167,12 +186,29 @@ public class AppOrientationLockUtility {
     /// - seealso: `defaultOrientationLock`
     static public private(set) var orientationLock: UIInterfaceOrientationMask?
     
-    static public func setOrientationLock(_ newValue: UIInterfaceOrientationMask?, rotateIfNeeded: Bool = true) {
+    static public func reset() {
+        setOrientationLock(nil)
+    }
+    
+    /// Set the orientation lock.
+    static public func setOrientationLock(_ newValue: UIInterfaceOrientationMask?, rotateIfNeeded: Bool = shouldAutorotate) {
         orientationLock = newValue
         guard rotateIfNeeded else { return }
         
+        // Get initial orientation
+        let windowOrientation: UIInterfaceOrientation? = {
+            if #available(iOS 13.0, *) {
+                return UIApplication.shared.keyWindow?.windowScene?.interfaceOrientation
+            }
+            else {
+                return UIApplication.shared.statusBarOrientation
+            }
+        }()
         let device = UIDevice.current
-        var orientation = device.orientation
+        let currentOrientation: UIDeviceOrientation = windowOrientation.flatMap { .init(rawValue: $0.rawValue) } ?? device.orientation
+        var orientation = currentOrientation
+
+        // Compare current to desired.
         switch currentOrientationLock {
         case .portrait:
             orientation = .portrait
@@ -189,9 +225,41 @@ public class AppOrientationLockUtility {
         default:
             break
         }
-        if orientation != device.orientation {
-            device.setValue(orientation.rawValue, forKey: "orientation")
-            UIViewController.attemptRotationToDeviceOrientation()
+        
+        // Set the device orientation and rotate.
+        device.setValue(orientation.rawValue, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
+    }
+}
+
+extension UIInterfaceOrientationMask {
+    func names() -> [String] {
+        let mapping: [String : UIInterfaceOrientationMask] = [
+            "portrait" : .portrait,
+            "landscape" : .landscape
+        ]
+        return mapping.compactMap { self.contains($0.value) ? $0.key : nil }
+    }
+}
+
+extension UIDeviceOrientation {
+    var name: String {
+        switch self {
+        case .portrait:
+            return "portrait"
+        case .landscapeRight:
+            return "landscapeRight"
+        case .landscapeLeft:
+            return "landscapeLeft"
+        case .portraitUpsideDown:
+            return "portraitUpsideDown"
+        case .faceUp:
+            return "faceUp"
+        case .faceDown:
+            return "faceDown"
+
+        default:
+            return "unknown"
         }
     }
 }
@@ -204,6 +272,7 @@ public class AppOrientationLockUtility {
 /// syoung 08/15/2019
 ///
 /// - seealso: `RSDAppDelegate` for an example implementation.
+@available(*, deprecated, message: "Use `AppOrientationLockUtility` instead.")
 public protocol RSDAppOrientationLock : UIApplicationDelegate {
     
     /// The default orientation lock if not overridden by setting the `orientationLock` property.
@@ -215,6 +284,7 @@ public protocol RSDAppOrientationLock : UIApplicationDelegate {
     var orientationLock: UIInterfaceOrientationMask? { get set }
 }
 
+@available(*, deprecated, message: "Use `AppOrientationLockUtility` instead.")
 extension RSDAppOrientationLock {
     
     /// Convenience accessor for the appLock for applications where the app delegate implements
@@ -222,4 +292,8 @@ extension RSDAppOrientationLock {
     public static var appLock: RSDAppOrientationLock? {
         return UIApplication.shared.delegate as? RSDAppOrientationLock
     }
+}
+
+@available(*, deprecated, message: "Use `AppOrientationLockUtility` instead.")
+extension RSDAppDelegate : RSDAppOrientationLock {
 }
