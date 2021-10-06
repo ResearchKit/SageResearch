@@ -14,6 +14,7 @@
 		FFA4628B27063A6C00BF0FC5 /* CustomTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA4628A27063A6C00BF0FC5 /* CustomTask.swift */; };
 		FFA4629127063EDA00BF0FC5 /* Research in Frameworks */ = {isa = PBXBuildFile; productRef = FFA4629027063EDA00BF0FC5 /* Research */; };
 		FFA4629327063EDA00BF0FC5 /* ResearchUI in Frameworks */ = {isa = PBXBuildFile; productRef = FFA4629227063EDA00BF0FC5 /* ResearchUI */; };
+		FFEE26DE270D25A700E37DD5 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFEE26DD270D25A700E37DD5 /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		FFA462772706389F00BF0FC5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FFA4627E270638AC00BF0FC5 /* SageResearch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SageResearch; path = ..; sourceTree = "<group>"; };
 		FFA4628A27063A6C00BF0FC5 /* CustomTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTask.swift; sourceTree = "<group>"; };
+		FFEE26DD270D25A700E37DD5 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				FFA462702706389C00BF0FC5 /* SwiftUITestAppApp.swift */,
 				FFA462722706389C00BF0FC5 /* ContentView.swift */,
 				FFA4628A27063A6C00BF0FC5 /* CustomTask.swift */,
+				FFEE26DD270D25A700E37DD5 /* Storyboard.storyboard */,
 				FFA462742706389F00BF0FC5 /* Assets.xcassets */,
 				FFA462762706389F00BF0FC5 /* Preview Content */,
 			);
@@ -148,6 +151,7 @@
 			files = (
 				FFA462782706389F00BF0FC5 /* Preview Assets.xcassets in Resources */,
 				FFA462752706389F00BF0FC5 /* Assets.xcassets in Resources */,
+				FFEE26DE270D25A700E37DD5 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

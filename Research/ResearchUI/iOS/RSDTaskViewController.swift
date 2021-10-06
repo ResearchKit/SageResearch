@@ -776,8 +776,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        // Reset the orientation
-        AppOrientationLockUtility.reset()
+        // If this view is *not* disappearing because another view is presented fullscreen
+        // modally on *top* of this view, then reset the orientation.
+        if self.presentedViewController == nil {
+            AppOrientationLockUtility.reset()
+        }
     }
     
     
