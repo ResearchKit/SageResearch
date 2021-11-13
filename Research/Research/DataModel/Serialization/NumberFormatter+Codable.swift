@@ -42,7 +42,7 @@ extension NumberFormatter {
     /// Convenience function for getting the default number formatter with the given `maximumFractionDigits`.
     /// - parameter maximumFractionDigits: The number of decimal places to include.
     /// - returns: A number formatter.
-    static func defaultNumberFormatter(with maximumFractionDigits: Int) -> NumberFormatter {
+    public static func defaultNumberFormatter(with maximumFractionDigits: Int) -> NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = maximumFractionDigits
         formatter.defaultInit()

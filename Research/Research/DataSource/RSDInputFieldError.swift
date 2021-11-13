@@ -39,11 +39,17 @@ public enum RSDInputFieldError: Error {
     /// The context for the error.
     public struct Context {
         /// The identifier for the `RSDInputField`.
-        let identifier: String?
+        public let identifier: String?
         /// The value being validated.
-        let value: Any?
+        public let value: Any?
         /// A debug description for the error.
-        let debugDescription: String
+        public let debugDescription: String
+        
+        public init(identifier: String?, value: Any?, debugDescription: String) {
+            self.identifier = identifier
+            self.value = value
+            self.debugDescription = debugDescription
+        }
     }
     
     /// The value entered cannot be converted to the expected answer type.
