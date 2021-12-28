@@ -788,7 +788,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     /// Returns the currently active step controller (if any).
     public var currentStepViewController: (RSDStepController & UIViewController)? {
-        return pageViewController.children.first as? (RSDStepController & UIViewController)
+        return pageViewController?.children.first as? (RSDStepController & UIViewController)
     }
     
     /// Respond to a gesture to go back. Always returns `nil` but will call `goBack()` if appropriate.
