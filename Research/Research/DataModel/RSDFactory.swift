@@ -68,6 +68,9 @@ open class RSDFactory : MobilePassiveDataFactory {
         
         // Add results from this factory
         self.resultSerializer.registerLibraryExamples(with: self)
+        
+        // Add TaskMetadata as a root object
+        self.registerRootObject(RSDTaskMetadata())
     }
     
     /// The type of device to point use when decoding different text depending upon the target

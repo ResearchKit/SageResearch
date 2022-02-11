@@ -207,6 +207,20 @@ internal class TaskArchiver : NSObject {
                 }
             }
         }
+        else if let fileArchivable = result as? FileArchivable {
+            do {
+                if let (fileInfo, data) = try fileArchivable.buildArchivableFileData(at: stepPath) {
+                    let manifest = RSDFileManifest(from: fileInfo)
+                    try self.archive?.insertDataIntoArchive(data, manifest: manifest)
+                    self.files.insert(manifest)
+                }
+            } catch let err {
+                // If this is not swallowed, then rethrow the error
+                if !manager.shouldContinueOnFail(for: archive, error: err) {
+                    throw err
+                }
+            }
+        }
         else if let collection = result as? CollectionResult {
             let path = (stepPath != nil) ? "\(stepPath!)/\(collection.identifier)" : collection.identifier
             try recursiveAddFunc(sectionIdentifier, collection.identifier, path, collection.children)
