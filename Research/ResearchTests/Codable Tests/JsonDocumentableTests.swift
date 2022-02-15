@@ -47,11 +47,7 @@ class JsonDocumentableTests: XCTestCase {
 
     func testCreateJsonSchemaDocumentation() {
         let factory = RSDFactory()
-        let baseUrl = URL(string: "http://sagebionetworks.org/SageResearch/jsonSchema/")!
-        
-        let doc = JsonDocumentBuilder(baseUrl: baseUrl,
-                                      factory: factory,
-                                      rootDocuments: [AssessmentTaskObject.self, RSDTaskResultObject.self])
+        let doc = JsonDocumentBuilder(factory: factory)
         
         do {
             let _ = try doc.buildSchemas()  

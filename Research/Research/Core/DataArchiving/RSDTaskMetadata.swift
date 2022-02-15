@@ -32,10 +32,26 @@
 //
 
 import Foundation
+import JsonModel
 
 /// The metadata for a task result archive that can be zipped using the app developer's choice of
 /// third-party archival tools.
-public struct RSDTaskMetadata : Codable {
+public struct RSDTaskMetadata : Codable, DocumentableRootObject, DocumentableStruct {
+    private enum CodingKeys : String, OrderedEnumCodingKey {
+        case deviceInfo,
+             deviceTypeIdentifier,
+             appName,
+             appVersion,
+             rsdFrameworkVersion,
+             taskIdentifier,
+             taskRunUUID,
+             startDate,
+             endDate,
+             schemaIdentifier,
+             schemaRevision,
+             versionString,
+             files
+    }
 
     /// Information about the specific device.
     public let deviceInfo: String
@@ -82,18 +98,16 @@ public struct RSDTaskMetadata : Codable {
     ///     - taskResult: The task result to use to pull information included in the top-level metadata.
     ///     - files: A list of files included with this metadata.
     public init(taskResult: RSDTaskResult, files: [RSDFileManifest]) {
+        let platformInfo = PlatformContextInfo()
+        self.deviceInfo = platformInfo.deviceInfo
+        self.deviceTypeIdentifier = platformInfo.deviceTypeIdentifier
+        self.appName = platformInfo.appName
+        self.appVersion = platformInfo.appVersion
+        
         if let platformContext = currentPlatformContext {
-            self.deviceInfo = platformContext.deviceInfo
-            self.deviceTypeIdentifier = platformContext.deviceTypeIdentifier
-            self.appName = platformContext.appName
-            self.appVersion = platformContext.appVersion
             self.rsdFrameworkVersion = platformContext.rsdFrameworkVersion
         }
         else {
-            self.deviceInfo = "Unknown"
-            self.deviceTypeIdentifier = "Unknown"
-            self.appName = "Unknown"
-            self.appVersion = "Unknown"
             self.rsdFrameworkVersion = "Unknown"
         }
         self.taskIdentifier = taskResult.identifier
@@ -112,6 +126,88 @@ public struct RSDTaskMetadata : Codable {
             self.schemaRevision = nil
             self.versionString = nil
         }
+    }
+    
+    public init() {
+        self.init(taskResult: RSDTaskResultObject(identifier: "example"), files: [
+            .init(filename: "foo.json",
+                  timestamp: ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!,
+                  contentType: "application/json",
+                  identifier: "foo",
+                  stepPath: "Goo/foo",
+                  jsonSchema: .init(string: "https://example.com/foo.json"),
+                  metadata: .object(["foo" : "baroo"]))
+        ])
+    }
+    
+    // Documentation
+    
+    public var jsonSchema: URL = .init(string: "TaskMetadata.json", relativeTo: kSageJsonSchemaBaseURL)!
+    
+    public var documentDescription: String? {
+        "The metadata for a task result archive that can be zipped using the app developer's choice of third-party archival tools."
+    }
+    
+    public static func codingKeys() -> [CodingKey] {
+        CodingKeys.allCases
+    }
+    
+    public static func isRequired(_ codingKey: CodingKey) -> Bool {
+        guard let key = codingKey as? CodingKeys else { return false }
+        switch key {
+        case .deviceInfo,.deviceTypeIdentifier,.appName,.appVersion,.taskIdentifier:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
+        guard let key = codingKey as? CodingKeys else {
+            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
+        }
+        switch key {
+        case .appName:
+            return .init(propertyType: .primitive(.string),
+                         propertyDescription: "Name of the app that built the archive.")
+        case .appVersion:
+            return .init(propertyType: .primitive(.string),
+                         propertyDescription: "Version of the app that built the archive.")
+        case .deviceInfo:
+            return .init(propertyType: .primitive(.string),
+                         propertyDescription: "Information about the specific device.")
+        case .deviceTypeIdentifier:
+            return .init(propertyType: .primitive(.string),
+                         propertyDescription: "Specific model identifier of the device.")
+        case .files:
+            return .init(propertyType: .reference(RSDFileManifest.documentableType()),
+                         propertyDescription: "A list of the files included in this archive.")
+        case .taskIdentifier:
+            return .init(propertyType: .primitive(.string),
+                         propertyDescription: "The identifier for the task.")
+        case .rsdFrameworkVersion:
+            return .init(propertyType: .primitive(.string),
+                         propertyDescription: "Research framework version.")
+        case .startDate, .endDate:
+            return .init(propertyType: .format(.dateTime))
+        case .taskRunUUID:
+            return .init(propertyType: .primitive(.string),
+                         propertyDescription: "The task run UUID.")
+        case .schemaIdentifier:
+            return .init(propertyType: .primitive(.string),
+                         propertyDescription: "The Bridge Exporter 2.0 Schema Identifier used to map to Synapse.")
+        case .schemaRevision:
+            return .init(propertyType: .primitive(.integer),
+                         propertyDescription: "The Bridge Exporter 2.0 Schema Revision used to map to Synapse.")
+        case .versionString:
+            return .init(propertyType: .primitive(.string),
+                         propertyDescription: "A version string that can be used by an assessment to track version.")
+
+        }
+    }
+    
+    public static func examples() -> [RSDTaskMetadata] {
+        [.init()]
     }
 }
 
