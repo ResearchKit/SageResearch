@@ -35,8 +35,12 @@ import Foundation
 
 #if os(macOS)
 public struct IndexPath : Hashable {
-    let item: Int
-    let section: Int
+    public let item: Int
+    public let section: Int
+    public init(item: Int, section: Int) {
+        self.item = item
+        self.section = section
+    }
 }
 #endif
 
