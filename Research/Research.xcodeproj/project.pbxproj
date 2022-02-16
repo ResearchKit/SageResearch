@@ -3039,7 +3039,7 @@
 			repositoryURL = "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.2.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
