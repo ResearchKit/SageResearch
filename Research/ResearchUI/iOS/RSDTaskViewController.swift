@@ -325,9 +325,20 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///            by this platform.
     open func asyncAction(for configuration: AsyncActionConfiguration, path: RSDPathComponent) -> AsyncActionController? {
         if let vender = configuration as? AsyncActionVendor {
+            let sectionIdentifier: String? = {
+                if let substep = path as? RSDStepViewPathComponent {
+                    return substep.sectionIdentifier()
+                }
+                else if (path is RSDNodePathComponent) && (path is RSDTaskPathComponent) {
+                    return path.identifier
+                }
+                else {
+                    return nil
+                }
+            }()
             return vender.instantiateController(outputDirectory: path.outputDirectory,
                                                 initialStepPath: path.fullPath,
-                                                sectionIdentifier: (path as? RSDStepViewPathComponent)?.sectionIdentifier())
+                                                sectionIdentifier: sectionIdentifier)
         } else {
             return vendDefaultAsyncActionController(for: configuration)
         }
