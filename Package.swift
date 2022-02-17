@@ -32,10 +32,10 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(name: "JsonModel",
                  url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-                 from: "1.3.4"),
+                 from: "1.3.5"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-                 from: "1.2.1"),
+                 from: "1.2.3"),
     ],
     targets: [
 
