@@ -69,7 +69,9 @@ open class RSDFactory : MobilePassiveDataFactory {
         // Add results from this factory
         self.resultSerializer.registerLibraryExamples(with: self)
         
-        // Add TaskMetadata as a root object
+        // Add root objects
+        self.registerRootObject(AssessmentTaskObject())
+        self.registerRootObject(RSDTaskResultObject())
         self.registerRootObject(RSDTaskMetadata())
     }
     
@@ -400,4 +402,8 @@ extension Encoder {
     public var schemaInfo: RSDSchemaInfo? {
         return self.userInfo[.schemaInfo] as? RSDSchemaInfo
     }
+}
+
+open class RSDAbstractPolymorphicSerializer : AbstractPolymorphicSerializer {
+    
 }

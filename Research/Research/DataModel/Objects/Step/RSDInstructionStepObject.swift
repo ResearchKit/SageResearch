@@ -35,8 +35,10 @@ import Foundation
 import JsonModel
 
 open class RSDInstructionStepObject : RSDUIStepObject, RSDInstructionStep, Encodable {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
+    private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case spokenInstructions
+        
+        var relativeIndex: Int { 1 }
     }
     
     // MARK: spoken instruction handling

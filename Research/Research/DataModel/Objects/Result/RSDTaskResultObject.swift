@@ -37,8 +37,8 @@ import JsonModel
 /// `RSDTaskResultObject` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
 public struct RSDTaskResultObject : SerializableResultData, AssessmentResult, Codable {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, serializableType = "type", startDate, endDate, taskRunUUID, assessmentIdentifier, schemaIdentifier, versionString, stepHistory, asyncResults, nodePath
+    private enum CodingKeys : String, OrderedEnumCodingKey {
+        case serializableType = "type", identifier, startDate, endDate, assessmentIdentifier, schemaIdentifier, versionString, taskRunUUID, stepHistory, asyncResults, nodePath
     }
     public private(set) var serializableType: SerializableResultType = .task
     
@@ -137,6 +137,21 @@ public struct RSDTaskResultObject : SerializableResultData, AssessmentResult, Co
         copy.asyncResults = self.asyncResults?.map { $0.deepCopy() }
         copy.nodePath = self.nodePath
         return copy
+    }
+}
+
+extension RSDTaskResultObject : DocumentableRootObject {
+    
+    public init() {
+        self.init(identifier: "example")
+    }
+    
+    public var jsonSchema: URL {
+        URL(string: "\(RSDFactory.shared.modelName(for: self.className)).json", relativeTo: kSageJsonSchemaBaseURL)!
+    }
+    
+    public var documentDescription: String? {
+        "A top-level result for this assessment."
     }
 }
 

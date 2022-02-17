@@ -70,8 +70,8 @@ public struct RSDCollectionResultObject : SerializableResultData, CollectionResu
         self.endDate = endDate
     }
     
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, serializableType = "type", startDate, endDate, children, skipToIdentifier
+    private enum CodingKeys : String, OrderedEnumCodingKey {
+        case serializableType = "type", identifier, startDate, endDate, children, skipToIdentifier
     }
     
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated

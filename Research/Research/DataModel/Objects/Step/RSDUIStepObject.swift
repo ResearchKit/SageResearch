@@ -46,9 +46,9 @@ extension RSDStepType {
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
 open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, StandardPermissionsStep, RSDOptionalStep {
 
-    private enum CodingKeys: String, CodingKey, CaseIterable {
-        case identifier
+    private enum CodingKeys: String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case stepType = "type"
+        case identifier
         case title
         case subtitle
         case detail
@@ -61,6 +61,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         case image
         case beforeCohortRules
         case afterCohortRules
+        
+        var relativeIndex: Int { 0 }
     }
     
     private enum DeprecatedCodingKeys: String, CodingKey {

@@ -39,8 +39,8 @@ import MobilePassiveData
 /// step that includes an instruction step, countdown step, and activity step.
 public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator, RSDStepValidator, RSDCopyStep, Decodable {
 
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, stepType = "type", steps, progressMarkers, asyncActions
+    private enum CodingKeys : String, OrderedEnumCodingKey {
+        case stepType = "type", identifier, steps, progressMarkers, asyncActions
     }
     
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results

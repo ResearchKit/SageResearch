@@ -37,8 +37,9 @@ import JsonModel
 // TODO: syoung 04/06/2020 Implement ComboBoxQuestionObject supported in Kotlin frameworks
 
 open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCohortAssignmentStep {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
+    private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case surveyRules, isOptional = "optional"
+        var relativeIndex: Int { 1 }
     }
     
     public var surveyRules: [RSDSurveyRule] = []
@@ -156,8 +157,9 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
 }
 
 open class AbstractSkipQuestionStep : AbstractQuestionStep {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
+    private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case skipCheckbox
+        var relativeIndex: Int { 2 }
     }
     
     public fileprivate(set) var skipCheckbox: SkipCheckboxInputItem? = nil
@@ -211,8 +213,9 @@ open class AbstractSkipQuestionStep : AbstractQuestionStep {
 }
 
 public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQuestion, QuestionStep, Encodable {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
+    private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case inputItem
+        var relativeIndex: Int { 3 }
     }
     
     public private(set) var inputItem: InputItemBuilder = StringTextInputItemObject()
@@ -311,8 +314,9 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
 }
 
 public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, MultipleInputQuestion, QuestionStep, Encodable {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
+    private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case inputItems, sequenceSeparator
+        var relativeIndex: Int { 3 }
     }
     
     public private(set) var inputItems: [InputItemBuilder]
@@ -423,8 +427,9 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
 /// defined at this level with an encoded `baseType` and an overridable method for decoding the
 /// the choices.
 open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, QuestionStep, Encodable {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case jsonChoices = "choices", baseType, isSingleAnswer = "singleChoice", inputUIHint = "uiHint"
+    private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
+        case baseType, jsonChoices = "choices", isSingleAnswer = "singleChoice", inputUIHint = "uiHint"
+        var relativeIndex: Int { 3 }
     }
     public static var jsonChoicesCodingKey : CodingKey { CodingKeys.jsonChoices }
     

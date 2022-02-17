@@ -38,8 +38,9 @@ import JsonModel
 /// case where an `RSDUIStep` has an action such as "start walking" or "stop walking"; the step may also implement
 /// the `RSDActiveUIStep` protocol to allow for spoken instruction.
 open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
-    private enum CodingKeys: String, CodingKey, CaseIterable {
+    private enum CodingKeys: String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case duration, commands, requiresBackgroundAudio, shouldEndOnInterrupt, spokenInstructions
+        var relativeIndex: Int { 1 }
     }
 
     /// The duration of time to run the step. If `0`, then this value is ignored.

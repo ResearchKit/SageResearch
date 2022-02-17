@@ -41,13 +41,10 @@ extension SerializableResultType {
     public static let base: SerializableResultType = "base"
     
     /// Defaults to creating a `RSDTaskResult`.
-    public static let task: SerializableResultType = "task"
+    public static let task: SerializableResultType = "assessment"
     
     /// Defaults to creating a `SectionResultObject`.
     public static let section: SerializableResultType = "section"
-    
-    /// Defaults to creating a `RSDNavigationResult`.
-    public static let navigation: SerializableResultType = "navigation"
 }
 
 // List of the serialization examples included in this library.

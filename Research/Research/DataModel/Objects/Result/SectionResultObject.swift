@@ -36,8 +36,8 @@ import Foundation
 import JsonModel
 
 public struct SectionResultObject : SerializableResultData, RSDTaskResult, Codable {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, serializableType = "type", startDate, endDate, stepHistory, asyncResults, nodePath
+    private enum CodingKeys : String, OrderedEnumCodingKey {
+        case serializableType = "type", identifier, startDate, endDate, stepHistory, asyncResults, nodePath
     }
     
     /// The identifier associated with the task, step, or asynchronous action.
