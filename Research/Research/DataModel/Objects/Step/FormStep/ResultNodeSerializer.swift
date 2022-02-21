@@ -41,6 +41,10 @@ public final class ResultNodeSerializer : IdentifiableInterfaceSerializer, Polym
         """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
+    public var jsonSchema: URL {
+        URL(string: "\(RSDFactory.shared.modelName(for: self.interfaceName)).json", relativeTo: kSageJsonSchemaBaseURL)!
+    }
+    
     override init() {
         let examples: [SerializableResultNode] = [
             ChoiceQuestionStepObject.serializationExample(),

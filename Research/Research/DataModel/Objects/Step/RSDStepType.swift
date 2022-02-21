@@ -140,6 +140,10 @@ public final class StepSerializer : IdentifiableInterfaceSerializer, Polymorphic
         """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
+    public var jsonSchema: URL {
+        URL(string: "\(RSDFactory.shared.modelName(for: self.interfaceName)).json", relativeTo: kSageJsonSchemaBaseURL)!
+    }
+    
     override init() {
         let uiExamples: [SerializableStep] = [
             RSDActiveUIStepObject.serializationExample(),

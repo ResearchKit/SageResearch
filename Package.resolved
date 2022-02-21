@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
         "state": {
           "branch": null,
-          "revision": "3eecda46442930cf241899381ab124101fd459a9",
-          "version": "1.3.4"
+          "revision": "f451abe21ff7fe4cb44ea1a58f74e1a4adf55146",
+          "version": "1.3.5"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
         "state": {
           "branch": null,
-          "revision": "617dc2b6487041c5beb1b79fde1c02331ffdb166",
-          "version": "1.2.1"
+          "revision": "064e91d8593fb871c62bc54936828c82a04cc0d6",
+          "version": "1.2.3"
         }
       }
     ]

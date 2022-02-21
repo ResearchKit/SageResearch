@@ -53,8 +53,8 @@ public struct RSDResultObject : SerializableResultData, RSDNavigationResult, Cod
     /// navigation handling.
     public var skipToIdentifier: String?
     
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, serializableType = "type", startDate, endDate, skipToIdentifier
+    private enum CodingKeys : String, OrderedEnumCodingKey {
+        case serializableType = "type", identifier, startDate, endDate, skipToIdentifier
     }
     
     /// Default initializer for this object.

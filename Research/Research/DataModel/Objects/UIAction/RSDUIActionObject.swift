@@ -89,6 +89,10 @@ public final class ButtonActionSerializer : AbstractPolymorphicSerializer, Polym
         """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
+    public var jsonSchema: URL {
+        URL(string: "\(RSDFactory.shared.modelName(for: self.interfaceName)).json", relativeTo: kSageJsonSchemaBaseURL)!
+    }
+    
     override init() {
         examples = [
             RSDUIActionObject.examples().first!,

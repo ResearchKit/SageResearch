@@ -180,7 +180,7 @@ public struct RSDTaskMetadata : Codable, DocumentableRootObject, DocumentableStr
             return .init(propertyType: .primitive(.string),
                          propertyDescription: "Specific model identifier of the device.")
         case .files:
-            return .init(propertyType: .reference(RSDFileManifest.documentableType()),
+            return .init(propertyType: .referenceArray(RSDFileManifest.documentableType()),
                          propertyDescription: "A list of the files included in this archive.")
         case .taskIdentifier:
             return .init(propertyType: .primitive(.string),

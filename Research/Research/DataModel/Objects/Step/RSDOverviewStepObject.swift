@@ -39,8 +39,9 @@ import JsonModel
 /// collect the data needed for this task.
 open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep, Encodable {
 
-    private enum CodingKeys: String, CodingKey, CaseIterable {
+    private enum CodingKeys: String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case icons
+        var relativeIndex: Int { 1 }
     }
     
     /// For this implementation of the overview step, the learn more action is included in the

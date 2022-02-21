@@ -51,6 +51,10 @@ public final class InputItemSerializer : AbstractPolymorphicSerializer, Polymorp
         """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
+    public var jsonSchema: URL {
+        URL(string: "\(RSDFactory.shared.modelName(for: self.interfaceName)).json", relativeTo: kSageJsonSchemaBaseURL)!
+    }
+    
     override init() {
         let examples: [SerializableInputItemBuilder] = [
             
@@ -152,7 +156,7 @@ extension InputItemType : ExpressibleByStringLiteral, DocumentableStringLiteral 
 
 open class AbstractInputItemObject {
 
-    private enum CodingKeys : String, CodingKey, CaseIterable {
+    private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case inputItemType = "type"
         case identifier
         case inputUIHint = "uiHint"
@@ -160,6 +164,8 @@ open class AbstractInputItemObject {
         case placeholder
         case isOptional = "optional"
         case isExclusive = "exclusive"
+        
+        var relativeIndex: Int { 0 }
     }
     
     public private(set) var inputItemType: InputItemType

@@ -70,6 +70,10 @@ public final class TaskSerializer : IdentifiableInterfaceSerializer, Polymorphic
         """.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "  ", with: "\n")
     }
     
+    public var jsonSchema: URL {
+        URL(string: "\(RSDFactory.shared.modelName(for: self.interfaceName)).json", relativeTo: kSageJsonSchemaBaseURL)!
+    }
+    
     override init() {
         let examples: [SerializableTask] = [
             AssessmentTaskObject()
@@ -110,8 +114,9 @@ extension AssessmentTaskObject : SerializableTask {
 ///
 /// - seealso: `AssessmentTaskObject`
 open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Decodable {
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case taskType = "type", identifier, steps, progressMarkers, asyncActions, schemaIdentifier, versionString, estimatedMinutes, usesTrackedData
+    private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
+        case taskType = "type", identifier, schemaIdentifier, versionString, estimatedMinutes, usesTrackedData, progressMarkers, steps, asyncActions
+        var relativeIndex: Int { 0 }
     }
     
     private enum DeprecatedCodingKeys : String, CodingKey, CaseIterable {
@@ -435,7 +440,15 @@ open class AssessmentTaskObject : AbstractTaskObject, RSDActiveTask {
         .assessment
     }
     
-    fileprivate override init() {
+    public var jsonSchema: URL {
+        URL(string: "\(RSDFactory.shared.modelName(for: self.className)).json", relativeTo: kSageJsonSchemaBaseURL)!
+    }
+    
+    public var documentDescription: String? {
+        "An assessment that explictly describes the steps and async actions for the assessment as part of serialization."
+    }
+    
+    public required override init() {
         super.init()
     }
     
@@ -521,5 +534,5 @@ open class AssessmentTaskObject : AbstractTaskObject, RSDActiveTask {
     }
 }
 
-extension AssessmentTaskObject : DocumentableObject {
+extension AssessmentTaskObject : DocumentableRootObject {
 }
