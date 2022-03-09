@@ -45,6 +45,9 @@ extension SerializableResultType {
     
     /// Defaults to creating a `SectionResultObject`.
     public static let section: SerializableResultType = "section"
+    
+    // syoung 03/09/2022 Added back in for MobileToolbox
+    public static let navigation: SerializableResultType = "navigation"
 }
 
 // List of the serialization examples included in this library.

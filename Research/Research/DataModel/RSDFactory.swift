@@ -70,7 +70,7 @@ open class RSDFactory : MobilePassiveDataFactory {
         self.resultSerializer.registerLibraryExamples(with: self)
         
         // Add root objects
-        self.registerRootObject(AssessmentTaskObject())
+        self.registerRootObject(RSDAssessmentTaskObject())
         self.registerRootObject(RSDTaskResultObject())
         self.registerRootObject(RSDTaskMetadata())
     }

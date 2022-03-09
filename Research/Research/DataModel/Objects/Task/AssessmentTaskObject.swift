@@ -76,7 +76,7 @@ public final class TaskSerializer : IdentifiableInterfaceSerializer, Polymorphic
     
     override init() {
         let examples: [SerializableTask] = [
-            AssessmentTaskObject()
+            RSDAssessmentTaskObject()
         ]
         self.examples = examples
     }
@@ -170,7 +170,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
     
     // MARK: Initialization
     
-    fileprivate override init() {
+    public override init() {
         self.identifier = RSDTaskType.assessment.rawValue
         self.steps = []
         
@@ -439,16 +439,8 @@ open class AssessmentTaskObject : AbstractTaskObject, RSDActiveTask {
     override open class func defaultType() -> RSDTaskType {
         .assessment
     }
-    
-    public var jsonSchema: URL {
-        URL(string: "\(RSDFactory.shared.modelName(for: self.className)).json", relativeTo: kSageJsonSchemaBaseURL)!
-    }
-    
-    public var documentDescription: String? {
-        "An assessment that explictly describes the steps and async actions for the assessment as part of serialization."
-    }
-    
-    public required override init() {
+
+    public override init() {
         super.init()
     }
     
@@ -534,5 +526,14 @@ open class AssessmentTaskObject : AbstractTaskObject, RSDActiveTask {
     }
 }
 
-extension AssessmentTaskObject : DocumentableRootObject {
+public final class RSDAssessmentTaskObject : AssessmentTaskObject, DocumentableRootObject {
+    
+    public var jsonSchema: URL {
+        URL(string: "\(RSDFactory.shared.modelName(for: self.className)).json", relativeTo: kSageJsonSchemaBaseURL)!
+    }
+    
+    public var documentDescription: String? {
+        "An assessment that explictly describes the steps and async actions for the assessment as part of serialization."
+    }
 }
+
