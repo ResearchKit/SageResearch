@@ -1,7 +1,0 @@
-scheme "RSDCatalog"
-clean false
-code_coverage false
-skip_build true
-device "iPhone 12"
-# skip_slack false
-# slack_only_on_failure true
