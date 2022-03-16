@@ -12,9 +12,9 @@
 		FFA462752706389F00BF0FC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFA462742706389F00BF0FC5 /* Assets.xcassets */; };
 		FFA462782706389F00BF0FC5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFA462772706389F00BF0FC5 /* Preview Assets.xcassets */; };
 		FFA4628B27063A6C00BF0FC5 /* CustomTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA4628A27063A6C00BF0FC5 /* CustomTask.swift */; };
-		FFA4629127063EDA00BF0FC5 /* Research in Frameworks */ = {isa = PBXBuildFile; productRef = FFA4629027063EDA00BF0FC5 /* Research */; };
-		FFA4629327063EDA00BF0FC5 /* ResearchUI in Frameworks */ = {isa = PBXBuildFile; productRef = FFA4629227063EDA00BF0FC5 /* ResearchUI */; };
 		FFEE26DE270D25A700E37DD5 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFEE26DD270D25A700E37DD5 /* Storyboard.storyboard */; };
+		FFFF9D8C27E161D6002C6BD5 /* Research in Frameworks */ = {isa = PBXBuildFile; productRef = FFFF9D8B27E161D6002C6BD5 /* Research */; };
+		FFFF9D8E27E161D6002C6BD5 /* ResearchUI in Frameworks */ = {isa = PBXBuildFile; productRef = FFFF9D8D27E161D6002C6BD5 /* ResearchUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +23,6 @@
 		FFA462722706389C00BF0FC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FFA462742706389F00BF0FC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FFA462772706389F00BF0FC5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		FFA4627E270638AC00BF0FC5 /* SageResearch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SageResearch; path = ..; sourceTree = "<group>"; };
 		FFA4628A27063A6C00BF0FC5 /* CustomTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTask.swift; sourceTree = "<group>"; };
 		FFEE26DD270D25A700E37DD5 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -33,8 +32,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFA4629127063EDA00BF0FC5 /* Research in Frameworks */,
-				FFA4629327063EDA00BF0FC5 /* ResearchUI in Frameworks */,
+				FFFF9D8C27E161D6002C6BD5 /* Research in Frameworks */,
+				FFFF9D8E27E161D6002C6BD5 /* ResearchUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,7 +43,6 @@
 		FFA462642706389C00BF0FC5 = {
 			isa = PBXGroup;
 			children = (
-				FFA4627E270638AC00BF0FC5 /* SageResearch */,
 				FFA4626F2706389C00BF0FC5 /* SwiftUITestApp */,
 				FFA4626E2706389C00BF0FC5 /* Products */,
 				FFA4628F27063EDA00BF0FC5 /* Frameworks */,
@@ -104,8 +102,8 @@
 			);
 			name = SwiftUITestApp;
 			packageProductDependencies = (
-				FFA4629027063EDA00BF0FC5 /* Research */,
-				FFA4629227063EDA00BF0FC5 /* ResearchUI */,
+				FFFF9D8B27E161D6002C6BD5 /* Research */,
+				FFFF9D8D27E161D6002C6BD5 /* ResearchUI */,
 			);
 			productName = SwiftUITestApp;
 			productReference = FFA4626D2706389C00BF0FC5 /* SwiftUITestApp.app */;
@@ -373,11 +371,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FFA4629027063EDA00BF0FC5 /* Research */ = {
+		FFFF9D8B27E161D6002C6BD5 /* Research */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Research;
 		};
-		FFA4629227063EDA00BF0FC5 /* ResearchUI */ = {
+		FFFF9D8D27E161D6002C6BD5 /* ResearchUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ResearchUI;
 		};

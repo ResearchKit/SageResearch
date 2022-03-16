@@ -1,0 +1,25 @@
+name: Swift
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build for iOS
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme Research -destination "platform=iOS Simulator,OS=15.2,name=iPhone 12" | xcpretty
+    - name: Run tests for iOS
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild test-without-building -scheme Research -destination "platform=iOS Simulator,OS=15.2,name=iPhone 12" | xcpretty
+    - name: Build Research for macOS
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build -scheme Research-macOS -destination "platform=macOS,arch=x86_64" | xcpretty
+    - name: Build SwiftUITestApp
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build -scheme SwiftUITestApp -destination "platform=iOS Simulator,OS=15.2,name=iPhone 12" | xcpretty
+    - name: Build SwiftUITestApp
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build -scheme StoryboardTestApp -destination "platform=iOS Simulator,OS=15.2,name=iPhone 12" | xcpretty
