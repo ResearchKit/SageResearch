@@ -13,9 +13,9 @@
 		FFA462A827065BD300BF0FC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFA462A627065BD300BF0FC5 /* Main.storyboard */; };
 		FFA462AA27065BD700BF0FC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFA462A927065BD700BF0FC5 /* Assets.xcassets */; };
 		FFA462AD27065BD700BF0FC5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFA462AB27065BD700BF0FC5 /* LaunchScreen.storyboard */; };
-		FFA462B727065C3300BF0FC5 /* Research in Frameworks */ = {isa = PBXBuildFile; productRef = FFA462B627065C3300BF0FC5 /* Research */; };
-		FFA462B927065C3300BF0FC5 /* ResearchUI in Frameworks */ = {isa = PBXBuildFile; productRef = FFA462B827065C3300BF0FC5 /* ResearchUI */; };
 		FFA462BB27065CC800BF0FC5 /* CustomTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA462BA27065CC800BF0FC5 /* CustomTask.swift */; };
+		FFFF9D8827E161C9002C6BD5 /* Research in Frameworks */ = {isa = PBXBuildFile; productRef = FFFF9D8727E161C9002C6BD5 /* Research */; };
+		FFFF9D8A27E161C9002C6BD5 /* ResearchUI in Frameworks */ = {isa = PBXBuildFile; productRef = FFFF9D8927E161C9002C6BD5 /* ResearchUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,6 @@
 		FFA462A927065BD700BF0FC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FFA462AC27065BD700BF0FC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FFA462AE27065BD700BF0FC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FFA462B427065BEC00BF0FC5 /* SageResearch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SageResearch; path = ..; sourceTree = "<group>"; };
 		FFA462BA27065CC800BF0FC5 /* CustomTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -36,8 +35,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFA462B727065C3300BF0FC5 /* Research in Frameworks */,
-				FFA462B927065C3300BF0FC5 /* ResearchUI in Frameworks */,
+				FFFF9D8827E161C9002C6BD5 /* Research in Frameworks */,
+				FFFF9D8A27E161C9002C6BD5 /* ResearchUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,7 +46,6 @@
 		FFA4629427065BD300BF0FC5 = {
 			isa = PBXGroup;
 			children = (
-				FFA462B427065BEC00BF0FC5 /* SageResearch */,
 				FFA4629F27065BD300BF0FC5 /* StoryboardTestApp */,
 				FFA4629E27065BD300BF0FC5 /* Products */,
 				FFA462B527065C3300BF0FC5 /* Frameworks */,
@@ -101,8 +99,8 @@
 			);
 			name = StoryboardTestApp;
 			packageProductDependencies = (
-				FFA462B627065C3300BF0FC5 /* Research */,
-				FFA462B827065C3300BF0FC5 /* ResearchUI */,
+				FFFF9D8727E161C9002C6BD5 /* Research */,
+				FFFF9D8927E161C9002C6BD5 /* ResearchUI */,
 			);
 			productName = StoryboardTestApp;
 			productReference = FFA4629D27065BD300BF0FC5 /* StoryboardTestApp.app */;
@@ -386,11 +384,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FFA462B627065C3300BF0FC5 /* Research */ = {
+		FFFF9D8727E161C9002C6BD5 /* Research */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Research;
 		};
-		FFA462B827065C3300BF0FC5 /* ResearchUI */ = {
+		FFFF9D8927E161C9002C6BD5 /* ResearchUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ResearchUI;
 		};
