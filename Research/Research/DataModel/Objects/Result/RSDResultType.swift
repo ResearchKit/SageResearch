@@ -41,7 +41,7 @@ extension SerializableResultType {
     public static let base: SerializableResultType = "base"
     
     /// Defaults to creating a `RSDTaskResult`.
-    public static let task: SerializableResultType = "assessment"
+    public static let task: SerializableResultType = "task"
     
     /// Defaults to creating a `SectionResultObject`.
     public static let section: SerializableResultType = "section"
