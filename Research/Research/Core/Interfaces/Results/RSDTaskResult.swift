@@ -37,11 +37,6 @@ import JsonModel
 /// `RSDTaskResult` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
 public protocol RSDTaskResult : BranchNodeResult {
-
-    /// A list of all the asynchronous results for this task. The list should include uniquely identified results.
-    /// The step history is used to describe the path you took to get to where you are going, whereas
-    /// the asynchronous results include any canonical results that are independent of path.
-    var asyncResults: [ResultData]? { get set }
 }
 
 /// The `RSDTaskRunResult` is a task result where the task run UUID can be set to allow for nested
@@ -71,11 +66,6 @@ extension RSDTaskRunResult {
 
 extension RSDTaskResult  {
     
-    public var children: [ResultData] {
-        get { asyncResults ?? [] }
-        set { asyncResults = newValue }
-    }
-    
     /// Find a result within the step history.
     /// - parameter step: The step associated with the result.
     /// - returns: The result or `nil` if not found.
@@ -83,75 +73,11 @@ extension RSDTaskResult  {
         return self.stepHistory.first(where: { $0.identifier == step.identifier })
     }
     
-    /// Find a result within the step history.
-    /// - parameter identifier: The identifier associated with the result.
-    /// - returns: The result or `nil` if not found.
-    public func findResult(with identifier: String) -> ResultData? {
-        return self.stepHistory.first(where: { $0.identifier == identifier })
-    }
-    
-
-    /// Append the result to the end of the step history. If the last result has the same
-    /// identifier, then remove it.
-    /// - parameter result:  The result to add to the step history.
-    /// - returns: The previous result or `nil` if there wasn't one.
-    @discardableResult
-    mutating public func appendStepHistory(with result: ResultData) -> ResultData? {
-        var previousResult: ResultData?
-        if let idx = stepHistory.lastIndex(where: { $0.identifier == result.identifier }) {
-            previousResult = (idx == stepHistory.count - 1) ? stepHistory.remove(at: idx) : stepHistory[idx]
-        }
-        stepHistory.append(result)
-        if nodePath.last != result.identifier {
-            nodePath.append(result.identifier)
-        }
-        return previousResult
-    }
-    
-    /// Remove the nodePath from `stepIdentifier` to the end of the result set.
-    /// - parameter stepIdentifier:  The identifier of the result associated with the given step.
-    /// - returns: The previous results or `nil` if there weren't any.
-    @discardableResult
-    mutating public func removeStepHistory(from stepIdentifier: String) -> Array<ResultData>? {
-        if let idx = nodePath.lastIndex(of: stepIdentifier) {
-            nodePath.removeSubrange(idx...)
-        }
-        guard let idx = stepHistory.lastIndex(where: { $0.identifier == stepIdentifier }) else { return nil }
-        return Array(stepHistory[idx...])
-    }
-    
     /// Append the async results with the given result, replacing the previous instance with the same identifier.
     /// The step history is used to describe the path you took to get to where you are going, whereas
     /// the asynchronous results include any canonical results that are independent of path.
     /// - parameter result:  The result to add to the async results.
-    mutating public func appendAsyncResult(with result: ResultData) {
-        if let idx = asyncResults?.firstIndex(where: { $0.identifier == result.identifier }) {
-            asyncResults?.remove(at: idx)
-        }
-        if asyncResults == nil {
-            asyncResults = [result]
-        }
-        else {
-            asyncResults!.append(result)
-        }
-    }
-}
-
-
-public extension RSDTaskResult {
-    func findAnswer(with identifier:String ) -> AnswerResult? {
-        for result in stepHistory {
-            if let answerResult = (result as? AnswerFinder)?.findAnswer(with: identifier) {
-                return answerResult
-            }
-        }
-        if let results = asyncResults {
-            for result in results {
-                if let answerResult = (result as? AnswerFinder)?.findAnswer(with: identifier) {
-                    return answerResult
-                }
-            }
-        }
-        return nil
+    public func appendAsyncResult(with result: ResultData) {
+        insert(result)
     }
 }

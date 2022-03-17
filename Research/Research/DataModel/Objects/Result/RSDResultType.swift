@@ -48,6 +48,12 @@ extension SerializableResultType {
     
     // syoung 03/09/2022 Added back in for MobileToolbox
     public static let navigation: SerializableResultType = "navigation"
+    
+    // syoung 03/16/2022 Add in the static value extensions
+    public static let answer: SerializableResultType = "answer"
+    public static let collection: SerializableResultType = "collection"
+    public static let file: SerializableResultType = "file"
+    public static let error: SerializableResultType = "error"
 }
 
 // List of the serialization examples included in this library.

@@ -67,7 +67,7 @@ class DataArchiveTests: XCTestCase {
             taskViewModel.taskResult.appendStepHistory(with: AnswerResultObject(identifier: "only", value: .integer(7)))
             
             // add the second collection as a subsection
-            var sectionResult = RSDTaskResultObject(identifier: "sectionA")
+            let sectionResult = RSDTaskResultObject(identifier: "sectionA")
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
             sectionResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
@@ -148,7 +148,7 @@ class DataArchiveTests: XCTestCase {
             taskViewModel.taskResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             
             // add the second collection as a subsection
-            var sectionResult = RSDTaskResultObject(identifier: "sectionA")
+            let sectionResult = RSDTaskResultObject(identifier: "sectionA")
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
             sectionResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
@@ -229,7 +229,7 @@ class DataArchiveTests: XCTestCase {
     }
     
     func buildCollectionResult(identifier: String) -> RSDCollectionResultObject {
-        var collectionResult = RSDCollectionResultObject(identifier: identifier)
+        let collectionResult = RSDCollectionResultObject(identifier: identifier)
         for ii in 1...3 {
             collectionResult.appendInputResults(with: AnswerResultObject(identifier: "input\(ii)", value: .integer(ii)))
         }
@@ -237,7 +237,7 @@ class DataArchiveTests: XCTestCase {
     }
     
     func buildSingleAnswerResult(identifier: String, answer: Int) -> RSDCollectionResultObject {
-        var collectionResult = RSDCollectionResultObject(identifier: identifier)
+        let collectionResult = RSDCollectionResultObject(identifier: identifier)
         collectionResult.appendInputResults(with: AnswerResultObject(identifier: identifier, value: .integer(answer)))
         return collectionResult
     }

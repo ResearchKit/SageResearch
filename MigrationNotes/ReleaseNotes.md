@@ -142,3 +142,7 @@ See "MigrationNotes_v4.0.md".
 ## Version 4.1
 
 See "MigrationNotes_v4.1.md". 
+
+## Version 4.4
+
+Moved base implementation for `BranchNodeResult` and `AssessmentResult` into JsonModel.

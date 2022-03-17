@@ -35,93 +35,10 @@
 import Foundation
 import JsonModel
 
-public struct SectionResultObject : SerializableResultData, RSDTaskResult, Codable {
-    private enum CodingKeys : String, OrderedEnumCodingKey {
-        case serializableType = "type", identifier, startDate, endDate, stepHistory, asyncResults, nodePath
-    }
+public final class SectionResultObject : AbstractBranchNodeResultObject, SerializableResultData, BranchNodeResult, MultiplatformResultData, RSDTaskResult {
     
-    /// The identifier associated with the task, step, or asynchronous action.
-    public let identifier: String
-    
-    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    public let serializableType: SerializableResultType
-    
-    /// The start date timestamp for the result.
-    public var startDate: Date
-    
-    /// The end date timestamp for the result.
-    public var endDate: Date
-    
-    /// A listing of the step history for this task or section. The listed step results should *only* include the
-    /// last result for any given step.
-    public var stepHistory: [ResultData]
-    
-    /// A list of all the asynchronous results for this task. The list should include uniquely identified results.
-    public var asyncResults: [ResultData]?
-    
-    /// The path to the current result.
-    public var nodePath: [String]
-    
-    /// Default initializer for this object.
-    ///
-    /// - parameters:
-    ///     - identifier: The identifier string.
-    public init(identifier: String, startDate: Date = Date(), endDate: Date = Date(), stepHistory: [ResultData] = [], asyncResults: [ResultData]? = nil, nodePath: [String] = []) {
-        self.identifier = identifier
-        self.serializableType = .section
-        self.startDate = startDate
-        self.endDate = endDate
-        self.stepHistory = stepHistory
-        self.asyncResults = asyncResults
-        self.nodePath = nodePath
-    }
-    
-    /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
-    /// with the decoder to decode the `stepHistory`, `asyncResults`, and `schemaInfo`.
-    ///
-    /// - parameter decoder: The decoder to use to decode this instance.
-    /// - throws: `DecodingError`
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.serializableType = try container.decode(SerializableResultType.self, forKey: .serializableType)
-        self.startDate = try container.decode(Date.self, forKey: .startDate)
-        self.endDate = try container.decode(Date.self, forKey: .endDate)
-        self.nodePath = try container.decodeIfPresent([String].self, forKey: .nodePath) ?? []
-        
-        let resultsContainer = try container.nestedUnkeyedContainer(forKey: .stepHistory)
-        self.stepHistory = try decoder.factory.decodePolymorphicArray(ResultData.self, from: resultsContainer)
-        
-        if container.contains(.asyncResults) {
-            let asyncResultsContainer = try container.nestedUnkeyedContainer(forKey: .asyncResults)
-            self.asyncResults = try decoder.factory.decodePolymorphicArray(ResultData.self, from: asyncResultsContainer)
-        }
-    }
-    
-    /// Encode the result to the given encoder.
-    /// - parameter encoder: The encoder to use to encode this instance.
-    /// - throws: `EncodingError`
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(identifier, forKey: .identifier)
-        try container.encode(serializableType, forKey: .serializableType)
-        try container.encode(startDate, forKey: .startDate)
-        try container.encode(endDate, forKey: .endDate)
-        try container.encode(nodePath, forKey: .nodePath)
-        
-        var nestedContainer = container.nestedUnkeyedContainer(forKey: .stepHistory)
-        for result in stepHistory {
-            let nestedEncoder = nestedContainer.superEncoder()
-            try result.encode(to: nestedEncoder)
-        }
-        
-        if let results = asyncResults {
-            var asyncContainer = container.nestedUnkeyedContainer(forKey: .asyncResults)
-            for result in results {
-                let nestedEncoder = asyncContainer.superEncoder()
-                try result.encode(to: nestedEncoder)
-            }
-        }
+    public override class func defaultType() -> SerializableResultType {
+        .section
     }
     
     public func deepCopy() -> SectionResultObject {
@@ -130,42 +47,11 @@ public struct SectionResultObject : SerializableResultData, RSDTaskResult, Codab
                             endDate: endDate,
                             stepHistory: stepHistory.map { $0.deepCopy() },
                             asyncResults: asyncResults?.map { $0.deepCopy() },
-                            nodePath: nodePath)
+                            path: path)
     }
 }
 
 extension SectionResultObject : DocumentableStruct {
-    public static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    public static func isRequired(_ codingKey: CodingKey) -> Bool {
-        guard let key = codingKey as? CodingKeys else { return false }
-        switch key {
-        case .serializableType, .identifier, .startDate, .endDate, .stepHistory:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
-        guard let key = codingKey as? CodingKeys else {
-            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
-        }
-        switch key {
-        case .serializableType:
-            return .init(constValue: SerializableResultType.section)
-        case .identifier:
-            return .init(propertyType: .primitive(.string))
-        case .startDate, .endDate:
-            return .init(propertyType: .format(.dateTime))
-        case .stepHistory, .asyncResults:
-            return .init(propertyType: .interfaceArray("\(ResultData.self)"))
-        case .nodePath:
-            return .init(propertyType: .primitiveArray(.string))
-        }
-    }
     
     public static func examples() -> [SectionResultObject] {
         
@@ -174,7 +60,7 @@ extension SectionResultObject : DocumentableStruct {
         var introStepResult = RSDResultObject(identifier: "introduction")
         introStepResult.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         introStepResult.endDate = introStepResult.startDate.addingTimeInterval(20)
-        var collectionResult = RSDCollectionResultObject.examples().first!
+        let collectionResult = RSDCollectionResultObject.examples().first!
         collectionResult.startDate = introStepResult.endDate
         collectionResult.endDate = collectionResult.startDate.addingTimeInterval(2 * 60)
         var conclusionStepResult = RSDResultObject(identifier: "conclusion")

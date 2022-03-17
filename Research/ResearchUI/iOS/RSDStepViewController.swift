@@ -804,7 +804,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }
         else {
             // Otherwise, replace the result with a collection result.
-            var collectionResult = RSDCollectionResultObject(identifier: self.step.identifier)
+            let collectionResult = RSDCollectionResultObject(identifier: self.step.identifier)
             collectionResult.appendInputResults(with: previousResult)
             navigationResult = collectionResult
         }

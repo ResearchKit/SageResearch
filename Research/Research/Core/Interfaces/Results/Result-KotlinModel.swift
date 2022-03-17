@@ -34,40 +34,23 @@
 import Foundation
 import JsonModel
 
-
-
 /// The `BranchNodeResult` is the result created for a given level of navigation of a node tree.
-public protocol BranchNodeResult : CollectionResult {
-
-    /// The running history of the nodes that were traversed as a part of running an assessment.
-    /// This will only include a subset (section) that is the path defined at this level of the
-    /// overall assessment hierarchy.
-    var stepHistory: [ResultData] { get set }
+public extension BranchNodeResult {
     
     /// The path traversed by this branch. The `nodePath` is specific to the navigation implemented
     /// on iOS and is different from the `path` implementation in the Kotlin-native framework.
-    var nodePath: [String] { get set }
+    var nodePath: [String] {
+        get {
+            self.path.map { $0.identifier }
+        }
+        set {
+            self.path = newValue.map { .init(identifier: $0, direction: .forward) }
+        }
+    }
 }
 
-/// An `AssessmentResult` is the top-level `Result` for an assessment.
-public protocol AssessmentResult : RSDTaskResult {
-
-    /// A unique identifier for this run of the assessment. This property is defined as readwrite
-    /// to allow the controller for the task to set this on the `AssessmentResult` children
-    /// included in this run.
-    var taskRunUUID: UUID { get set }
-
-    /// The `versionString` may be a semantic version, timestamp, or sequential revision integer.
-    var versionString: String? { get }
-    
-    ///  A unique identifier for a Assessment model associated with this result. This is explicitly
-    /// included so that the `identifier` can be associated as per the needs of the developers and
-    /// to allow for changes to the API that are not important to the researcher.
-    var assessmentIdentifier: String? { get }
-    
-    /// A unique identifier for a schema associated with this result. This is explicitly
-    /// included so that the `identifier` can be associated as per the needs of the developers and
-    /// to allow for changes to the API that are not important to the researcher.
-    var schemaIdentifier: String? { get }
+extension AssessmentResultObject : RSDTaskResult {
 }
 
+extension BranchNodeResultObject : RSDTaskResult {
+}
