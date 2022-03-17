@@ -65,24 +65,16 @@ public extension CollectionResult {
     /// - parameter result: The result to add to the input results.
     /// - returns: The previous result or `nil` if there wasn't one.
     @discardableResult
-    mutating func appendInputResults(with result: ResultData) -> ResultData? {
-        var previousResult: ResultData?
-        if let idx = children.firstIndex(where: { $0.identifier == result.identifier }) {
-            previousResult = children.remove(at: idx)
-        }
-        children.append(result)
-        return previousResult
+    func appendInputResults(with result: ResultData) -> ResultData? {
+        insert(result)
     }
     
     /// Remove the result with the given identifier.
     /// - parameter result: The result to remove from the input results.
     /// - returns: The previous result or `nil` if there wasn't one.
     @discardableResult
-    mutating func removeInputResult(with identifier: String) -> ResultData? {
-        guard let idx = children.firstIndex(where: { $0.identifier == identifier }) else {
-            return nil
-        }
-        return children.remove(at: idx)
+    func removeInputResult(with identifier: String) -> ResultData? {
+        remove(with: identifier)
     }
 }
 

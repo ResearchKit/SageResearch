@@ -59,7 +59,7 @@ class SurveyRuleTests: XCTestCase {
         let step = MultipleInputQuestionStepObject(identifier: "foo", inputItems: [inputItem1, inputItem2])
         step.actions = [.navigation(.skip) : skipAction]
         
-        var (taskResult, answerResult) = createTaskResult(for: step, with: nil)
+        let (taskResult, answerResult) = createTaskResult(for: step, with: nil)
         let skipResult = RSDResultObject(identifier: answerResult.identifier,
                                          startDate: answerResult.startDate,
                                          endDate: answerResult.endDate,
@@ -83,7 +83,7 @@ class SurveyRuleTests: XCTestCase {
         let step = MultipleInputQuestionStepObject(identifier: "foo", inputItems: [inputItem1, inputItem2])
         step.actions = [.navigation(.skip) : skipAction]
         
-        var (taskResult, answerResult) = createTaskResult(for: step, with: .object(["field1":"boo","field2":3]))
+        let (taskResult, answerResult) = createTaskResult(for: step, with: .object(["field1":"boo","field2":3]))
         let skipResult = RSDResultObject(identifier: answerResult.identifier,
                                          startDate: answerResult.startDate,
                                          endDate: answerResult.endDate,
@@ -101,7 +101,7 @@ class SurveyRuleTests: XCTestCase {
 
         let step = RSDUIStepObject(identifier: "foo")
         
-        var taskResult = RSDTaskResultObject(identifier: "boobaloo")
+        let taskResult = RSDTaskResultObject(identifier: "boobaloo")
         taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction1"))
         taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction2"))
         
@@ -1018,7 +1018,7 @@ class SurveyRuleTests: XCTestCase {
     }
     
     func createTaskResult(for step: QuestionStep, with jsonValue: JsonElement?) -> (RSDTaskResultObject, AnswerResultObject) {
-        var taskResult = RSDTaskResultObject(identifier: "boobaloo")
+        let taskResult = RSDTaskResultObject(identifier: "boobaloo")
         taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction1"))
         taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction2"))
         

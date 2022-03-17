@@ -113,7 +113,7 @@ class TaskViewModelTests: XCTestCase {
         var task = TestTask(identifier: "test", stepNavigator: navigator)
         
         // Create an answer result to add to the final task result.
-        var taskResult = RSDTaskResultObject(identifier: "test")
+        let taskResult = RSDTaskResultObject(identifier: "test")
         let answerResultBlu = AnswerResultObject(identifier: "blu", value: .string("goo"))
         taskResult.appendAsyncResult(with: answerResultBlu)
         task.taskResult = taskResult

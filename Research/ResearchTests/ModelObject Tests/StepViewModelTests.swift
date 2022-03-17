@@ -165,7 +165,7 @@ class StepViewModelTests: XCTestCase {
     func testResultSummaryStepViewModel_String() {
         let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo")
         let answerResult = AnswerResultObject(identifier: "foo", value: .string("blu"))
-        var taskResult = RSDTaskResultObject(identifier: "magoo")
+        let taskResult = RSDTaskResultObject(identifier: "magoo")
         taskResult.stepHistory = [answerResult]
         let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)
         stepViewModel.taskResult = taskResult
@@ -178,7 +178,7 @@ class StepViewModelTests: XCTestCase {
     func testResultSummaryStepViewModel_Decimal() {
         let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo")
         let answerResult = AnswerResultObject(identifier: "foo", value: .number(1.234211))
-        var taskResult = RSDTaskResultObject(identifier: "magoo")
+        let taskResult = RSDTaskResultObject(identifier: "magoo")
         taskResult.stepHistory = [answerResult]
         let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)
         stepViewModel.taskResult = taskResult
@@ -191,15 +191,15 @@ class StepViewModelTests: XCTestCase {
     func testResultSummaryStepViewModel_Collection() {
         let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo", unitText: nil, stepResultIdentifier: "step2")
 
-        var result1 = RSDCollectionResultObject(identifier: "step1")
+        let result1 = RSDCollectionResultObject(identifier: "step1")
         let answerResult1 = AnswerResultObject(identifier: "foo", value: .string("magoo"))
         result1.children = [answerResult1, RSDResultObject(identifier: "roo")]
         
-        var result2 = RSDCollectionResultObject(identifier: "step2")
+        let result2 = RSDCollectionResultObject(identifier: "step2")
         let answerResult2 = AnswerResultObject(identifier: "foo", value: .string("blu"))
         result2.children = [answerResult2, RSDResultObject(identifier: "roo")]
         
-        var taskResult = RSDTaskResultObject(identifier: "magoo")
+        let taskResult = RSDTaskResultObject(identifier: "magoo")
         taskResult.stepHistory = [result1, result2]
         
         let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)

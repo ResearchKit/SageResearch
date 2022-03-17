@@ -36,7 +36,7 @@ import JsonModel
 
 /// `RSDCollectionResultObject` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
-public struct RSDCollectionResultObject : SerializableResultData, CollectionResult, RSDNavigationResult, Codable, RSDCopyWithIdentifier {
+public final class RSDCollectionResultObject : SerializableResultData, CollectionResult, RSDNavigationResult, Codable, RSDCopyWithIdentifier {
     
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
@@ -155,7 +155,7 @@ extension RSDCollectionResultObject : DocumentableStruct {
     }
     
     public static func examples() -> [RSDCollectionResultObject] {
-        var result = RSDCollectionResultObject(identifier: "formStep")
+        let result = RSDCollectionResultObject(identifier: "formStep")
         result.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         result.endDate = result.startDate.addingTimeInterval(5 * 60)
         result.children = AnswerResultObject.examples()

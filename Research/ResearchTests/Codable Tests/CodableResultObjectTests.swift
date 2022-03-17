@@ -86,7 +86,7 @@ class CodableResultObjectTests: XCTestCase {
 
     
     func testStepCollectionResultObject_Codable() {
-        var stepResult = RSDCollectionResultObject(identifier: "foo")
+        let stepResult = RSDCollectionResultObject(identifier: "foo")
         let answerResult1 = AnswerResultObject(identifier: "input1", value: .boolean(true))
         let answerResult2 = AnswerResultObject(identifier: "input2", value: .integer(42))
         stepResult.children = [answerResult1, answerResult2]
@@ -135,7 +135,7 @@ class CodableResultObjectTests: XCTestCase {
     }
     
     func testTaskResultObject_Codable() {
-        var taskResult = RSDTaskResultObject(identifier: "foo",
+        let taskResult = RSDTaskResultObject(identifier: "foo",
                                              versionString: "3",
                                              assessmentIdentifier: "foo 2",
                                              schemaIdentifier: "bar")
@@ -153,7 +153,7 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertNotNil(dictionary["startDate"])
-            XCTAssertNotNil(dictionary["endDate"])
+            XCTAssertNil(dictionary["endDate"])
 
             if let results = dictionary["stepHistory"] as? [[String : Any]] {
                 XCTAssertEqual(results.count, 2)
