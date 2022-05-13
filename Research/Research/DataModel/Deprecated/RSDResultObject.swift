@@ -2,7 +2,7 @@
 //  RSDResultObject.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,6 +35,7 @@ import Foundation
 import JsonModel
 
 /// `RSDResultObject` is a concrete implementation of the base result associated with a task, step, or asynchronous action.
+@available(*,deprecated, message: "Use `JsonModel.ResultObject` instead.")
 public struct RSDResultObject : SerializableResultData, RSDNavigationResult, Codable {
 
     /// The identifier associated with the task, step, or asynchronous action.
@@ -74,41 +75,3 @@ public struct RSDResultObject : SerializableResultData, RSDNavigationResult, Cod
     }
 }
 
-extension RSDResultObject : DocumentableStruct {
-    public static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    public static func isRequired(_ codingKey: CodingKey) -> Bool {
-        guard let key = codingKey as? CodingKeys else { return false }
-        switch key {
-        case .serializableType, .identifier, .startDate, .endDate:
-            return true
-        case .skipToIdentifier:
-            return false
-        }
-    }
-    
-    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
-        guard let key = codingKey as? CodingKeys else {
-            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
-        }
-        switch key {
-        case .serializableType:
-            return .init(constValue: SerializableResultType.base)
-        case .identifier:
-            return .init(propertyType: .primitive(.string))
-        case .startDate, .endDate:
-            return .init(propertyType: .format(.dateTime))
-        case .skipToIdentifier:
-            return .init(propertyType: .primitive(.string))
-        }
-    }
-    
-    public static func examples() -> [RSDResultObject] {
-        var result = RSDResultObject(identifier: "step1")
-        result.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
-        result.endDate = result.startDate.addingTimeInterval(5 * 60)
-        return [result]
-    }
-}

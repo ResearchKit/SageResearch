@@ -1,8 +1,8 @@
 //
-//  RSDSectionStep.swift
-//  Research
+//  RSDNavigationResultObject.swift
+//  
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -30,46 +30,44 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-
 import Foundation
 import JsonModel
 
+public final class RSDNavigationResultObject : RSDNavigationResult {
 
-/// `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey
-/// or an active step that includes an instruction step, countdown step, and activity step.
-public protocol RSDSectionStep: RSDStep, RSDTask, RSDStepNavigator {
+    /// The identifier for the step to go to following this result. If non-nil, then this will be used in
+    /// navigation handling. This property is transient and should not be copied or serialized.
+    public var skipToIdentifier: String?
     
-    /// A list of the steps used to define this subgrouping of steps.
-    var steps: [RSDStep] { get }
+    public private(set) var wrappedResult: ResultData
+    
+    public init(wrappedResult: ResultData) {
+        self.wrappedResult = wrappedResult
+    }
+    
+    public var typeName: String {
+        wrappedResult.typeName
+    }
+    
+    public var identifier: String {
+        wrappedResult.identifier
+    }
+    
+    public var startDate: Date {
+        get { wrappedResult.startDate }
+        set { wrappedResult.startDate = newValue }
+    }
+    
+    public var endDate: Date {
+        get { wrappedResult.endDate }
+        set { wrappedResult.endDate = newValue }
+    }
+    
+    public func deepCopy() -> RSDNavigationResultObject {
+        .init(wrappedResult: wrappedResult.deepCopy())
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        try wrappedResult.encode(to: encoder)
+    }
 }
-
-extension RSDSectionStep {
-    
-    /// Task info is `nil` for a section step.
-    public var taskInfo: RSDTaskInfoStep? {
-        return nil
-    }
-    
-    /// Schema info is `nil` for a section step.
-    public var schemaInfo: RSDSchemaInfo? {
-        return nil
-    }
-    
-    /// The step navigator is `self` for a section step.
-    public var stepNavigator: RSDStepNavigator {
-        return self
-    }
-    
-    /// A section step returns a task result for both the step result and the task result
-    /// This method will throw an assert if the implementation of the section step does not
-    /// return a `RSDTaskResult` as its type.
-    public func instantiateTaskResult() -> RSDTaskResult {
-        let result = self.instantiateStepResult()
-        guard let taskResult = result as? RSDTaskResult else {
-            assertionFailure("Expected that a section step will return a result that conforms to RSDTaskResult protocol.")
-            return BranchNodeResultObject(identifier: identifier)
-        }
-        return taskResult
-    }
-}
-

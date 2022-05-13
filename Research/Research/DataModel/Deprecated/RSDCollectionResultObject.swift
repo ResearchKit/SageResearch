@@ -2,7 +2,7 @@
 //  RSDCollectionResultObject.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -36,6 +36,7 @@ import JsonModel
 
 /// `RSDCollectionResultObject` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
+@available(*,deprecated, message: "Use `JsonModel.CollectionResultObject` instead.")
 public final class RSDCollectionResultObject : SerializableResultData, CollectionResult, RSDNavigationResult, Codable, RSDCopyWithIdentifier {
     
     /// The identifier associated with the task, step, or asynchronous action.
@@ -121,44 +122,3 @@ public final class RSDCollectionResultObject : SerializableResultData, Collectio
     }
 }
 
-extension RSDCollectionResultObject : DocumentableStruct {
-    public static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    public static func isRequired(_ codingKey: CodingKey) -> Bool {
-        guard let key = codingKey as? CodingKeys else { return false }
-        switch key {
-        case .serializableType, .identifier, .startDate, .children:
-            return true
-        case .skipToIdentifier, .endDate:
-            return false
-        }
-    }
-    
-    public static func documentProperty(for codingKey: CodingKey) throws -> DocumentProperty {
-        guard let key = codingKey as? CodingKeys else {
-            throw DocumentableError.invalidCodingKey(codingKey, "\(codingKey) is not recognized for this class")
-        }
-        switch key {
-        case .serializableType:
-            return .init(constValue: SerializableResultType.collection)
-        case .identifier:
-            return .init(propertyType: .primitive(.string))
-        case .startDate, .endDate:
-            return .init(propertyType: .format(.dateTime))
-        case .skipToIdentifier:
-            return .init(propertyType: .primitive(.string))
-        case .children:
-            return .init(propertyType: .interfaceArray("\(ResultData.self)"))
-        }
-    }
-    
-    public static func examples() -> [RSDCollectionResultObject] {
-        let result = RSDCollectionResultObject(identifier: "formStep")
-        result.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
-        result.endDate = result.startDate.addingTimeInterval(5 * 60)
-        result.children = AnswerResultObject.examples()
-        return [result]
-    }
-}

@@ -66,11 +66,9 @@ public struct RSDDocumentCreator {
     let allCodableObjects: [DocumentableObject.Type] = [
         RSDAnimatedImageThemeElementObject.self,
         RSDCohortNavigationRuleObject.self,
-        RSDCollectionResultObject.self,
         RSDDateRangeObject.self,
         RSDNavigationUIActionObject.self,
         RSDResourceTransformerObject.self,
-        RSDResultObject.self,
         RSDTaskInfoStepObject.self,
         RSDTaskResultObject.self,
         RSDUIActionObject.self,

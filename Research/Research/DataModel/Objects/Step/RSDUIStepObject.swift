@@ -226,7 +226,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     /// Instantiate a step result that is appropriate for this step. Default implementation will return a `RSDResultObject`.
     /// - returns: A result for this step.
     open func instantiateStepResult() -> ResultData {
-        return RSDResultObject(identifier: identifier)
+        ResultObject(identifier: identifier)
     }
     
     // MARK: validation
