@@ -61,7 +61,7 @@ class CodableResultObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDResultObject.self, from: json)
+            let object = try decoder.decode(ResultObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.serializableType, .base)
@@ -86,9 +86,10 @@ class CodableResultObjectTests: XCTestCase {
 
     
     func testStepCollectionResultObject_Codable() {
-        let stepResult = RSDCollectionResultObject(identifier: "foo")
+        let stepResult = CollectionResultObject(identifier: "foo")
         let answerResult1 = AnswerResultObject(identifier: "input1", value: .boolean(true))
         let answerResult2 = AnswerResultObject(identifier: "input2", value: .integer(42))
+        stepResult.endDateTime = Date() // Set an end time (can be nil)
         stepResult.children = [answerResult1, answerResult2]
         
         do {
@@ -111,7 +112,7 @@ class CodableResultObjectTests: XCTestCase {
                 XCTFail("Failed to encode the input results.")
             }
             
-            let object = try decoder.decode(RSDCollectionResultObject.self, from: jsonData)
+            let object = try decoder.decode(CollectionResultObject.self, from: jsonData)
             
             XCTAssertEqual(object.identifier, stepResult.identifier)
             XCTAssertEqual(object.startDate.timeIntervalSinceNow, stepResult.startDate.timeIntervalSinceNow, accuracy: 1)

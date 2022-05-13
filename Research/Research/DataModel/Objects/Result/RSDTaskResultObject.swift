@@ -2,7 +2,7 @@
 //  RSDTaskResultObject.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -78,13 +78,13 @@ extension RSDTaskResultObject : DocumentableStruct {
         
         var result = RSDTaskResultObject(identifier: "example")
         
-        var introStepResult = RSDResultObject(identifier: "introduction")
+        var introStepResult = ResultObject(identifier: "introduction")
         introStepResult.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         introStepResult.endDate = introStepResult.startDate.addingTimeInterval(20)
-        let collectionResult = RSDCollectionResultObject.examples().first!
-        collectionResult.startDate = introStepResult.endDate
-        collectionResult.endDate = collectionResult.startDate.addingTimeInterval(2 * 60)
-        var conclusionStepResult = RSDResultObject(identifier: "conclusion")
+        let collectionResult = CollectionResultObject(identifier: "collection")
+        collectionResult.startDateTime = introStepResult.endDate
+        collectionResult.endDateTime = collectionResult.startDate.addingTimeInterval(2 * 60)
+        var conclusionStepResult = ResultObject(identifier: "conclusion")
         conclusionStepResult.startDate = collectionResult.endDate
         conclusionStepResult.endDate = conclusionStepResult.startDate.addingTimeInterval(20)
         result.stepHistory = [introStepResult, collectionResult, conclusionStepResult]

@@ -2,7 +2,7 @@
 //  RSDResultType.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,27 +33,24 @@
 import Foundation
 import JsonModel
 
+
 /// `RSDResultType` is an extendable string enum used by `RSDFactory` to create the appropriate
 /// result type.
 extension SerializableResultType {
 
-    /// Defaults to creating a `RSDResult`.
-    public static let base: SerializableResultType = "base"
-    
     /// Defaults to creating a `RSDTaskResult`.
     public static let task: SerializableResultType = "task"
-    
-    /// Defaults to creating a `SectionResultObject`.
-    public static let section: SerializableResultType = "section"
     
     // syoung 03/09/2022 Added back in for MobileToolbox
     public static let navigation: SerializableResultType = "navigation"
     
-    // syoung 03/16/2022 Add in the static value extensions
-    public static let answer: SerializableResultType = "answer"
-    public static let collection: SerializableResultType = "collection"
-    public static let file: SerializableResultType = "file"
-    public static let error: SerializableResultType = "error"
+    // syoung 05/13/2022 Add in the static value extensions
+    public static let answer: SerializableResultType = SerializableResultType.StandardTypes.answer.resultType
+    public static let base: SerializableResultType = SerializableResultType.StandardTypes.base.resultType
+    public static let collection: SerializableResultType = SerializableResultType.StandardTypes.collection.resultType
+    public static let file: SerializableResultType = SerializableResultType.StandardTypes.file.resultType
+    public static let error: SerializableResultType = SerializableResultType.StandardTypes.error.resultType
+    public static let section: SerializableResultType = SerializableResultType.StandardTypes.section.resultType
 }
 
 // List of the serialization examples included in this library.
@@ -62,9 +59,9 @@ extension ResultDataSerializer {
     func libraryExamples() -> [SerializableResultData] {
         [
             RSDTaskResultObject.examples().first!,
-            SectionResultObject.examples().first!,
-            RSDResultObject.examples().first!,
-            RSDCollectionResultObject.examples().first!,
+            SectionResultObject(identifier: "example"),
+            RSDResultObject(identifier: "example"),
+            RSDCollectionResultObject(identifier: "example"),
         ]
     }
     

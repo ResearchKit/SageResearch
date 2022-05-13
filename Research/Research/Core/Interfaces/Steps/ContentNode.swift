@@ -94,7 +94,7 @@ public extension FormStep {
     func instantiateCollectionResult() -> CollectionResult {
         guard let result = instantiateStepResult() as? CollectionResult else {
             debugPrint("WARNING!!! The instantiated step result does not conform to `CollectionResult`.")
-            return RSDCollectionResultObject(identifier: self.identifier)
+            return CollectionResultObject(identifier: self.identifier)
         }
         return result
     }

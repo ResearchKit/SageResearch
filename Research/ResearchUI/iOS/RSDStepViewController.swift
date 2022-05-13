@@ -803,10 +803,8 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             navigationResult = navResult
         }
         else {
-            // Otherwise, replace the result with a collection result.
-            let collectionResult = RSDCollectionResultObject(identifier: self.step.identifier)
-            collectionResult.appendInputResults(with: previousResult)
-            navigationResult = collectionResult
+            // Otherwise, wrap the result in a navigation result object.
+            navigationResult = RSDNavigationResultObject(wrappedResult: previousResult)
         }
         navigationResult.skipToIdentifier = skipToIdentifier
         self.stepViewModel!.taskResult.appendStepHistory(with: navigationResult)

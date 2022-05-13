@@ -133,7 +133,7 @@ fileprivate struct _StepDecoder: Decodable {
 fileprivate struct PlaceholderStep: RSDStep {
     let identifier: String
     let stepType: RSDStepType = "placeholder"
-    func instantiateStepResult() -> ResultData { RSDResultObject(identifier: identifier) }
+    func instantiateStepResult() -> ResultData { ResultObject(identifier: identifier) }
     func validate() throws { }
 }
 

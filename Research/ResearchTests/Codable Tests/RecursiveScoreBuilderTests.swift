@@ -59,10 +59,10 @@ class RecursiveScoreBuilderTests: XCTestCase {
         
         // Build section A
         let subResultA = RSDTaskResultObject(identifier: "sectionA")
-        subResultA.appendStepHistory(with: RSDResultObject(identifier: "intruction"))
+        subResultA.appendStepHistory(with: ResultObject(identifier: "intruction"))
         subResultA.appendStepHistory(with: score1)
         subResultA.appendStepHistory(with: answer1)
-        let collection1 = RSDCollectionResultObject(identifier: "collection")
+        let collection1 = CollectionResultObject(identifier: "collection")
         collection1.appendInputResults(with: answer2)
         collection1.appendInputResults(with: answer3)
         subResultA.appendStepHistory(with: collection1)
@@ -70,13 +70,13 @@ class RecursiveScoreBuilderTests: XCTestCase {
         
         // Build section B
         let subResultB = RSDTaskResultObject(identifier: "sectionB")
-        subResultB.appendStepHistory(with: RSDResultObject(identifier: "intruction"))
+        subResultB.appendStepHistory(with: ResultObject(identifier: "intruction"))
         subResultB.appendStepHistory(with: score2)
         taskResult.appendStepHistory(with: subResultB)
         
         // Build section C
         let subResultC = RSDTaskResultObject(identifier: "sectionC")
-        subResultC.appendStepHistory(with: RSDResultObject(identifier: "intruction"))
+        subResultC.appendStepHistory(with: ResultObject(identifier: "intruction"))
         subResultC.appendStepHistory(with: score3)
         taskResult.appendStepHistory(with: subResultC)
         

@@ -3,7 +3,7 @@
 //  Research
 //
 //
-//  Copyright © 2017-2020 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2022 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,6 +35,7 @@
 import Foundation
 import JsonModel
 
+@available(*,deprecated, message: "Use `JsonModel.BranchNodeResultObject` instead.")
 public final class SectionResultObject : AbstractBranchNodeResultObject, SerializableResultData, BranchNodeResult, MultiplatformResultData, RSDTaskResult {
     
     public override class func defaultType() -> SerializableResultType {
@@ -48,35 +49,6 @@ public final class SectionResultObject : AbstractBranchNodeResultObject, Seriali
                             stepHistory: stepHistory.map { $0.deepCopy() },
                             asyncResults: asyncResults?.map { $0.deepCopy() },
                             path: path)
-    }
-}
-
-extension SectionResultObject : DocumentableStruct {
-    
-    public static func examples() -> [SectionResultObject] {
-        
-        var result = SectionResultObject(identifier: "example")
-        
-        var introStepResult = RSDResultObject(identifier: "introduction")
-        introStepResult.startDate = ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
-        introStepResult.endDate = introStepResult.startDate.addingTimeInterval(20)
-        let collectionResult = RSDCollectionResultObject.examples().first!
-        collectionResult.startDate = introStepResult.endDate
-        collectionResult.endDate = collectionResult.startDate.addingTimeInterval(2 * 60)
-        var conclusionStepResult = RSDResultObject(identifier: "conclusion")
-        conclusionStepResult.startDate = collectionResult.endDate
-        conclusionStepResult.endDate = conclusionStepResult.startDate.addingTimeInterval(20)
-        result.stepHistory = [introStepResult, collectionResult, conclusionStepResult]
-        
-        var fileResult = FileResultObject.examples().first!
-        fileResult.startDate = collectionResult.startDate
-        fileResult.endDate = collectionResult.endDate
-        result.asyncResults = [fileResult]
-        
-        result.startDate = introStepResult.startDate
-        result.endDate = conclusionStepResult.endDate
-        
-        return [result]
     }
 }
 
