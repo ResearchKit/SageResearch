@@ -89,7 +89,7 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         if activityIndicator == nil {
             self.view.backgroundColor = UIColor.white
-            activityIndicator = UIActivityIndicatorView(style: .gray)
+            activityIndicator = UIActivityIndicatorView(style: .medium)
             self.view.addSubview(activityIndicator)
             activityIndicator.translatesAutoresizingMaskIntoConstraints = false
             activityIndicator.rsd_alignCenterVertical(padding: 0)

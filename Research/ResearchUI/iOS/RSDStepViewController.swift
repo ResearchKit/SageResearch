@@ -1075,8 +1075,17 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// If the timer fires and the step is still running, it will check to see if there is
     /// a vocal instruction to speak since the last firing of the timer.
     open func timerFired() {
-        guard completedUptime == nil, let duration = self.clock?.runningDuration() else { return }
-        
+        Task {
+            guard completedUptime == nil,
+                  let duration = await self.clock?.runningDuration()
+            else {
+                return
+            }
+            timerFired(duration: duration)
+        }
+    }
+    
+    @MainActor open func timerFired(duration: SecondDuration) {
         if let stepDuration = self.activeStep?.duration, stepDuration > 0,
             let commands = self.activeStep?.commands, commands.contains(.continueOnFinish),
             duration > stepDuration {

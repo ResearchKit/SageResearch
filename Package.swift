@@ -8,10 +8,10 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         // Add support for all platforms starting from a specific version.
-        .macOS(.v10_15),
-        .iOS(.v11),
-        .watchOS(.v4),
-        .tvOS(.v11)
+        .macOS(.v11),
+        .iOS(.v14),
+        .watchOS(.v6),
+        .tvOS(.v14)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
@@ -32,10 +32,10 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(name: "JsonModel",
                  url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-                 "1.4.0"..<"1.5.0"),
+                 from: "1.5.0"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-                 "1.2.3"..<"1.3.0"),
+                 from: "1.3.0"),
     ],
     targets: [
 
