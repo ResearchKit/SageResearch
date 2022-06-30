@@ -42,6 +42,7 @@ import UIKit
 /// gone to sleep.
 ///
 /// - seealso: https://stackoverflow.com/questions/12488481/getting-ios-system-uptime-that-doesnt-pause-when-asleep/45068046#45068046
+@available(*, deprecated, message: "Use `MobilePassiveData.SystemClock` instead.")
 public class RSDClock {
     
     public init() {
