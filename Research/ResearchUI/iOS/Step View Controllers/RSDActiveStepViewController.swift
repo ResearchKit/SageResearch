@@ -159,9 +159,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
     /// The pause method is overridden to pause the countdown dial animation.
     override open func pause() {
         super.pause()
-        Task {
-            await _pauseProgress()
-        }
+        _pauseProgress()
     }
 
     /// The pause method is overridden to resume the countdown dial animation.
@@ -268,8 +266,8 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
     
     // MARK: Dial progress indicator
     
-    @MainActor private func _pauseProgress() async {
-        guard let stepDuration = self.activeStep?.duration, let duration = await self.clock?.runningDuration()
+    @MainActor private func _pauseProgress() {
+        guard let stepDuration = self.activeStep?.duration, let duration = self.clock?.runningDuration()
             else {
                 return
         }
@@ -285,12 +283,12 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
                 if seconds > 0 {
                     try await Task.sleep(nanoseconds: seconds * 1_000_000_000)
                 }
-                await _asyncStartProgressAnimation()
+                _asyncStartProgressAnimation()
             } catch {}
         }
     }
     
-    @MainActor private func _asyncStartProgressAnimation() async {
+    @MainActor private func _asyncStartProgressAnimation() {
         guard let stepDuration = self.activeStep?.duration,
             let clock = self.clock, !clock.isPaused
             else {
@@ -300,7 +298,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
         
         // calculate how much time has already passed since the step timer
         // was started.
-        let duration = await clock.runningDuration()
+        let duration = clock.runningDuration()
         guard !Task.isCancelled else { return }
         
         // For shorter duration intervals,the animation will run more smoothly if it
