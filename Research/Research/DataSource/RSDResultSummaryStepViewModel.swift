@@ -34,7 +34,6 @@
 import Foundation
 import JsonModel
 
-@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDResultSummaryStepViewModel: RSDStepViewModel {
     
     /// Text to display as the title above the result.

@@ -317,6 +317,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 }
 
 /// `RSDTitleHeaderCollectionViewHeader` shows a simple title label.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
     
     static let kCollectionHeaderTopMargin: CGFloat = 8.0
@@ -376,6 +377,7 @@ open class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
 }
 
 /// `RSDOverviewCollectionViewCell` shows a vertically stacked image icon and title label.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable open class RSDOverviewCollectionViewCell: RSDCollectionViewCell {
 
     let kCollectionCellVerticalItemSpacing = CGFloat(6)

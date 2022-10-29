@@ -37,14 +37,12 @@ import Research
 
 /// `RSDLoadingViewControllerProtocol` is a convenience protocol to allow UIViewControllers that do
 /// not inherit from the same subclass to show and hide a loading indicator.
-@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDLoadingViewControllerProtocol {
     
     /// The container view for the loading indicator.
     var loadingContainerView: UIView! { get }
 }
 
-@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDLoadingViewControllerProtocol {
     
     /// Find the standard loading view that was added to this view controller.
@@ -81,7 +79,6 @@ extension RSDLoadingViewControllerProtocol {
 }
 
 /// `RSDLoadingView` is a simple loading view for displaying a loading indicator in a view.
-@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDLoadingView: UIView {
     
     /// Is the loading indicator animating?

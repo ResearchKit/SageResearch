@@ -35,6 +35,7 @@ import XCTest
 import JsonModel
 @testable import Research
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 class ExampleDecodableTests: XCTestCase {
     
     override func setUp() {

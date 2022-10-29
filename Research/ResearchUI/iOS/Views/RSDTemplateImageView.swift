@@ -163,6 +163,7 @@ open class RSDTemplateImageButton: UIButton, RSDViewDesignable {
 
 /// The template image view is designed as an image view that shows a template image within a
 /// framing view.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable
 open class RSDTemplateImageView: UIView {
     
@@ -273,14 +274,17 @@ open class RSDTemplateImageView: UIView {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTemplateImageButton : TemplateView {
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTemplateImageView : TemplateView {
 }
 
 /// Use a fileprivate extension to implement common behavior to the classes that do not have
 /// a common inheritance tree.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 fileprivate protocol TemplateView : AnyObject {
     var layer: CALayer { get }
     var bounds: CGRect { get }
@@ -290,6 +294,7 @@ fileprivate protocol TemplateView : AnyObject {
     func updateRatios(_ cornerRadius: CGFloat)
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension TemplateView {
     
     fileprivate func updateCircleSize() {

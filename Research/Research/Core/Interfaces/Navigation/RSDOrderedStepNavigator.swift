@@ -47,6 +47,7 @@ public protocol RSDOrderedStepNavigator : RSDStepNavigator, RSDStepValidator {
     var progressMarkers : [String]? { get }
     
     /// A list of the tracking rules that apply to this navigator.
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     var trackingRules : [RSDTrackingRule] { get }
     
     /// The navigation rule (if any) associated with this step.
@@ -71,6 +72,7 @@ extension RSDOrderedStepNavigator {
         return self.steps.first(where: { $0.identifier == identifier })
     }
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     private func _checkConditionalRules(after previousStep: RSDStep?, with result: RSDTaskResult, isPeeking: Bool) -> String? {
         for rule in self.trackingRules {
             if let nextStepId = rule.nextStepIdentifier(after: previousStep, with: result, isPeeking: isPeeking) {
@@ -80,6 +82,7 @@ extension RSDOrderedStepNavigator {
         return nil
     }
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     private func _checkConditionalSkipRules(before returnStep: RSDStep?, with result: RSDTaskResult, isPeeking: Bool) -> String? {
         guard let returnStep = returnStep else { return nil }
         for rule in self.trackingRules {

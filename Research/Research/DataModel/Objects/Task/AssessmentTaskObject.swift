@@ -113,7 +113,7 @@ extension AssessmentTaskObject : SerializableTask {
 /// override `defaultType()` and `copy(with identifier: String)`.
 ///
 /// - seealso: `AssessmentTaskObject`
-open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Decodable {
+open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
     private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case taskType = "type", identifier, schemaIdentifier, versionString, estimatedMinutes, usesTrackedData, progressMarkers, steps, asyncActions
         var relativeIndex: Int { 0 }
@@ -292,73 +292,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
         fatalError("Abstract method. Subclass \(type(of: self)) does not implement `copy(with:, schemaInfo:)`")
     }
     
-    // MARK:  RSDDataTracker
-    
-    /// Does this task use stored data and/or include a scoring at this level?
-    open fileprivate(set) var usesTrackedData: Bool = false
-    
-    /// Returns the task data for this task result.
-    ///
-    /// The default implementation will first look to see if the `stepNavigator` implements `RSDTaskData`
-    /// and if so, will return the task data from the navigator.
-    ///
-    /// Otherwise, the task will *only* build a score if this task object has the property `usesTrackedData`
-    /// set to true and the method `instantiateScoreBuilder()` returns a score builder.
-    ///
-    open func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
-        if let tracker = self.stepNavigator as? RSDTrackingTask {
-            return tracker.taskData(for: taskResult)
-        }
-        
-        // Only return task data if the task uses it to influence the results.
-        guard usesTrackedData,
-            let scoreBuilder = instantiateScoreBuilder(),
-            let score = scoreBuilder.getScoringData(from: taskResult)
-            else {
-                return nil
-        }
-    
-        return TaskData(identifier: self.identifier, timestampDate: taskResult.endDate, json: score)
-    }
-    
-    /// Set up the data tracker. In the default implementation, the task object only acts as a pass-through
-    /// for the step navigator if that object implements the protocol.
-    open func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
-        if let tracker = self.stepNavigator as? RSDTrackingTask {
-            tracker.setupTask(with: data, for: path)
-        }
-    }
-    
-    /// Should this step use a result from a previous run? In the default implementation, the task object
-    /// acts only as a pass-through for the step navigator if that object implements the protocol.
-    open func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: ResultData?) {
-        if let tracker = self.stepNavigator as? RSDTrackingTask {
-            return tracker.shouldSkipStep(step)
-        }
-        else {
-            return (false, nil)
-        }
-    }
-    
-    /// Instantiate the score builder to use to build the task data for this task result.
-    ///
-    /// The default behavior is to use a simple recursive builder that will look for results that implement
-    /// either `RSDScoringResult` or `RSDAnswerResult` and return either a dictionary or array as applicable
-    /// if more than one score is found at any given level of subtask result or collection result. For
-    /// a more detailed description, go code spelunking into the unit tests for `RecursiveScoreBuilder`.
-    ///
-    /// This method is only called if the step navigator attached to this task does not implement the
-    /// `RSDTrackingTask` protocol.
-    ///
-    open func instantiateScoreBuilder() -> RSDScoreBuilder? {
-        return RecursiveScoreBuilder()
-    }
-    
-    struct TaskData : RSDTaskData {
-        let identifier: String
-        let timestampDate: Date?
-        let json: JsonSerializable
-    }
+
     
     // MARK: Documention
     
@@ -431,6 +365,80 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTracki
             ]
         ]
         return [jsonA, jsonB]
+    }
+    
+    // MARK:  RSDDataTracker
+    
+    /// Does this task use stored data and/or include a scoring at this level?
+    open fileprivate(set) var usesTrackedData: Bool = false
+    
+    @available(*,deprecated, message: "Will be deleted in a future version.")
+    struct TaskData : RSDTaskData {
+        let identifier: String
+        let timestampDate: Date?
+        let json: JsonSerializable
+    }
+}
+
+@available(*,deprecated, message: "Will be deleted in a future version.")
+extension AbstractTaskObject : RSDTrackingTask {
+
+    
+    /// Returns the task data for this task result.
+    ///
+    /// The default implementation will first look to see if the `stepNavigator` implements `RSDTaskData`
+    /// and if so, will return the task data from the navigator.
+    ///
+    /// Otherwise, the task will *only* build a score if this task object has the property `usesTrackedData`
+    /// set to true and the method `instantiateScoreBuilder()` returns a score builder.
+    ///
+    public func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
+        if let tracker = self.stepNavigator as? RSDTrackingTask {
+            return tracker.taskData(for: taskResult)
+        }
+        
+        // Only return task data if the task uses it to influence the results.
+        guard usesTrackedData,
+            let scoreBuilder = instantiateScoreBuilder(),
+            let score = scoreBuilder.getScoringData(from: taskResult)
+            else {
+                return nil
+        }
+    
+        return TaskData(identifier: self.identifier, timestampDate: taskResult.endDate, json: score)
+    }
+    
+    /// Set up the data tracker. In the default implementation, the task object only acts as a pass-through
+    /// for the step navigator if that object implements the protocol.
+    public func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
+        if let tracker = self.stepNavigator as? RSDTrackingTask {
+            tracker.setupTask(with: data, for: path)
+        }
+    }
+    
+    /// Should this step use a result from a previous run? In the default implementation, the task object
+    /// acts only as a pass-through for the step navigator if that object implements the protocol.
+    public func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: ResultData?) {
+        if let tracker = self.stepNavigator as? RSDTrackingTask {
+            return tracker.shouldSkipStep(step)
+        }
+        else {
+            return (false, nil)
+        }
+    }
+    
+    /// Instantiate the score builder to use to build the task data for this task result.
+    ///
+    /// The default behavior is to use a simple recursive builder that will look for results that implement
+    /// either `RSDScoringResult` or `RSDAnswerResult` and return either a dictionary or array as applicable
+    /// if more than one score is found at any given level of subtask result or collection result. For
+    /// a more detailed description, go code spelunking into the unit tests for `RecursiveScoreBuilder`.
+    ///
+    /// This method is only called if the step navigator attached to this task does not implement the
+    /// `RSDTrackingTask` protocol.
+    ///
+    public func instantiateScoreBuilder() -> RSDScoreBuilder? {
+        return RecursiveScoreBuilder()
     }
 }
 

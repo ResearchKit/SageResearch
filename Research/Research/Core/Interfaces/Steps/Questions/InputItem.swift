@@ -198,6 +198,7 @@ public protocol YearTextInputItem : KeyboardTextInputItem {
     var formatOptions: YearFormatOptions? { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension YearTextInputItem {
     var answerType: AnswerType { AnswerTypeInteger() }
     

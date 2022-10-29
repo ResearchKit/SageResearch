@@ -81,7 +81,7 @@ open class RSDTableSection {
 @available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTableSection : CustomStringConvertible {
 
-    open var description: String {
+    public var description: String {
         var description = "<\(String(describing: type(of: self))) \(self.index) \(self.identifier)>"
         if let title = self.title {
             description.append(" \(title)")

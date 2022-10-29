@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 class CodableQuestionTests: XCTestCase {
 
     override func setUp() {

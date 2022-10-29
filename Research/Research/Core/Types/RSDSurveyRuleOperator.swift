@@ -35,7 +35,6 @@ import Foundation
 import JsonModel
 
 /// List of rules creating the survey rule items.
-@available(*,deprecated, message: "Will be deleted in a future version.")
 public enum RSDSurveyRuleOperator: String, Codable, StringEnumSet {
     
     /// Survey rule for checking if the skip identifier should apply if the answer was skipped
@@ -71,6 +70,5 @@ public enum RSDSurveyRuleOperator: String, Codable, StringEnumSet {
     case always
 }
 
-@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDSurveyRuleOperator : DocumentableStringEnum {
 }

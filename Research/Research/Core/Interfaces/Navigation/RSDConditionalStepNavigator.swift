@@ -40,6 +40,7 @@ public protocol RSDConditionalStepNavigator : RSDOrderedStepNavigator {
 
 extension RSDConditionalStepNavigator {
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     public var trackingRules : [RSDTrackingRule] {
         return RSDFactory.shared.trackingRules
     }

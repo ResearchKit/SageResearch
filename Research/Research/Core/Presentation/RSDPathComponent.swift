@@ -115,6 +115,7 @@ public protocol RSDStepViewPathComponent : RSDNodePathComponent {
 public protocol RSDHistoryPathComponent : RSDPathComponent {
     
     /// The data manager should be implemented as a weak reference.
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     var dataManager: RSDDataStorageManager? { get set }
     
     /// Get the previous result for the given step.

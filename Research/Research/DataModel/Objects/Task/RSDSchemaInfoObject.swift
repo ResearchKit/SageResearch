@@ -35,7 +35,6 @@ import Foundation
 import JsonModel
 
 /// `RSDSchemaInfoObject` is a concrete implementation of the `RSDSchemaInfo` protocol.
-@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable, Hashable {
     
     private enum CodingKeys: String, CodingKey, CaseIterable {
@@ -65,7 +64,6 @@ public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable, Hashable {
     }
 }
 
-@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDSchemaInfoObject : DocumentableStruct {
     public static func codingKeys() -> [CodingKey] {
         CodingKeys.allCases

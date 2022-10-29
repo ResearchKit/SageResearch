@@ -34,7 +34,6 @@
 import Foundation
 import JsonModel
 
-@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct RSDTaskInfoObject : RSDTaskInfo, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, title, subtitle, detail, footnote, icon, _estimatedMinutes = "estimatedMinutes", embeddedResource = "taskTransformer", schemaInfoObject = "schemaInfo"
@@ -97,7 +96,6 @@ public struct RSDTaskInfoObject : RSDTaskInfo, Codable {
     }
 }
 
-@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTaskInfoObject : DocumentableStruct {
     public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases

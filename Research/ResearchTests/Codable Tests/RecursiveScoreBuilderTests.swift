@@ -35,6 +35,7 @@ import XCTest
 import JsonModel
 @testable import Research
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 class RecursiveScoreBuilderTests: XCTestCase {
 
     override func setUp() {
@@ -103,6 +104,7 @@ class RecursiveScoreBuilderTests: XCTestCase {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 struct TestResult : SerializableResultData, RSDScoringResult {
 
     let identifier: String

@@ -37,6 +37,7 @@ import JsonModel
 /// `RSDOverviewStepObject` extends the `RSDUIStepObject` to include information about an activity including
 /// what permissions are required by this task. Without these preconditions, the task cannot measure or
 /// collect the data needed for this task.
+@available(*,deprecated, message: "Will be deleted in a future version. To replace, consider overriding `RSDUIStepObject` and override the `defaultType()` method with `.overview` as the type.")
 open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep, Encodable {
 
     private enum CodingKeys: String, OrderedEnumCodingKey, OpenOrderedCodingKey {

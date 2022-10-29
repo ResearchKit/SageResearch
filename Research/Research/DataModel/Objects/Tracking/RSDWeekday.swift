@@ -93,6 +93,7 @@ extension RSDWeekday : Comparable {
 }
 
 /// Extend the weekday enum to implement the choice and comparable protocols.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDWeekday : RSDChoice, RSDComparable {
     
     /// Returns `rawValue`.
@@ -121,6 +122,7 @@ extension RSDWeekday : RSDChoice, RSDComparable {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDWeekday : DocumentableStringEnum {
     
     public init(from decoder: Decoder) throws {

@@ -147,6 +147,7 @@ public struct RSDDurationPickerDataSourceObject : RSDMultipleComponentPickerData
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDDurationRange {
     
     /// Convenience method for getting the base unit associated with this range.

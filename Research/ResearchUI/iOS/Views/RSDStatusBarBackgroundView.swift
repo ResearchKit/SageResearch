@@ -36,7 +36,6 @@ import UIKit
 /// The status bar background is used on scrolling views to block the underlying view.
 ///
 /// - seealso: `RSDTableStepViewController`
-@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable
 open class RSDStatusBarBackgroundView: UIView {
     

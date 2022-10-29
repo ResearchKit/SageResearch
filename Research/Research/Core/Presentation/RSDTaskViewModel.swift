@@ -68,6 +68,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     }
     
     /// The data manager for accessing previous runs of the task.
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     public weak var dataManager: RSDDataStorageManager? {
         didSet {
             setupDataTracking()

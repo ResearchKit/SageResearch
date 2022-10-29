@@ -35,6 +35,7 @@ import XCTest
 @testable import Research
 import JsonModel
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 class QuestionTableDataSourceTests: XCTestCase {
     
     override func setUp() {
