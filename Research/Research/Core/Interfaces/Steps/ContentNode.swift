@@ -76,6 +76,7 @@ public protocol ResultNode : ContentNode {
     func instantiateResult() -> ResultData
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol FormStep : ResultNode, RSDUIStep {
     
     /// A list of the child result nodes. Typically, these will be a collection of `Question`
@@ -83,6 +84,7 @@ public protocol FormStep : ResultNode, RSDUIStep {
     var children: [ResultNode] { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension FormStep {
     
     /// A form step instantiates a step result.

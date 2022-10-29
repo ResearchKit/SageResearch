@@ -33,10 +33,12 @@
 
 import Foundation
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 fileprivate enum NumberFormatterCodingKeys: String, CodingKey {
     case maximumFractionDigits = "maximumDigits"
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension NumberFormatter {
     
     /// Convenience function for getting the default number formatter with the given `maximumFractionDigits`.
@@ -56,6 +58,7 @@ extension NumberFormatter {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension NumberFormatter { // : Decodable
     
     /// Define an initialier for decoding `NumberFormatter` from a decoder.
@@ -75,12 +78,13 @@ extension NumberFormatter { // : Decodable
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension NumberFormatter : Encodable {
     
     /// Encode the object to the given encoder.
     /// - parameter encoder: The encoder to use to encode this instance.
     /// - throws: `EncodingError`
-    open func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: NumberFormatterCodingKeys.self)
         try container.encode(maximumFractionDigits, forKey: .maximumFractionDigits)
     }

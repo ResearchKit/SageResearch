@@ -37,6 +37,7 @@ import JsonModel
 /// `RSDActiveUIStepObject` extends the `RSDUIStepObject` to include a duration and commands. This is used for the
 /// case where an `RSDUIStep` has an action such as "start walking" or "stop walking"; the step may also implement
 /// the `RSDActiveUIStep` protocol to allow for spoken instruction.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     private enum CodingKeys: String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case duration, commands, requiresBackgroundAudio, shouldEndOnInterrupt, spokenInstructions

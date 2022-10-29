@@ -35,6 +35,7 @@ import Foundation
 
 /// A cohort navigation step is a step that carries information about navigation rules to apply either
 /// before or after displaying this step based on the currently applied cohorts.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDCohortNavigationStep : RSDStep {
     
     /// The navigation cohort rules to apply *before* displaying the step.
@@ -46,6 +47,7 @@ public protocol RSDCohortNavigationStep : RSDStep {
 
 /// `RSDCohortAssignmentStep` evaluates a task result and returns the cohorts to apply for a given
 /// result.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDCohortAssignmentStep : RSDStep {
     
     /// Evaluate the task result and return the set of cohorts to add and remove.
@@ -55,6 +57,7 @@ public protocol RSDCohortAssignmentStep : RSDStep {
 }
 
 /// List of the rules to apply when navigating based on the currently applied cohorts.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public enum RSDCohortRuleOperator : String, Codable, CaseIterable {
     /// Require all the cohorts to match.
     case all
@@ -64,6 +67,7 @@ public enum RSDCohortRuleOperator : String, Codable, CaseIterable {
 
 /// A cohort navigation rule is used by the `RSDCohortTrackingRule` to determine whether to skip a step,
 /// and if so where to skip to, based on the currently applied cohorts.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDCohortNavigationRule {
     
     /// The list of cohorts that are tested for this navigation rule.

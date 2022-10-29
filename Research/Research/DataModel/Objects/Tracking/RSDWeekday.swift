@@ -36,6 +36,7 @@ import JsonModel
 
 /// The weekday enum assigns an enum value to each day of the week and implements `Comparable` to allow
 /// for sorting the weekdays by the order appropriate for the participant's current Locale.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public enum RSDWeekday : Int, Codable, CaseIterable {
     
     case sunday = 1
@@ -67,6 +68,7 @@ public enum RSDWeekday : Int, Codable, CaseIterable {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDWeekday {
     
     public init(date: Date) {
@@ -75,6 +77,7 @@ extension RSDWeekday {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDWeekday : Comparable {
     
     /// Sort the weekdays based on the `firstWeekday` property of the current Locale.

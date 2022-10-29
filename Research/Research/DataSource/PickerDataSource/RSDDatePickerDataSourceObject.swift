@@ -34,6 +34,7 @@
 import Foundation
 
 /// A simple struct that can be used to implement the `RSDDatePickerDataSource` protocol.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct RSDDatePickerDataSourceObject : RSDDatePickerDataSource {
     
     /// The type of UI picker to display for dates and times.
@@ -66,6 +67,7 @@ public struct RSDDatePickerDataSourceObject : RSDDatePickerDataSource {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDDatePickerDataSource {
     
     /// Returns the text answer to display for a given selected answer.
@@ -79,6 +81,7 @@ extension RSDDatePickerDataSource {
 
 
 /// Extension of `RSDDateRange` for setting up calendar components and a data source.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDDateRange {
     
     /// The calendar components to include for this date range.

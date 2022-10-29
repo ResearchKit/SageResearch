@@ -36,6 +36,7 @@ import Foundation
 
 /// `RSDModalStepDataSource` extends `RSDTableDataSource` for a data source that includes entering
 /// information using a modal step.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDModalStepDataSource : RSDTableDataSource {
     
     /// The taskViewModel to use to instantiate an appropriate view controller for the given modal step

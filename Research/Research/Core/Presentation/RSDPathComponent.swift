@@ -121,6 +121,7 @@ public protocol RSDHistoryPathComponent : RSDPathComponent {
     func previousResult(for step: RSDStep) -> ResultData?
     
     /// The previous data for this task.
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     var previousTaskData: RSDTaskData? { get }
 }
 

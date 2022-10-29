@@ -35,6 +35,7 @@ import Foundation
 import Formatters
 
 /// `RSDDurationRangeObject` extends the properties of an `RSDInputField` for a `.duration` data type.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
@@ -132,18 +133,21 @@ public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, 
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension String {
     fileprivate func unitDuration() -> UnitDuration? {
         return UnitDuration(fromSymbol: self)
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension Double {
     fileprivate func measurement(with unit: Unit) -> Measurement<Unit> {
         return Measurement(value: self, unit: unit)
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension UnitDuration {
     
     /// Returns a date components formatter set up for displaying duration values.
@@ -173,6 +177,7 @@ extension UnitDuration {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension UnitDuration : Comparable {
     
     /// The maximum value represented by this unit.
@@ -231,6 +236,7 @@ extension UnitDuration : Comparable {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension Measurement where UnitType : UnitDuration {
     
     /// The hours component of the measurement.
@@ -276,6 +282,7 @@ extension Measurement where UnitType : UnitDuration {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension NSCalendar.Unit {
     
     /// Convenience initializer for converting from a `RSDDurationUnit` set to an `NSCalendar.Unit`

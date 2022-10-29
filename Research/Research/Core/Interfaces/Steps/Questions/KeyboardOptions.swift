@@ -35,6 +35,7 @@ import Foundation
 import JsonModel
 
 /// A set of options for the keyboard to use for test entry.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol KeyboardOptions {
     
     /// Is the text field for password entry?
@@ -55,6 +56,7 @@ public protocol KeyboardOptions {
 
 /// `Codable` enum for the auto-capitalization type for an input text field.
 /// - keywords: ["none", "words", "sentences", "allCharacters"]
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public enum RSDTextAutocapitalizationType : String, Codable, StringEnumSet {
     case none, words, sentences, allCharacters
     
@@ -71,12 +73,14 @@ public enum RSDTextAutocapitalizationType : String, Codable, StringEnumSet {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTextAutocapitalizationType : DocumentableStringEnum {
 }
 
 
 /// `Codable` enum for the auto-correction type for an input text field.
 /// - keywords: ["default", "no", yes"]
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public enum RSDTextAutocorrectionType : String, Codable, StringEnumSet {
     case `default`, no, yes
     
@@ -93,12 +97,14 @@ public enum RSDTextAutocorrectionType : String, Codable, StringEnumSet {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTextAutocorrectionType : DocumentableStringEnum {
 }
 
 
 /// `Codable` enum for the spell checking type for an input text field.
 /// - keywords: ["default", "no", yes"]
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public enum RSDTextSpellCheckingType  : String, Codable, StringEnumSet {
     case `default`, no, yes
     
@@ -115,6 +121,7 @@ public enum RSDTextSpellCheckingType  : String, Codable, StringEnumSet {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTextSpellCheckingType : DocumentableStringEnum {
 }
 
@@ -123,6 +130,7 @@ extension RSDTextSpellCheckingType : DocumentableStringEnum {
 /// - keywords: [ "default", "asciiCapable", "numbersAndPunctuation", "URL",
 ///               "numberPad", "phonePad", "namePhonePad", "emailAddress",
 ///               "decimalPad", "twitter", "webSearch", "asciiCapableNumberPad"]
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public enum RSDKeyboardType  : String, Codable, StringEnumSet {
     case `default`, asciiCapable, numbersAndPunctuation, URL, numberPad, phonePad, namePhonePad, emailAddress, decimalPad, twitter, webSearch, asciiCapableNumberPad
     
@@ -139,5 +147,6 @@ public enum RSDKeyboardType  : String, Codable, StringEnumSet {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDKeyboardType : DocumentableStringEnum {
 }

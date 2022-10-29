@@ -36,6 +36,7 @@ import Foundation
 /// `RSDTaskGroup` defines a subgrouping of tasks.  This is used in UI presentations where
 /// the researchers wish to tie a group of activities and surveys together but allow the
 /// user to perform them non-sequentially or with a break between the activities.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDTaskGroup {
     
     /// A short string that uniquely identifies the task group.

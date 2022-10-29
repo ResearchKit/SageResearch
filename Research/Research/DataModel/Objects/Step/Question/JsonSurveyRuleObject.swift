@@ -34,6 +34,7 @@
 import Foundation
 import JsonModel
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct JsonSurveyRuleObject : RSDComparableSurveyRule, Codable, Hashable {
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case skipToIdentifier, matchingValue = "matchingAnswer", ruleOperator, cohort
@@ -69,6 +70,7 @@ public struct JsonSurveyRuleObject : RSDComparableSurveyRule, Codable, Hashable 
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension JsonSurveyRuleObject : DocumentableStruct {
     public static func codingKeys() -> [CodingKey] {
         CodingKeys.allCases

@@ -37,6 +37,7 @@ import Foundation
 /// A tracking rule is used to track changes that are applied during a task that should be saved at the
 /// end of the the overall task. By definition, these rules can mutate and should be handled using
 /// pointers rather than using structs.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDTrackingRule : AnyObject {
     
     /// Asks the conditional rule what the identifier is for the next step to display after the given step

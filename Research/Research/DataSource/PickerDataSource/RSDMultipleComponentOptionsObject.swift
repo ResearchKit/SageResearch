@@ -34,6 +34,7 @@
 import Foundation
 
 /// A simple struct that can be used to implement the `RSDMultipleComponentOptions` protocol.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct RSDMultipleComponentOptionsObject : RSDMultipleComponentOptions {
 
     /// A list of choices for the input field.
@@ -60,6 +61,7 @@ public struct RSDMultipleComponentOptionsObject : RSDMultipleComponentOptions {
 
 /// Extension of the `RSDMultipleComponentPickerDataSource` protocol to implement part of the
 /// `RSDChoicePickerDataSource` protocol.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDMultipleComponentPickerDataSource {
     
     /// Returns the number of 'columns' to display.
@@ -87,6 +89,7 @@ extension RSDMultipleComponentPickerDataSource {
 
 /// Extension of the `RSDMultipleComponentOptions` implementation to implement selected
 /// answer conversion.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDMultipleComponentOptions {
     
     /// Returns the selected answer created by the union of the selected rows.

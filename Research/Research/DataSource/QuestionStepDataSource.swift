@@ -34,6 +34,7 @@
 import Foundation
 import JsonModel
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public final class QuestionStepDataSource : RSDStepViewModel, RSDTableDataSource {
 
     public weak var delegate: RSDTableDataSourceDelegate?

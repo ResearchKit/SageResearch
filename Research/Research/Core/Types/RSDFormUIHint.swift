@@ -39,6 +39,7 @@ import JsonModel
 /// for an input field. Not all ui hints are applicable to all data types or devices, and therefore the ui hint
 /// may be ignored by the application displaying the input field to the user.
 ///
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct RSDFormUIHint : RawRepresentable, Codable, Hashable {
 
     public let rawValue: String
@@ -129,6 +130,7 @@ public struct RSDFormUIHint : RawRepresentable, Codable, Hashable {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDFormUIHint : Equatable {
     public static func ==(lhs: RSDFormUIHint, rhs: RSDFormUIHint) -> Bool {
         return lhs.rawValue == rhs.rawValue
@@ -141,12 +143,14 @@ extension RSDFormUIHint : Equatable {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDFormUIHint : ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDFormUIHint : DocumentableStringLiteral {
     public static func examples() -> [String] {
         allStandardHints.map { $0.rawValue }

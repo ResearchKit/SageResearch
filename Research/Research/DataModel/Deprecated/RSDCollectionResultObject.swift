@@ -36,7 +36,7 @@ import JsonModel
 
 /// `RSDCollectionResultObject` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
-@available(*,deprecated, message: "Use `JsonModel.CollectionResultObject` instead.")
+@available(*,deprecated, message: "Will be deleted in a future version. Use `JsonModel.CollectionResultObject` instead.")
 public final class RSDCollectionResultObject : SerializableResultData, CollectionResult, RSDNavigationResult, Codable, RSDCopyWithIdentifier {
     
     /// The identifier associated with the task, step, or asynchronous action.

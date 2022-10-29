@@ -35,6 +35,7 @@ import Foundation
 
 
 /// `RSDTableStep` is a UI step that can be displayed using a `UITableView`.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDTableStep : RSDUIStep {
     
     /// Instantiate an instance of the data source with the data source mapping to the included list of

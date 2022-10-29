@@ -49,11 +49,15 @@ open class RSDFactory : MobilePassiveDataFactory {
     public let buttonActionSerializer = ButtonActionSerializer()
     public let colorMappingSerializer = ColorMappingSerializer()
     public let imageThemeSerializer = ImageThemeSerializer()
-    public let inputItemSerializer = InputItemSerializer()
-    public let resultNodeSerializer = ResultNodeSerializer()
+
     public let stepSerializer = StepSerializer()
     public let taskSerializer = TaskSerializer()
     public let viewThemeSerializer = ViewThemeSerializer()
+    
+    @available(*,deprecated, message: "Will be deleted in a future version.")
+    public let inputItemSerializer = InputItemSerializer()
+    @available(*,deprecated, message: "Will be deleted in a future version.")
+    public let resultNodeSerializer = ResultNodeSerializer()
     
     public required init() {
         super.init()

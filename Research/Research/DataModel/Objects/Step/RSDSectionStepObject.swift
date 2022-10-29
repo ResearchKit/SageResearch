@@ -37,6 +37,7 @@ import MobilePassiveData
 
 /// `RSDSectionStepObject` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
 /// step that includes an instruction step, countdown step, and activity step.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator, RSDStepValidator, RSDCopyStep, Decodable {
 
     private enum CodingKeys : String, OrderedEnumCodingKey {
@@ -195,6 +196,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDSectionStepObject : DocumentableObject {
     public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases

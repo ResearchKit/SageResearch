@@ -34,6 +34,7 @@
 import Foundation
 import JsonModel
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public final class ResultNodeSerializer : IdentifiableInterfaceSerializer, PolymorphicSerializer {
     public var documentDescription: String? {
         """
@@ -66,9 +67,15 @@ public final class ResultNodeSerializer : IdentifiableInterfaceSerializer, Polym
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol SerializableResultNode : ResultNode, PolymorphicRepresentable {
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension ChoiceQuestionStepObject : SerializableResultNode {}
+
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension MultipleInputQuestionStepObject : SerializableResultNode {}
+
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension SimpleQuestionStepObject : SerializableResultNode {}

@@ -37,6 +37,7 @@ import JsonModel
 /// `RSDChoiceObject` is a concrete implementation of `RSDChoice` that can be used to
 /// track a multiple choice, single choice, or multiple component input field where each
 /// choice in the input field maps to a specific value.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, Codable {
 
     public typealias Value = T

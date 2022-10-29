@@ -36,6 +36,7 @@ import JsonModel
 
 /// `RSDComparableSurveyRuleObject` is a survey rule that matches an expected result to the answer and vends a skip
 /// identifier if the match is evaluated to `true`.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRule, Codable {
     public typealias Value = T
     
