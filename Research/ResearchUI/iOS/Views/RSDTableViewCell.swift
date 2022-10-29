@@ -42,6 +42,7 @@ internal let kTableBottomMargin: CGFloat = 12.0
 internal let kTableSectionTopMargin: CGFloat = 40.0
 
 /// `RSDTableViewCell` is used to display a table cell that is linked to a `RSDTableItem`.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable open class RSDTableViewCell : RSDDesignableTableViewCell {
     
     /// The index path of the cell.
@@ -52,6 +53,7 @@ internal let kTableSectionTopMargin: CGFloat = 40.0
 }
 
 /// `RSDTableViewCell` is used to display a table cell that conforms to the `RSDViewDesignable` protocol.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable open class RSDDesignableTableViewCell : UITableViewCell, RSDViewDesignable {
     
     /// Does this cell use the table background color to set the color of the content view?

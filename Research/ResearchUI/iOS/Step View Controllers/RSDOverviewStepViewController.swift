@@ -38,6 +38,7 @@ import Research
 /// `RSDOverviewStepViewController` is a customizable view controller that is designed to be the first view
 /// displayed for an active task that may require checking the user's permissions and allows the user to set
 /// a notification reminder to perform the task at a later time.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDOverviewStepViewController: PermissionStepViewController {
     
     /// Override viewDidAppear to set up notification handling.

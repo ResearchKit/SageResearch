@@ -36,6 +36,7 @@ import UIKit
 import Research
 
 /// `RSDImageViewCell` can be used to display images amongst the table cells.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable open class RSDImageViewCell : RSDTableViewCell {
     
     private let kVertMargin: CGFloat = 10.0
@@ -119,6 +120,7 @@ import Research
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDImageViewCell : ThemeImageViewOwner {
     func themeImageIdentifier(withKey key: String) -> String? {
         return _imageIdentifier

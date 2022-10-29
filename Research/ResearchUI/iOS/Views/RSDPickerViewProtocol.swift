@@ -37,6 +37,7 @@ import UIKit
 import Research
 
 /// `RSDPickerViewProtocol` is a protocol for an input view that can be used to pick an answer.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @objc
 public protocol RSDPickerViewProtocol : NSObjectProtocol {
     
@@ -51,12 +52,14 @@ public protocol RSDPickerViewProtocol : NSObjectProtocol {
 }
 
 /// `RSDPickerObserver` is an observer of changes to the picker.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @objc
 public protocol RSDPickerObserver : NSObjectProtocol {
     @objc func pickerValueChanged(_ sender: Any)
 }
 
 /// `RSDDatePicker` is a date picker that stores a pointer to the index path with which it is associated.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public class RSDDatePicker : UIDatePicker, RSDPickerViewProtocol {
     
     /// The observer of this picker
@@ -105,6 +108,7 @@ public class RSDDatePicker : UIDatePicker, RSDPickerViewProtocol {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDDatePickerMode {
     
     /// The `UIDatePickerMode` that maps to this picker mode.
@@ -122,6 +126,7 @@ extension RSDDatePickerMode {
 
 /// `RSDChoicePickerView` is a `UIPickerView` that can be used to represent a picker with an associated index path.
 /// This picker has a `RSDChoicePickerDataSource` as it's source. This implementation only supports text choices.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerViewDataSource, UIPickerViewDelegate, RSDViewDesignable {
 
     /// The observer of this picker
@@ -371,6 +376,7 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
 
 /// `RSDNumberPickerView` is a `UIPickerView` that can be used to represent a picker with an associated index path.
 /// This picker has a `RSDNumberPickerDataSource` as it's source.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDNumberPickerView : UIPickerView, RSDPickerViewProtocol, UIPickerViewDataSource, UIPickerViewDelegate {
     
     /// The observer of this picker

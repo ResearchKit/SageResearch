@@ -36,6 +36,7 @@ import Research
 
 /// The scrolling overview step view controller is a custom subclass of the overview step view controller
 /// that uses a scrollview to allow showing detailed overview instructions.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     /// The constraint that sets the scroll bar's top background view's height.

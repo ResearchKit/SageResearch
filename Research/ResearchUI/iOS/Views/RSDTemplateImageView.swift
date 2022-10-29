@@ -37,6 +37,7 @@ import UIKit
 /// The template image button is designed as a button that shows a template image within a
 /// button. There are different supported style-types for the button that can be used with the
 /// design system to set up the color of the button and the default tint for the image within.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable
 open class RSDTemplateImageButton: UIButton, RSDViewDesignable {
     

@@ -44,6 +44,7 @@ import Research
 ///         this implementation can be copy/pasted and used to extend that custom implementation. This
 ///         framework does *not* force using this implementation by extending `UINavigationController`
 ///         directly.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDNavigationController : UINavigationController, RSDStepController {
 
     /// The root view controller is assumed to be a `RSDStepController`.

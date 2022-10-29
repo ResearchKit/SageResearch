@@ -34,6 +34,7 @@
 import UIKit
 import Research
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDResultSummaryStepViewController: RSDInstructionStepViewController {
 
     @IBOutlet public var resultTitleLabel: UILabel?

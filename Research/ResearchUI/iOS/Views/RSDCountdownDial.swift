@@ -36,6 +36,7 @@ import Research
 
 /// `RSDProgressIndicator` is an animatable abstract view that marks progress. Override the `progressLayer` property
 /// to show progress using a shape layer. See `RSDCountdownDial` for an example implementation.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable
 open class RSDProgressIndicator: UIView {
     
@@ -86,6 +87,7 @@ open class RSDProgressIndicator: UIView {
 
 /// `RSDCountdownDial` shows a circular dial indicator.
 /// - seealso: `RSDActiveStepViewController`
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable
 public final class RSDCountdownDial: RSDProgressIndicator, RSDViewDesignable {
 

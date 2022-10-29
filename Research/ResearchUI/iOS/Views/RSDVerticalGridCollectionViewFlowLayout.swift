@@ -42,6 +42,7 @@ import UIKit
 /// provided by this class to render the collection view grid correctly.
 /// This is because the class works by making each row of the grid be a section.
 ///
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
             
     /// The number of columns in each row of the grid.
@@ -173,6 +174,7 @@ public class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension IndexPath {
    fileprivate var gridrow: Int { return section }
    fileprivate var gridcolumn: Int { return item }

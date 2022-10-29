@@ -36,6 +36,7 @@ import UIKit
 import Research
 
 /// `RSDTextLabelCell` can be used to display a text element such as a footnote in a table.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable open class RSDTextLabelCell : RSDTableViewCell {
     
     private let kSideMargin = CGFloat(20.0).rsd_proportionalToScreenWidth()

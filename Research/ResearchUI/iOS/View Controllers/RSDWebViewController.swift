@@ -38,6 +38,7 @@ import Research
 /// `RSDWebViewController` is a simple view controller for showing a webview. The base-class implementation
 /// supports loading a web view from a URL, HTML string, or `RSDResourceTransformer`. It is assumed that
 /// the property will be set for one of these values.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDWebViewController: UIViewController, WKNavigationDelegate {
     
     /// The webview attached to this view controller.

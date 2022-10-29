@@ -36,6 +36,7 @@ import UIKit
 
 
 /// `RSDStepChoiceSectionHeader` is the base implementation for a selection table view section header of a form step.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable open class RSDTableSectionHeader: UITableViewHeaderFooterView, RSDViewDesignable {
     
     @IBOutlet open var titleLabel: UILabel!
