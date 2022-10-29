@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// The metadata for a task result archive that can be zipped using the app developer's choice of
 /// third-party archival tools.

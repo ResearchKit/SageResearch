@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// The tracking task protocol is intended for tasks that use scoring data from a previous task run to

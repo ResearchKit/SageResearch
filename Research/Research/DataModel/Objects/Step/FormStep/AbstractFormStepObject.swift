@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// This step is included to allow for simplier migration from v2.0 `RSDFormUIStepObject`.
 /// To use this step, override the `defaultType()` in your subclass and add your subclass

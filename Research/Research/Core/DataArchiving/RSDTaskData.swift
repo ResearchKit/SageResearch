@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// A compact object for storing information about a task run that can be used by a task to influence
 /// subsequent task runs.

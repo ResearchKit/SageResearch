@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// The data archive manager controls vending a new archive (as appropriate) and handling state. It is a

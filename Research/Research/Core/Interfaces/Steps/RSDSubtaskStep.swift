@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// `RSDSubtaskStep` is a step that contains a task reference.

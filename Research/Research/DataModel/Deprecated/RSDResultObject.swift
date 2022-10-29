@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// `RSDResultObject` is a concrete implementation of the base result associated with a task, step, or asynchronous action.
 @available(*,deprecated, message: "Use `JsonModel.ResultObject` instead.")

@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// The `BranchNodeResult` is the result created for a given level of navigation of a node tree.
 public extension BranchNodeResult {

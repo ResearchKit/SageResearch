@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// `RSDTaskResult` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.

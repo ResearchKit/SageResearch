@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import XCTest
 @testable import Research
 

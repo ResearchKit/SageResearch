@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 // TODO: syoung 04/02/2020 Add documentation for the Kotlin interfaces.
 

@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// Base class implementation for a step view model.

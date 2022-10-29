@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// `RSDPickerDataSource` includes information that can be used to build a picker UI element.
 @available(*,deprecated, message: "Will be deleted in a future version.")

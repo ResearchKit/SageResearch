@@ -37,6 +37,7 @@ import AVFoundation
 import AVKit
 import UIKit
 import JsonModel
+import ResultModel
 import Research
 import MobilePassiveData
 

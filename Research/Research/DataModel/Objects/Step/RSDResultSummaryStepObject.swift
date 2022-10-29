@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// A result summary step is used to display a result that is calculated or measured earlier in the task.
 @available(*,deprecated, message: "Will be deleted in a future version. To replace, consider overriding `RSDUIStepObject` and override the `defaultType()` method with `.feedback` as the type.")

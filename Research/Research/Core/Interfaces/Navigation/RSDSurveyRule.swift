@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// `RSDSurveyRule` defines an evaluation rule and returns a step identifier if appropriate.

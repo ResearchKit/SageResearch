@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// A list of reserved filenames for data added to an archive that is keyed to a custom-built data file.

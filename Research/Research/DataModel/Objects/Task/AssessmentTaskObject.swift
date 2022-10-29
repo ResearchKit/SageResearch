@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 import MobilePassiveData
 
 

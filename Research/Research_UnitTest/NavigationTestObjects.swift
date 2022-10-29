@@ -34,6 +34,7 @@
 import Foundation
 @testable import Research
 import JsonModel
+import ResultModel
 import UIKit
 import ResearchUI
 import MobilePassiveData

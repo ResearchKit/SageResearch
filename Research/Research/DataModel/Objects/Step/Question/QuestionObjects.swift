@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 // TODO: syoung 04/06/2020 Implement ComboBoxQuestionObject supported in Kotlin frameworks
 

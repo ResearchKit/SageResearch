@@ -32,6 +32,7 @@
 //
 import Foundation
 import JsonModel
+import ResultModel
 
 public final class RSDNavigationResultObject : RSDNavigationResult {
 

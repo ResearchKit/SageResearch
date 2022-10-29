@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 
 /// `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey

@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// A result that can be used to track a custom navigation as a result of user action.

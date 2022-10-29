@@ -34,6 +34,7 @@
 import UIKit
 import MobilePassiveData
 import JsonModel
+import ResultModel
 import Research
 import ResearchUI
 

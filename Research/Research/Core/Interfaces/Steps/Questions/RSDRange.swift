@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// `RSDRange` defines range constraints that are appropriate for a given data type.

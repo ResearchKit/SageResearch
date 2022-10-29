@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 import Formatters
 
 @available(*,deprecated, message: "Will be deleted in a future version.")

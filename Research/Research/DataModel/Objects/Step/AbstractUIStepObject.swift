@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// `AbstractUIStepObject` is an alternative pattern to `RSDUIStepObject`. This class is not used
