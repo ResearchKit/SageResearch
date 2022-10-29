@@ -116,12 +116,12 @@ extension AssessmentTaskObject : SerializableTask {
 /// - seealso: `AssessmentTaskObject`
 open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
     private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
-        case taskType = "type", identifier, schemaIdentifier, versionString, estimatedMinutes, usesTrackedData, progressMarkers, steps, asyncActions
+        case taskType = "type", identifier, schemaIdentifier, versionString, estimatedMinutes, progressMarkers, steps, asyncActions
         var relativeIndex: Int { 0 }
     }
     
     private enum DeprecatedCodingKeys : String, CodingKey, CaseIterable {
-        case schemaInfo
+        case schemaInfo, usesTrackedData
     }
     
     /// The default decoding type.
@@ -232,7 +232,7 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable
             self.asyncActions = try decoder.factory.decodePolymorphicArray(AsyncActionConfiguration.self, from: asyncActionsContainer)
         }
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers) ?? self.progressMarkers
-        self.usesTrackedData = try container.decodeIfPresent(Bool.self, forKey: .usesTrackedData) ?? self.usesTrackedData
+        
         self.schemaIdentifier = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier) ?? self.schemaIdentifier
         self.versionString = try container.decodeIfPresent(String.self, forKey: .versionString) ?? self.versionString
         self._estimatedMinutes = try container.decodeIfPresent(Int.self, forKey: .estimatedMinutes) ?? self._estimatedMinutes
@@ -248,6 +248,11 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable
         else if let schemaInfo = decoder.schemaInfo {
             self._schemaInfo = schemaInfo
         }
+        
+        if let usesTrackedData = try deprecatedContainer.decodeIfPresent(Bool.self, forKey: .usesTrackedData) {
+            debugPrint("WARNING! CodingKey `usesTrackedData` is a deprecated and will not be supported in future versions of SageResearch.")
+            self.usesTrackedData = usesTrackedData
+        }
     }
     
     open override func encode(to encoder: Encoder) throws {
@@ -261,11 +266,13 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable
         try container.encodeIfPresent(self.schemaIdentifier, forKey: .schemaIdentifier)
         try container.encodeIfPresent(self.versionString, forKey: .versionString)
         try container.encodeIfPresent(self._estimatedMinutes, forKey: .estimatedMinutes)
-        try container.encodeIfPresent(self.usesTrackedData, forKey: .usesTrackedData)
         if let actions = self.asyncActions {
             let nestedContainer = container.nestedUnkeyedContainer(forKey: .asyncActions)
             try encoder.factory.encode(actions, to: nestedContainer)
         }
+        
+        var deprecatedContainer = encoder.container(keyedBy: DeprecatedCodingKeys.self)
+        try deprecatedContainer.encodeIfPresent(self.usesTrackedData, forKey: .usesTrackedData)
     }
     
     private func commonInit() {
@@ -292,8 +299,6 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable
     open func copy(with identifier: String) -> Self {
         fatalError("Abstract method. Subclass \(type(of: self)) does not implement `copy(with:, schemaInfo:)`")
     }
-    
-
     
     // MARK: Documention
     
@@ -330,8 +335,6 @@ open class AbstractTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable
             return .init(propertyType: .primitive(.string))
         case .estimatedMinutes:
             return .init(propertyType: .primitive(.integer))
-        case .usesTrackedData:
-            return .init(propertyType: .primitive(.boolean))
         }
     }
     

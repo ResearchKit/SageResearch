@@ -370,6 +370,13 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, Decodable, RSDCopyStep {
         self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
         self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
         
+        let deprecatedKeys: [CodingKeys] = [.beforeCohortRules, .afterCohortRules]
+        deprecatedKeys.forEach { key in
+            if container.contains(key) {
+                debugPrint("WARNING! CodingKey `\(key.rawValue)` is a deprecated and will not be supported in future versions of SageResearch.")
+            }
+        }
+        
         if container.contains(.viewTheme) {
             let nestedDecoder = try container.superDecoder(forKey: .viewTheme)
             self.viewTheme = try decoder.factory.decodePolymorphicObject(RSDViewThemeElement.self, from: nestedDecoder)

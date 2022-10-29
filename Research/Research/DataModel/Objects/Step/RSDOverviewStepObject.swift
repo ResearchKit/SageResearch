@@ -87,6 +87,9 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep, Encodable {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.icons = try container.decodeIfPresent([RSDIconInfo].self, forKey: .icons) ?? self.icons
+        if container.contains(.icons) {
+            debugPrint("WARNING! Decoding from \(self) is a deprecated. You will need to include CodingKey `icons` in your own serializations.")
+        }
     }
     
     open override func encode(to encoder: Encoder) throws {

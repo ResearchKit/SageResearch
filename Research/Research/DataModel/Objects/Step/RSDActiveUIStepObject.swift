@@ -182,6 +182,18 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         try super.decode(from: decoder, for: deviceType)
     
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        CodingKeys.allCases.forEach { key in
+            if container.contains(key) {
+                if key == .commands {
+                    debugPrint("WARNING! Decoding from \(self) is a deprecated. You will need to include CodingKey `\(key.rawValue)` in your own serializations.")
+                }
+                else {
+                    debugPrint("WARNING! CodingKey `\(key.rawValue)` is a deprecated and will not be supported in future versions of SageResearch.")
+                }
+            }
+        }
+        
         var stepDuration: TimeInterval = 0
         if let duration = try container.decodeIfPresent(Double.self, forKey: .duration) {
             self.duration = duration
