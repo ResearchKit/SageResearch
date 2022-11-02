@@ -34,6 +34,7 @@
 import UIKit
 
 /// `RSDCollectionViewCell` is used to display a collection cell.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable open class RSDCollectionViewCell : RSDDesignableCollectionViewCell {
     
     /// The index path of the cell.
@@ -41,6 +42,7 @@ import UIKit
 }
 
 /// `RSDDesignableCollectionViewCell` is used to display a collection cell that conforms to the `RSDViewDesignable` protocol.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable open class RSDDesignableCollectionViewCell : UICollectionViewCell, RSDViewDesignable {
     
     /// Does this cell use the colection view background color to set the color of the content view?

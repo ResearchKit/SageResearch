@@ -37,6 +37,7 @@ import AVFoundation
 import AVKit
 import UIKit
 import JsonModel
+import ResultModel
 import Research
 import MobilePassiveData
 
@@ -81,11 +82,13 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     
     /// Convenience property for casting the step to a `RSDSpokenInstructionStep`.
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     public var spokenInstructionStep: RSDSpokenInstructionStep? {
         return step as? RSDSpokenInstructionStep
     }
     
     /// Convenience property for casting the step to a `RSDActiveUIStep`.
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     public var activeStep: RSDActiveUIStep? {
         return step as? RSDActiveUIStep
     }

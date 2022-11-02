@@ -33,9 +33,11 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// A compact object for storing information about a task run that can be used by a task to influence
 /// subsequent task runs.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDTaskData {
     
     /// The identifier for the task.

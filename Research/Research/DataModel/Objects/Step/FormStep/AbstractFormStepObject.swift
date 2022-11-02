@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// This step is included to allow for simplier migration from v2.0 `RSDFormUIStepObject`.
 /// To use this step, override the `defaultType()` in your subclass and add your subclass
@@ -40,6 +41,7 @@ import JsonModel
 /// add your `ResultNode` implementations to the `resultNodeSerializer`.
 ///
 /// - seealso: `RSDFactory.stepSerializer`, `RSDFactory.resultNodeSerializer`
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class AbstractFormStepObject : RSDUIStepObject {
     open override class func defaultType() -> RSDStepType {
         assertionFailure("This is an abstract class. Must override this property in your subclass.")

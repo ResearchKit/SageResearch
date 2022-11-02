@@ -34,6 +34,7 @@
 import Foundation
 
 /// `RSDInputFieldError` is used when validating a user-entered answer.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public enum RSDInputFieldError: Error {
     
     /// The context for the error.

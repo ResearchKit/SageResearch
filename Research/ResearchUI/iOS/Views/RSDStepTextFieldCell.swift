@@ -37,6 +37,7 @@ import UIKit
 
 /// `RSDStepTextFieldCell` is the base implementation of a text field used to enter answers in a
 /// form step table view.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDStepTextFieldCell: RSDTableViewCell {
     
     /// The text field associated with this cell.
@@ -164,6 +165,7 @@ open class RSDStepTextFieldCell: RSDTableViewCell {
 
 /// `RSDStepTextViewCell` is the base implementation of a text view used to enter answers in a
 /// form step table view.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDStepTextViewCell: RSDTableViewCell {
     
     /// The text field associated with this cell.
@@ -278,6 +280,7 @@ open class RSDStepTextViewCell: RSDTableViewCell {
 }
 
 /// `RSDStepTextFieldCellLayoutConstants` defines the layout constants used by a `RSDStepTextFieldCell`.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDStepTextFieldCellLayoutConstants {
     var featuredCellVerticalMargin: CGFloat { get }
     var verticalMargin: CGFloat { get }
@@ -286,6 +289,7 @@ public protocol RSDStepTextFieldCellLayoutConstants {
 }
 
 /// `RSDStepTextViewCellLayoutConstants` defines the layout constants used by a `RSDStepTextViewCell`.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDStepTextViewCellLayoutConstants {
     var verticalMargin: CGFloat { get }
     var verticalPadding: CGFloat { get }
@@ -296,6 +300,7 @@ public protocol RSDStepTextViewCellLayoutConstants {
 }
 
 /// Default constants used by a `RSDStepTextFieldCell`.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 fileprivate struct RSDDefaultStepTextFieldCellLayoutConstants {
     let featuredCellVerticalMargin: CGFloat = CGFloat(22).rsd_proportionalToScreenHeight()
     let verticalMargin: CGFloat = 10.0
@@ -304,6 +309,7 @@ fileprivate struct RSDDefaultStepTextFieldCellLayoutConstants {
 }
 
 /// Default constants used by a `RSDStepTextViewCell`.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 fileprivate struct RSDDefaultStepTextViewCellLayoutConstants {
     let verticalMargin: CGFloat = 10.0
     let verticalPadding: CGFloat = 7.0
@@ -313,14 +319,17 @@ fileprivate struct RSDDefaultStepTextViewCellLayoutConstants {
     let borderRadius: CGFloat = 8.0
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDDefaultStepTextFieldCellLayoutConstants : RSDStepTextFieldCellLayoutConstants {
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDDefaultStepTextViewCellLayoutConstants : RSDStepTextViewCellLayoutConstants {
 }
 
 /// `RSDStepTextFieldFeaturedCell` is an implementation of the text field form step entry cell for
 /// use when there is a single input field on for the step.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
     
     override open var textfieldTextType: RSDDesignSystem.TextType {
@@ -360,6 +369,7 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
 
 /// `RSDStepTextInputView` defines custom properties associated with a 'UITextView' or 'UITextField'
 /// and provides read only access to other common properties.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDStepTextInputView: AnyObject {
     var inputAccessoryView: UIView? { get }
     var inputView: UIView? { get }
@@ -368,6 +378,7 @@ public protocol RSDStepTextInputView: AnyObject {
 }
 
 /// `RSDStepTextField` is a subclass of `UITextField` that conforms to 'RSDStepTextInputView'.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDStepTextField: UITextField, RSDStepTextInputView {
     public var currentText: String? {
         get {
@@ -381,6 +392,7 @@ open class RSDStepTextField: UITextField, RSDStepTextInputView {
 }
 
 /// `RSDStepTextView` is a subclass of `UITextView` that conforms to 'RSDStepTextInputView'.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDStepTextView: UITextView, RSDStepTextInputView {
     public var currentText: String? {
         get {

@@ -33,6 +33,7 @@
 
 import Foundation
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public final class RSDUIStepTableDataSourceImpl : RSDStepViewModel, RSDTableDataSource {
     
     /// The delegate associated with this data source.

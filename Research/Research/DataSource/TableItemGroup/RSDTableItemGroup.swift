@@ -35,6 +35,7 @@ import Foundation
 
 /// `RSDTableItemGroup` is a generic table item group object that can be used to display information in a tableview
 /// that does not have an associated input field.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDTableItemGroup {
     
     /// The list of items (or rows) included in this group. A table group can be used to represent one or more rows.

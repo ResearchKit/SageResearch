@@ -33,14 +33,17 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 // TODO: syoung 04/02/2020 Add documentation for the Kotlin interfaces.
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol InputItemBuilder {
     var answerType: AnswerType { get }
     func buildInputItem(for question: Question) -> InputItem
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol InputItem : InputItemBuilder {
     var identifier: String? { get }
     var inputUIHint: RSDFormUIHint { get }
@@ -50,23 +53,28 @@ public protocol InputItem : InputItemBuilder {
     var isExclusive: Bool { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension InputItem {
     func buildInputItem(for question: Question) -> InputItem { self }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol ChoiceInputItem : InputItem, RSDChoice {
     func jsonElement(selected: Bool) -> JsonElement?
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension ChoiceInputItem {
     var placeholder: String? { nil }
     var isOptional: Bool { true }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol SkipCheckboxInputItem : ChoiceInputItem {
     var matchingValue : JsonElement? { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension SkipCheckboxInputItem {
     /// A JSON encodable object to return as the value when this choice is selected. A `null` value
     /// indicates that the user has selected to skip the question or "prefers not to answer".
@@ -90,9 +98,11 @@ public extension SkipCheckboxInputItem {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol CheckboxInputItem : ChoiceInputItem, RSDComparable {
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension CheckboxInputItem {
     var inputUIHint: RSDFormUIHint { .checkbox }
     var isExclusive: Bool { false }
@@ -106,6 +116,7 @@ public extension CheckboxInputItem {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol KeyboardTextInputItem : InputItem {
 
     /**
@@ -125,16 +136,19 @@ public protocol KeyboardTextInputItem : InputItem {
     func buildPickerSource() -> RSDPickerDataSource?
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol TextInputValidator {
     func answerText(for answer: Any?) -> String?
     func validateInput(text: String?) throws -> Any?
     func validateInput(answer: Any?) throws -> Any?
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol DoubleTextInputItem : KeyboardTextInputItem {
     var formatOptions: DoubleFormatOptions? { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension DoubleTextInputItem {
     var answerType: AnswerType { AnswerTypeNumber() }
     var keyboardOptions: KeyboardOptions { KeyboardOptionsObject.decimalEntryOptions }
@@ -155,10 +169,12 @@ public extension DoubleTextInputItem {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol IntegerTextInputItem : KeyboardTextInputItem {
     var formatOptions: IntegerFormatOptions? { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension IntegerTextInputItem {
     var answerType: AnswerType { AnswerTypeInteger() }
     
@@ -178,10 +194,12 @@ public extension IntegerTextInputItem {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol YearTextInputItem : KeyboardTextInputItem {
     var formatOptions: YearFormatOptions? { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension YearTextInputItem {
     var answerType: AnswerType { AnswerTypeInteger() }
     
@@ -203,10 +221,12 @@ public extension YearTextInputItem {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol ChoicePickerInputItem : KeyboardTextInputItem, RSDChoiceOptions {
     var jsonChoices: [JsonChoice] { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension ChoicePickerInputItem {
     var choices: [RSDChoice] { jsonChoices }
     var keyboardOptions: KeyboardOptions { KeyboardOptionsObject() }
@@ -214,11 +234,13 @@ public extension ChoicePickerInputItem {
     func buildPickerSource() -> RSDPickerDataSource? { self }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol DateTimeInputItem : KeyboardTextInputItem {
     var pickerMode: RSDDatePickerMode { get }
     var formatOptions: RSDDateRangeObject? { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension DateTimeInputItem {
     
     var keyboardOptions: KeyboardOptions {

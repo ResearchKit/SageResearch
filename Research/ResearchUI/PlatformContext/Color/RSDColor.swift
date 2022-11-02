@@ -136,7 +136,7 @@ extension RSDColor {
     ///     - traitCollection: The trait collection to use (if supported).
     /// - returns: The color created.
     @available(iOS 10.3, tvOS 10.2, *)
-    open class func rsd_color(named name: String, in bundle: Bundle?, compatibleWith traitCollection: UITraitCollection? = nil) -> RSDColor? {
+    public class func rsd_color(named name: String, in bundle: Bundle?, compatibleWith traitCollection: UITraitCollection? = nil) -> RSDColor? {
         if let color = RSDColor(hexString: name) {
             return color
         } else if let color = UIColor(named: name, in: bundle, compatibleWith: traitCollection) {

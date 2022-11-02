@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 
 /// `RSDComparable` can be used to compare a stored result to a matching value.

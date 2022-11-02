@@ -36,6 +36,8 @@ import Foundation
 /// `RSDOverviewStep` extends the `RSDUIStep` to include general overview information about an activity
 /// including what permissions are required by this task. Without these preconditions, the task cannot
 /// measure or collect the data needed for this task.
+// TODO: syoung 10/28/2022 Break adherence to the StandardPermissionsStep protocol
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDOverviewStep : AnyObject, RSDUIStep, StandardPermissionsStep {
     
     /// For an overview step, the title is readwrite.
@@ -54,6 +56,7 @@ public protocol RSDOverviewStep : AnyObject, RSDUIStep, StandardPermissionsStep 
     var icons: [RSDIconInfo]? { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTask {
     
     /// Look to see if the first step in this task is an overview step and if so, return that

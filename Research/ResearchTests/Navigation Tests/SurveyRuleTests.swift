@@ -36,7 +36,9 @@ import Foundation
 import XCTest
 import Research
 import JsonModel
+import ResultModel
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 class SurveyRuleTests: XCTestCase {
     
     override func setUp() {

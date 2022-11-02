@@ -73,7 +73,7 @@ extension RSDDeviceType : DocumentableStringLiteral {
     }
 }
 
-extension RSDDeviceType : ExpressibleByStringLiteral {    
+extension RSDDeviceType : ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }

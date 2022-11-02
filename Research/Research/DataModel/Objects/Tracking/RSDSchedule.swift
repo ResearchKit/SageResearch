@@ -33,6 +33,7 @@
 
 import Foundation
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDScheduleTime {
     
     /// The time of the day as a string with the format "HH:mm:ss" or "HH:mm".
@@ -44,6 +45,7 @@ public protocol RSDScheduleTime {
 
 /// The `RSDSchedule` protocol can be used to describe a local notification schedule. This provides a
 /// shared interface for getting and setting the time of day and for setting up notifications.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDSchedule : RSDScheduleTime {
     
     /// The time of the day as a string with the format "HH:mm".
@@ -57,6 +59,7 @@ public protocol RSDSchedule : RSDScheduleTime {
     func notificationTriggers() -> [DateComponents]
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDScheduleTime {
     
     /// The time of the day for the schedule. This method will return a `Date` object on the same day as the
@@ -92,6 +95,7 @@ extension RSDScheduleTime {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDSchedule {
 
     /// Set the time by converting from Any.

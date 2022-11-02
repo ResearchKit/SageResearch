@@ -34,6 +34,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 @available(*,deprecated, message: "Use `JsonModel.BranchNodeResultObject` instead.")
 public final class SectionResultObject : AbstractBranchNodeResultObject, SerializableResultData, BranchNodeResult, MultiplatformResultData, RSDTaskResult {

@@ -33,8 +33,10 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// A result summary step is used to display a result that is calculated or measured earlier in the task.
+@available(*,deprecated, message: "Will be deleted in a future version. To replace, consider overriding `RSDUIStepObject` and override the `defaultType()` method with `.feedback` as the type.")
 open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummaryStep, RSDNavigationSkipRule {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case unitText, resultIdentifier, stepResultIdentifier, resultTitle
@@ -144,6 +146,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
 /// Since on iOS the `completion` step has the same functionality as the `feedback` step, but a
 /// subtly different meaning in terms of the UI, these need to have different values for `stepType`
 /// so that the call to save results happens with the appropriate timing.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public final class RSDCompletionStepObject : RSDResultSummaryStepObject {
     public override class func defaultType() -> RSDStepType {
         return .completion

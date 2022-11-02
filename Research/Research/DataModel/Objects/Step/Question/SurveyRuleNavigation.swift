@@ -37,12 +37,14 @@ import Foundation
 /// - note: This protocol does not require conformance to `Question` or `RSDCohortAssignmentStep`
 /// to allow for abstract subclassing and overrides.
 /// - seealso: `AbstractQuestionStep`
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol SurveyRuleNavigation : RSDNavigationRule {  // RSDCohortAssignmentStep
     var identifier: String { get }
     var skipToIfNil: String? { get }
     var surveyRules: [RSDSurveyRule] { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension SurveyRuleNavigation {
 
     /// Evaluate the survey rules for the given task result and return the next identifier.

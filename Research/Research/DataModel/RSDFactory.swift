@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 import Formatters
 import MobilePassiveData
 
@@ -49,11 +50,15 @@ open class RSDFactory : MobilePassiveDataFactory {
     public let buttonActionSerializer = ButtonActionSerializer()
     public let colorMappingSerializer = ColorMappingSerializer()
     public let imageThemeSerializer = ImageThemeSerializer()
-    public let inputItemSerializer = InputItemSerializer()
-    public let resultNodeSerializer = ResultNodeSerializer()
+
     public let stepSerializer = StepSerializer()
     public let taskSerializer = TaskSerializer()
     public let viewThemeSerializer = ViewThemeSerializer()
+    
+    @available(*,deprecated, message: "Will be deleted in a future version.")
+    public let inputItemSerializer = InputItemSerializer()
+    @available(*,deprecated, message: "Will be deleted in a future version.")
+    public let resultNodeSerializer = ResultNodeSerializer()
     
     public required init() {
         super.init()
@@ -90,6 +95,7 @@ open class RSDFactory : MobilePassiveDataFactory {
     }()
     
     /// Optional shared tracking rules
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     open var trackingRules: [RSDTrackingRule] = []
     
     open override func modelName(for className: String) -> String {
@@ -253,6 +259,12 @@ open class RSDFactory : MobilePassiveDataFactory {
     /// Override mapping the array to allow steps to add a pointer between the countdown step and
     /// the active step. This is handled in Kotlin native serialization during unpacking.
     open override func mapDecodedArray<RSDStep>(_ objects: [RSDStep]) throws -> [RSDStep] {
+        _deprecatedSpecialCaseDecoding(objects)
+        return objects
+    }
+    
+    @available(*,deprecated, message: "Will be deleted in a future version.")
+    private func _deprecatedSpecialCaseDecoding<RSDStep>(_ objects: [RSDStep]) {
         objects.enumerated().forEach { (index, step) in
             if let countdown = step as? RSDCountdownUIStepObject,
                 index + 1 < objects.count,
@@ -269,7 +281,6 @@ open class RSDFactory : MobilePassiveDataFactory {
                 countdown.activeStep = activeStep
             }
         }
-        return objects
     }
     
     /// Override mapping the object to check if this is a step transformer, and transform the step

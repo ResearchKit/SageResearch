@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// The tracking task protocol is intended for tasks that use scoring data from a previous task run to
@@ -42,6 +43,7 @@ import Foundation
 /// run data, the tracking task does *not* inherit from `RSDTask`.
 ///
 /// - seealso: `RSDTaskObject` for example implementation.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDTrackingTask {
     
     /// Create and return the tracked data task that may be used to inform subsequent runs of this task.

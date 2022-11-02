@@ -83,6 +83,7 @@ class CodableTaskObjectTests: XCTestCase {
     }
 
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     func testTaskInfoObject_Codable() {
         let json = """
         {
@@ -111,6 +112,7 @@ class CodableTaskObjectTests: XCTestCase {
     }
 
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     func testTaskGroupObject_Decodable() {
         
         let json = """

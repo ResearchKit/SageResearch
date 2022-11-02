@@ -35,6 +35,7 @@ import Foundation
 import UIKit
 
 /// `RSDBackgroundGradient` is a UI element for adding a shadow gradient to a view.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 @IBDesignable public final class RSDBackgroundGradient : UIView, RSDViewDesignable {
     
     /// The color that the gradient begins with.

@@ -36,6 +36,7 @@ import XCTest
 @testable import Research_UnitTest
 
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 class TrackingTests: XCTestCase {
     
     override func setUp() {

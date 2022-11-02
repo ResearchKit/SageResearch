@@ -57,6 +57,7 @@ import Research
 /// fields). These steps will result in a `tableData` that has no sections and, therefore, no rows. So the
 /// tableView will simply have a headerView, no rows, and a footerView.
 ///
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate, RSDTaskViewControllerDelegate {
 
     /// The table view associated with this view controller. This will be created during `viewDidLoad()`
@@ -1145,6 +1146,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDUIRowAnimation {
     
     public func tableAnimation() -> UITableView.RowAnimation {
@@ -1156,9 +1158,11 @@ extension RSDUIRowAnimation {
 /// methods which can be overriden by an application to return different shared implementations. This allows
 /// the generic step to override the UI consistently for all step views that use either
 /// `RSDTableStepViewController` or a subclass implementation.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public class RSDTableStepUIConfig: NSObject {
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTableStepUIConfig {
     
     /// Defines whether or not a drop shadow is shown below the top edge of the navigation view. The shadow
@@ -1191,6 +1195,7 @@ extension RSDTableStepUIConfig {
 }
 
 /// `RSDTableStepLayoutConstants` defines the layout constants used by the `RSDTableStepViewController`.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDTableStepLayoutConstants {
     var mainViewBottomMargin: CGFloat { get }
     var defaultRowHeight: CGFloat { get }
@@ -1199,6 +1204,7 @@ public protocol RSDTableStepLayoutConstants {
 }
 
 /// Default constants.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 fileprivate struct RSDDefaultGenericStepLayoutConstants {
     private let kMainViewBottomMargin: CGFloat = 30.0
     
@@ -1212,5 +1218,6 @@ fileprivate struct RSDDefaultGenericStepLayoutConstants {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDDefaultGenericStepLayoutConstants : RSDTableStepLayoutConstants {
 }

@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 import JsonModel
+import ResultModel
 
 class JsonDocumentableTests: XCTestCase {
 
@@ -68,10 +69,6 @@ class JsonDocumentableTests: XCTestCase {
                                                 using: factory, protocolType: RSDColorMappingThemeElement.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.imageThemeSerializer.examples,
                                                 using: factory, protocolType: RSDImageThemeElement.self))
-        XCTAssertTrue(checkPolymorphicExamples(for: factory.inputItemSerializer.examples,
-                                                using: factory, protocolType: InputItemBuilder.self))
-        XCTAssertTrue(checkPolymorphicExamples(for: factory.resultNodeSerializer.examples,
-                                                using: factory, protocolType: ResultNode.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.stepSerializer.examples,
                                                 using: factory, protocolType: RSDStep.self))
         XCTAssertTrue(checkPolymorphicExamples(for: factory.taskSerializer.examples,

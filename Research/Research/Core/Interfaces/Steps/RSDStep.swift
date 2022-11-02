@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// `RSDStep` is the base protocol for the steps that can compose a task for presentation using a

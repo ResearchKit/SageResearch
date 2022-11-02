@@ -35,6 +35,7 @@ import Foundation
 
 /// `RSDCountdownUIStepObject` extends the `RSDActiveUIStepObject` to include default values for a
 /// countdown step that is intended to preceed an active step.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDCountdownUIStepObject : RSDActiveUIStepObject, RSDCountdownUIStep {
 
     /// The active step that follows this step.

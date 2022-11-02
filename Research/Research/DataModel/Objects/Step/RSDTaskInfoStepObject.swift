@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// `RSDTaskInfoStepObject` is a concrete implementation of the `RSDTaskInfoStep` protocol.
 public struct RSDTaskInfoStepObject : RSDTaskInfoStep, Codable {

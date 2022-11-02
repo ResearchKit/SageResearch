@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 
 /// A data archive is a class object that can be used to add multiple files to a zipped archive for upload as
@@ -133,7 +134,7 @@ internal class TaskArchiver : NSObject {
             do {
                 // Check if there are any answers to add.
                 if answerMap.count > 0, archive.shouldInsertData(for: .answers) {
-                    let data = try answerMap.rsd_jsonEncodedData()
+                    let data = try answerMap.jsonEncodedData()
                     let manifest = RSDFileResultUtility.fileManifest(for: .answers)
                     try archive.insertDataIntoArchive(data, manifest: manifest)
                     self.files.insert(manifest)
@@ -141,7 +142,7 @@ internal class TaskArchiver : NSObject {
                 
                 // Check if there is a task result to add.
                 if archive.shouldInsertData(for: .taskResult) {
-                    let data = try taskResult.rsd_jsonEncodedData()
+                    let data = try taskResult.jsonEncodedData()
                     let manifest = RSDFileResultUtility.fileManifest(for: .taskResult)
                     try archive.insertDataIntoArchive(data, manifest: manifest)
                     self.files.insert(manifest)

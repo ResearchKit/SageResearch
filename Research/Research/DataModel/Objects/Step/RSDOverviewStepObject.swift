@@ -37,6 +37,7 @@ import JsonModel
 /// `RSDOverviewStepObject` extends the `RSDUIStepObject` to include information about an activity including
 /// what permissions are required by this task. Without these preconditions, the task cannot measure or
 /// collect the data needed for this task.
+@available(*,deprecated, message: "Will be deleted in a future version. To replace, consider overriding `RSDUIStepObject` and override the `defaultType()` method with `.overview` as the type.")
 open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep, Encodable {
 
     private enum CodingKeys: String, OrderedEnumCodingKey, OpenOrderedCodingKey {
@@ -86,6 +87,9 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep, Encodable {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.icons = try container.decodeIfPresent([RSDIconInfo].self, forKey: .icons) ?? self.icons
+        if container.contains(.icons) {
+            debugPrint("WARNING! Decoding from \(self) is a deprecated. You will need to include CodingKey `icons` in your own serializations.")
+        }
     }
     
     open override func encode(to encoder: Encoder) throws {

@@ -34,6 +34,7 @@
 import XCTest
 @testable import Research
 import JsonModel
+import ResultModel
 
 class CodableResultObjectTests: XCTestCase {
     

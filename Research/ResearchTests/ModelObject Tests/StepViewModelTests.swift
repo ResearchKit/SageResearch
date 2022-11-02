@@ -32,6 +32,7 @@
 //
 
 import JsonModel
+import ResultModel
 import XCTest
 @testable import Research
 
@@ -41,7 +42,7 @@ class StepViewModelTests: XCTestCase {
     var section3: RSDTaskStepNode!
     var sectionA: RSDTaskStepNode!
     var stepXModel: RSDStepViewModel!
-    var stepX: RSDActiveUIStepObject!
+    var stepX: RSDUIStepObject!
     var task: AssessmentTaskObject!
     
     override func setUp() {
@@ -91,17 +92,6 @@ class StepViewModelTests: XCTestCase {
         XCTAssertTrue(stepXModel.shouldHideAction(for: .navigation(.skip)))
     }
     
-    func testShouldHideAction_TransitionAutomatically() {
-
-        stepX.commands = .transitionAutomatically
-        
-        XCTAssertFalse(stepXModel.shouldHideAction(for: .navigation(.cancel)))
-        XCTAssertTrue(stepXModel.shouldHideAction(for: .navigation(.goForward)))
-        XCTAssertTrue(stepXModel.shouldHideAction(for: .navigation(.goBackward)))
-        XCTAssertTrue(stepXModel.shouldHideAction(for: .navigation(.learnMore)))
-        XCTAssertTrue(stepXModel.shouldHideAction(for: .navigation(.skip)))
-    }
-    
     func testShouldHideAction_TaskLevelShouldHide() {
         
         task.shouldHideActions = [.navigation(.cancel), .navigation(.goForward), .navigation(.goBackward), .navigation(.skip)]
@@ -140,7 +130,7 @@ class StepViewModelTests: XCTestCase {
         
         let step1 = RSDUIStepObject(identifier: "step1")
         let step2 = RSDUIStepObject(identifier: "step2")
-        stepX = RSDActiveUIStepObject(identifier: "stepX")
+        stepX = RSDUIStepObject(identifier: "stepX")
         let stepY = RSDUIStepObject(identifier: "stepY")
         let stepZ = RSDUIStepObject(identifier: "stepZ")
         let stepA = RSDSectionStepObject(identifier: "stepA", steps: [stepX, stepY, stepZ])

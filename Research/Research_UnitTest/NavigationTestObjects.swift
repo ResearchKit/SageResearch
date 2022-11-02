@@ -34,6 +34,7 @@
 import Foundation
 @testable import Research
 import JsonModel
+import ResultModel
 import UIKit
 import ResearchUI
 import MobilePassiveData
@@ -111,6 +112,7 @@ public struct TestConditionalNavigator: RSDConditionalStepNavigator {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public class TestSubtaskStep : RSDSubtaskStep {
 
     public let task: RSDTask
@@ -173,7 +175,7 @@ public final class TestTaskInfo : RSDTaskInfo, RSDTaskTransformer {
     }
 }
 
-public struct TestTask : RSDTask, RSDTrackingTask {
+public struct TestTask : RSDTask {
 
     public let identifier: String
     public let stepNavigator: RSDStepNavigator
@@ -182,6 +184,8 @@ public struct TestTask : RSDTask, RSDTrackingTask {
     
     public var taskResult: RSDTaskResult?
     public var validationError: Error?
+    
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     public var tracker: RSDTrackingTask?
     
     public init(identifier: String, stepNavigator: RSDStepNavigator) {
@@ -207,16 +211,20 @@ public struct TestTask : RSDTask, RSDTrackingTask {
         return nil
     }
     
+    public func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: ResultData?) {
+        return tracker?.shouldSkipStep(step) ?? (false, nil)
+    }
+}
+
+@available(*,deprecated, message: "Will be deleted in a future version.")
+extension TestTask : RSDTrackingTask {
+    
     public func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
         return tracker?.taskData(for: taskResult)
     }
     
     public func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
         tracker?.setupTask(with: data, for: path)
-    }
-    
-    public func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: ResultData?) {
-        return tracker?.shouldSkipStep(step) ?? (false, nil)
     }
 }
 
@@ -459,6 +467,7 @@ public class TestTaskController: NSObject, RSDTaskController {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public class TestDataStoreManager : NSObject, RSDDataStorageManager {
     
     public var previous: [RSDIdentifier : RSDTaskData] = [:]
@@ -473,6 +482,7 @@ public class TestDataStoreManager : NSObject, RSDDataStorageManager {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct TestData : RSDTaskData {
     public let identifier: String
     public let timestampDate: Date?

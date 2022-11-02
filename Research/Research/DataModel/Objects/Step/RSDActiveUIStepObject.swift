@@ -37,6 +37,7 @@ import JsonModel
 /// `RSDActiveUIStepObject` extends the `RSDUIStepObject` to include a duration and commands. This is used for the
 /// case where an `RSDUIStep` has an action such as "start walking" or "stop walking"; the step may also implement
 /// the `RSDActiveUIStep` protocol to allow for spoken instruction.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     private enum CodingKeys: String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case duration, commands, requiresBackgroundAudio, shouldEndOnInterrupt, spokenInstructions
@@ -181,6 +182,18 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         try super.decode(from: decoder, for: deviceType)
     
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        CodingKeys.allCases.forEach { key in
+            if container.contains(key) {
+                if key == .commands {
+                    debugPrint("WARNING! Decoding from \(self) is a deprecated. You will need to include CodingKey `\(key.rawValue)` in your own serializations.")
+                }
+                else {
+                    debugPrint("WARNING! CodingKey `\(key.rawValue)` is a deprecated and will not be supported in future versions of SageResearch.")
+                }
+            }
+        }
+        
         var stepDuration: TimeInterval = 0
         if let duration = try container.decodeIfPresent(Double.self, forKey: .duration) {
             self.duration = duration

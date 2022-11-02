@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 
 /// `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey
@@ -46,6 +47,7 @@ public protocol RSDSectionStep: RSDStep, RSDTask, RSDStepNavigator {
 extension RSDSectionStep {
     
     /// Task info is `nil` for a section step.
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     public var taskInfo: RSDTaskInfoStep? {
         return nil
     }

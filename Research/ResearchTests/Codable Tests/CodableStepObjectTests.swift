@@ -50,6 +50,7 @@ class CodableStepObjectTests: XCTestCase {
     }
     
 
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     func testInstructionStepObject_Codable() {
         
         let json = """
@@ -203,6 +204,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     func testUIStepObject_DeviceType_Codable() {
         
         let json = """
@@ -242,6 +244,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     func testUIStepObjectWithThemes_Codable() {
         
         let json = """
@@ -390,6 +393,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     func testActiveUIStepObject_Codable() {
         
         let json = """
@@ -435,6 +439,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     func testActiveUIStepObject_Codable_Defaults() {
         
         let json = """
@@ -461,6 +466,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     func testOverviewStepObject_Codable() {
         
         let json = """
@@ -566,6 +572,7 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     func testResultSummaryStepObject_Codable() {
         
         let json = """
@@ -645,31 +652,6 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(lastStep.identifier, "step2")
             XCTAssertEqual(lastStep.title, "Step 2")
             
-        } catch let err {
-            XCTFail("Failed to decode/encode object: \(err)")
-            return
-        }
-    }
-    
-    func testStepTransform() {
-        let json = """
-        {
-            "identifier": "foobar",
-            "type": "transform",
-            "resourceTransformer" : { "resourceName": "FactoryTest_StepTransform.json"}
-        }
-        """.data(using: .utf8)! // our data in native (JSON) format
-        let resourceInfo = FactoryResourceInfo(factoryBundle: Bundle.module,
-                                               packageName: nil)
-        let decoder = RSDFactory.shared.createJSONDecoder(resourceInfo: resourceInfo)
-        
-        do {
-            
-            let wrapper = try decoder.decode(StepWrapper<SimpleQuestionStepObject>.self, from: json)
-            let object = wrapper.step
-            
-            XCTAssertEqual("foobar", object.identifier)
-
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return

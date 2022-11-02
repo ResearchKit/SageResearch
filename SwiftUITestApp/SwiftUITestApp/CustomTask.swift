@@ -34,6 +34,7 @@
 import UIKit
 import MobilePassiveData
 import JsonModel
+import ResultModel
 import Research
 import ResearchUI
 
@@ -58,12 +59,12 @@ class CustomTask : RSDOrientationTask {
     }
     
     lazy var stepNavigator: RSDStepNavigator = {
-        let step1 = RSDInstructionStepObject(identifier: "step1")
+        let step1 = InstructionStepObject(identifier: "step1")
         step1.title = "Step 1 - \(self.identifier)"
         step1.detail = "This is the first step."
         step1.imageTheme = RSDFetchableImageThemeElementObject(imageName: "cat1")
         let step1b = CustomStep(identifier: "step1b")
-        let step2 = RSDInstructionStepObject(identifier: "step2")
+        let step2 = InstructionStepObject(identifier: "step2")
         step2.title = "Step 2 - \(self.identifier)"
         step2.detail = "This is the second step."
         step2.imageTheme = RSDFetchableImageThemeElementObject(imageName: "cat2")
@@ -97,7 +98,7 @@ struct CustomStep : RSDStepViewControllerVendor {
     let stepType: RSDStepType = "custom"
     
     func instantiateStepResult() -> ResultData {
-        RSDResultObject(identifier: self.identifier)
+        ResultObject(identifier: self.identifier)
     }
     
     func validate() throws {
@@ -119,5 +120,11 @@ class PresentedViewController : UIViewController {
         self.dismiss(animated: true) {
             print("view dismissed")
         }
+    }
+}
+
+class InstructionStepObject : RSDUIStepObject {
+    override class func defaultType() -> RSDStepType {
+        return .instruction
     }
 }

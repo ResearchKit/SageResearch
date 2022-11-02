@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 import MobilePassiveData
 
 extension RSDStepType {
@@ -44,7 +45,7 @@ extension RSDStepType {
 /// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, StandardPermissionsStep, RSDOptionalStep {
+open class RSDUIStepObject : RSDUIActionHandlerObject, Decodable, RSDCopyStep {
 
     private enum CodingKeys: String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case stepType = "type"
@@ -134,9 +135,11 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     open private(set) var nextStepIdentifier: String?
     
     /// The navigation cohort rules to apply *before* displaying the step.
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     public var beforeCohortRules: [RSDCohortNavigationRule]?
     
     /// The navigation cohort rules to apply *after* displaying the step.
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     public var afterCohortRules: [RSDCohortNavigationRule]?
     
     /// The default step type.
@@ -256,6 +259,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     
     // MARK: Table source
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     open func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
         return RSDUIStepTableDataSourceImpl(step: self, parent: parent)
     }
@@ -366,6 +370,13 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
         self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
         
+        let deprecatedKeys: [CodingKeys] = [.beforeCohortRules, .afterCohortRules]
+        deprecatedKeys.forEach { key in
+            if container.contains(key) {
+                debugPrint("WARNING! CodingKey `\(key.rawValue)` is a deprecated and will not be supported in future versions of SageResearch.")
+            }
+        }
+        
         if container.contains(.viewTheme) {
             let nestedDecoder = try container.superDecoder(forKey: .viewTheme)
             self.viewTheme = try decoder.factory.decodePolymorphicObject(RSDViewThemeElement.self, from: nestedDecoder)
@@ -427,6 +438,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         try encodable.encode(to: nestedEncoder)
     }
     
+    @available(*,deprecated, message: "Will be deleted in a future version.")
     private func _encode(cohortRules: [RSDCohortNavigationRule]?, to encoder: Encoder, forKey: CodingKeys) throws {
         guard let rules = cohortRules else { return }
         guard let encodableRules = rules as? [RSDCohortNavigationRuleObject] else {
@@ -538,4 +550,21 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
 }
 
 extension RSDUIStepObject : DocumentableObject {
+}
+
+extension RSDUIStepObject : RSDDesignableUIStep {
+}
+
+extension RSDUIStepObject : RSDNavigationRule {
+}
+
+extension RSDUIStepObject : RSDDecodableReplacement {
+}
+
+extension RSDUIStepObject : RSDOptionalStep {
+}
+
+@available(*,deprecated, message: "Will be deleted in a future version.")
+extension RSDUIStepObject : StandardPermissionsStep, RSDCohortNavigationStep, RSDTableStep {
+    
 }

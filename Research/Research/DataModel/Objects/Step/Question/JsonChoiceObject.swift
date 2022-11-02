@@ -34,25 +34,30 @@
 import Foundation
 import JsonModel
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol JsonComparable : RSDComparable {
     var matchingValue: JsonElement? { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension JsonComparable {
     var matchingAnswer: Any? {
         matchingValue?.jsonObject()
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol JsonChoice : RSDChoice, JsonComparable {
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public extension JsonChoice {
     var answerValue: Codable? {
         matchingValue ?? JsonElement.null
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct JsonChoiceObject : JsonChoice, Codable, Hashable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case matchingValue = "value", text, detail, _isExclusive = "exclusive", icon
@@ -93,6 +98,7 @@ public struct JsonChoiceObject : JsonChoice, Codable, Hashable {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension JsonChoiceObject : DocumentableStruct {
     public static func codingKeys() -> [CodingKey] {
         CodingKeys.allCases

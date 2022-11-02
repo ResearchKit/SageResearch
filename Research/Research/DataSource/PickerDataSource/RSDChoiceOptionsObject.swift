@@ -34,6 +34,7 @@
 import Foundation
 
 /// A simple struct that can be used to implement the `RSDChoiceOptions` protocol.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public struct RSDChoiceOptionsObject : RSDChoiceOptions {
     
     /// A list of choices for the input field.
@@ -54,6 +55,7 @@ public struct RSDChoiceOptionsObject : RSDChoiceOptions {
 }
 
 /// Extension of the `RSDChoiceOptions` protocol to implement the `RSDChoicePickerDataSource` protocol.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDChoiceOptions {
     
     /// Returns the number of 'columns' to display.

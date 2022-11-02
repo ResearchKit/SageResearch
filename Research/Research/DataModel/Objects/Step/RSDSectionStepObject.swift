@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 import MobilePassiveData
 
 /// `RSDSectionStepObject` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
@@ -195,6 +196,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDSectionStepObject : DocumentableObject {
     public static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases

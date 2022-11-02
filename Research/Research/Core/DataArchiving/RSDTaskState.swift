@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 /// The task state object is a base class implementation that can upload and archive results, return
 /// the encoded result, and manage file cleanup.
@@ -114,7 +115,7 @@ open class RSDTaskState : NSObject {
     /// - parameter encoder: The factory top-level encoder.
     /// - returns: The encoded result.
     public func encodeResult(to encoder: FactoryEncoder) throws -> Data {
-        return try self.taskResult.rsd_encodeObject(to: encoder)
+        return try self.taskResult.encodeObject(to: encoder)
     }
     
     /// Cleanup the task following archive and upload.
@@ -177,5 +178,22 @@ open class RSDTaskState : NSObject {
                 }
             }
         }
+    }
+}
+
+extension Encodable {
+    
+    fileprivate func encodeObject(to encoder: FactoryEncoder) throws -> Data {
+        let wrapper = _EncodableWrapper(encodable: self)
+        return try encoder.encode(wrapper)
+    }
+}
+
+/// The wrapper is required b/c `JSONEncoder` does not implement the `Encoder` protocol.
+/// Instead, it uses a private wrapper to box the encoded object.
+fileprivate struct _EncodableWrapper: Encodable {
+    let encodable: Encodable
+    func encode(to encoder: Encoder) throws {
+        try encodable.encode(to: encoder)
     }
 }

@@ -38,6 +38,7 @@ import Foundation
 /// For most group types, there is one cell per group and there can be one or more groups per section.
 /// However, there are exceptions such as multiple-choice lists where each value is displayed in a
 /// selectable table item.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class RSDTableSection {
     
     /// A unique identifier for the section.
@@ -77,9 +78,10 @@ open class RSDTableSection {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTableSection : CustomStringConvertible {
 
-    open var description: String {
+    public var description: String {
         var description = "<\(String(describing: type(of: self))) \(self.index) \(self.identifier)>"
         if let title = self.title {
             description.append(" \(title)")
@@ -92,6 +94,7 @@ extension RSDTableSection : CustomStringConvertible {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDTableSection : Equatable {
     
     public static func ==(lhs: RSDTableSection, rhs: RSDTableSection) -> Bool {

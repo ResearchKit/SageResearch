@@ -33,9 +33,11 @@
 
 import Foundation
 import JsonModel
+import ResultModel
 
 // TODO: syoung 04/06/2020 Implement ComboBoxQuestionObject supported in Kotlin frameworks
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCohortAssignmentStep {
     private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case surveyRules, isOptional = "optional"
@@ -156,6 +158,7 @@ open class AbstractQuestionStep : RSDUIStepObject, SurveyRuleNavigation, RSDCoho
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class AbstractSkipQuestionStep : AbstractQuestionStep {
     private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case skipCheckbox
@@ -212,6 +215,7 @@ open class AbstractSkipQuestionStep : AbstractQuestionStep {
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQuestion, QuestionStep, Encodable {
     private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case inputItem
@@ -313,6 +317,7 @@ public final class SimpleQuestionStepObject : AbstractSkipQuestionStep, SimpleQu
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, MultipleInputQuestion, QuestionStep, Encodable {
     private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case inputItems, sequenceSeparator
@@ -426,6 +431,7 @@ public final class MultipleInputQuestionStepObject : AbstractSkipQuestionStep, M
 /// keyword would be brittle for human-edited json files. Therefore, instead, the "type" field is
 /// defined at this level with an encoded `baseType` and an overridable method for decoding the
 /// the choices.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, QuestionStep, Encodable {
     private enum CodingKeys : String, OrderedEnumCodingKey, OpenOrderedCodingKey {
         case baseType, jsonChoices = "choices", isSingleAnswer = "singleChoice", inputUIHint = "uiHint"
@@ -589,6 +595,7 @@ open class ChoiceQuestionStepObject : AbstractQuestionStep, ChoiceQuestion, Ques
     }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public final class StringChoiceQuestionStepObject : ChoiceQuestionStepObject {
     public override class func defaultType() -> RSDStepType {
         .stringChoiceQuestion

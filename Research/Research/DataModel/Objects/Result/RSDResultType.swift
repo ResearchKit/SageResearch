@@ -32,6 +32,7 @@
 //
 import Foundation
 import JsonModel
+import ResultModel
 
 
 /// `RSDResultType` is an extendable string enum used by `RSDFactory` to create the appropriate

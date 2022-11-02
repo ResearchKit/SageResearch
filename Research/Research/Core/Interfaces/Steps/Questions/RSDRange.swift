@@ -32,15 +32,18 @@
 //
 
 import JsonModel
+import ResultModel
 import Foundation
 
 /// `RSDRange` defines range constraints that are appropriate for a given data type.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDRange {
 }
 
 /// `RSDRangeWithFormatter` is an optional extension of the range that can be used to extend the range
 /// to include a formatter appropriate to the UI. For example, this could be used to describe a number
 /// range that displays currency.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDRangeWithFormatter : RSDRange {
     
     /// A formatter that is appropriate to the data type. If `nil`, the format will be determined by the UI.
@@ -52,6 +55,7 @@ public protocol RSDRangeWithFormatter : RSDRange {
 }
 
 /// `RSDDateRange` defines the range of values appropriate for a `date` data type.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDDateRange : RSDRange {
     
     /// The minimum allowed date. When the value of this property is `nil`, then the `allowPast`
@@ -82,6 +86,7 @@ public protocol RSDDateRange : RSDRange {
     var defaultDate: Date? { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 extension RSDDateRange {
     
     /// The minimum allowed date. This is calculated by using either the `minDate` (if non-nil) or today's
@@ -100,6 +105,7 @@ extension RSDDateRange {
 }
 
 /// `RSDNumberRange` extends the properties of an `RSDInputField` for a `decimal` or `integer` data type.
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDNumberRange : RSDRange {
     
     /// The minimum allowed number. When the value of this property is `nil`, there is no minimum.
@@ -120,6 +126,7 @@ public protocol RSDNumberRange : RSDRange {
     var unit: String? { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDDurationRange : RSDRange {
     
     /// The minimum allowed duration. The minimum duration should use the `UnitDuration` of the
@@ -138,6 +145,7 @@ public protocol RSDDurationRange : RSDRange {
     var durationUnits: Set<UnitDuration> { get }
 }
 
+@available(*,deprecated, message: "Will be deleted in a future version.")
 public protocol RSDPostalCodeRange : RSDRange {
     
     /// A list of the supported regions for this question. This should include all the regions that
