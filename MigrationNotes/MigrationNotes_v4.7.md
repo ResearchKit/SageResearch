@@ -17,3 +17,13 @@ It is also recommended that you update your package dependencies to include
              url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
              from: "1.6.0"),
 ```
+
+--OR--
+
+```
+    .package(name: "JsonModel",
+             url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
+             "1.6.0"..<"3.0.0"),
+```
+
+Once the packages that reference JsonModel have been migrated to support JsonModel 2.0.
