@@ -9,6 +9,7 @@ import ResultModel
 
 /// The metadata for a task result archive that can be zipped using the app developer's choice of
 /// third-party archival tools.
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
 public struct RSDTaskMetadata : Codable, DocumentableRootObject, DocumentableStruct {
     private enum CodingKeys : String, OrderedEnumCodingKey {
         case deviceInfo,

@@ -24,6 +24,7 @@ public enum RSDReservedFilename : String {
 }
 
 /// A manifest for a given file that includes the filename, content type, and creation timestamp.
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
 public struct RSDFileManifest : Codable, Hashable, Equatable {
     private enum CodingKeys : String, OrderedEnumCodingKey {
         case filename, timestamp, contentType, identifier, stepPath, jsonSchema, metadata
@@ -86,6 +87,7 @@ public struct RSDFileManifest : Codable, Hashable, Equatable {
     }
 }
 
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
 extension RSDFileManifest : DocumentableStruct {
     public static func codingKeys() -> [CodingKey] {
         CodingKeys.allCases
@@ -137,6 +139,7 @@ extension RSDFileManifest : DocumentableStruct {
     }
 }
 
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
 extension FileInfo {
     init(from fileManifest: RSDFileManifest) {
         self.init(filename: fileManifest.filename,

@@ -13,6 +13,7 @@ import ResultModel
 /// the results are sent individually. It is the responsibility of the developer who implements this protocol
 /// for their services to ensure that the data is cached (if offline) and to re-attempt upload of the
 /// encrypted results.
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
 public protocol RSDDataArchive : AnyObject {
     
     /// A unique identifier for this archive.
@@ -48,20 +49,30 @@ public protocol RSDDataArchive : AnyObject {
 
 /// An archivable result is an object wrapper for results that allows them to be transformed into
 /// data for a zipped archive or service.
-public protocol RSDArchivable {
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
+public protocol RSDArchivable : FileArchivable {
     
     /// Build the archiveable or uploadable data for this result.
     func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)?
 }
 
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
 extension RSDArchivable {
     
     /// Convenience method for calling `buildArchiveData()` without a step path.
     public func buildArchiveData() throws -> (manifest: RSDFileManifest, data: Data)? {
         return try self.buildArchiveData(at: nil)
     }
+    
+    /// Implement the newer protocol that is not dependent on SageResearch.
+    public func buildArchivableFileData(at stepPath: String?) throws -> (fileInfo: FileInfo, data: Data)? {
+        try self.buildArchiveData(at: stepPath).map {
+            (.init(from: $0.manifest), $0.data)
+        }
+    }
 }
 
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
 internal class TaskArchiver : NSObject {
     
     let manager: RSDDataArchiveManager

@@ -100,6 +100,7 @@ public class RSDFileResultUtility {
     ///
     /// - parameter filename: The name of the file.
     /// - returns: String path for the given file name.
+    @available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
     internal static func fileManifest(for filename: RSDReservedFilename) -> RSDFileManifest {
         let filename = (filename.stringValue as NSString).appendingPathExtension("json")!
         return RSDFileManifest(filename: filename, timestamp: Date(), contentType: "application/json")

@@ -11,9 +11,11 @@ import Foundation
 /// composite protocol of the methods defined using Swift, which are required but can include Swift objects
 /// and methods that conform to Objective-C protocols which allows for optional implementation of the
 /// included methods.
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
 public protocol RSDDataArchiveManager : RSDSwiftDataArchiveManager, RSDObjCDataArchiveManager {
 }
 
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
 public protocol RSDSwiftDataArchiveManager : NSObjectProtocol {
     
     /// Should the task result archiving be continued if there was an error adding data to the current
@@ -47,6 +49,7 @@ public protocol RSDSwiftDataArchiveManager : NSObjectProtocol {
     
 }
 
+@available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
 @objc public protocol RSDObjCDataArchiveManager : NSObjectProtocol {
     
     /// Returns the answer key for a given `RSDAnswerResult` to be included in the answer map. This allows
