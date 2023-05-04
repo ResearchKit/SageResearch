@@ -146,3 +146,15 @@ See "MigrationNotes_v4.1.md".
 ## Version 4.4
 
 Moved base implementation for `BranchNodeResult` and `AssessmentResult` into JsonModel.
+
+## Version 4.6
+
+Update Swift Package min target and all app min target OS to iOS 14 and macOS 11.
+
+## Version 4.7
+
+Deprecated unused code and added support for `JsonModel 1.6.0..<3.0.0`
+
+## Version 4.9
+
+Deprecated classes and structs used to support Bridge Exporter v1 and v2.
