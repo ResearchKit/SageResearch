@@ -136,6 +136,7 @@ open class RSDTaskState : NSObject {
     /// The file results will be added to the files list in a JSON serialized file named "metadata.json"
     /// that includes information about the device, application, task, and a file manifest.
     ///
+    @available(*, deprecated, message: "Support for BridgeSDK archive and export is deprecated. Please use BridgeClient and implement `FileArchivable` directly instead of `RSDArchivable`.")
     public func archiveResults(with manager: RSDDataArchiveManager, completion: ((_ error: Error?) -> Void)? = nil) {
         fileManagementQueue.async {
             do {

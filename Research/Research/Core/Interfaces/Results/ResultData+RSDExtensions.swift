@@ -7,24 +7,6 @@ import JsonModel
 import ResultModel
 import Foundation
 
-
-extension FileResultObject : RSDArchivable {
-    
-    /// Build the archiveable or uploadable data for this result.
-    public func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
-        let filename = self.relativePath
-        guard let url = self.url else { return nil }
-        let manifest = RSDFileManifest(filename: filename,
-                                       timestamp: self.startDate,
-                                       contentType: self.contentType,
-                                       identifier: self.identifier,
-                                       stepPath: stepPath,
-                                       jsonSchema: self.jsonSchema)
-        let data = try Data(contentsOf: url)
-        return (manifest, data)
-    }
-}
-
 public extension AnswerResult {
     
     var value: Any? {
