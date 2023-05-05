@@ -84,7 +84,6 @@ public struct TestConditionalNavigator: RSDConditionalStepNavigator {
     }
 }
 
-@available(*,deprecated, message: "Will be deleted in a future version.")
 public class TestSubtaskStep : RSDSubtaskStep {
 
     public let task: RSDTask
