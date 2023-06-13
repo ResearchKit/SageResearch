@@ -129,6 +129,9 @@ open class RSDSwiftUIAppDelegate : RSDAppDelegate {
 /// syoung 09/28/2021
 public class AppOrientationLockUtility {
     
+    public static let willChange: Notification.Name = .init(rawValue: "RSDAppOrientationLockUtilityWillChange")
+    public static let didChange: Notification.Name = .init(rawValue: "RSDAppOrientationLockUtilityDidChange")
+    
     /// The current supported interface orientations.
     static public var currentOrientationLock: UIInterfaceOrientationMask {
         orientationLock ?? defaultOrientationLock
@@ -164,13 +167,20 @@ public class AppOrientationLockUtility {
     
     /// Set the orientation lock.
     static public func setOrientationLock(_ newValue: UIInterfaceOrientationMask?, rotateIfNeeded: Bool = shouldAutorotate) {
+        guard newValue != orientationLock else { return }
+        
+        NotificationCenter.default.post(name: Self.willChange, object: self)
+        
         orientationLock = newValue
-        guard rotateIfNeeded else { return }
+        guard rotateIfNeeded else {
+            NotificationCenter.default.post(name: Self.didChange, object: self)
+            return
+        }
         
         // Get initial orientation
         let windowOrientation: UIInterfaceOrientation? = {
             if #available(iOS 13.0, *) {
-                return UIApplication.shared.keyWindow?.windowScene?.interfaceOrientation
+                return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
             }
             else {
                 return UIApplication.shared.statusBarOrientation
@@ -201,6 +211,8 @@ public class AppOrientationLockUtility {
         // Set the device orientation and rotate.
         device.setValue(orientation.rawValue, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
+        
+        NotificationCenter.default.post(name: Self.didChange, object: self)
     }
 }
 
