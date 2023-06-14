@@ -172,24 +172,31 @@ public class AppOrientationLockUtility {
         NotificationCenter.default.post(name: Self.willChange, object: self)
         
         orientationLock = newValue
-        guard rotateIfNeeded else {
-            NotificationCenter.default.post(name: Self.didChange, object: self)
+       
+        if rotateIfNeeded {
+            rotate()
+        }
+        
+        NotificationCenter.default.post(name: Self.didChange, object: self)
+    }
+    
+    static func rotate() {
+        guard let windowScene = UIApplication.shared.firstWindowScene else {
             return
         }
         
-        // Get initial orientation
-        let windowOrientation: UIInterfaceOrientation? = {
-            if #available(iOS 13.0, *) {
-                return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
-            }
-            else {
-                return UIApplication.shared.statusBarOrientation
-            }
-        }()
-        let device = UIDevice.current
-        let currentOrientation: UIDeviceOrientation = windowOrientation.flatMap { .init(rawValue: $0.rawValue) } ?? device.orientation
-        var orientation = currentOrientation
+        // iOS 16 will throw a warning if you directly attempt to rotate the device.
+        if #available(iOS 16.0, *) {
+            windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: currentOrientationLock))
+            return
+        }
+        
+        // else fallback to shoehorning in the device rotation.
 
+        // Get initial orientation
+        let device = UIDevice.current
+        var orientation = UIDeviceOrientation(rawValue: windowScene.interfaceOrientation.rawValue) ?? device.orientation
+        
         // Compare current to desired.
         switch currentOrientationLock {
         case .portrait:
@@ -211,8 +218,13 @@ public class AppOrientationLockUtility {
         // Set the device orientation and rotate.
         device.setValue(orientation.rawValue, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
-        
-        NotificationCenter.default.post(name: Self.didChange, object: self)
+    }
+}
+
+extension UIApplication {
+    
+    var firstWindowScene: UIWindowScene? {
+        connectedScenes.first(where: { ($0.activationState == .foregroundActive) && ($0 is UIWindowScene) }) as? UIWindowScene
     }
 }
 
