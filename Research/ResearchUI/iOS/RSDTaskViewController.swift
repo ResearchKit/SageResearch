@@ -9,6 +9,7 @@ import JsonModel
 import ResultModel
 import Research
 import MobilePassiveData
+import SharedMobileUI
 
 /// `RSDPageViewControllerProtocol` allows replacing the `UIPageViewController` in the base class with a different
 /// view controller implementation. It is assumed that the implementation is for a view controller appropriate to
