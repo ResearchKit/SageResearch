@@ -6,7 +6,7 @@
 import SwiftUI
 import ResearchUI
 
-class AppDelegate: RSDSwiftUIAppDelegate {
+class AppDelegate: RSDAppDelegate {
 }
 
 @main
