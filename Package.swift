@@ -36,6 +36,8 @@ let package = Package(
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
                  from: "1.4.0"),
+        .package(url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
+                 from: "1.0.0"),
     ],
     targets: [
 
@@ -64,6 +66,7 @@ let package = Package(
             name: "ResearchUI",
             dependencies: [
                 "Research",
+                .product(name: "AssessmentModelUI", package: "AssessmentModelKMM"),
             ],
             path: "Research/ResearchUI/",
             exclude: ["Info-iOS.plist"],
