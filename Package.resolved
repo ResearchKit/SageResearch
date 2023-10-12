@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/NU-MSS/MobilePassiveData-SDK.git",
         "state": {
           "branch": null,
-          "revision": "a13ff3b41ac48d984bfbad1628c91c9752e6fd48",
-          "version": "1.5.4"
+          "revision": "3643d45db37f54ae2afd6bec9ae77c0c2d279a0d",
+          "version": "1.5.5"
         }
       }
     ]
