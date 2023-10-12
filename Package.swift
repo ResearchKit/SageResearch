@@ -35,7 +35,7 @@ let package = Package(
                  "1.6.0"..<"3.0.0"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/NU-MSS/MobilePassiveData-SDK.git",
-                 from: "1.4.0"),
+                 from: "1.5.5"),
         .package(url: "https://github.com/NU-MSS/AssessmentModelKMM.git",
                  from: "1.0.0"),
     ],
