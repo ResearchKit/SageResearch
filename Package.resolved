@@ -3,29 +3,29 @@
     "pins": [
       {
         "package": "AssessmentModel",
-        "repositoryURL": "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
+        "repositoryURL": "https://github.com/NU-MSS/AssessmentModelKMM.git",
         "state": {
           "branch": null,
-          "revision": "345ff22602e119a44815889512bcc524da504300",
-          "version": "1.0.0"
+          "revision": "ae36e6e3c097f58d1b71c4d383cd53a3c9110edf",
+          "version": "1.0.2"
         }
       },
       {
         "package": "JsonModel",
-        "repositoryURL": "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
+        "repositoryURL": "https://github.com/NU-MSS/JsonModel-Swift.git",
         "state": {
           "branch": null,
-          "revision": "4431edad387697d8db879212c4ca8dacbc436b5f",
-          "version": "1.6.0"
+          "revision": "5d9acc0f5c1779cca3a31ca1913d684406e74f1f",
+          "version": "2.3.1"
         }
       },
       {
         "package": "MobilePassiveData",
-        "repositoryURL": "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
+        "repositoryURL": "https://github.com/NU-MSS/MobilePassiveData-SDK.git",
         "state": {
           "branch": null,
-          "revision": "5c1b98eedde37fd6a898798c031f5e7d863404b3",
-          "version": "1.4.0"
+          "revision": "a13ff3b41ac48d984bfbad1628c91c9752e6fd48",
+          "version": "1.5.4"
         }
       }
     ]
