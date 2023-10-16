@@ -37,7 +37,7 @@ let package = Package(
                  url: "https://github.com/NU-MSS/MobilePassiveData-SDK.git",
                  from: "1.5.5"),
         .package(url: "https://github.com/NU-MSS/AssessmentModelKMM.git",
-                 from: "1.0.0"),
+				 .branch("ella/reference_update")),
     ],
     targets: [
 

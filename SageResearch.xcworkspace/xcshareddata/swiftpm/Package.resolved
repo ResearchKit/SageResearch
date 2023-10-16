@@ -5,9 +5,9 @@
         "package": "AssessmentModel",
         "repositoryURL": "https://github.com/NU-MSS/AssessmentModelKMM.git",
         "state": {
-          "branch": null,
-          "revision": "ae36e6e3c097f58d1b71c4d383cd53a3c9110edf",
-          "version": "1.0.2"
+          "branch": "ella/reference_update",
+          "revision": "83f28b5b50cf7c6ae81c041e664be2aabbdaf6a1",
+          "version": null
         }
       },
       {
