@@ -36,7 +36,7 @@ let package = Package(
         .package(name: "MobilePassiveData",
                  url: "https://github.com/NU-MSS/MobilePassiveData-SDK.git",
                  from: "1.5.5"),
-		.package(name: "AssessmentModelKMM", url: "https://github.com/NU-MSS/AssessmentModelKMM.git",
+		.package(name: "AssessmentModel", url: "https://github.com/NU-MSS/AssessmentModelKMM.git",
 				 .branch("ella/reference_update")),
     ],
     targets: [
@@ -66,7 +66,7 @@ let package = Package(
             name: "ResearchUI",
             dependencies: [
                 "Research",
-                .product(name: "AssessmentModelUI", package: "AssessmentModelKMM"),
+                .product(name: "AssessmentModelUI", package: "AssessmentModel"),
             ],
             path: "Research/ResearchUI/",
             exclude: ["Info-iOS.plist"],
