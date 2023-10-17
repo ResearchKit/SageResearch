@@ -5,9 +5,9 @@
         "package": "AssessmentModel",
         "repositoryURL": "https://github.com/NU-MSS/AssessmentModelKMM.git",
         "state": {
-          "branch": "mtbMain",
+          "branch": null,
           "revision": "4b8e6a7a07d097bd848e9a50854a8cd733072efc",
-          "version": null
+          "version": "1.0.4"
         }
       },
       {
