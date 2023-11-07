@@ -7,6 +7,7 @@ import UIKit
 import Research
 
 @available(*,deprecated, message: "Will be deleted in a future version.")
+@available(iOS 13.0, *)
 open class RSDResultSummaryStepViewController: RSDInstructionStepViewController {
 
     @IBOutlet public var resultTitleLabel: UILabel?

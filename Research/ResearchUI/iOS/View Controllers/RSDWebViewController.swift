@@ -11,6 +11,7 @@ import Research
 /// supports loading a web view from a URL, HTML string, or `RSDResourceTransformer`. It is assumed that
 /// the property will be set for one of these values.
 @available(*,deprecated, message: "Will be deleted in a future version.")
+@available(iOS 13.0, *)
 open class RSDWebViewController: UIViewController, WKNavigationDelegate {
     
     /// The webview attached to this view controller.
@@ -58,6 +59,7 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
     // MARK: View management
     
     /// Override `viewDidLoad()` to instantiate a webview if there wasn't one created using a storyboard or nib.
+    @available(iOS 13.0, *)
     open override func viewDidLoad() {
         super.viewDidLoad()
         if activityIndicator == nil {

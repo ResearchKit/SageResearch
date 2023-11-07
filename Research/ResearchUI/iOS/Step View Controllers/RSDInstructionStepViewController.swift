@@ -9,6 +9,7 @@ import Research
 /// `RSDInstructionStepViewController` is a custom step view controller that is intended to be used with the
 /// `RSDInstructionStepViewController.nib` file. This is the default view controller for steps that
 @available(*,deprecated, message: "Will be deleted in a future version.")
+@available(iOS 13.0, *)
 open class RSDInstructionStepViewController: PermissionStepViewController {
 
     /// Retuns the imageView, in this case the image from the navigationHeader.

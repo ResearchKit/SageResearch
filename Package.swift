@@ -9,7 +9,7 @@ let package = Package(
     platforms: [
         // Add support for all platforms starting from a specific version.
         .macOS(.v11),
-        .iOS(.v14),
+        .iOS(.v12),
         .watchOS(.v6),
         .tvOS(.v14)
     ],

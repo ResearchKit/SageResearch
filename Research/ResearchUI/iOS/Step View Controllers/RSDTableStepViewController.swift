@@ -30,6 +30,7 @@ import Research
 /// tableView will simply have a headerView, no rows, and a footerView.
 ///
 @available(*,deprecated, message: "Will be deleted in a future version.")
+@available(iOS 13.0, *)
 open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate, RSDTaskViewControllerDelegate {
 
     /// The table view associated with this view controller. This will be created during `viewDidLoad()`

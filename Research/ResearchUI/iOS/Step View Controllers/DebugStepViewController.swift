@@ -8,6 +8,7 @@ import Research
 
 /// `DebugStepViewController` is an internal class that is used to display a view controller for a step without any UI.
 /// This allows the developer to use a placeholder view controller when developing a new task.
+@available(iOS 13.0, *)
 class DebugStepViewController: RSDStepViewController {
     
     /// A label for displaying the step identifier.
