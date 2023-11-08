@@ -102,6 +102,7 @@ public protocol RSDOrientationTask : RSDTask {
 /// `RSDTaskViewController` is the default implementation of task view controller that is suitable to the iPhone or iPad.
 /// The default implementation will display a series of steps using a `UIPageViewController`. This controller will also handle
 /// starting and stoping async actions and vending the appropriate step view controller for each step.
+@available(iOS 13.0, *)
 open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, AsyncActionControllerDelegate, RSDLoadingViewControllerProtocol {
 
     /// The delegate for the task view controller.

@@ -9,7 +9,7 @@ let package = Package(
     platforms: [
         // Add support for all platforms starting from a specific version.
         .macOS(.v11),
-        .iOS(.v14),
+        .iOS(.v12),
         .watchOS(.v6),
         .tvOS(.v14)
     ],
@@ -32,12 +32,12 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(name: "JsonModel",
                  url: "https://github.com/NU-MSS/JsonModel-Swift.git",
-                 "1.6.0"..<"3.0.0"),
+                 from: "2.3.2"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/NU-MSS/MobilePassiveData-SDK.git",
-                 from: "1.5.5"),
+                 from: "1.5.6"),
 		.package(name: "AssessmentModel", url: "https://github.com/NU-MSS/AssessmentModelKMM.git",
-				 from: "1.0.4"),
+				 from: "1.0.5"),
     ],
     targets: [
 

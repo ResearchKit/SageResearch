@@ -21,6 +21,7 @@ public final class ResearchUI {
 ///
 /// Using this class as the base class of your app delegate is not required, but is included as a
 /// possible solution to certain common issues with setting up an app.
+@available(iOS 13.0, *)
 open class RSDAppDelegate : UIResponder, UIApplicationDelegate, RSDAlertPresenter  {
     
     open var window: UIWindow?

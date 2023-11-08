@@ -7,6 +7,7 @@ import UIKit
 import Research
 
 @available(*,deprecated, message: "Will be deleted in a future version.")
+@available(iOS 13.0, *)
 open class RSDFullscreenImageStepViewController: RSDStepViewController {
     
     /// Override to return the primary background color for all placements.
@@ -36,6 +37,7 @@ open class RSDFullscreenImageStepViewController: RSDStepViewController {
 /// - seealso: `RSDTaskViewController.vendDefaultViewController(for:)`
 ///
 @available(*,deprecated, message: "Will be deleted in a future version.")
+@available(iOS 13.0, *)
 open class RSDCountdownStepViewController: RSDFullscreenImageStepViewController {
     
     /// A label that is updated to show a countdown (5-4-3-2-1).

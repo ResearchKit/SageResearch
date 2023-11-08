@@ -15,6 +15,7 @@ public protocol RSDLoadingViewControllerProtocol {
     var loadingContainerView: UIView! { get }
 }
 
+@available(iOS 13.0, *)
 extension RSDLoadingViewControllerProtocol {
     
     /// Find the standard loading view that was added to this view controller.
@@ -51,6 +52,7 @@ extension RSDLoadingViewControllerProtocol {
 }
 
 /// `RSDLoadingView` is a simple loading view for displaying a loading indicator in a view.
+@available(iOS 13.0, *)
 open class RSDLoadingView: UIView {
     
     /// Is the loading indicator animating?

@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/NU-MSS/AssessmentModelKMM.git",
         "state": {
           "branch": null,
-          "revision": "ae36e6e3c097f58d1b71c4d383cd53a3c9110edf",
-          "version": "1.0.2"
+          "revision": "8e02ba3e3e6fb5b0c11972474ff94869679bb321",
+          "version": "1.0.5"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/NU-MSS/JsonModel-Swift.git",
         "state": {
           "branch": null,
-          "revision": "5d9acc0f5c1779cca3a31ca1913d684406e74f1f",
-          "version": "2.3.1"
+          "revision": "2057ae23ddad161102aa1ddd3e76baccdabdd188",
+          "version": "2.3.2"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/NU-MSS/MobilePassiveData-SDK.git",
         "state": {
           "branch": null,
-          "revision": "3643d45db37f54ae2afd6bec9ae77c0c2d279a0d",
-          "version": "1.5.5"
+          "revision": "9bb8385ed9ee05b2488922648aa70adb1407d494",
+          "version": "1.5.6"
         }
       }
     ]
