@@ -54,13 +54,13 @@ open class RSDStepProgressView: UIView, RSDViewDesignable {
     
     // TODO: syoung 03/19/2019 Remove these properties once the modules that use them have been updated.
     @available(*, unavailable)
-    open var usesLightStyle: Bool = false
+    open var usesLightStyle: Bool { return false }
     
     @available(*, unavailable)
-    open var labelIsUppercase: Bool = false
+    open var labelIsUppercase: Bool { return false }
     
     @available(*, unavailable)
-    open var labelCurrentStepIsBold: Bool = false
+    open var labelCurrentStepIsBold: Bool { return false }
     
     /// The background color mapping that this view should use as its key. Typically, for all but the
     /// top-level views, this will be the background of the superview.

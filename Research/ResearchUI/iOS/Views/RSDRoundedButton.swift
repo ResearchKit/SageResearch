@@ -102,7 +102,7 @@ import UIKit
     
     // TODO: syoung 03/19/2019 Remove these properties once the modules that use them have been updated.
     @available(*, unavailable)
-    open var usesLightStyle: Bool = false
+    open var usesLightStyle: Bool { return false }
     
     /// Should the button display using the "secondary" button style? This style is used for buttons that
     /// are displayed inline with scrolling views for handling secondary actions.

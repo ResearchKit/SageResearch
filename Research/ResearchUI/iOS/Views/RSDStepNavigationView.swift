@@ -155,7 +155,7 @@ open class RSDStepNavigationView: UIView, RSDViewDesignable {
     /// Should the navigation view subcomponents be displayed with a dark background and light tint on the
     /// buttons and text?
     @available(*, unavailable)
-    open var usesLightStyle: Bool = false
+    open var usesLightStyle: Bool { return false }
     
     /// The background color mapping that this view should use as its key.
     open private(set) var backgroundColorTile: RSDColorTile?
