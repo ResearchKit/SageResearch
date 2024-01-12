@@ -327,7 +327,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, Decodable, RSDCopyStep {
         self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? self.title
         
         if let text = try deprecatedContainer.decodeIfPresent(String.self, forKey: .text) {
-            debugPrint("WARNING!!! `text` keyword on a UIStepObject decoding is deprecated and will be deleted in future versions.")
+            // debugPrint("WARNING!!! `text` keyword on a UIStepObject decoding is deprecated and will be deleted in future versions.")
             self.subtitle = text
         }
         else {
